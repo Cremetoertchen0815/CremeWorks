@@ -37,9 +37,20 @@ namespace CremeWorks
                 playList.Items.Add(element.Title + " - " + element.Artist);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void AddNewSong(object sender, EventArgs e)
         {
+            if (_c == null) return;
+            var ns = new Song();
+            if (new SongEditor(_c, ns).ShowDialog() != DialogResult.OK) return;
+            _c.Playlist.Add(ns);
+            UpdatePlaylist();
+        }
 
+        private void EditSong(object sender, EventArgs e)
+        {
+            if (_c == null || playList.SelectedIndex < 0) return;
+            new SongEditor(_c, _c.Playlist[playList.SelectedIndex]).ShowDialog();
+            UpdatePlaylist();
         }
     }
 }
