@@ -29,6 +29,7 @@ namespace CremeWorks
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.devicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,6 +56,8 @@ namespace CremeWorks
             this.lightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button12 = new System.Windows.Forms.Button();
+            this.footSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,10 +88,11 @@ namespace CremeWorks
             // 
             this.devicesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.configureToolStripMenuItem,
-            this.reloadToolStripMenuItem});
+            this.reloadToolStripMenuItem,
+            this.footSwitchToolStripMenuItem});
             this.devicesToolStripMenuItem.Name = "devicesToolStripMenuItem";
-            this.devicesToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.devicesToolStripMenuItem.Text = "Devices";
+            this.devicesToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.devicesToolStripMenuItem.Text = "MIDI Devices";
             // 
             // newToolStripMenuItem
             // 
@@ -125,14 +129,17 @@ namespace CremeWorks
             // 
             // listBox1
             // 
+            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(12, 58);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(177, 394);
+            this.listBox1.Size = new System.Drawing.Size(238, 394);
             this.listBox1.TabIndex = 2;
             // 
             // button1
             // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button1.Location = new System.Drawing.Point(12, 458);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(55, 23);
@@ -142,6 +149,7 @@ namespace CremeWorks
             // 
             // button2
             // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button2.Location = new System.Drawing.Point(73, 458);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(55, 23);
@@ -151,6 +159,7 @@ namespace CremeWorks
             // 
             // button3
             // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button3.Location = new System.Drawing.Point(134, 458);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(55, 23);
@@ -160,26 +169,35 @@ namespace CremeWorks
             // 
             // label2
             // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(195, 24);
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(195, 21);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(597, 31);
+            this.label2.Size = new System.Drawing.Size(597, 44);
             this.label2.TabIndex = 6;
-            this.label2.Text = "label2";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.Text = "Don’t Stop Believin’";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // textBox1
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(195, 58);
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(256, 68);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(597, 423);
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(536, 413);
             this.textBox1.TabIndex = 7;
+            this.textBox1.Text = resources.GetString("textBox1.Text");
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // button4
             // 
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button4.Location = new System.Drawing.Point(798, 58);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(100, 100);
@@ -189,6 +207,7 @@ namespace CremeWorks
             // 
             // button5
             // 
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button5.Location = new System.Drawing.Point(904, 58);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(100, 100);
@@ -198,6 +217,7 @@ namespace CremeWorks
             // 
             // button6
             // 
+            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button6.Location = new System.Drawing.Point(904, 164);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(100, 100);
@@ -207,6 +227,7 @@ namespace CremeWorks
             // 
             // button7
             // 
+            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button7.Location = new System.Drawing.Point(798, 164);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(100, 100);
@@ -216,6 +237,7 @@ namespace CremeWorks
             // 
             // button8
             // 
+            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button8.Location = new System.Drawing.Point(904, 270);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(100, 100);
@@ -225,6 +247,7 @@ namespace CremeWorks
             // 
             // button9
             // 
+            this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button9.Location = new System.Drawing.Point(798, 270);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(100, 100);
@@ -234,6 +257,7 @@ namespace CremeWorks
             // 
             // button10
             // 
+            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button10.Location = new System.Drawing.Point(904, 376);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(100, 100);
@@ -243,6 +267,7 @@ namespace CremeWorks
             // 
             // button11
             // 
+            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button11.Location = new System.Drawing.Point(798, 376);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(100, 100);
@@ -252,6 +277,7 @@ namespace CremeWorks
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(798, 39);
             this.label3.Name = "label3";
@@ -269,7 +295,7 @@ namespace CremeWorks
             // 
             this.configureToolStripMenuItem.Name = "configureToolStripMenuItem";
             this.configureToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.configureToolStripMenuItem.Text = "Configure";
+            this.configureToolStripMenuItem.Text = "Set Up";
             // 
             // reloadToolStripMenuItem
             // 
@@ -277,11 +303,30 @@ namespace CremeWorks
             this.reloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
             // 
+            // button12
+            // 
+            this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button12.Location = new System.Drawing.Point(195, 458);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(55, 23);
+            this.button12.TabIndex = 17;
+            this.button12.Text = "Remove";
+            this.button12.UseVisualStyleBackColor = true;
+            // 
+            // footSwitchToolStripMenuItem
+            // 
+            this.footSwitchToolStripMenuItem.Name = "footSwitchToolStripMenuItem";
+            this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.footSwitchToolStripMenuItem.Text = "Foot Switch";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1014, 490);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.button12);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.button11);
@@ -292,11 +337,9 @@ namespace CremeWorks
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -337,6 +380,8 @@ namespace CremeWorks
         private System.Windows.Forms.ToolStripMenuItem configureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reloadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lightingToolStripMenuItem;
+        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.ToolStripMenuItem footSwitchToolStripMenuItem;
     }
 }
 
