@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Melanchall.DryWetMidi.Multimedia;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,50 @@ using System.Threading.Tasks;
 
 namespace CremeWorks
 {
-    class Concert
+    public class Concert
     {
         public string FilePath;
-        public string[] MIDIDevices;
+        public MIDIDevice[] Devices = { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() };
         public object FootSwitchConfig;
         public object LightingConfig;
-        public List<Object> Playlist;
+        public List<object> Playlist;
+
+        public Action<bool> ConnectionChangeHandler = (x) => {return; };
+        public void Connect()
+        {
+            foreach (var element in Devices)
+            {
+                if (element.Name == null || element.Name == string.Empty) continue;
+                try
+                {
+                    if (element.Input == null) element.Input = InputDevice.GetByName(element.Name);
+                }
+                catch { }
+                try
+                {
+                    if (element.Output == null) element.Output = OutputDevice.GetByName(element.Name);
+                }
+                catch { }
+            }
+            ConnectionChangeHandler(true);
+        }
+
+        public void Disconnect()
+        {
+            foreach (var element in Devices)
+            {
+                if (element.Name == null || element.Name == string.Empty) continue;
+                if (element.Input != null) { element.Input.Dispose(); element.Input = null; }
+                if (element.Output != null) { element.Output.Dispose(); element.Output = null; }
+            }
+            ConnectionChangeHandler(false);
+        }
+    }
+
+    public class MIDIDevice
+    {
+        public InputDevice Input;
+        public OutputDevice Output;
+        public string Name;
     }
 }

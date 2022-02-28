@@ -47,6 +47,7 @@ namespace CremeWorks
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.RefreshButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -106,6 +107,7 @@ namespace CremeWorks
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(219, 21);
             this.comboBox1.TabIndex = 5;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
             // comboBox2
             // 
@@ -114,6 +116,7 @@ namespace CremeWorks
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(219, 21);
             this.comboBox2.TabIndex = 6;
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
             // comboBox3
             // 
@@ -122,6 +125,7 @@ namespace CremeWorks
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(219, 21);
             this.comboBox3.TabIndex = 7;
+            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
             // comboBox4
             // 
@@ -130,6 +134,7 @@ namespace CremeWorks
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(219, 21);
             this.comboBox4.TabIndex = 8;
+            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
             // comboBox5
             // 
@@ -138,6 +143,7 @@ namespace CremeWorks
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(219, 21);
             this.comboBox5.TabIndex = 9;
+            this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
             // comboBox6
             // 
@@ -146,6 +152,7 @@ namespace CremeWorks
             this.comboBox6.Name = "comboBox6";
             this.comboBox6.Size = new System.Drawing.Size(219, 21);
             this.comboBox6.TabIndex = 11;
+            this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
             // label6
             // 
@@ -165,6 +172,7 @@ namespace CremeWorks
             this.button1.TabIndex = 12;
             this.button1.Text = "Test";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -174,6 +182,7 @@ namespace CremeWorks
             this.button2.TabIndex = 13;
             this.button2.Text = "Test";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button1_Click);
             // 
             // button3
             // 
@@ -183,6 +192,7 @@ namespace CremeWorks
             this.button3.TabIndex = 14;
             this.button3.Text = "Test";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button1_Click);
             // 
             // button4
             // 
@@ -192,6 +202,7 @@ namespace CremeWorks
             this.button4.TabIndex = 15;
             this.button4.Text = "Test";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button1_Click);
             // 
             // button5
             // 
@@ -201,6 +212,7 @@ namespace CremeWorks
             this.button5.TabIndex = 16;
             this.button5.Text = "Test";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button1_Click);
             // 
             // button6
             // 
@@ -210,12 +222,24 @@ namespace CremeWorks
             this.button6.TabIndex = 17;
             this.button6.Text = "Test";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // RefreshButton
+            // 
+            this.RefreshButton.Location = new System.Drawing.Point(274, 174);
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(89, 26);
+            this.RefreshButton.TabIndex = 18;
+            this.RefreshButton.Text = "Refresh";
+            this.RefreshButton.UseVisualStyleBackColor = true;
+            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
             // MIDISetUp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 178);
+            this.ClientSize = new System.Drawing.Size(374, 212);
+            this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -239,6 +263,7 @@ namespace CremeWorks
             this.MinimizeBox = false;
             this.Name = "MIDISetUp";
             this.Text = "Set Up";
+            this.Load += new System.EventHandler(this.MIDISetUp_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,5 +289,6 @@ namespace CremeWorks
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button RefreshButton;
     }
 }

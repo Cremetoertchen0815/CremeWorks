@@ -12,9 +12,25 @@ namespace CremeWorks
 {
     public partial class Form1 : Form
     {
+        private Concert _c = new Concert();
+
         public Form1()
         {
             InitializeComponent();
         }
+
+        private void configureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var diag = new MIDISetUp(_c);
+            diag.ShowDialog();
+        }
+
+        private void connectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_c == null) return;
+            if (connectToolStripMenuItem.Text == "Connect") _c.Connect(); else _c.Disconnect();
+        }
+
+        private void Form1_Load(object sender, EventArgs e) =>_c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
     }
 }
