@@ -13,6 +13,7 @@ namespace CremeWorks
     public partial class Form1 : Form
     {
         private Concert _c = Concert.Empty();
+        private Song _s = null;
 
         public Form1()
         {
@@ -37,6 +38,23 @@ namespace CremeWorks
                 playList.Items.Add(element.Title + " - " + element.Artist);
         }
 
+        private void UpdateSong()
+        {
+            songTitle.Text = string.Empty;
+            songLyrics.Text = string.Empty;
+            if (_s == null) return;
+
+
+            songTitle.Text = _s.Title;
+            songLyrics.Text = _s.Lyrics;
+            ConfigSongMIDI();
+        }
+
+        private void ConfigSongMIDI()
+        {
+            
+        }
+
         private void AddNewSong(object sender, EventArgs e)
         {
             if (_c == null) return;
@@ -51,6 +69,12 @@ namespace CremeWorks
             if (_c == null || playList.SelectedIndex < 0) return;
             new SongEditor(_c, _c.Playlist[playList.SelectedIndex]).ShowDialog();
             UpdatePlaylist();
+        }
+
+        private void playList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _s = playList.SelectedIndex >= 0 ? _c.Playlist[playList.SelectedIndex] : null;
+            UpdateSong();
         }
     }
 }
