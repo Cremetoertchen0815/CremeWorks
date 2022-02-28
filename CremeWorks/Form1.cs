@@ -30,5 +30,16 @@ namespace CremeWorks
 
         private void Form1_Load(object sender, EventArgs e) =>_c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
 
+        private void UpdatePlaylist()
+        {
+            playList.Items.Clear();
+            foreach (var element in _c.Playlist)
+                playList.Items.Add(element.Title + " - " + element.Artist);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

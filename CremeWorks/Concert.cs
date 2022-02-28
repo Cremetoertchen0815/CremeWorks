@@ -14,7 +14,7 @@ namespace CremeWorks
         public MIDIDevice[] Devices;
         public (MidiEventType, short, short)[] FootSwitchConfig;
         public object LightingConfig;
-        public List<object> Playlist;
+        public List<Song> Playlist;
 
         public Action<bool> ConnectionChangeHandler = (x) => {return; };
         public void Connect()
@@ -52,6 +52,7 @@ namespace CremeWorks
             var lol = new Concert();
             lol.Devices = new MIDIDevice[] { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() };
             lol.FootSwitchConfig = new (MidiEventType, short, short)[] { (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0) };
+            lol.Playlist = new List<Song>();
             return lol;
         }
     }
