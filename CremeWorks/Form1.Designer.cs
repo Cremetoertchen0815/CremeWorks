@@ -82,8 +82,8 @@ namespace CremeWorks
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem});
             this.configToolStripMenuItem.Name = "configToolStripMenuItem";
-            this.configToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
-            this.configToolStripMenuItem.Text = "Config";
+            this.configToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.configToolStripMenuItem.Text = "Concert";
             // 
             // devicesToolStripMenuItem
             // 
