@@ -58,7 +58,7 @@ namespace CremeWorks
 
         private void ConfigSongMIDI()
         {
-            
+            _c.MidiMatrix.KeyMap = _s.InstrumentMap;
         }
 
         private void AddNewSong(object sender, EventArgs e)

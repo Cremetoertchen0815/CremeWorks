@@ -1,9 +1,6 @@
-﻿using Melanchall.DryWetMidi.Multimedia;
+﻿using Melanchall.DryWetMidi.Core;
+using Melanchall.DryWetMidi.Multimedia;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CremeWorks
 {
@@ -13,6 +10,8 @@ namespace CremeWorks
         private Concert _c;
         public MIDIMatrix(Concert c) => _c = c;
         private bool _reg = false;
+
+        public bool[][] KeyMap = { new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false } };
 
         public void Register()
         {
@@ -42,27 +41,54 @@ namespace CremeWorks
 
         private void ListenFootPedal(object sender, MidiEventReceivedEventArgs e )
         {
-            Console.WriteLine("s");
+            for (int i = 0; i < _c.FootSwitchConfig.Length; i++)
+            {
+                //Check if event matches mask
+                if (e.Event.EventType == _c.FootSwitchConfig[i].Item1)
+                {
+                    if (e.Event.EventType == MidiEventType.NoteOn)
+                    {
+                        var ev = (NoteOnEvent)e.Event;
+                        if (ev.NoteNumber != _c.FootSwitchConfig[i].Item2 || ev.Channel != _c.FootSwitchConfig[i].Item3) continue;
+                    } else
+                    {
+                        var ev = (ControlChangeEvent)e.Event;
+                        if (ev.ControlNumber != _c.FootSwitchConfig[i].Item2 || ev.Channel != _c.FootSwitchConfig[i].Item3) continue;
+                    }
+                }
+
+                //Execute action
+                switch (i)
+                {
+                    default:
+                        break;
+                }
+            }
         }
         private void ListenLightController(object sender, MidiEventReceivedEventArgs e)
         {
-            Console.WriteLine("s");
+            
         }
+
         private void ListenMaster(object sender, MidiEventReceivedEventArgs e)
         {
-            Console.WriteLine("s");
+            for (int i = 0; i < 4; i++)
+                if (KeyMap[0][i]) _c.Devices[2 + i].Output?.SendEvent(e.Event);
         }
         private void ListenAux1(object sender, MidiEventReceivedEventArgs e)
         {
-            Console.WriteLine("s");
+            for (int i = 0; i < 4; i++)
+                if (KeyMap[1][i]) _c.Devices[2 + i].Output?.SendEvent(e.Event);
         }
         private void ListenAux2(object sender, MidiEventReceivedEventArgs e)
         {
-            Console.WriteLine("s");
+            for (int i = 0; i < 4; i++)
+                if (KeyMap[2][i]) _c.Devices[2 + i].Output?.SendEvent(e.Event);
         }
         private void ListenAux3(object sender, MidiEventReceivedEventArgs e)
         {
-            Console.WriteLine("s");
+            for (int i = 0; i < 4; i++)
+                if (KeyMap[3][i]) _c.Devices[2 + i].Output?.SendEvent(e.Event);
         }
     }
 
