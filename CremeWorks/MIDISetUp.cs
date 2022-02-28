@@ -29,6 +29,12 @@ namespace CremeWorks
         {
             _c.Disconnect();
             RefreshAll();
+            comboBox1.Text = _c.Devices[0].Name;
+            comboBox2.Text = _c.Devices[1].Name;
+            comboBox3.Text = _c.Devices[2].Name;
+            comboBox4.Text = _c.Devices[3].Name;
+            comboBox5.Text = _c.Devices[4].Name;
+            comboBox6.Text = _c.Devices[5].Name;
         }
 
         private void RefreshButton_Click(object sender, EventArgs e) => RefreshAll();

@@ -17,12 +17,12 @@ namespace CremeWorks
         public void Register()
         {
             if (_reg) return;
-            if (_c?.Devices[0]?.Output != null) _c.Devices[0].Input.EventReceived += ListenFootPedal;
-            if (_c?.Devices[1]?.Output != null) _c.Devices[1].Input.EventReceived += ListenLightController;
-            if (_c?.Devices[2]?.Output != null) _c.Devices[2].Input.EventReceived += ListenMaster;
-            if (_c?.Devices[3]?.Output != null) _c.Devices[3].Input.EventReceived += ListenAux1;
-            if (_c?.Devices[4]?.Output != null) _c.Devices[4].Input.EventReceived += ListenAux2;
-            if (_c?.Devices[5]?.Output != null) _c.Devices[5].Input.EventReceived += ListenAux3;
+            if (_c?.Devices[0]?.Input != null) _c.Devices[0].Input.EventReceived += ListenFootPedal;
+            if (_c?.Devices[1]?.Input != null) _c.Devices[1].Input.EventReceived += ListenLightController;
+            if (_c?.Devices[2]?.Input != null) _c.Devices[2].Input.EventReceived += ListenMaster;
+            if (_c?.Devices[3]?.Input != null) _c.Devices[3].Input.EventReceived += ListenAux1;
+            if (_c?.Devices[4]?.Input != null) _c.Devices[4].Input.EventReceived += ListenAux2;
+            if (_c?.Devices[5]?.Input != null) _c.Devices[5].Input.EventReceived += ListenAux3;
             foreach (var element in _c.Devices) element.Input?.StartEventsListening();
             _reg = true;
         }
@@ -30,12 +30,12 @@ namespace CremeWorks
         public void Unregister()
         {
             if (!_reg) return;
-            if (_c?.Devices[0]?.Output != null) _c.Devices[0].Input.EventReceived -= ListenFootPedal;
-            if (_c?.Devices[1]?.Output != null) _c.Devices[1].Input.EventReceived -= ListenLightController;
-            if (_c?.Devices[2]?.Output != null) _c.Devices[2].Input.EventReceived -= ListenMaster;
-            if (_c?.Devices[3]?.Output != null) _c.Devices[3].Input.EventReceived -= ListenAux1;
-            if (_c?.Devices[4]?.Output != null) _c.Devices[4].Input.EventReceived -= ListenAux2;
-            if (_c?.Devices[5]?.Output != null) _c.Devices[5].Input.EventReceived -= ListenAux3;
+            if (_c?.Devices[0]?.Input != null) _c.Devices[0].Input.EventReceived -= ListenFootPedal;
+            if (_c?.Devices[1]?.Input != null) _c.Devices[1].Input.EventReceived -= ListenLightController;
+            if (_c?.Devices[2]?.Input != null) _c.Devices[2].Input.EventReceived -= ListenMaster;
+            if (_c?.Devices[3]?.Input != null) _c.Devices[3].Input.EventReceived -= ListenAux1;
+            if (_c?.Devices[4]?.Input != null) _c.Devices[4].Input.EventReceived -= ListenAux2;
+            if (_c?.Devices[5]?.Input != null) _c.Devices[5].Input.EventReceived -= ListenAux3;
             foreach (var element in _c.Devices) element.Input?.StopEventsListening();
             _reg = false;
         }
