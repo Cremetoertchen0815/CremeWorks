@@ -330,6 +330,7 @@ namespace CremeWorks
             this.footSwitchToolStripMenuItem.Name = "footSwitchToolStripMenuItem";
             this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.footSwitchToolStripMenuItem.Text = "Foot Switch";
+            this.footSwitchToolStripMenuItem.Click += new System.EventHandler(this.footSwitchToolStripMenuItem_Click);
             // 
             // label4
             // 

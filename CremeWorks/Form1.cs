@@ -19,11 +19,8 @@ namespace CremeWorks
             InitializeComponent();
         }
 
-        private void configureToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var diag = new MIDISetUp(_c);
-            diag.ShowDialog();
-        }
+        private void configureToolStripMenuItem_Click(object sender, EventArgs e) => new MIDISetUp(_c).ShowDialog();
+        private void footSwitchToolStripMenuItem_Click(object sender, EventArgs e) => new FootSwitchConfig(_c).ShowDialog();
 
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -32,5 +29,6 @@ namespace CremeWorks
         }
 
         private void Form1_Load(object sender, EventArgs e) =>_c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
+
     }
 }
