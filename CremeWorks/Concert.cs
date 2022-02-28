@@ -16,7 +16,11 @@ namespace CremeWorks
         public object LightingConfig;
         public List<Song> Playlist;
 
+        public MIDIMatrix MidiMatrix;
         public Action<bool> ConnectionChangeHandler = (x) => {return; };
+
+        public Concert() { MidiMatrix = new MIDIMatrix(this); }
+
         public void Connect()
         {
             foreach (var element in Devices)
@@ -33,6 +37,8 @@ namespace CremeWorks
                 }
                 catch { }
             }
+
+
             ConnectionChangeHandler(true);
         }
 
@@ -44,6 +50,7 @@ namespace CremeWorks
                 if (element.Input != null) { element.Input.Dispose(); element.Input = null; }
                 if (element.Output != null) { element.Output.Dispose(); element.Output = null; }
             }
+
             ConnectionChangeHandler(false);
         }
 
