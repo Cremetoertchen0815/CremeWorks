@@ -153,9 +153,9 @@ namespace CremeWorks
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(311, 9);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(43, 13);
+            this.label5.Size = new System.Drawing.Size(105, 13);
             this.label5.TabIndex = 6;
-            this.label5.Text = "Value 2";
+            this.label5.Text = "Value 2(-1 for ignore)";
             // 
             // label6
             // 
@@ -174,6 +174,11 @@ namespace CremeWorks
             0,
             0,
             0});
+            this.valB1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
             this.valB1.Name = "valB1";
             this.valB1.Size = new System.Drawing.Size(70, 20);
             this.valB1.TabIndex = 8;
@@ -187,6 +192,11 @@ namespace CremeWorks
             0,
             0,
             0});
+            this.valB2.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
             this.valB2.Name = "valB2";
             this.valB2.Size = new System.Drawing.Size(70, 20);
             this.valB2.TabIndex = 12;
@@ -235,6 +245,11 @@ namespace CremeWorks
             0,
             0,
             0});
+            this.valB3.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
             this.valB3.Name = "valB3";
             this.valB3.Size = new System.Drawing.Size(70, 20);
             this.valB3.TabIndex = 16;
@@ -283,6 +298,11 @@ namespace CremeWorks
             0,
             0,
             0});
+            this.valB4.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
             this.valB4.Name = "valB4";
             this.valB4.Size = new System.Drawing.Size(70, 20);
             this.valB4.TabIndex = 20;
@@ -331,6 +351,11 @@ namespace CremeWorks
             0,
             0,
             0});
+            this.valB5.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
             this.valB5.Name = "valB5";
             this.valB5.Size = new System.Drawing.Size(70, 20);
             this.valB5.TabIndex = 24;
@@ -379,6 +404,11 @@ namespace CremeWorks
             0,
             0,
             0});
+            this.valB6.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
             this.valB6.Name = "valB6";
             this.valB6.Size = new System.Drawing.Size(70, 20);
             this.valB6.TabIndex = 28;
@@ -427,6 +457,11 @@ namespace CremeWorks
             0,
             0,
             0});
+            this.valB7.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
             this.valB7.Name = "valB7";
             this.valB7.Size = new System.Drawing.Size(70, 20);
             this.valB7.TabIndex = 32;
@@ -475,6 +510,11 @@ namespace CremeWorks
             0,
             0,
             0});
+            this.valB10.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
             this.valB10.Name = "valB10";
             this.valB10.Size = new System.Drawing.Size(70, 20);
             this.valB10.TabIndex = 44;
@@ -523,6 +563,11 @@ namespace CremeWorks
             0,
             0,
             0});
+            this.valB9.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
             this.valB9.Name = "valB9";
             this.valB9.Size = new System.Drawing.Size(70, 20);
             this.valB9.TabIndex = 40;
@@ -571,6 +616,11 @@ namespace CremeWorks
             0,
             0,
             0});
+            this.valB8.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
             this.valB8.Name = "valB8";
             this.valB8.Size = new System.Drawing.Size(70, 20);
             this.valB8.TabIndex = 36;
@@ -784,6 +834,7 @@ namespace CremeWorks
             this.MinimizeBox = false;
             this.Name = "FootSwitchConfig";
             this.Text = "Foot Controller";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FootSwitchConfig_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.valA1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB2)).EndInit();

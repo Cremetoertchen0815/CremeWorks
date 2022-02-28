@@ -12,7 +12,7 @@ namespace CremeWorks
 {
     public partial class Form1 : Form
     {
-        private Concert _c = new Concert();
+        private Concert _c = Concert.Empty();
 
         public Form1()
         {

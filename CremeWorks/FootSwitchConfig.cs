@@ -19,14 +19,25 @@ namespace CremeWorks
         public FootSwitchConfig(Concert c)
         {
             InitializeComponent();
-            Control.CheckForIllegalCrossThreadCalls = false;
+            CheckForIllegalCrossThreadCalls = false;
 
             _c = c;
             c.Connect();
 
+            //Prepare control array
             _cont = new (ComboBox, NumericUpDown, NumericUpDown, Button)[] { (type1, valA1, valB1, det1), (type2, valA2, valB2, det2), (type3, valA3, valB3, det3),
                                                                              (type4, valA4, valB4, det4), (type5, valA5, valB5, det5), (type6, valA6, valB6, det6),
                                                                              (type7, valA7, valB7, det7), (type8, valA8, valB8, det8), (type9, valA9, valB9, det9), (type10, valA10, valB10, det10)};
+            
+            //Load data into dialogue
+            for (int i = 0; i < 10; i++)
+            {
+                var cfg = _c.FootSwitchConfig[i];
+                var cnt = _cont[i];
+                cnt.Item1.SelectedIndex = cfg.Item1 == MidiEventType.ControlChange ? 1 : 0;
+                cnt.Item2.Value = cfg.Item2;
+                cnt.Item3.Value = cfg.Item3;
+            }
         }
 
         private bool _InTest = false;
@@ -74,6 +85,16 @@ namespace CremeWorks
                 controls.Item3.Value = ev.ControlValue;
             }
             controls.Item4.Text = "Detect";
+        }
+
+        private void FootSwitchConfig_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //Save data from dialogue
+            for (int i = 0; i < 10; i++)
+            {
+                var cnt = _cont[i];
+                _c.FootSwitchConfig[i] = (cnt.Item1.SelectedIndex == 1 ? MidiEventType.ControlChange : MidiEventType.NoteOn, (short)cnt.Item2.Value, (short)cnt.Item3.Value);
+            }
         }
     }
 }
