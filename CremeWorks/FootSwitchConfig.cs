@@ -23,6 +23,7 @@ namespace CremeWorks
 
             _c = c;
             c.Connect();
+            _c.MidiMatrix.Unregister();
 
             //Prepare control array
             _cont = new (ComboBox, NumericUpDown, NumericUpDown, Button)[] { (type1, valA1, valB1, det1), (type2, valA2, valB2, det2), (type3, valA3, valB3, det3),
@@ -95,6 +96,8 @@ namespace CremeWorks
                 var cnt = _cont[i];
                 _c.FootSwitchConfig[i] = (cnt.Item1.SelectedIndex == 1 ? MidiEventType.ControlChange : MidiEventType.NoteOn, (short)cnt.Item2.Value, (short)cnt.Item3.Value);
             }
+
+            _c.MidiMatrix.Register();
         }
     }
 }

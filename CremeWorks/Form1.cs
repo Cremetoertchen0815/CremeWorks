@@ -26,7 +26,13 @@ namespace CremeWorks
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_c == null) return;
-            if (connectToolStripMenuItem.Text == "Connect") _c.Connect(); else _c.Disconnect();
+            if (connectToolStripMenuItem.Text == "Connect")
+            {
+                _c.Connect();
+                _c.MidiMatrix.Register();
+            }
+            else
+                _c.Disconnect();
         }
 
         private void Form1_Load(object sender, EventArgs e) =>_c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";

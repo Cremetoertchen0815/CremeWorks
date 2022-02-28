@@ -22,6 +22,7 @@ namespace CremeWorks
         {
             InitializeComponent();
             _c = c;
+            _c.MidiMatrix.Unregister();
         }
 
         private void MIDISetUp_Load(object sender, EventArgs e)

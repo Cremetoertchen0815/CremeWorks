@@ -22,6 +22,7 @@ namespace CremeWorks
             _c = c;
             _s = s;
             DialogResult = DialogResult.Cancel;
+            _c.MidiMatrix.Unregister();
 
             //Map matrix
             _mapMatrix = new CheckBox[][] { new CheckBox[] {chkMM, chkM1, chkM2, chkM3 }, new CheckBox[] { chk1M, chk11, chk12, chk13 },
@@ -47,6 +48,7 @@ namespace CremeWorks
 
         private void SongEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
+            _c.MidiMatrix.Register();
             if (DialogResult != DialogResult.OK) return; //Don't save changes if aborting
 
             //Save changes

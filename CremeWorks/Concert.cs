@@ -44,6 +44,7 @@ namespace CremeWorks
 
         public void Disconnect()
         {
+            MidiMatrix.Unregister();
             foreach (var element in Devices)
             {
                 if (element.Name == null || element.Name == string.Empty) continue;
