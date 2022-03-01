@@ -65,6 +65,31 @@ namespace CremeWorks
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.cc3M = new System.Windows.Forms.CheckBox();
+            this.cc2M = new System.Windows.Forms.CheckBox();
+            this.cc13 = new System.Windows.Forms.CheckBox();
+            this.cc31 = new System.Windows.Forms.CheckBox();
+            this.cc23 = new System.Windows.Forms.CheckBox();
+            this.ccM2 = new System.Windows.Forms.CheckBox();
+            this.cc33 = new System.Windows.Forms.CheckBox();
+            this.cc12 = new System.Windows.Forms.CheckBox();
+            this.cc22 = new System.Windows.Forms.CheckBox();
+            this.cc11 = new System.Windows.Forms.CheckBox();
+            this.cc32 = new System.Windows.Forms.CheckBox();
+            this.ccM3 = new System.Windows.Forms.CheckBox();
+            this.ccM1 = new System.Windows.Forms.CheckBox();
+            this.cc1M = new System.Windows.Forms.CheckBox();
+            this.cc21 = new System.Windows.Forms.CheckBox();
+            this.ccMM = new System.Windows.Forms.CheckBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -107,7 +132,7 @@ namespace CremeWorks
             // 
             this.txtTitle.Location = new System.Drawing.Point(66, 6);
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(361, 20);
+            this.txtTitle.Size = new System.Drawing.Size(397, 20);
             this.txtTitle.TabIndex = 4;
             this.txtTitle.Text = "Name";
             // 
@@ -115,7 +140,7 @@ namespace CremeWorks
             // 
             this.txtArtist.Location = new System.Drawing.Point(66, 32);
             this.txtArtist.Name = "txtArtist";
-            this.txtArtist.Size = new System.Drawing.Size(361, 20);
+            this.txtArtist.Size = new System.Drawing.Size(397, 20);
             this.txtArtist.TabIndex = 5;
             this.txtArtist.Text = "Unknown";
             // 
@@ -123,7 +148,7 @@ namespace CremeWorks
             // 
             this.txtNotes.Location = new System.Drawing.Point(66, 58);
             this.txtNotes.Name = "txtNotes";
-            this.txtNotes.Size = new System.Drawing.Size(361, 20);
+            this.txtNotes.Size = new System.Drawing.Size(397, 20);
             this.txtNotes.TabIndex = 6;
             // 
             // txtLyrics
@@ -132,12 +157,12 @@ namespace CremeWorks
             this.txtLyrics.Multiline = true;
             this.txtLyrics.Name = "txtLyrics";
             this.txtLyrics.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLyrics.Size = new System.Drawing.Size(361, 372);
+            this.txtLyrics.Size = new System.Drawing.Size(397, 372);
             this.txtLyrics.TabIndex = 7;
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(214, 526);
+            this.btnOk.Location = new System.Drawing.Point(360, 482);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(103, 38);
             this.btnOk.TabIndex = 8;
@@ -147,7 +172,7 @@ namespace CremeWorks
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(323, 526);
+            this.btnCancel.Location = new System.Drawing.Point(360, 526);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(103, 38);
             this.btnCancel.TabIndex = 9;
@@ -167,16 +192,16 @@ namespace CremeWorks
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(73, 470);
+            this.label6.Location = new System.Drawing.Point(63, 470);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(23, 13);
+            this.label6.Size = new System.Drawing.Size(49, 13);
             this.label6.TabIndex = 11;
-            this.label6.Text = "I/O";
+            this.label6.Text = "Note I/O";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(63, 486);
+            this.label7.Location = new System.Drawing.Point(71, 486);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(39, 13);
             this.label7.TabIndex = 12;
@@ -185,7 +210,7 @@ namespace CremeWorks
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(63, 506);
+            this.label8.Location = new System.Drawing.Point(71, 506);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(34, 13);
             this.label8.TabIndex = 13;
@@ -194,7 +219,7 @@ namespace CremeWorks
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(63, 526);
+            this.label9.Location = new System.Drawing.Point(71, 526);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(34, 13);
             this.label9.TabIndex = 14;
@@ -203,7 +228,7 @@ namespace CremeWorks
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(63, 546);
+            this.label10.Location = new System.Drawing.Point(71, 546);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(34, 13);
             this.label10.TabIndex = 15;
@@ -212,7 +237,7 @@ namespace CremeWorks
             // chkMM
             // 
             this.chkMM.AutoSize = true;
-            this.chkMM.Location = new System.Drawing.Point(103, 486);
+            this.chkMM.Location = new System.Drawing.Point(111, 486);
             this.chkMM.Name = "chkMM";
             this.chkMM.Size = new System.Drawing.Size(15, 14);
             this.chkMM.TabIndex = 16;
@@ -221,7 +246,7 @@ namespace CremeWorks
             // chk21
             // 
             this.chk21.AutoSize = true;
-            this.chk21.Location = new System.Drawing.Point(124, 526);
+            this.chk21.Location = new System.Drawing.Point(132, 526);
             this.chk21.Name = "chk21";
             this.chk21.Size = new System.Drawing.Size(15, 14);
             this.chk21.TabIndex = 17;
@@ -230,7 +255,7 @@ namespace CremeWorks
             // chk1M
             // 
             this.chk1M.AutoSize = true;
-            this.chk1M.Location = new System.Drawing.Point(103, 506);
+            this.chk1M.Location = new System.Drawing.Point(111, 506);
             this.chk1M.Name = "chk1M";
             this.chk1M.Size = new System.Drawing.Size(15, 14);
             this.chk1M.TabIndex = 18;
@@ -239,7 +264,7 @@ namespace CremeWorks
             // chkM1
             // 
             this.chkM1.AutoSize = true;
-            this.chkM1.Location = new System.Drawing.Point(124, 486);
+            this.chkM1.Location = new System.Drawing.Point(132, 486);
             this.chkM1.Name = "chkM1";
             this.chkM1.Size = new System.Drawing.Size(15, 14);
             this.chkM1.TabIndex = 19;
@@ -248,7 +273,7 @@ namespace CremeWorks
             // chkM3
             // 
             this.chkM3.AutoSize = true;
-            this.chkM3.Location = new System.Drawing.Point(166, 486);
+            this.chkM3.Location = new System.Drawing.Point(174, 486);
             this.chkM3.Name = "chkM3";
             this.chkM3.Size = new System.Drawing.Size(15, 14);
             this.chkM3.TabIndex = 20;
@@ -257,7 +282,7 @@ namespace CremeWorks
             // chk32
             // 
             this.chk32.AutoSize = true;
-            this.chk32.Location = new System.Drawing.Point(145, 546);
+            this.chk32.Location = new System.Drawing.Point(153, 546);
             this.chk32.Name = "chk32";
             this.chk32.Size = new System.Drawing.Size(15, 14);
             this.chk32.TabIndex = 21;
@@ -266,7 +291,7 @@ namespace CremeWorks
             // chk11
             // 
             this.chk11.AutoSize = true;
-            this.chk11.Location = new System.Drawing.Point(124, 506);
+            this.chk11.Location = new System.Drawing.Point(132, 506);
             this.chk11.Name = "chk11";
             this.chk11.Size = new System.Drawing.Size(15, 14);
             this.chk11.TabIndex = 22;
@@ -275,7 +300,7 @@ namespace CremeWorks
             // chk22
             // 
             this.chk22.AutoSize = true;
-            this.chk22.Location = new System.Drawing.Point(145, 526);
+            this.chk22.Location = new System.Drawing.Point(153, 526);
             this.chk22.Name = "chk22";
             this.chk22.Size = new System.Drawing.Size(15, 14);
             this.chk22.TabIndex = 23;
@@ -284,7 +309,7 @@ namespace CremeWorks
             // chk12
             // 
             this.chk12.AutoSize = true;
-            this.chk12.Location = new System.Drawing.Point(145, 506);
+            this.chk12.Location = new System.Drawing.Point(153, 506);
             this.chk12.Name = "chk12";
             this.chk12.Size = new System.Drawing.Size(15, 14);
             this.chk12.TabIndex = 24;
@@ -293,7 +318,7 @@ namespace CremeWorks
             // chk33
             // 
             this.chk33.AutoSize = true;
-            this.chk33.Location = new System.Drawing.Point(166, 546);
+            this.chk33.Location = new System.Drawing.Point(174, 546);
             this.chk33.Name = "chk33";
             this.chk33.Size = new System.Drawing.Size(15, 14);
             this.chk33.TabIndex = 25;
@@ -302,7 +327,7 @@ namespace CremeWorks
             // chkM2
             // 
             this.chkM2.AutoSize = true;
-            this.chkM2.Location = new System.Drawing.Point(145, 486);
+            this.chkM2.Location = new System.Drawing.Point(153, 486);
             this.chkM2.Name = "chkM2";
             this.chkM2.Size = new System.Drawing.Size(15, 14);
             this.chkM2.TabIndex = 26;
@@ -311,7 +336,7 @@ namespace CremeWorks
             // chk23
             // 
             this.chk23.AutoSize = true;
-            this.chk23.Location = new System.Drawing.Point(166, 526);
+            this.chk23.Location = new System.Drawing.Point(174, 526);
             this.chk23.Name = "chk23";
             this.chk23.Size = new System.Drawing.Size(15, 14);
             this.chk23.TabIndex = 27;
@@ -320,7 +345,7 @@ namespace CremeWorks
             // chk31
             // 
             this.chk31.AutoSize = true;
-            this.chk31.Location = new System.Drawing.Point(124, 546);
+            this.chk31.Location = new System.Drawing.Point(132, 546);
             this.chk31.Name = "chk31";
             this.chk31.Size = new System.Drawing.Size(15, 14);
             this.chk31.TabIndex = 28;
@@ -329,7 +354,7 @@ namespace CremeWorks
             // chk13
             // 
             this.chk13.AutoSize = true;
-            this.chk13.Location = new System.Drawing.Point(166, 506);
+            this.chk13.Location = new System.Drawing.Point(174, 506);
             this.chk13.Name = "chk13";
             this.chk13.Size = new System.Drawing.Size(15, 14);
             this.chk13.TabIndex = 29;
@@ -338,7 +363,7 @@ namespace CremeWorks
             // chk2M
             // 
             this.chk2M.AutoSize = true;
-            this.chk2M.Location = new System.Drawing.Point(103, 526);
+            this.chk2M.Location = new System.Drawing.Point(111, 526);
             this.chk2M.Name = "chk2M";
             this.chk2M.Size = new System.Drawing.Size(15, 14);
             this.chk2M.TabIndex = 30;
@@ -347,7 +372,7 @@ namespace CremeWorks
             // chk3M
             // 
             this.chk3M.AutoSize = true;
-            this.chk3M.Location = new System.Drawing.Point(103, 546);
+            this.chk3M.Location = new System.Drawing.Point(111, 546);
             this.chk3M.Name = "chk3M";
             this.chk3M.Size = new System.Drawing.Size(15, 14);
             this.chk3M.TabIndex = 31;
@@ -356,7 +381,7 @@ namespace CremeWorks
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(102, 470);
+            this.label11.Location = new System.Drawing.Point(110, 470);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(16, 13);
             this.label11.TabIndex = 32;
@@ -365,7 +390,7 @@ namespace CremeWorks
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(124, 470);
+            this.label12.Location = new System.Drawing.Point(132, 470);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(13, 13);
             this.label12.TabIndex = 33;
@@ -374,7 +399,7 @@ namespace CremeWorks
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(145, 470);
+            this.label13.Location = new System.Drawing.Point(153, 470);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(13, 13);
             this.label13.TabIndex = 34;
@@ -383,17 +408,267 @@ namespace CremeWorks
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(166, 470);
+            this.label14.Location = new System.Drawing.Point(174, 470);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(13, 13);
             this.label14.TabIndex = 35;
             this.label14.Text = "3";
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(316, 469);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(13, 13);
+            this.label15.TabIndex = 60;
+            this.label15.Text = "3";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(295, 469);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(13, 13);
+            this.label16.TabIndex = 59;
+            this.label16.Text = "2";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(274, 469);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(13, 13);
+            this.label17.TabIndex = 58;
+            this.label17.Text = "1";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(252, 469);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(16, 13);
+            this.label18.TabIndex = 57;
+            this.label18.Text = "M";
+            // 
+            // cc3M
+            // 
+            this.cc3M.AutoSize = true;
+            this.cc3M.Location = new System.Drawing.Point(253, 545);
+            this.cc3M.Name = "cc3M";
+            this.cc3M.Size = new System.Drawing.Size(15, 14);
+            this.cc3M.TabIndex = 56;
+            this.cc3M.UseVisualStyleBackColor = true;
+            // 
+            // cc2M
+            // 
+            this.cc2M.AutoSize = true;
+            this.cc2M.Location = new System.Drawing.Point(253, 525);
+            this.cc2M.Name = "cc2M";
+            this.cc2M.Size = new System.Drawing.Size(15, 14);
+            this.cc2M.TabIndex = 55;
+            this.cc2M.UseVisualStyleBackColor = true;
+            // 
+            // cc13
+            // 
+            this.cc13.AutoSize = true;
+            this.cc13.Location = new System.Drawing.Point(316, 505);
+            this.cc13.Name = "cc13";
+            this.cc13.Size = new System.Drawing.Size(15, 14);
+            this.cc13.TabIndex = 54;
+            this.cc13.UseVisualStyleBackColor = true;
+            // 
+            // cc31
+            // 
+            this.cc31.AutoSize = true;
+            this.cc31.Location = new System.Drawing.Point(274, 545);
+            this.cc31.Name = "cc31";
+            this.cc31.Size = new System.Drawing.Size(15, 14);
+            this.cc31.TabIndex = 53;
+            this.cc31.UseVisualStyleBackColor = true;
+            // 
+            // cc23
+            // 
+            this.cc23.AutoSize = true;
+            this.cc23.Location = new System.Drawing.Point(316, 525);
+            this.cc23.Name = "cc23";
+            this.cc23.Size = new System.Drawing.Size(15, 14);
+            this.cc23.TabIndex = 52;
+            this.cc23.UseVisualStyleBackColor = true;
+            // 
+            // ccM2
+            // 
+            this.ccM2.AutoSize = true;
+            this.ccM2.Location = new System.Drawing.Point(295, 485);
+            this.ccM2.Name = "ccM2";
+            this.ccM2.Size = new System.Drawing.Size(15, 14);
+            this.ccM2.TabIndex = 51;
+            this.ccM2.UseVisualStyleBackColor = true;
+            // 
+            // cc33
+            // 
+            this.cc33.AutoSize = true;
+            this.cc33.Location = new System.Drawing.Point(316, 545);
+            this.cc33.Name = "cc33";
+            this.cc33.Size = new System.Drawing.Size(15, 14);
+            this.cc33.TabIndex = 50;
+            this.cc33.UseVisualStyleBackColor = true;
+            // 
+            // cc12
+            // 
+            this.cc12.AutoSize = true;
+            this.cc12.Location = new System.Drawing.Point(295, 505);
+            this.cc12.Name = "cc12";
+            this.cc12.Size = new System.Drawing.Size(15, 14);
+            this.cc12.TabIndex = 49;
+            this.cc12.UseVisualStyleBackColor = true;
+            // 
+            // cc22
+            // 
+            this.cc22.AutoSize = true;
+            this.cc22.Location = new System.Drawing.Point(295, 525);
+            this.cc22.Name = "cc22";
+            this.cc22.Size = new System.Drawing.Size(15, 14);
+            this.cc22.TabIndex = 48;
+            this.cc22.UseVisualStyleBackColor = true;
+            // 
+            // cc11
+            // 
+            this.cc11.AutoSize = true;
+            this.cc11.Location = new System.Drawing.Point(274, 505);
+            this.cc11.Name = "cc11";
+            this.cc11.Size = new System.Drawing.Size(15, 14);
+            this.cc11.TabIndex = 47;
+            this.cc11.UseVisualStyleBackColor = true;
+            // 
+            // cc32
+            // 
+            this.cc32.AutoSize = true;
+            this.cc32.Location = new System.Drawing.Point(295, 545);
+            this.cc32.Name = "cc32";
+            this.cc32.Size = new System.Drawing.Size(15, 14);
+            this.cc32.TabIndex = 46;
+            this.cc32.UseVisualStyleBackColor = true;
+            // 
+            // ccM3
+            // 
+            this.ccM3.AutoSize = true;
+            this.ccM3.Location = new System.Drawing.Point(316, 485);
+            this.ccM3.Name = "ccM3";
+            this.ccM3.Size = new System.Drawing.Size(15, 14);
+            this.ccM3.TabIndex = 45;
+            this.ccM3.UseVisualStyleBackColor = true;
+            // 
+            // ccM1
+            // 
+            this.ccM1.AutoSize = true;
+            this.ccM1.Location = new System.Drawing.Point(274, 485);
+            this.ccM1.Name = "ccM1";
+            this.ccM1.Size = new System.Drawing.Size(15, 14);
+            this.ccM1.TabIndex = 44;
+            this.ccM1.UseVisualStyleBackColor = true;
+            // 
+            // cc1M
+            // 
+            this.cc1M.AutoSize = true;
+            this.cc1M.Location = new System.Drawing.Point(253, 505);
+            this.cc1M.Name = "cc1M";
+            this.cc1M.Size = new System.Drawing.Size(15, 14);
+            this.cc1M.TabIndex = 43;
+            this.cc1M.UseVisualStyleBackColor = true;
+            // 
+            // cc21
+            // 
+            this.cc21.AutoSize = true;
+            this.cc21.Location = new System.Drawing.Point(274, 525);
+            this.cc21.Name = "cc21";
+            this.cc21.Size = new System.Drawing.Size(15, 14);
+            this.cc21.TabIndex = 42;
+            this.cc21.UseVisualStyleBackColor = true;
+            // 
+            // ccMM
+            // 
+            this.ccMM.AutoSize = true;
+            this.ccMM.Location = new System.Drawing.Point(253, 485);
+            this.ccMM.Name = "ccMM";
+            this.ccMM.Size = new System.Drawing.Size(15, 14);
+            this.ccMM.TabIndex = 41;
+            this.ccMM.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(213, 545);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(34, 13);
+            this.label19.TabIndex = 40;
+            this.label19.Text = "Aux 3";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(213, 525);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(34, 13);
+            this.label20.TabIndex = 39;
+            this.label20.Text = "Aux 2";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(213, 505);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(34, 13);
+            this.label21.TabIndex = 38;
+            this.label21.Text = "Aux 1";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(213, 485);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(39, 13);
+            this.label22.TabIndex = 37;
+            this.label22.Text = "Master";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(213, 469);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(40, 13);
+            this.label23.TabIndex = 36;
+            this.label23.Text = "CC I/O";
+            // 
             // SongEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(437, 572);
+            this.ClientSize = new System.Drawing.Size(475, 572);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.cc3M);
+            this.Controls.Add(this.cc2M);
+            this.Controls.Add(this.cc13);
+            this.Controls.Add(this.cc31);
+            this.Controls.Add(this.cc23);
+            this.Controls.Add(this.ccM2);
+            this.Controls.Add(this.cc33);
+            this.Controls.Add(this.cc12);
+            this.Controls.Add(this.cc22);
+            this.Controls.Add(this.cc11);
+            this.Controls.Add(this.cc32);
+            this.Controls.Add(this.ccM3);
+            this.Controls.Add(this.ccM1);
+            this.Controls.Add(this.cc1M);
+            this.Controls.Add(this.cc21);
+            this.Controls.Add(this.ccMM);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.label23);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
@@ -479,5 +754,30 @@ namespace CremeWorks
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.CheckBox cc3M;
+        private System.Windows.Forms.CheckBox cc2M;
+        private System.Windows.Forms.CheckBox cc13;
+        private System.Windows.Forms.CheckBox cc31;
+        private System.Windows.Forms.CheckBox cc23;
+        private System.Windows.Forms.CheckBox ccM2;
+        private System.Windows.Forms.CheckBox cc33;
+        private System.Windows.Forms.CheckBox cc12;
+        private System.Windows.Forms.CheckBox cc22;
+        private System.Windows.Forms.CheckBox cc11;
+        private System.Windows.Forms.CheckBox cc32;
+        private System.Windows.Forms.CheckBox ccM3;
+        private System.Windows.Forms.CheckBox ccM1;
+        private System.Windows.Forms.CheckBox cc1M;
+        private System.Windows.Forms.CheckBox cc21;
+        private System.Windows.Forms.CheckBox ccMM;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label23;
     }
 }

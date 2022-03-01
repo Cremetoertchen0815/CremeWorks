@@ -14,7 +14,8 @@ namespace CremeWorks
     {
         private Concert _c;
         private Song _s;
-        private CheckBox[][] _mapMatrix;
+        private CheckBox[][] _mapMatrixA;
+        private CheckBox[][] _mapMatrixB;
 
         public SongEditor(Concert c, Song s)
         {
@@ -25,8 +26,10 @@ namespace CremeWorks
             _c.MidiMatrix.Unregister();
 
             //Map matrix
-            _mapMatrix = new CheckBox[][] { new CheckBox[] {chkMM, chkM1, chkM2, chkM3 }, new CheckBox[] { chk1M, chk11, chk12, chk13 },
+            _mapMatrixA = new CheckBox[][] { new CheckBox[] {chkMM, chkM1, chkM2, chkM3 }, new CheckBox[] { chk1M, chk11, chk12, chk13 },
                                             new CheckBox[] { chk2M, chk21, chk22, chk23 }, new CheckBox[] { chk3M, chk31, chk32, chk33 } };
+            _mapMatrixB = new CheckBox[][] { new CheckBox[] {ccMM, ccM1, ccM2, ccM3 }, new CheckBox[] { cc1M, cc11, cc12, cc13 },
+                                            new CheckBox[] { cc2M, cc21, cc22, cc23 }, new CheckBox[] { cc3M, cc31, cc32, cc33 } };
 
             //Load data
             txtTitle.Text = s.Title;
@@ -35,7 +38,10 @@ namespace CremeWorks
             txtLyrics.Text = s.Lyrics;
             for (int x = 0; x < 4; x++)
                 for (int y = 0; y < 4; y++)
-                    _mapMatrix[x][y].Checked = s.InstrumentMap[x][y];
+                {
+                    _mapMatrixA[x][y].Checked = s.NoteMap[x][y];
+                    _mapMatrixB[x][y].Checked = s.CCMap[x][y];
+                }
         }
 
         private void CloseOK(object sender, EventArgs e)
@@ -58,7 +64,10 @@ namespace CremeWorks
             _s.Lyrics = txtLyrics.Text;
             for (int x = 0; x < 4; x++)
                 for (int y = 0; y < 4; y++)
-                    _s.InstrumentMap[x][y] = _mapMatrix[x][y].Checked;
+                {
+                    _s.NoteMap[x][y] = _mapMatrixA[x][y].Checked;
+                    _s.CCMap[x][y] = _mapMatrixB[x][y].Checked;
+                }
         }
     }
 }
