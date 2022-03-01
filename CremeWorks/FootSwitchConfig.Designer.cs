@@ -127,7 +127,8 @@ namespace CremeWorks
             this.type1.FormattingEnabled = true;
             this.type1.Items.AddRange(new object[] {
             "Note On",
-            "Control Change"});
+            "Control Change",
+            "Program Change"});
             this.type1.Location = new System.Drawing.Point(145, 41);
             this.type1.Name = "type1";
             this.type1.Size = new System.Drawing.Size(87, 21);
@@ -230,7 +231,8 @@ namespace CremeWorks
             this.type2.FormattingEnabled = true;
             this.type2.Items.AddRange(new object[] {
             "Note On",
-            "Control Change"});
+            "Control Change",
+            "Program Change"});
             this.type2.Location = new System.Drawing.Point(145, 67);
             this.type2.Name = "type2";
             this.type2.Size = new System.Drawing.Size(87, 21);
@@ -288,7 +290,8 @@ namespace CremeWorks
             this.type3.FormattingEnabled = true;
             this.type3.Items.AddRange(new object[] {
             "Note On",
-            "Control Change"});
+            "Control Change",
+            "Program Change"});
             this.type3.Location = new System.Drawing.Point(145, 93);
             this.type3.Name = "type3";
             this.type3.Size = new System.Drawing.Size(87, 21);
@@ -299,7 +302,7 @@ namespace CremeWorks
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 96);
+            this.label4.Location = new System.Drawing.Point(12, 121);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(83, 13);
             this.label4.TabIndex = 13;
@@ -346,7 +349,8 @@ namespace CremeWorks
             this.type4.FormattingEnabled = true;
             this.type4.Items.AddRange(new object[] {
             "Note On",
-            "Control Change"});
+            "Control Change",
+            "Program Change"});
             this.type4.Location = new System.Drawing.Point(145, 119);
             this.type4.Name = "type4";
             this.type4.Size = new System.Drawing.Size(87, 21);
@@ -357,7 +361,7 @@ namespace CremeWorks
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 122);
+            this.label7.Location = new System.Drawing.Point(12, 147);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(83, 13);
             this.label7.TabIndex = 17;
@@ -404,7 +408,8 @@ namespace CremeWorks
             this.type5.FormattingEnabled = true;
             this.type5.Items.AddRange(new object[] {
             "Note On",
-            "Control Change"});
+            "Control Change",
+            "Program Change"});
             this.type5.Location = new System.Drawing.Point(145, 145);
             this.type5.Name = "type5";
             this.type5.Size = new System.Drawing.Size(87, 21);
@@ -415,7 +420,7 @@ namespace CremeWorks
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 148);
+            this.label8.Location = new System.Drawing.Point(12, 173);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(83, 13);
             this.label8.TabIndex = 21;
@@ -462,7 +467,8 @@ namespace CremeWorks
             this.type6.FormattingEnabled = true;
             this.type6.Items.AddRange(new object[] {
             "Note On",
-            "Control Change"});
+            "Control Change",
+            "Program Change"});
             this.type6.Location = new System.Drawing.Point(145, 171);
             this.type6.Name = "type6";
             this.type6.Size = new System.Drawing.Size(87, 21);
@@ -473,7 +479,7 @@ namespace CremeWorks
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 174);
+            this.label9.Location = new System.Drawing.Point(12, 199);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(84, 13);
             this.label9.TabIndex = 25;
@@ -520,7 +526,8 @@ namespace CremeWorks
             this.type7.FormattingEnabled = true;
             this.type7.Items.AddRange(new object[] {
             "Note On",
-            "Control Change"});
+            "Control Change",
+            "Program Change"});
             this.type7.Location = new System.Drawing.Point(145, 197);
             this.type7.Name = "type7";
             this.type7.Size = new System.Drawing.Size(87, 21);
@@ -531,7 +538,7 @@ namespace CremeWorks
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 200);
+            this.label10.Location = new System.Drawing.Point(12, 225);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(83, 13);
             this.label10.TabIndex = 29;
@@ -578,7 +585,8 @@ namespace CremeWorks
             this.type10.FormattingEnabled = true;
             this.type10.Items.AddRange(new object[] {
             "Note On",
-            "Control Change"});
+            "Control Change",
+            "Program Change"});
             this.type10.Location = new System.Drawing.Point(145, 276);
             this.type10.Name = "type10";
             this.type10.Size = new System.Drawing.Size(87, 21);
@@ -589,11 +597,11 @@ namespace CremeWorks
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 279);
+            this.label11.Location = new System.Drawing.Point(12, 97);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(84, 13);
+            this.label11.Size = new System.Drawing.Size(66, 13);
             this.label11.TabIndex = 41;
-            this.label11.Text = "Quick Access H";
+            this.label11.Text = "All Notes Off";
             // 
             // valB9
             // 
@@ -636,7 +644,8 @@ namespace CremeWorks
             this.type9.FormattingEnabled = true;
             this.type9.Items.AddRange(new object[] {
             "Note On",
-            "Control Change"});
+            "Control Change",
+            "Program Change"});
             this.type9.Location = new System.Drawing.Point(145, 250);
             this.type9.Name = "type9";
             this.type9.Size = new System.Drawing.Size(87, 21);
@@ -647,7 +656,7 @@ namespace CremeWorks
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(12, 253);
+            this.label12.Location = new System.Drawing.Point(12, 278);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(84, 13);
             this.label12.TabIndex = 37;
@@ -694,7 +703,8 @@ namespace CremeWorks
             this.type8.FormattingEnabled = true;
             this.type8.Items.AddRange(new object[] {
             "Note On",
-            "Control Change"});
+            "Control Change",
+            "Program Change"});
             this.type8.Location = new System.Drawing.Point(145, 224);
             this.type8.Name = "type8";
             this.type8.Size = new System.Drawing.Size(87, 21);
@@ -705,7 +715,7 @@ namespace CremeWorks
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(12, 227);
+            this.label13.Location = new System.Drawing.Point(12, 252);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(82, 13);
             this.label13.TabIndex = 33;
@@ -825,7 +835,7 @@ namespace CremeWorks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(451, 304);
+            this.ClientSize = new System.Drawing.Size(451, 393);
             this.Controls.Add(this.det10);
             this.Controls.Add(this.det9);
             this.Controls.Add(this.det8);

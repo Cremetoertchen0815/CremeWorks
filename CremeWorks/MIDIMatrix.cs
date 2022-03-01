@@ -51,7 +51,8 @@ namespace CremeWorks
                     {
                         var ev = (NoteOnEvent)e.Event;
                         if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, ev.Velocity > 0);
-                    } else if (e.Event.EventType == MidiEventType.NoteOff && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
+                    }
+                    else if (e.Event.EventType == MidiEventType.NoteOff && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
                     {
                         var ev = (NoteOffEvent)e.Event;
                         if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, false);
@@ -60,6 +61,11 @@ namespace CremeWorks
                     {
                         var ev = (ControlChangeEvent)e.Event;
                         if (ev.ControlNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, ev.ControlValue >= 64);
+                    }
+                    else if (_c.FootSwitchConfig[i].Item1 == MidiEventType.ProgramChange)
+                    {
+                        var ev = (ProgramChangeEvent)e.Event;
+                    if (ev.ProgramNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3) { ExecuteAction(i, true); ExecuteAction(i, false); }
                     }
 
             }

@@ -240,7 +240,7 @@ namespace CremeWorks
             this.button4.Size = new System.Drawing.Size(100, 100);
             this.button4.TabIndex = 8;
             this.button4.Tag = "0";
-            this.button4.Text = "Quick Access A";
+            this.button4.Text = "All Notes Off";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
             this.button4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonUp);
@@ -254,7 +254,7 @@ namespace CremeWorks
             this.button5.Size = new System.Drawing.Size(100, 100);
             this.button5.TabIndex = 9;
             this.button5.Tag = "1";
-            this.button5.Text = "Quick AccessB";
+            this.button5.Text = "Quick Access A";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
             this.button5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonUp);
@@ -268,7 +268,7 @@ namespace CremeWorks
             this.button6.Size = new System.Drawing.Size(100, 100);
             this.button6.TabIndex = 11;
             this.button6.Tag = "3";
-            this.button6.Text = "Quick Access D";
+            this.button6.Text = "Quick Access C";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
             this.button6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonUp);
@@ -282,7 +282,7 @@ namespace CremeWorks
             this.button7.Size = new System.Drawing.Size(100, 100);
             this.button7.TabIndex = 10;
             this.button7.Tag = "2";
-            this.button7.Text = "Quick Access C";
+            this.button7.Text = "Quick Access B";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
             this.button7.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonUp);
@@ -296,7 +296,7 @@ namespace CremeWorks
             this.button8.Size = new System.Drawing.Size(100, 100);
             this.button8.TabIndex = 13;
             this.button8.Tag = "5";
-            this.button8.Text = "Quick Access F";
+            this.button8.Text = "Quick Access E";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
             this.button8.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonUp);
@@ -310,7 +310,7 @@ namespace CremeWorks
             this.button9.Size = new System.Drawing.Size(100, 100);
             this.button9.TabIndex = 12;
             this.button9.Tag = "4";
-            this.button9.Text = "Quick Access E";
+            this.button9.Text = "Quick Access D";
             this.button9.UseVisualStyleBackColor = true;
             this.button9.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
             this.button9.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonUp);
@@ -324,7 +324,7 @@ namespace CremeWorks
             this.button10.Size = new System.Drawing.Size(100, 100);
             this.button10.TabIndex = 15;
             this.button10.Tag = "7";
-            this.button10.Text = "Quick Access H";
+            this.button10.Text = "Quick Access G";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
             this.button10.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonUp);
@@ -338,7 +338,7 @@ namespace CremeWorks
             this.button11.Size = new System.Drawing.Size(100, 100);
             this.button11.TabIndex = 14;
             this.button11.Tag = "6";
-            this.button11.Text = "Quick Access G";
+            this.button11.Text = "Quick Access F";
             this.button11.UseVisualStyleBackColor = true;
             this.button11.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
             this.button11.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonUp);

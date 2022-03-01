@@ -75,6 +75,9 @@ namespace CremeWorks
                 case 1:
                     if (enable && playList.SelectedIndex < playList.Items.Count - 1) playList.SelectedIndex++;
                     break;
+                case 2:
+                    if (enable) foreach (var item in _c.Devices) if (item.Output != null) item.Output.TurnAllNotesOff();
+                    break;
                 default:
                     break;
             }
