@@ -11,7 +11,8 @@ namespace CremeWorks
         public MIDIMatrix(Concert c) => _c = c;
         private bool _reg = false;
 
-        public bool[][] KeyMap = { new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false } };
+        public bool[][] NoteMap = { new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false } };
+        public bool[][] CCMap = { new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false } };
 
         public void Register()
         {
@@ -43,52 +44,58 @@ namespace CremeWorks
         {
             for (int i = 0; i < _c.FootSwitchConfig.Length; i++)
             {
-                //Check if event matches mask
-                if (e.Event.EventType == _c.FootSwitchConfig[i].Item1)
-                {
-                    if (e.Event.EventType == MidiEventType.NoteOn)
+
+                    if (e.Event.EventType == MidiEventType.NoteOn && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
                     {
                         var ev = (NoteOnEvent)e.Event;
-                        if (ev.NoteNumber != _c.FootSwitchConfig[i].Item2 || ev.Channel != _c.FootSwitchConfig[i].Item3) continue;
-                    } else
+                        if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 || ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, true);
+                    } else if (e.Event.EventType == MidiEventType.NoteOff && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
+                    {
+                        var ev = (NoteOffEvent)e.Event;
+                        if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 || ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, false);
+                    }
+                    else if(_c.FootSwitchConfig[i].Item1 == MidiEventType.ControlChange)
                     {
                         var ev = (ControlChangeEvent)e.Event;
-                        if (ev.ControlNumber != _c.FootSwitchConfig[i].Item2 || ev.Channel != _c.FootSwitchConfig[i].Item3) continue;
+                        if (ev.ControlNumber == _c.FootSwitchConfig[i].Item2 || ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, ev.ControlValue >= 64);
                     }
-                }
 
-                //Execute action
-                switch (i)
-                {
-                    default:
-                        break;
-                }
             }
         }
+
+        private bool[] _actionActive = { false, false, false, false, false, false, false, false, false, false };
+        private void ExecuteAction(int nr, bool enable)
+        {
+            //Check for double triggers
+            if (_actionActive[nr] == enable) return;
+            _actionActive[nr] = enable;
+
+            //Execute actions
+            switch (nr)
+            {
+                default:
+                    break;
+            }
+        }
+
         private void ListenLightController(object sender, MidiEventReceivedEventArgs e)
         {
             
         }
 
-        private void ListenMaster(object sender, MidiEventReceivedEventArgs e)
+        private void ListenMaster(object sender, MidiEventReceivedEventArgs e) => SendInstrData(0, e.Event);
+        private void ListenAux1(object sender, MidiEventReceivedEventArgs e) => SendInstrData(1, e.Event);
+        private void ListenAux2(object sender, MidiEventReceivedEventArgs e) => SendInstrData(2, e.Event);
+        private void ListenAux3(object sender, MidiEventReceivedEventArgs e) => SendInstrData(3, e.Event);
+        private void SendInstrData(int sender, MidiEvent e)
         {
-            for (int i = 0; i < 4; i++)
-                if (KeyMap[0][i]) _c.Devices[2 + i].Output?.SendEvent(e.Event);
-        }
-        private void ListenAux1(object sender, MidiEventReceivedEventArgs e)
-        {
-            for (int i = 0; i < 4; i++)
-                if (KeyMap[1][i]) _c.Devices[2 + i].Output?.SendEvent(e.Event);
-        }
-        private void ListenAux2(object sender, MidiEventReceivedEventArgs e)
-        {
-            for (int i = 0; i < 4; i++)
-                if (KeyMap[2][i]) _c.Devices[2 + i].Output?.SendEvent(e.Event);
-        }
-        private void ListenAux3(object sender, MidiEventReceivedEventArgs e)
-        {
-            for (int i = 0; i < 4; i++)
-                if (KeyMap[3][i]) _c.Devices[2 + i].Output?.SendEvent(e.Event);
+            if (e.EventType == MidiEventType.NoteOn || e.EventType == MidiEventType.NoteOff)
+            {
+                for (int i = 0; i < 4; i++) if (NoteMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+            } else if (e.EventType == MidiEventType.ControlChange)
+            {
+                for (int i = 0; i < 4; i++) if (CCMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+            }
         }
     }
 

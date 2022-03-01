@@ -58,7 +58,23 @@ namespace CremeWorks
 
         private void ConfigSongMIDI()
         {
-            _c.MidiMatrix.KeyMap = _s.NoteMap;
+            _c.MidiMatrix.NoteMap = _s.NoteMap;
+            _c.MidiMatrix.CCMap = _s.CCMap;
+        }
+
+        private void ExecuteAction(int nr, bool enable)
+        {
+            switch (nr)
+            {
+                case 0:
+                    if (enable && playList.SelectedIndex > 0) playList.SelectedIndex--;
+                    break;
+                case 1:
+                    if (enable && playList.SelectedIndex < playList.Items.Count - 1) playList.SelectedIndex++;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void AddNewSong(object sender, EventArgs e)
@@ -82,5 +98,8 @@ namespace CremeWorks
             _s = playList.SelectedIndex >= 0 ? _c.Playlist[playList.SelectedIndex] : null;
             UpdateSong();
         }
+
+        private void ShortcutButtonDown(object sender, MouseEventArgs e) => ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, true);
+        private void ShortcutButtonUp(object sender, MouseEventArgs e) => ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, false);
     }
 }
