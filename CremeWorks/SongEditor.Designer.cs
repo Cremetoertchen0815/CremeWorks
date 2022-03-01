@@ -711,8 +711,10 @@ namespace CremeWorks
             this.acbM.Name = "acbM";
             this.acbM.Size = new System.Drawing.Size(31, 23);
             this.acbM.TabIndex = 66;
+            this.acbM.Tag = "0";
             this.acbM.Text = "...";
             this.acbM.UseVisualStyleBackColor = true;
+            this.acbM.Click += new System.EventHandler(this.SysExEdit);
             // 
             // acb1
             // 
@@ -720,8 +722,10 @@ namespace CremeWorks
             this.acb1.Name = "acb1";
             this.acb1.Size = new System.Drawing.Size(31, 23);
             this.acb1.TabIndex = 67;
+            this.acb1.Tag = "1";
             this.acb1.Text = "...";
             this.acb1.UseVisualStyleBackColor = true;
+            this.acb1.Click += new System.EventHandler(this.SysExEdit);
             // 
             // acb2
             // 
@@ -729,8 +733,10 @@ namespace CremeWorks
             this.acb2.Name = "acb2";
             this.acb2.Size = new System.Drawing.Size(31, 23);
             this.acb2.TabIndex = 68;
+            this.acb2.Tag = "2";
             this.acb2.Text = "...";
             this.acb2.UseVisualStyleBackColor = true;
+            this.acb2.Click += new System.EventHandler(this.SysExEdit);
             // 
             // acb3
             // 
@@ -738,8 +744,10 @@ namespace CremeWorks
             this.acb3.Name = "acb3";
             this.acb3.Size = new System.Drawing.Size(31, 23);
             this.acb3.TabIndex = 69;
+            this.acb3.Tag = "3";
             this.acb3.Text = "...";
             this.acb3.UseVisualStyleBackColor = true;
+            this.acb3.Click += new System.EventHandler(this.SysExEdit);
             // 
             // button5
             // 

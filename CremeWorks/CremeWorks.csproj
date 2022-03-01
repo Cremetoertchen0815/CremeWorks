@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RefaceDataStructs.cs" />
     <Compile Include="Song.cs" />
     <Compile Include="SongEditor.cs">
       <SubType>Form</SubType>
@@ -91,6 +92,9 @@
     </Compile>
     <Compile Include="StructMarshal.cs" />
     <Compile Include="SysExMan.cs" />
+    <EmbeddedResource Include="ACEditor.resx">
+      <DependentUpon>ACEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FootSwitchConfig.resx">
       <DependentUpon>FootSwitchConfig.cs</DependentUpon>
     </EmbeddedResource>

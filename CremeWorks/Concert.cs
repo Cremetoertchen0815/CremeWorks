@@ -69,6 +69,9 @@ namespace CremeWorks
     {
         public InputDevice Input;
         public OutputDevice Output;
+        public DeviceType Type = DeviceType.Undefined;
+        public byte[] SystemDump;
+        public byte[] VoiceDump;
         public string Name;
     }
 }

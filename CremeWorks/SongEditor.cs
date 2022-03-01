@@ -69,5 +69,7 @@ namespace CremeWorks
                     _s.CCMap[x][y] = _mapMatrixB[x][y].Checked;
                 }
         }
+
+        private void SysExEdit(object sender, EventArgs e) => new ACEditor(_c, _c.Devices[2 + int.Parse((string)((Button)sender).Tag)]).ShowDialog();
     }
 }
