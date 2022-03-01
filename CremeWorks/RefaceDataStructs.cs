@@ -6,24 +6,24 @@ namespace CremeWorks.Reface
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct RefaceSystemData
     {
-        byte MIDIChannelTransmit;
-        byte MIDIChannelReceive;
-        int MasterTune;
-        byte LocalControl;
-        byte MasterTranspose;
-        short Tempo;
-        byte LCDContrast;
-        byte SustainPedalSelect;
-        byte AutoPwrOff;
-        byte SpkOut;
-        byte MIDICtrl;
-        byte GlobalPBRange;
-        int Reserved2;
-        byte FootSwitchMode;
-        byte Reserved3;
-        short Reserved4;
-        int Reserved5;
-        int Reserved6;
+        public byte MIDIChannelTransmit;
+        public byte MIDIChannelReceive;
+        public int MasterTune;
+        public byte LocalControl;
+        public byte MasterTranspose;
+        public short Tempo;
+        public byte LCDContrast;
+        public byte SustainPedalSelect;
+        public byte AutoPwrOff;
+        public byte SpkOut;
+        public byte MIDICtrl;
+        public byte GlobalPBRange;
+        public int Reserved2;
+        public byte FootSwitchMode;
+        public byte Reserved3;
+        public short Reserved4;
+        public int Reserved5;
+        public int Reserved6;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

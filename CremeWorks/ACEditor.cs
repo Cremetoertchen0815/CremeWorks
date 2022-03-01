@@ -29,6 +29,8 @@ namespace CremeWorks
             InitializeComponent();
             _c = c;
             _d = d;
+            CheckForIllegalCrossThreadCalls = false;
+            typeSelector.SelectedIndex = (int)_d.Type;
             UpdateControls();
 
             //Set up MIDI shit
@@ -41,7 +43,24 @@ namespace CremeWorks
 
         private void UpdateControls()
         {
-            typeSelector.SelectedIndex = (int)_d.Type;
+            if (_d.Type != DeviceType.Undefined)
+            {
+                deviceBox.Visible = true;
+                numericUpDown1.Value = _datSys.MIDIChannelTransmit == 0x7F ? 0 : _datSys.MIDIChannelTransmit + 1;
+                numericUpDown2.Value = _datSys.MIDIChannelTransmit == 0x10 ? 0 : _datSys.MIDIChannelTransmit + 1;
+                numericUpDown3.Value = _datSys.MasterTune;
+                comboBox1.SelectedIndex = _datSys.LocalControl;
+                numericUpDown4.Value = Math.Max(_datSys.MasterTranspose - 0x40, -12);
+                numericUpDown5.Value = _datSys.Tempo;
+                numericUpDown7.Value = _datSys.LCDContrast;
+                comboBox2.SelectedIndex = _datSys.SustainPedalSelect;
+                comboBox3.SelectedIndex = _datSys.AutoPwrOff;
+                comboBox4.SelectedIndex = _datSys.SpkOut;
+
+                comboBox5.SelectedIndex = _datSys.MIDICtrl;
+                numericUpDown6.Value = Math.Max(_datSys.GlobalPBRange - 0x40, -24);
+                comboBox6.SelectedIndex = _datSys.FootSwitchMode;
+            }
         }
 
         private void ListenForSysEx(object sender, MidiEventReceivedEventArgs e)
@@ -53,6 +72,7 @@ namespace CremeWorks
             {
                 //System settings bulk received
                 _datSys = StructMarshal<RefaceSystemData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
+                UpdateControls();
             } else if (ev.Data.Length == 28 && _d.Type == DeviceType.RefaceCP)
             {
                 //CP voice data bulk received
@@ -68,7 +88,11 @@ namespace CremeWorks
         }
 
         private void button4_Click(object sender, EventArgs e) => SendSystemBulkdumpRequest(_d.Output, _d.Type);
-        private void typeSelector_SelectedIndexChanged(object sender, EventArgs e) => _d.Type = (DeviceType)typeSelector.SelectedIndex;
+        private void typeSelector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _d.Type = (DeviceType)typeSelector.SelectedIndex;
+            UpdateControls();
+        }
 
         private void button1_Click(object sender, EventArgs e) => SendVoiceBulkdumpRequest(_d.Output, _d.Type);
     }
