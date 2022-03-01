@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace CremeWorks
+namespace CremeWorks.Reface
 {
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
