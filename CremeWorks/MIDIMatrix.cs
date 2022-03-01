@@ -11,6 +11,7 @@ namespace CremeWorks
         public MIDIMatrix(Concert c) => _c = c;
         private bool _reg = false;
 
+        public Action<int, bool> ActionExecute = (a, b) => { return; };
         public bool[][] NoteMap = { new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false } };
         public bool[][] CCMap = { new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false } };
 
@@ -48,16 +49,16 @@ namespace CremeWorks
                     if (e.Event.EventType == MidiEventType.NoteOn && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
                     {
                         var ev = (NoteOnEvent)e.Event;
-                        if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 || ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, true);
+                        if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, ev.Velocity > 0);
                     } else if (e.Event.EventType == MidiEventType.NoteOff && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
                     {
                         var ev = (NoteOffEvent)e.Event;
-                        if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 || ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, false);
+                        if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, false);
                     }
                     else if(_c.FootSwitchConfig[i].Item1 == MidiEventType.ControlChange)
                     {
                         var ev = (ControlChangeEvent)e.Event;
-                        if (ev.ControlNumber == _c.FootSwitchConfig[i].Item2 || ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, ev.ControlValue >= 64);
+                        if (ev.ControlNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, ev.ControlValue >= 64);
                     }
 
             }
@@ -71,11 +72,7 @@ namespace CremeWorks
             _actionActive[nr] = enable;
 
             //Execute actions
-            switch (nr)
-            {
-                default:
-                    break;
-            }
+            ActionExecute(nr, enable);
         }
 
         private void ListenLightController(object sender, MidiEventReceivedEventArgs e)

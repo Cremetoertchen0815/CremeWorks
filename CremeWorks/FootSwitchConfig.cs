@@ -77,13 +77,13 @@ namespace CremeWorks
                 var ev = (NoteOnEvent)e.Event;
                 controls.Item1.SelectedIndex = 0;
                 controls.Item2.Value = ev.NoteNumber;
-                controls.Item3.Value = ev.Velocity;
+                controls.Item3.Value = ev.Channel + 1;
             } else if (e.Event.EventType == MidiEventType.ControlChange)
             {
                 var ev = (ControlChangeEvent)e.Event;
                 controls.Item1.SelectedIndex = 1;
                 controls.Item2.Value = ev.ControlNumber;
-                controls.Item3.Value = ev.ControlValue;
+                controls.Item3.Value = ev.Channel;
             }
             controls.Item4.Text = "Detect";
         }
@@ -94,7 +94,7 @@ namespace CremeWorks
             for (int i = 0; i < 10; i++)
             {
                 var cnt = _cont[i];
-                _c.FootSwitchConfig[i] = (cnt.Item1.SelectedIndex == 1 ? MidiEventType.ControlChange : MidiEventType.NoteOn, (short)cnt.Item2.Value, (short)cnt.Item3.Value);
+                _c.FootSwitchConfig[i] = (cnt.Item1.SelectedIndex == 1 ? MidiEventType.ControlChange : MidiEventType.NoteOn, (short)cnt.Item2.Value, (byte)(cnt.Item3.Value - 1));
             }
 
             _c.MidiMatrix.Register();

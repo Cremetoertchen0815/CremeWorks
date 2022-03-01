@@ -12,7 +12,7 @@ namespace CremeWorks
     {
         public string FilePath;
         public MIDIDevice[] Devices;
-        public (MidiEventType, short, short)[] FootSwitchConfig;
+        public (MidiEventType, short, byte)[] FootSwitchConfig;
         public object LightingConfig;
         public List<Song> Playlist;
 
@@ -59,7 +59,7 @@ namespace CremeWorks
         {
             var lol = new Concert();
             lol.Devices = new MIDIDevice[] { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() };
-            lol.FootSwitchConfig = new (MidiEventType, short, short)[] { (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0) };
+            lol.FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) };
             lol.Playlist = new List<Song>();
             return lol;
         }

@@ -30,6 +30,7 @@ namespace CremeWorks
             {
                 _c.Connect();
                 _c.MidiMatrix.Register();
+                _c.MidiMatrix.ActionExecute = ExecuteAction;
             }
             else
                 _c.Disconnect();

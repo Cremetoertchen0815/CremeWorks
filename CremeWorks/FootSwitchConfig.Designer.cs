@@ -153,9 +153,9 @@ namespace CremeWorks
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(311, 9);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(105, 13);
+            this.label5.Size = new System.Drawing.Size(46, 13);
             this.label5.TabIndex = 6;
-            this.label5.Text = "Value 2(-1 for ignore)";
+            this.label5.Text = "Channel";
             // 
             // label6
             // 
@@ -170,7 +170,7 @@ namespace CremeWorks
             // 
             this.valB1.Location = new System.Drawing.Point(314, 42);
             this.valB1.Maximum = new decimal(new int[] {
-            127,
+            16,
             0,
             0,
             0});
@@ -178,17 +178,22 @@ namespace CremeWorks
             1,
             0,
             0,
-            -2147483648});
+            0});
             this.valB1.Name = "valB1";
             this.valB1.Size = new System.Drawing.Size(70, 20);
             this.valB1.TabIndex = 8;
             this.valB1.Tag = "0";
+            this.valB1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // valB2
             // 
             this.valB2.Location = new System.Drawing.Point(314, 68);
             this.valB2.Maximum = new decimal(new int[] {
-            127,
+            16,
             0,
             0,
             0});
@@ -196,11 +201,16 @@ namespace CremeWorks
             1,
             0,
             0,
-            -2147483648});
+            0});
             this.valB2.Name = "valB2";
             this.valB2.Size = new System.Drawing.Size(70, 20);
             this.valB2.TabIndex = 12;
             this.valB2.Tag = "1";
+            this.valB2.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // valA2
             // 
@@ -241,7 +251,7 @@ namespace CremeWorks
             // 
             this.valB3.Location = new System.Drawing.Point(314, 93);
             this.valB3.Maximum = new decimal(new int[] {
-            127,
+            16,
             0,
             0,
             0});
@@ -249,11 +259,16 @@ namespace CremeWorks
             1,
             0,
             0,
-            -2147483648});
+            0});
             this.valB3.Name = "valB3";
             this.valB3.Size = new System.Drawing.Size(70, 20);
             this.valB3.TabIndex = 16;
             this.valB3.Tag = "2";
+            this.valB3.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // valA3
             // 
@@ -294,7 +309,7 @@ namespace CremeWorks
             // 
             this.valB4.Location = new System.Drawing.Point(314, 119);
             this.valB4.Maximum = new decimal(new int[] {
-            127,
+            16,
             0,
             0,
             0});
@@ -302,11 +317,16 @@ namespace CremeWorks
             1,
             0,
             0,
-            -2147483648});
+            0});
             this.valB4.Name = "valB4";
             this.valB4.Size = new System.Drawing.Size(70, 20);
             this.valB4.TabIndex = 20;
             this.valB4.Tag = "3";
+            this.valB4.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // valA4
             // 
@@ -347,7 +367,7 @@ namespace CremeWorks
             // 
             this.valB5.Location = new System.Drawing.Point(314, 146);
             this.valB5.Maximum = new decimal(new int[] {
-            127,
+            16,
             0,
             0,
             0});
@@ -355,11 +375,16 @@ namespace CremeWorks
             1,
             0,
             0,
-            -2147483648});
+            0});
             this.valB5.Name = "valB5";
             this.valB5.Size = new System.Drawing.Size(70, 20);
             this.valB5.TabIndex = 24;
             this.valB5.Tag = "4";
+            this.valB5.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // valA5
             // 
@@ -400,7 +425,7 @@ namespace CremeWorks
             // 
             this.valB6.Location = new System.Drawing.Point(314, 172);
             this.valB6.Maximum = new decimal(new int[] {
-            127,
+            16,
             0,
             0,
             0});
@@ -408,11 +433,16 @@ namespace CremeWorks
             1,
             0,
             0,
-            -2147483648});
+            0});
             this.valB6.Name = "valB6";
             this.valB6.Size = new System.Drawing.Size(70, 20);
             this.valB6.TabIndex = 28;
             this.valB6.Tag = "5";
+            this.valB6.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // valA6
             // 
@@ -453,7 +483,7 @@ namespace CremeWorks
             // 
             this.valB7.Location = new System.Drawing.Point(314, 198);
             this.valB7.Maximum = new decimal(new int[] {
-            127,
+            16,
             0,
             0,
             0});
@@ -461,11 +491,16 @@ namespace CremeWorks
             1,
             0,
             0,
-            -2147483648});
+            0});
             this.valB7.Name = "valB7";
             this.valB7.Size = new System.Drawing.Size(70, 20);
             this.valB7.TabIndex = 32;
             this.valB7.Tag = "6";
+            this.valB7.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // valA7
             // 
@@ -506,7 +541,7 @@ namespace CremeWorks
             // 
             this.valB10.Location = new System.Drawing.Point(314, 276);
             this.valB10.Maximum = new decimal(new int[] {
-            127,
+            16,
             0,
             0,
             0});
@@ -514,11 +549,16 @@ namespace CremeWorks
             1,
             0,
             0,
-            -2147483648});
+            0});
             this.valB10.Name = "valB10";
             this.valB10.Size = new System.Drawing.Size(70, 20);
             this.valB10.TabIndex = 44;
             this.valB10.Tag = "9";
+            this.valB10.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // valA10
             // 
@@ -559,7 +599,7 @@ namespace CremeWorks
             // 
             this.valB9.Location = new System.Drawing.Point(314, 250);
             this.valB9.Maximum = new decimal(new int[] {
-            127,
+            16,
             0,
             0,
             0});
@@ -567,11 +607,16 @@ namespace CremeWorks
             1,
             0,
             0,
-            -2147483648});
+            0});
             this.valB9.Name = "valB9";
             this.valB9.Size = new System.Drawing.Size(70, 20);
             this.valB9.TabIndex = 40;
             this.valB9.Tag = "8";
+            this.valB9.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // valA9
             // 
@@ -612,7 +657,7 @@ namespace CremeWorks
             // 
             this.valB8.Location = new System.Drawing.Point(314, 225);
             this.valB8.Maximum = new decimal(new int[] {
-            127,
+            16,
             0,
             0,
             0});
@@ -620,11 +665,16 @@ namespace CremeWorks
             1,
             0,
             0,
-            -2147483648});
+            0});
             this.valB8.Name = "valB8";
             this.valB8.Size = new System.Drawing.Size(70, 20);
             this.valB8.TabIndex = 36;
             this.valB8.Tag = "7";
+            this.valB8.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // valA8
             // 
