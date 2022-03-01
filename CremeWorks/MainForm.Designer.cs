@@ -57,6 +57,7 @@ namespace CremeWorks
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.sendBulkDumpRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +66,8 @@ namespace CremeWorks
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.configToolStripMenuItem,
             this.devicesToolStripMenuItem,
-            this.lightingToolStripMenuItem});
+            this.lightingToolStripMenuItem,
+            this.sendBulkDumpRequestToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1014, 24);
@@ -353,6 +355,13 @@ namespace CremeWorks
             this.label3.TabIndex = 16;
             this.label3.Text = "Lighting:";
             // 
+            // sendBulkDumpRequestToolStripMenuItem
+            // 
+            this.sendBulkDumpRequestToolStripMenuItem.Name = "sendBulkDumpRequestToolStripMenuItem";
+            this.sendBulkDumpRequestToolStripMenuItem.Size = new System.Drawing.Size(152, 20);
+            this.sendBulkDumpRequestToolStripMenuItem.Text = "Send Bulk Dump Request";
+            this.sendBulkDumpRequestToolStripMenuItem.Click += new System.EventHandler(this.sendBulkDumpRequestToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -416,6 +425,7 @@ namespace CremeWorks
         private System.Windows.Forms.ToolStripMenuItem footSwitchToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sendBulkDumpRequestToolStripMenuItem;
     }
 }
 

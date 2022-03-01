@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Melanchall.DryWetMidi.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,6 +19,7 @@ namespace CremeWorks
         public MainForm()
         {
             InitializeComponent();
+            _c.MidiMatrix.ActionExecute = ExecuteAction;
         }
 
         private void configureToolStripMenuItem_Click(object sender, EventArgs e) => new MIDISetUp(_c).ShowDialog();
@@ -30,7 +32,6 @@ namespace CremeWorks
             {
                 _c.Connect();
                 _c.MidiMatrix.Register();
-                _c.MidiMatrix.ActionExecute = ExecuteAction;
             }
             else
                 _c.Disconnect();
@@ -107,6 +108,15 @@ namespace CremeWorks
         {
             if (playList.SelectedIndex >= 0) _c.Playlist.RemoveAt(playList.SelectedIndex);
             UpdatePlaylist();
+        }
+
+        private void sendBulkDumpRequestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //var lol = new NormalSysExEvent(new byte[] { 0x43, 0x10, 0x7F, 0x1C, 0x04, 0x30, 0x00, 0x02, 0x04, 0xF7 }); //Parameter set
+            var lel = new NormalSysExEvent(new byte[] { 0x43, 0x20, 0x7F, 0x1C, 0x04, 0x0E, 0x0F, 0x00, 0xF7 }); //Bulk dump request
+            _c.Devices[1].Output.SendEvent(lel);
+            lel = new NormalSysExEvent(new byte[] { 0x43, 0x20, 0x7F, 0x1C, 0x04, 0x30, 0x00, 0x00, 0xF7 }); //Bulk dump request
+            _c.Devices[1].Output.SendEvent(lel);
         }
     }
 }

@@ -54,6 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ACEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ACEditor.Designer.cs">
+      <DependentUpon>ACEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Concert.cs" />
     <Compile Include="FootSwitchConfig.cs">
       <SubType>Form</SubType>
@@ -83,6 +89,8 @@
     <Compile Include="SongEditor.Designer.cs">
       <DependentUpon>SongEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="StructMarshal.cs" />
+    <Compile Include="SysExMan.cs" />
     <EmbeddedResource Include="FootSwitchConfig.resx">
       <DependentUpon>FootSwitchConfig.cs</DependentUpon>
     </EmbeddedResource>

@@ -43,6 +43,7 @@ namespace CremeWorks
 
         private void ListenFootPedal(object sender, MidiEventReceivedEventArgs e )
         {
+
             for (int i = 0; i < _c.FootSwitchConfig.Length; i++)
             {
 
@@ -77,7 +78,9 @@ namespace CremeWorks
 
         private void ListenLightController(object sender, MidiEventReceivedEventArgs e)
         {
-            
+            if (e.Event.EventType == MidiEventType.ActiveSensing) return;
+            System.Diagnostics.Debug.WriteLine(e.Event.EventType);
+            var lel = (NormalSysExEvent)e.Event;
         }
 
         private void ListenMaster(object sender, MidiEventReceivedEventArgs e) => SendInstrData(0, e.Event);
