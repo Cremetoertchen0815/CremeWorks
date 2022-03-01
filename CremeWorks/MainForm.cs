@@ -102,5 +102,11 @@ namespace CremeWorks
 
         private void ShortcutButtonDown(object sender, MouseEventArgs e) => ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, true);
         private void ShortcutButtonUp(object sender, MouseEventArgs e) => ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, false);
+
+        private void RemSong(object sender, EventArgs e)
+        {
+            if (playList.SelectedIndex >= 0) _c.Playlist.RemoveAt(playList.SelectedIndex);
+            UpdatePlaylist();
+        }
     }
 }

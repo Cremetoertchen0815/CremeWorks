@@ -57,7 +57,6 @@ namespace CremeWorks
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.button12 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -204,6 +203,7 @@ namespace CremeWorks
             this.button3.TabIndex = 5;
             this.button3.Text = "Remove";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.RemSong);
             // 
             // songTitle
             // 
@@ -353,16 +353,6 @@ namespace CremeWorks
             this.label3.TabIndex = 16;
             this.label3.Text = "Lighting:";
             // 
-            // button12
-            // 
-            this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button12.Location = new System.Drawing.Point(195, 574);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(55, 23);
-            this.button12.TabIndex = 17;
-            this.button12.Text = "Remove";
-            this.button12.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -370,7 +360,6 @@ namespace CremeWorks
             this.ClientSize = new System.Drawing.Size(1014, 606);
             this.Controls.Add(this.playList);
             this.Controls.Add(this.songTitle);
-            this.Controls.Add(this.button12);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.button11);
@@ -424,7 +413,6 @@ namespace CremeWorks
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripMenuItem configureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lightingToolStripMenuItem;
-        private System.Windows.Forms.Button button12;
         private System.Windows.Forms.ToolStripMenuItem footSwitchToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
