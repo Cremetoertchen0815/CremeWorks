@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace CremeWorks
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private Concert _c = Concert.Empty();
         private Song _s = null;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
