@@ -34,5 +34,15 @@ namespace CremeWorks.Reface
         public enum RefaceCPEffectA : byte { Thru = 0, Tremolo = 1, Wah = 2 }
         public enum RefaceCPEffectB : byte { Thru = 0, Chorus = 1, Phaser = 2 }
         public enum RefaceCPEffectC : byte { Thru = 0, DDelay = 1, ADelay = 2 }
+
+        public void ApplySettings(MIDIDevice d)
+        {
+            
+        }
+
+        public void ApplyPatch(MIDIDevice d)
+        {
+            
+        }
     }
 }

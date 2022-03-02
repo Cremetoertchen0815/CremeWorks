@@ -29,6 +29,28 @@ namespace CremeWorks
             d?.SendEvent(new NormalSysExEvent(new byte[] { 0x43, 0x20, 0x7F, 0x1C, GetModelID(t), 0x0E, 0x0F, 0x00, 0xF7 })); //Request device settings
         }
 
+        public static void SendParameterChange(OutputDevice d, DeviceType t, byte[] address, byte[] data)
+        {
+            //Create event
+            var header = new byte[] { 0x43, 0x10, 0x7F, 0x1C, GetModelID(t), address[0], address[1], address[2] };
+            var transData = new byte[9 + data.Length];
+            header.CopyTo(transData, 0);
+            data.CopyTo(transData, 8);
+            transData[transData.Length - 1] = 0xF7;
+
+            d?.SendEvent(new NormalSysExEvent(transData)); //Send parameter change
+        }
+
+
+        //public static void SendParameterChange(OutputDevice d, DeviceType t, byte[] startAddr, byte[] data)
+        //{
+        //    //Create event
+
+        //    for (int i = 0; i < data.Length; i++)
+        //    {
+        //        d?.SendEvent(new NormalSysExEvent(new byte[] { 0x43, 0x10, 0x7F, 0x1C, GetModelID(t), startAddr[0], startAddr[1], (byte)(startAddr[2] + i), data[i], 0xF7 })); //Send parameter change
+        //    }
+        //}
 
     }
 }

@@ -2,13 +2,6 @@
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static CremeWorks.SysExMan;
 
@@ -204,5 +197,7 @@ namespace CremeWorks
         private void fetchVoiceData_Click(object sender, EventArgs e) => SendVoiceBulkdumpRequest(_d.Output, _refaceDat?.Type ?? DeviceType.Undefined);
 
         private void SaveStuffWhenClosing(object sender, FormClosingEventArgs e) => _s.AutoPatchSlots[_id] = (true, _refaceDat);
+
+        private void pushSysData_Click(object sender, EventArgs e) => _refaceDat?.ApplySettings(_d);
     }
 }

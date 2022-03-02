@@ -199,6 +199,7 @@ namespace CremeWorks
             this.pushSysData.TabIndex = 4;
             this.pushSysData.Text = "Push System Settings";
             this.pushSysData.UseVisualStyleBackColor = true;
+            this.pushSysData.Click += new System.EventHandler(this.pushSysData_Click);
             // 
             // fetchSysData
             // 

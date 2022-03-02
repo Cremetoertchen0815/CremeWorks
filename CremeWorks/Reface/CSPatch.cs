@@ -43,5 +43,15 @@ namespace CremeWorks.Reface
         public enum RefaceCSLFOAssign : byte { Off = 0, Amp = 1, Filter = 2, Pitch = 3, Oscillator = 4}
         public enum RefaceCSOSCType : byte { Saw = 0, Pulse = 1, OscSync = 2, RingMod = 3, FM = 4}
         public enum RefaceCSFXType : byte { Distortion = 0, ChorusFlanger = 1, Phaser = 2, Delay = 3, Thru = 4}
+
+        public void ApplySettings(MIDIDevice d)
+        {
+            
+        }
+
+        public void ApplyPatch(MIDIDevice d)
+        {
+            
+        }
     }
 }
