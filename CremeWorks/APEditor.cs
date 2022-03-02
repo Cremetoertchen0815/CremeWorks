@@ -182,7 +182,51 @@ namespace CremeWorks
 
         private void SaveVoiceData()
         {
-
+            switch(_refaceDat)
+            {
+                case CSPatch cs:
+                    var csDat = new CSPatch.RefaceCSVoiceData();
+                    csDat.Volume = (byte)numericUpDown17.Value;
+                    csDat.LFOAssign = (CSPatch.RefaceCSLFOAssign)comboBox11.SelectedIndex;
+                    csDat.LFODepth = (byte)numericUpDown18.Value;
+                    csDat.LFOSpeed = (byte)numericUpDown19.Value;
+                    csDat.Portamento = (byte)numericUpDown20.Value;
+                    csDat.OSCType = (CSPatch.RefaceCSOSCType)comboBox12.SelectedIndex;
+                    csDat.OSCTexture = (byte)numericUpDown21.Value;
+                    csDat.OSCMod = (byte)numericUpDown22.Value;
+                    csDat.FilterCutoff = (byte)numericUpDown23.Value;
+                    csDat.FilterResonance = (byte)numericUpDown24.Value;
+                    csDat.EGBalance = (byte)numericUpDown25.Value;
+                    csDat.EGAttack = (byte)numericUpDown26.Value;
+                    csDat.EGDecay = (byte)numericUpDown27.Value;
+                    csDat.EGSustain = (byte)numericUpDown28.Value;
+                    csDat.EGRelease = (byte)numericUpDown29.Value;
+                    csDat.FXType = (CSPatch.RefaceCSFXType)comboBox13.SelectedIndex;
+                    csDat.FXDepth = (byte)numericUpDown30.Value;
+                    csDat.FXRate = (byte)numericUpDown31.Value;
+                    cs.VoiceSettings = csDat;
+                    break;
+                case DXPatch dx:
+                    dx.ProgramChangeNr = (byte)(numericUpDown32.Value - 1);
+                    break;
+                case CPPatch cp:
+                    var cpDat = new CPPatch.RefaceCPVoiceData();
+                    cpDat.Volume = (byte)numericUpDown8.Value;
+                    cpDat.WaveType = (CPPatch.RefaceCPWaveType)comboBox7.SelectedIndex;
+                    cpDat.Drive = (byte)numericUpDown9.Value;
+                    cpDat.EffectAType = (CPPatch.RefaceCPEffectA)comboBox8.SelectedIndex;
+                    cpDat.EffectADepth = (byte)numericUpDown10.Value;
+                    cpDat.EffectARate = (byte)numericUpDown11.Value;
+                    cpDat.EffectBType = (CPPatch.RefaceCPEffectB)comboBox9.SelectedIndex;
+                    cpDat.EffectBDepth = (byte)numericUpDown12.Value;
+                    cpDat.EffectBSpeed = (byte)numericUpDown13.Value;
+                    cpDat.EffectCType = (CPPatch.RefaceCPEffectC)comboBox10.SelectedIndex;
+                    cpDat.EffectCDepth = (byte)numericUpDown14.Value;
+                    cpDat.EffectCTime = (byte)numericUpDown15.Value;
+                    cpDat.ReverbDepth = (byte)numericUpDown16.Value;
+                    cp.VoiceSettings = cpDat;
+                    break;
+            }
         }
 
         private byte[] CutOffBulkDumpHeader(byte[] dat)

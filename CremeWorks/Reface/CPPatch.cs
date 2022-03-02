@@ -8,6 +8,8 @@ namespace CremeWorks.Reface
         public RefaceCPVoiceData VoiceSettings { get; set; }
         public DeviceType Type => DeviceType.RefaceCP;
 
+        public void ApplySettings(MIDIDevice d) => SysExMan.SendParameterChange(d?.Output, Type, new byte[] { 0, 0, 0 }, StructMarshal<RefaceSystemData>.getBytes(SystemSettings));
+        public void ApplyPatch(MIDIDevice d) => SysExMan.SendParameterChange(d?.Output, Type, new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceCPVoiceData>.getBytes(VoiceSettings));
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct RefaceCPVoiceData
@@ -34,15 +36,5 @@ namespace CremeWorks.Reface
         public enum RefaceCPEffectA : byte { Thru = 0, Tremolo = 1, Wah = 2 }
         public enum RefaceCPEffectB : byte { Thru = 0, Chorus = 1, Phaser = 2 }
         public enum RefaceCPEffectC : byte { Thru = 0, DDelay = 1, ADelay = 2 }
-
-        public void ApplySettings(MIDIDevice d)
-        {
-            
-        }
-
-        public void ApplyPatch(MIDIDevice d)
-        {
-            
-        }
     }
 }
