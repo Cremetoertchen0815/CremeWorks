@@ -69,7 +69,6 @@ namespace CremeWorks
     {
         public InputDevice Input;
         public OutputDevice Output;
-        public Reface.IRefaceDevice RefaceDevice;
         public string Name;
     }
 }

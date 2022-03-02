@@ -91,14 +91,14 @@ namespace CremeWorks
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.acM = new System.Windows.Forms.CheckBox();
-            this.ac1 = new System.Windows.Forms.CheckBox();
-            this.ac2 = new System.Windows.Forms.CheckBox();
-            this.ac3 = new System.Windows.Forms.CheckBox();
-            this.acbM = new System.Windows.Forms.Button();
-            this.acb1 = new System.Windows.Forms.Button();
-            this.acb2 = new System.Windows.Forms.Button();
-            this.acb3 = new System.Windows.Forms.Button();
+            this.apM = new System.Windows.Forms.CheckBox();
+            this.ap1 = new System.Windows.Forms.CheckBox();
+            this.ap2 = new System.Windows.Forms.CheckBox();
+            this.ap3 = new System.Windows.Forms.CheckBox();
+            this.apbM = new System.Windows.Forms.Button();
+            this.apb1 = new System.Windows.Forms.Button();
+            this.apb2 = new System.Windows.Forms.Button();
+            this.apb3 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -659,95 +659,107 @@ namespace CremeWorks
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(337, 436);
+            this.label24.Location = new System.Drawing.Point(342, 436);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(69, 13);
+            this.label24.Size = new System.Drawing.Size(60, 13);
             this.label24.TabIndex = 61;
-            this.label24.Text = "SysEx Config";
+            this.label24.Text = "Auto Patch";
             // 
-            // acM
+            // apM
             // 
-            this.acM.AutoSize = true;
-            this.acM.Location = new System.Drawing.Point(413, 435);
-            this.acM.Name = "acM";
-            this.acM.Size = new System.Drawing.Size(58, 17);
-            this.acM.TabIndex = 62;
-            this.acM.Text = "Master";
-            this.acM.UseVisualStyleBackColor = true;
+            this.apM.AutoSize = true;
+            this.apM.Location = new System.Drawing.Point(413, 435);
+            this.apM.Name = "apM";
+            this.apM.Size = new System.Drawing.Size(58, 17);
+            this.apM.TabIndex = 62;
+            this.apM.Tag = "0";
+            this.apM.Text = "Master";
+            this.apM.UseVisualStyleBackColor = true;
+            this.apM.Click += new System.EventHandler(this.apM_Click);
             // 
-            // ac1
+            // ap1
             // 
-            this.ac1.AutoSize = true;
-            this.ac1.Location = new System.Drawing.Point(413, 461);
-            this.ac1.Name = "ac1";
-            this.ac1.Size = new System.Drawing.Size(53, 17);
-            this.ac1.TabIndex = 63;
-            this.ac1.Text = "Aux 1";
-            this.ac1.UseVisualStyleBackColor = true;
+            this.ap1.AutoSize = true;
+            this.ap1.Location = new System.Drawing.Point(413, 461);
+            this.ap1.Name = "ap1";
+            this.ap1.Size = new System.Drawing.Size(53, 17);
+            this.ap1.TabIndex = 63;
+            this.ap1.Tag = "1";
+            this.ap1.Text = "Aux 1";
+            this.ap1.UseVisualStyleBackColor = true;
+            this.ap1.Click += new System.EventHandler(this.apM_Click);
             // 
-            // ac2
+            // ap2
             // 
-            this.ac2.AutoSize = true;
-            this.ac2.Location = new System.Drawing.Point(413, 487);
-            this.ac2.Name = "ac2";
-            this.ac2.Size = new System.Drawing.Size(53, 17);
-            this.ac2.TabIndex = 64;
-            this.ac2.Text = "Aux 2";
-            this.ac2.UseVisualStyleBackColor = true;
+            this.ap2.AutoSize = true;
+            this.ap2.Location = new System.Drawing.Point(413, 487);
+            this.ap2.Name = "ap2";
+            this.ap2.Size = new System.Drawing.Size(53, 17);
+            this.ap2.TabIndex = 64;
+            this.ap2.Tag = "2";
+            this.ap2.Text = "Aux 2";
+            this.ap2.UseVisualStyleBackColor = true;
+            this.ap2.Click += new System.EventHandler(this.apM_Click);
             // 
-            // ac3
+            // ap3
             // 
-            this.ac3.AutoSize = true;
-            this.ac3.Location = new System.Drawing.Point(413, 514);
-            this.ac3.Name = "ac3";
-            this.ac3.Size = new System.Drawing.Size(53, 17);
-            this.ac3.TabIndex = 65;
-            this.ac3.Text = "Aux 3";
-            this.ac3.UseVisualStyleBackColor = true;
+            this.ap3.AutoSize = true;
+            this.ap3.Location = new System.Drawing.Point(413, 514);
+            this.ap3.Name = "ap3";
+            this.ap3.Size = new System.Drawing.Size(53, 17);
+            this.ap3.TabIndex = 65;
+            this.ap3.Tag = "3";
+            this.ap3.Text = "Aux 3";
+            this.ap3.UseVisualStyleBackColor = true;
+            this.ap3.Click += new System.EventHandler(this.apM_Click);
             // 
-            // acbM
+            // apbM
             // 
-            this.acbM.Location = new System.Drawing.Point(477, 431);
-            this.acbM.Name = "acbM";
-            this.acbM.Size = new System.Drawing.Size(31, 23);
-            this.acbM.TabIndex = 66;
-            this.acbM.Tag = "0";
-            this.acbM.Text = "...";
-            this.acbM.UseVisualStyleBackColor = true;
-            this.acbM.Click += new System.EventHandler(this.SysExEdit);
+            this.apbM.Enabled = false;
+            this.apbM.Location = new System.Drawing.Point(477, 431);
+            this.apbM.Name = "apbM";
+            this.apbM.Size = new System.Drawing.Size(31, 23);
+            this.apbM.TabIndex = 66;
+            this.apbM.Tag = "0";
+            this.apbM.Text = "...";
+            this.apbM.UseVisualStyleBackColor = true;
+            this.apbM.Click += new System.EventHandler(this.SysExEdit);
             // 
-            // acb1
+            // apb1
             // 
-            this.acb1.Location = new System.Drawing.Point(477, 457);
-            this.acb1.Name = "acb1";
-            this.acb1.Size = new System.Drawing.Size(31, 23);
-            this.acb1.TabIndex = 67;
-            this.acb1.Tag = "1";
-            this.acb1.Text = "...";
-            this.acb1.UseVisualStyleBackColor = true;
-            this.acb1.Click += new System.EventHandler(this.SysExEdit);
+            this.apb1.Enabled = false;
+            this.apb1.Location = new System.Drawing.Point(477, 457);
+            this.apb1.Name = "apb1";
+            this.apb1.Size = new System.Drawing.Size(31, 23);
+            this.apb1.TabIndex = 67;
+            this.apb1.Tag = "1";
+            this.apb1.Text = "...";
+            this.apb1.UseVisualStyleBackColor = true;
+            this.apb1.Click += new System.EventHandler(this.SysExEdit);
             // 
-            // acb2
+            // apb2
             // 
-            this.acb2.Location = new System.Drawing.Point(477, 483);
-            this.acb2.Name = "acb2";
-            this.acb2.Size = new System.Drawing.Size(31, 23);
-            this.acb2.TabIndex = 68;
-            this.acb2.Tag = "2";
-            this.acb2.Text = "...";
-            this.acb2.UseVisualStyleBackColor = true;
-            this.acb2.Click += new System.EventHandler(this.SysExEdit);
+            this.apb2.Enabled = false;
+            this.apb2.Location = new System.Drawing.Point(477, 483);
+            this.apb2.Name = "apb2";
+            this.apb2.Size = new System.Drawing.Size(31, 23);
+            this.apb2.TabIndex = 68;
+            this.apb2.Tag = "2";
+            this.apb2.Text = "...";
+            this.apb2.UseVisualStyleBackColor = true;
+            this.apb2.Click += new System.EventHandler(this.SysExEdit);
             // 
-            // acb3
+            // apb3
             // 
-            this.acb3.Location = new System.Drawing.Point(477, 510);
-            this.acb3.Name = "acb3";
-            this.acb3.Size = new System.Drawing.Size(31, 23);
-            this.acb3.TabIndex = 69;
-            this.acb3.Tag = "3";
-            this.acb3.Text = "...";
-            this.acb3.UseVisualStyleBackColor = true;
-            this.acb3.Click += new System.EventHandler(this.SysExEdit);
+            this.apb3.Enabled = false;
+            this.apb3.Location = new System.Drawing.Point(477, 510);
+            this.apb3.Name = "apb3";
+            this.apb3.Size = new System.Drawing.Size(31, 23);
+            this.apb3.TabIndex = 69;
+            this.apb3.Tag = "3";
+            this.apb3.Text = "...";
+            this.apb3.UseVisualStyleBackColor = true;
+            this.apb3.Click += new System.EventHandler(this.SysExEdit);
             // 
             // button5
             // 
@@ -858,14 +870,14 @@ namespace CremeWorks
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
-            this.Controls.Add(this.acb3);
-            this.Controls.Add(this.acb2);
-            this.Controls.Add(this.acb1);
-            this.Controls.Add(this.acbM);
-            this.Controls.Add(this.ac3);
-            this.Controls.Add(this.ac2);
-            this.Controls.Add(this.ac1);
-            this.Controls.Add(this.acM);
+            this.Controls.Add(this.apb3);
+            this.Controls.Add(this.apb2);
+            this.Controls.Add(this.apb1);
+            this.Controls.Add(this.apbM);
+            this.Controls.Add(this.ap3);
+            this.Controls.Add(this.ap2);
+            this.Controls.Add(this.ap1);
+            this.Controls.Add(this.apM);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label16);
@@ -1003,14 +1015,14 @@ namespace CremeWorks
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.CheckBox acM;
-        private System.Windows.Forms.CheckBox ac1;
-        private System.Windows.Forms.CheckBox ac2;
-        private System.Windows.Forms.CheckBox ac3;
-        private System.Windows.Forms.Button acbM;
-        private System.Windows.Forms.Button acb1;
-        private System.Windows.Forms.Button acb2;
-        private System.Windows.Forms.Button acb3;
+        private System.Windows.Forms.CheckBox apM;
+        private System.Windows.Forms.CheckBox ap1;
+        private System.Windows.Forms.CheckBox ap2;
+        private System.Windows.Forms.CheckBox ap3;
+        private System.Windows.Forms.Button apbM;
+        private System.Windows.Forms.Button apb1;
+        private System.Windows.Forms.Button apb2;
+        private System.Windows.Forms.Button apb3;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;

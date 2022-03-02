@@ -54,11 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ACEditor.cs">
+    <Compile Include="APEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ACEditor.Designer.cs">
-      <DependentUpon>ACEditor.cs</DependentUpon>
+    <Compile Include="APEditor.Designer.cs">
+      <DependentUpon>APEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Concert.cs" />
     <Compile Include="FootSwitchConfig.cs">
@@ -82,11 +82,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reface\CP.cs" />
-    <Compile Include="Reface\CS.cs" />
-    <Compile Include="Reface\DX.cs" />
+    <Compile Include="Reface\CPPatch.cs" />
+    <Compile Include="Reface\CSPatch.cs" />
+    <Compile Include="Reface\DXPatch.cs" />
     <Compile Include="Reface\General.cs" />
-    <Compile Include="Reface\IRefaceDevice.cs" />
+    <Compile Include="Reface\IRefacePatch.cs" />
     <Compile Include="Song.cs" />
     <Compile Include="SongEditor.cs">
       <SubType>Form</SubType>
@@ -96,8 +96,8 @@
     </Compile>
     <Compile Include="StructMarshal.cs" />
     <Compile Include="SysExMan.cs" />
-    <EmbeddedResource Include="ACEditor.resx">
-      <DependentUpon>ACEditor.cs</DependentUpon>
+    <EmbeddedResource Include="APEditor.resx">
+      <DependentUpon>APEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FootSwitchConfig.resx">
       <DependentUpon>FootSwitchConfig.cs</DependentUpon>

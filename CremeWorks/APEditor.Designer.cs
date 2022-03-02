@@ -1,7 +1,7 @@
 ﻿
 namespace CremeWorks
 {
-    partial class ACEditor
+    partial class APEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -1343,7 +1343,7 @@ namespace CremeWorks
             this.fetchVoiceData.UseVisualStyleBackColor = true;
             this.fetchVoiceData.Click += new System.EventHandler(this.fetchVoiceData_Click);
             // 
-            // ACEditor
+            // APEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1358,8 +1358,12 @@ namespace CremeWorks
             this.Controls.Add(this.pushSysData);
             this.Controls.Add(this.typeSelector);
             this.Controls.Add(this.label1);
-            this.Name = "ACEditor";
-            this.Text = "ACEditor";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "APEditor";
+            this.Text = "Auto Patch Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SaveStuffWhenClosing);
             this.deviceBox.ResumeLayout(false);
             this.deviceBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();

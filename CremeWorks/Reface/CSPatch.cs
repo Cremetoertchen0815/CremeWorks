@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CremeWorks.Reface
 {
-    class CS : IRefaceDevice
+    class CSPatch : IRefacePatch
     {
         public RefaceSystemData SystemSettings { get; set; }
         public RefaceCSVoiceData VoiceSettings { get; set; }

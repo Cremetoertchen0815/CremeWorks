@@ -21,12 +21,12 @@ namespace CremeWorks
                     return 0;
             }
         }
-        public static void SendSystemBulkdumpRequest(OutputDevice d, DeviceType t) => d.SendEvent(new NormalSysExEvent(new byte[] { 0x43, 0x20, 0x7F, 0x1C, GetModelID(t), 0x00, 0x00, 0x00, 0xF7 })); //Request device settings
+        public static void SendSystemBulkdumpRequest(OutputDevice d, DeviceType t) => d?.SendEvent(new NormalSysExEvent(new byte[] { 0x43, 0x20, 0x7F, 0x1C, GetModelID(t), 0x00, 0x00, 0x00, 0xF7 })); //Request device settings
 
         public static void SendVoiceBulkdumpRequest(OutputDevice d, DeviceType t)
         {
             if (t == DeviceType.Undefined || t == DeviceType.RefaceDX) return;
-            d.SendEvent(new NormalSysExEvent(new byte[] { 0x43, 0x20, 0x7F, 0x1C, GetModelID(t), 0x0E, 0x0F, 0x00, 0xF7 })); //Request device settings
+            d?.SendEvent(new NormalSysExEvent(new byte[] { 0x43, 0x20, 0x7F, 0x1C, GetModelID(t), 0x0E, 0x0F, 0x00, 0xF7 })); //Request device settings
         }
 
 

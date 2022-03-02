@@ -14,30 +14,45 @@ using static CremeWorks.SysExMan;
 
 namespace CremeWorks
 {
-    public partial class ACEditor : Form
+    public partial class APEditor : Form
     {
 
         public Concert _c;
+        public Song _s;
         public MIDIDevice _d;
+        public int _id;
         private bool _wasListening;
 
-        private IRefaceDevice _refaceDat;
+        private IRefacePatch _refaceDat;
 
-        public ACEditor(Concert c, MIDIDevice d)
+        public APEditor(Concert c, Song s, int id)
         {
             InitializeComponent();
+
+            //Load data from old patch
             _c = c;
-            _d = d;
+            _s = s;
+            _id = id;
+            _d = _c.Devices[2+id];
             CheckForIllegalCrossThreadCalls = false;
-            _refaceDat = _d.RefaceDevice;
+            _refaceDat = _s.AutoPatchSlots[id].Patch;
+
+            //Adapt controls
             typeSelector.SelectedIndex = (int?)_refaceDat?.Type ?? 0;
             UpdateControls();
 
             //Set up MIDI shit
             _c.Connect();
-            _wasListening = _d.Input.IsListeningForEvents;
-            if (!_d.Input.IsListeningForEvents) _d.Input.StartEventsListening();
-            _d.Input.EventReceived += ListenForSysEx;
+            if (_d.Input == null || _d.Output == null)
+            {
+                MessageBox.Show("Device not connected yet!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                _wasListening = _d.Input.IsListeningForEvents;
+                if (!_d.Input.IsListeningForEvents) _d.Input.StartEventsListening();
+                _d.Input.EventReceived += ListenForSysEx;
+            }
 
         }
 
@@ -74,7 +89,7 @@ namespace CremeWorks
             switch (_refaceDat.Type)
             {
                 case DeviceType.RefaceCS:
-                    var cs = ((CS)_refaceDat).VoiceSettings;
+                    var cs = ((CSPatch)_refaceDat).VoiceSettings;
                     numericUpDown17.Value = cs.Volume;
                     comboBox11.SelectedIndex = (int)cs.LFOAssign;
                     numericUpDown18.Value = cs.LFODepth;
@@ -96,12 +111,12 @@ namespace CremeWorks
                     voiceBoxCS.Visible = true;
                     break;
                 case DeviceType.RefaceDX:
-                    numericUpDown32.Value = ((DX)_refaceDat).ProgramChangeNr + 1;
+                    numericUpDown32.Value = ((DXPatch)_refaceDat).ProgramChangeNr + 1;
                     voiceBoxDX.Visible = true;
                     fetchVoiceData.Enabled = false;
                     break;
                 case DeviceType.RefaceCP:
-                    var cp = ((CP)_refaceDat).VoiceSettings;
+                    var cp = ((CPPatch)_refaceDat).VoiceSettings;
                     numericUpDown8.Value = cp.Volume;
                     comboBox7.SelectedIndex = (int)cp.WaveType;
                     numericUpDown9.Value = cp.Drive;
@@ -122,7 +137,7 @@ namespace CremeWorks
 
         private void ListenForSysEx(object sender, MidiEventReceivedEventArgs e)
         {
-            if (e.Event.EventType == MidiEventType.ProgramChange && _refaceDat is DX dx)
+            if (e.Event.EventType == MidiEventType.ProgramChange && _refaceDat is DXPatch dx)
             {
                 //DX program change received
                 var pc = (ProgramChangeEvent)e.Event;
@@ -139,16 +154,16 @@ namespace CremeWorks
                 //System settings bulk received
                 _refaceDat.SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
                 UpdateControls();
-            } else if (ev.Data.Length == 28 && _refaceDat is CP cp)
+            } else if (ev.Data.Length == 28 && _refaceDat is CPPatch cp)
             {
                 //CP voice data bulk received
-                cp.VoiceSettings = StructMarshal<CP.RefaceCPVoiceData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
+                cp.VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
                 UpdateControls();
             }
-            else if (ev.Data.Length == 34 && _refaceDat is CS cs)
+            else if (ev.Data.Length == 34 && _refaceDat is CSPatch cs)
             {
                 //CS voice data bulk received
-                cs.VoiceSettings = StructMarshal<CS.RefaceCSVoiceData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
+                cs.VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
                 UpdateControls();
             }
         }
@@ -169,24 +184,25 @@ namespace CremeWorks
                 switch (nuType)
                 {
                     case DeviceType.RefaceCS:
-                        _refaceDat = new CS();
+                        _refaceDat = new CSPatch();
                         break;
                     case DeviceType.RefaceDX:
-                        _refaceDat = new DX();
+                        _refaceDat = new DXPatch();
                         break;
                     case DeviceType.RefaceCP:
-                        _refaceDat = new CP();
+                        _refaceDat = new CPPatch();
                         break;
                     default:
                         _refaceDat = null;
                         break;
                 }
 
-                _d.RefaceDevice = _refaceDat;
             }
             UpdateControls();
         }
 
         private void fetchVoiceData_Click(object sender, EventArgs e) => SendVoiceBulkdumpRequest(_d.Output, _refaceDat?.Type ?? DeviceType.Undefined);
+
+        private void SaveStuffWhenClosing(object sender, FormClosingEventArgs e) => _s.AutoPatchSlots[_id] = (true, _refaceDat);
     }
 }

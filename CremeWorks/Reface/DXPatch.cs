@@ -1,6 +1,6 @@
 ﻿namespace CremeWorks.Reface
 {
-    class DX : IRefaceDevice
+    class DXPatch : IRefacePatch
     {
         public RefaceSystemData SystemSettings { get; set; }
         public byte ProgramChangeNr { get; set; }

@@ -36,6 +36,10 @@ namespace CremeWorks
             txtArtist.Text = s.Artist;
             txtNotes.Text = s.Notes;
             txtLyrics.Text = s.Lyrics;
+            apM.Checked = apbM.Enabled = s.AutoPatchSlots[0].Enabled;
+            ap1.Checked = apb1.Enabled = s.AutoPatchSlots[1].Enabled;
+            ap2.Checked = apb2.Enabled = s.AutoPatchSlots[2].Enabled;
+            ap3.Checked = apb3.Enabled = s.AutoPatchSlots[3].Enabled;
             for (int x = 0; x < 4; x++)
                 for (int y = 0; y < 4; y++)
                 {
@@ -70,6 +74,35 @@ namespace CremeWorks
                 }
         }
 
-        private void SysExEdit(object sender, EventArgs e) => new ACEditor(_c, _c.Devices[2 + int.Parse((string)((Button)sender).Tag)]).ShowDialog();
+        private void SysExEdit(object sender, EventArgs e) => new APEditor(_c, _s, int.Parse((string)((Button)sender).Tag)).ShowDialog();
+
+        private void apM_Click(object sender, EventArgs e)
+        {
+            //Update controls
+            var chk = ((CheckBox)sender);
+            var id = int.Parse((string)chk.Tag);
+            switch (id)
+            {
+                case 0:
+                    apbM.Enabled = chk.Checked;
+                    break;
+                case 1:
+                    apb1.Enabled = chk.Checked;
+                    break;
+                case 2:
+                    apb2.Enabled = chk.Checked;
+                    break;
+                case 3:
+                    apb3.Enabled = chk.Checked;
+                    break;
+                default:
+                    break;
+            }
+
+            //Update database
+            var patchBuffer = _s.AutoPatchSlots[id].Patch;
+            _s.AutoPatchSlots[id] = (chk.Checked, patchBuffer);
+
+        }
     }
 }
