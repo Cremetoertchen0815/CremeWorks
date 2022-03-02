@@ -199,7 +199,7 @@ namespace CremeWorks
             this.pushSysData.TabIndex = 4;
             this.pushSysData.Text = "Push System Settings";
             this.pushSysData.UseVisualStyleBackColor = true;
-            this.pushSysData.Click += new System.EventHandler(this.pushSysData_Click);
+            this.pushSysData.Click += new System.EventHandler(this.PushSysSettings);
             // 
             // fetchSysData
             // 
@@ -219,6 +219,7 @@ namespace CremeWorks
             this.pushVoiceData.TabIndex = 7;
             this.pushVoiceData.Text = "Push Voice Settings";
             this.pushVoiceData.UseVisualStyleBackColor = true;
+            this.pushVoiceData.Click += new System.EventHandler(this.PushVoiceSettings);
             // 
             // deviceBox
             // 

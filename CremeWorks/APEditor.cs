@@ -161,6 +161,30 @@ namespace CremeWorks
             }
         }
 
+        private void SaveSystemData()
+        {
+            var sysDat = new RefaceSystemData();
+            sysDat.MIDIChannelTransmit = (byte)(numericUpDown1.Value == 0 ? 0x7F : numericUpDown1.Value - 1);
+            sysDat.MIDIChannelReceive = (byte)(numericUpDown2.Value == 0 ? 0x10 : numericUpDown2.Value - 1);
+            sysDat.MasterTune = (uint)numericUpDown3.Value;
+            sysDat.LocalControl = (byte)comboBox1.SelectedIndex;
+            sysDat.MasterTranspose = (byte)(numericUpDown4.Value + 0x40);
+            sysDat.Tempo = (ushort)numericUpDown5.Value;
+            sysDat.LCDContrast = (byte)numericUpDown7.Value;
+            sysDat.SustainPedalSelect = (byte)comboBox2.SelectedIndex;
+            sysDat.AutoPwrOff = (byte)comboBox3.SelectedIndex;
+            sysDat.SpkOut = (byte)comboBox4.SelectedIndex;
+            sysDat.MIDICtrl = (byte)comboBox5.SelectedIndex;
+            sysDat.GlobalPBRange = (byte)(numericUpDown4.Value + 0x40);
+            sysDat.FootSwitchMode = (byte)comboBox6.SelectedIndex;
+            _refaceDat.SystemSettings = sysDat;
+        }
+
+        private void SaveVoiceData()
+        {
+
+        }
+
         private byte[] CutOffBulkDumpHeader(byte[] dat)
         {
             byte[] res = new byte[dat.Length - 12];
@@ -196,8 +220,23 @@ namespace CremeWorks
 
         private void fetchVoiceData_Click(object sender, EventArgs e) => SendVoiceBulkdumpRequest(_d.Output, _refaceDat?.Type ?? DeviceType.Undefined);
 
-        private void SaveStuffWhenClosing(object sender, FormClosingEventArgs e) => _s.AutoPatchSlots[_id] = (true, _refaceDat);
+        private void SaveStuffWhenClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveSystemData();
+            SaveVoiceData();
+            _s.AutoPatchSlots[_id] = (true, _refaceDat);
+        }
 
-        private void pushSysData_Click(object sender, EventArgs e) => _refaceDat?.ApplySettings(_d);
+        private void PushSysSettings(object sender, EventArgs e)
+        {
+            SaveSystemData();
+            _refaceDat?.ApplySettings(_d); 
+        }
+
+        private void PushVoiceSettings(object sender, EventArgs e)
+        {
+            SaveVoiceData();
+            _refaceDat?.ApplyPatch(_d);
+        }
     }
 }

@@ -8,10 +8,10 @@ namespace CremeWorks.Reface
     {
         public byte MIDIChannelTransmit;
         public byte MIDIChannelReceive;
-        public int MasterTune;
+        public uint MasterTune;
         public byte LocalControl;
         public byte MasterTranspose;
-        public short Tempo;
+        public ushort Tempo;
         public byte LCDContrast;
         public byte SustainPedalSelect;
         public byte AutoPwrOff;
