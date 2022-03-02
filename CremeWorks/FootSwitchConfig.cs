@@ -30,7 +30,7 @@ namespace CremeWorks
                 var cnt = _cont[i];
                 cnt.Item1.SelectedIndex = MidiEventTypeToIndex(cfg.Item1);
                 cnt.Item2.Value = cfg.Item2;
-                cnt.Item3.Value = cfg.Item3;
+                cnt.Item3.Value = Math.Max((int)cfg.Item3, 1);
             }
         }
 
