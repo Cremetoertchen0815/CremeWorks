@@ -6,5 +6,6 @@
         DeviceType Type { get; }
         void ApplySettings(MIDIDevice d);
         void ApplyPatch(MIDIDevice d);
+        IRefacePatch Clone();
     }
 }

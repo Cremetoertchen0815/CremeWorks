@@ -12,5 +12,6 @@ namespace CremeWorks.Reface
 
         public void ApplyPatch(MIDIDevice d) => d.Output?.SendEvent(new ProgramChangeEvent(new SevenBitNumber(ProgramChangeNr)));
         public void ApplySettings(MIDIDevice d) => SysExMan.SendParameterChange(d?.Output, Type, new byte[] { 0, 0, 0 }, StructMarshal<RefaceSystemData>.getBytes(SystemSettings));
+        public IRefacePatch Clone() => (IRefacePatch)MemberwiseClone();
     }
 }

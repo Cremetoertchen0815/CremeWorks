@@ -143,5 +143,13 @@ namespace CremeWorks
                 nIndex = sIndex;
             }
         }
+
+        private void DuplicateSong(object sender, EventArgs e)
+        {
+            if (playList.SelectedIndex < 0) return;
+            var cpy = _c.Playlist[playList.SelectedIndex].Clone();
+            _c.Playlist.Add(cpy);
+            UpdatePlaylist();
+        }
     }
 }

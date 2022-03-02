@@ -10,6 +10,7 @@ namespace CremeWorks.Reface
 
         public void ApplySettings(MIDIDevice d) => SysExMan.SendParameterChange(d?.Output, Type, new byte[] { 0, 0, 0 }, StructMarshal<RefaceSystemData>.getBytes(SystemSettings));
         public void ApplyPatch(MIDIDevice d) => SysExMan.SendParameterChange(d?.Output, Type, new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceCPVoiceData>.getBytes(VoiceSettings));
+        public IRefacePatch Clone() => (IRefacePatch)MemberwiseClone();
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct RefaceCPVoiceData
