@@ -63,6 +63,8 @@ namespace CremeWorks
         {
             _c.MidiMatrix.NoteMap = _s.NoteMap;
             _c.MidiMatrix.CCMap = _s.CCMap;
+
+            for (int i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplyPatch(_c.Devices[i + 2]);
         }
 
         private void ExecuteAction(int nr, bool enable)
@@ -112,6 +114,12 @@ namespace CremeWorks
         {
             if (playList.SelectedIndex >= 0) _c.Playlist.RemoveAt(playList.SelectedIndex);
             UpdatePlaylist();
+        }
+
+        private void applySongSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_c == null || _s == null) return;
+            for (int i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplySettings(_c.Devices[i + 2]);
         }
     }
 }

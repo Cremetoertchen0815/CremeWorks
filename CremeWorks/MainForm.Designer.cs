@@ -57,6 +57,7 @@ namespace CremeWorks
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.applySongSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -113,7 +114,8 @@ namespace CremeWorks
             this.configureToolStripMenuItem,
             this.footSwitchToolStripMenuItem,
             this.toolStripMenuItem1,
-            this.connectToolStripMenuItem});
+            this.connectToolStripMenuItem,
+            this.applySongSettingsToolStripMenuItem});
             this.devicesToolStripMenuItem.Name = "devicesToolStripMenuItem";
             this.devicesToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
             this.devicesToolStripMenuItem.Text = "MIDI Devices";
@@ -121,26 +123,26 @@ namespace CremeWorks
             // configureToolStripMenuItem
             // 
             this.configureToolStripMenuItem.Name = "configureToolStripMenuItem";
-            this.configureToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.configureToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.configureToolStripMenuItem.Text = "Set Up";
             this.configureToolStripMenuItem.Click += new System.EventHandler(this.configureToolStripMenuItem_Click);
             // 
             // footSwitchToolStripMenuItem
             // 
             this.footSwitchToolStripMenuItem.Name = "footSwitchToolStripMenuItem";
-            this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.footSwitchToolStripMenuItem.Text = "Foot Switch";
             this.footSwitchToolStripMenuItem.Click += new System.EventHandler(this.footSwitchToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(133, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(185, 6);
             // 
             // connectToolStripMenuItem
             // 
             this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-            this.connectToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.connectToolStripMenuItem.Text = "Connect";
             this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
             // 
@@ -353,6 +355,13 @@ namespace CremeWorks
             this.label3.TabIndex = 16;
             this.label3.Text = "Lighting:";
             // 
+            // applySongSettingsToolStripMenuItem
+            // 
+            this.applySongSettingsToolStripMenuItem.Name = "applySongSettingsToolStripMenuItem";
+            this.applySongSettingsToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.applySongSettingsToolStripMenuItem.Text = "Apply Device Settings";
+            this.applySongSettingsToolStripMenuItem.Click += new System.EventHandler(this.applySongSettingsToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -416,6 +425,7 @@ namespace CremeWorks
         private System.Windows.Forms.ToolStripMenuItem footSwitchToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem applySongSettingsToolStripMenuItem;
     }
 }
 

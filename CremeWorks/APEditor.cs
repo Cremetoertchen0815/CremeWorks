@@ -266,6 +266,9 @@ namespace CremeWorks
 
         private void SaveStuffWhenClosing(object sender, FormClosingEventArgs e)
         {
+            //End MIDI listening
+            if (_d.Input != null) _d.Input.EventReceived -= ListenForSysEx;
+            //Save data
             SaveSystemData();
             SaveVoiceData();
             _s.AutoPatchSlots[_id] = (true, _refaceDat);
