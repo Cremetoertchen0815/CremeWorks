@@ -15,7 +15,7 @@
             var nu = (Song)MemberwiseClone();
             nu.NoteMap = new bool[NoteMap.Length][];
             nu.CCMap = new bool[CCMap.Length][];
-            AutoPatchSlots = new (bool, Reface.IRefacePatch)[AutoPatchSlots.Length];
+            nu.AutoPatchSlots = new (bool, Reface.IRefacePatch)[AutoPatchSlots.Length];
             for (int i = 0; i < NoteMap.Length; i++) nu.NoteMap[i] = (bool[])NoteMap[i].Clone();
             for (int i = 0; i < CCMap.Length; i++) nu.CCMap[i] = (bool[])CCMap[i].Clone();
             for (int i = 0; i < nu.AutoPatchSlots.Length; i++) nu.AutoPatchSlots[i] = (AutoPatchSlots[i].Enabled, AutoPatchSlots[i].Patch?.Clone());
