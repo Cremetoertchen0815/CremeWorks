@@ -82,7 +82,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RefaceDataStructs.cs" />
+    <Compile Include="Reface\CP.cs" />
+    <Compile Include="Reface\CS.cs" />
+    <Compile Include="Reface\DX.cs" />
+    <Compile Include="Reface\General.cs" />
+    <Compile Include="Reface\IRefaceDevice.cs" />
     <Compile Include="Song.cs" />
     <Compile Include="SongEditor.cs">
       <SubType>Form</SubType>

@@ -69,9 +69,7 @@ namespace CremeWorks
     {
         public InputDevice Input;
         public OutputDevice Output;
-        public Reface.DeviceType Type = Reface.DeviceType.Undefined;
-        public byte[] SystemDump;
-        public byte[] VoiceDump;
+        public Reface.IRefaceDevice RefaceDevice;
         public string Name;
     }
 }
