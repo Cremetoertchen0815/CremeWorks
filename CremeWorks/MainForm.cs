@@ -121,5 +121,27 @@ namespace CremeWorks
             if (_c == null || _s == null) return;
             for (int i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplySettings(_c.Devices[i + 2]);
         }
+
+        int nIndex = -1;
+        private void playList_MouseDown(object sender, MouseEventArgs e) => nIndex = playList.SelectedIndex;
+        private void playList_MouseUp(object sender, MouseEventArgs e) => nIndex = -1;
+        private void playList_MouseMove(object sender, MouseEventArgs e)
+        {
+            var sIndex = playList.SelectedIndex;
+            if (e.Button == MouseButtons.Left && nIndex > -1 && nIndex != sIndex)
+            {
+                var aObj = playList.Items[nIndex];
+                var bObj = _c.Playlist[nIndex];
+
+                playList.Items[nIndex] = playList.Items[sIndex];
+                _c.Playlist[nIndex] = _c.Playlist[sIndex];
+
+
+                playList.Items[sIndex] = aObj;
+                _c.Playlist[sIndex] = bObj;
+
+                nIndex = sIndex;
+            }
+        }
     }
 }

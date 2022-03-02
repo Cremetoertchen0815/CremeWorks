@@ -173,6 +173,9 @@ namespace CremeWorks
             this.playList.Size = new System.Drawing.Size(238, 504);
             this.playList.TabIndex = 2;
             this.playList.SelectedIndexChanged += new System.EventHandler(this.playList_SelectedIndexChanged);
+            this.playList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playList_MouseDown);
+            this.playList.MouseMove += new System.Windows.Forms.MouseEventHandler(this.playList_MouseMove);
+            this.playList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.playList_MouseUp);
             // 
             // button1
             // 
