@@ -55,9 +55,9 @@ namespace CremeWorks
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(26, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 13);
+            this.label1.Size = new System.Drawing.Size(75, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Foot Switch";
+            this.label1.Text = "Foot Switch (I)";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label2
@@ -65,9 +65,9 @@ namespace CremeWorks
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 13);
+            this.label2.Size = new System.Drawing.Size(94, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Light Controller";
+            this.label2.Text = "Light Controller (O)";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label3
@@ -75,9 +75,9 @@ namespace CremeWorks
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(26, 69);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 13);
+            this.label3.Size = new System.Drawing.Size(85, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Master Instr.";
+            this.label3.Text = "Master Instr. (IO)";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label4
@@ -85,9 +85,9 @@ namespace CremeWorks
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(29, 96);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 13);
+            this.label4.Size = new System.Drawing.Size(80, 13);
             this.label4.TabIndex = 3;
-            this.label4.Text = "Aux Instr. 1";
+            this.label4.Text = "Aux Instr. 1 (IO)";
             this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label5
@@ -95,62 +95,62 @@ namespace CremeWorks
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(29, 123);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(60, 13);
+            this.label5.Size = new System.Drawing.Size(80, 13);
             this.label5.TabIndex = 4;
-            this.label5.Text = "Aux Instr. 2";
+            this.label5.Text = "Aux Instr. 2 (IO)";
             this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(95, 12);
+            this.comboBox1.Location = new System.Drawing.Point(113, 12);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(219, 21);
+            this.comboBox1.Size = new System.Drawing.Size(201, 21);
             this.comboBox1.TabIndex = 5;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(95, 39);
+            this.comboBox2.Location = new System.Drawing.Point(113, 39);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(219, 21);
+            this.comboBox2.Size = new System.Drawing.Size(201, 21);
             this.comboBox2.TabIndex = 6;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
             // comboBox3
             // 
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(95, 66);
+            this.comboBox3.Location = new System.Drawing.Point(113, 66);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(219, 21);
+            this.comboBox3.Size = new System.Drawing.Size(201, 21);
             this.comboBox3.TabIndex = 7;
             this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
             // comboBox4
             // 
             this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(95, 93);
+            this.comboBox4.Location = new System.Drawing.Point(113, 93);
             this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(219, 21);
+            this.comboBox4.Size = new System.Drawing.Size(201, 21);
             this.comboBox4.TabIndex = 8;
             this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
             // comboBox5
             // 
             this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(95, 120);
+            this.comboBox5.Location = new System.Drawing.Point(113, 120);
             this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(219, 21);
+            this.comboBox5.Size = new System.Drawing.Size(201, 21);
             this.comboBox5.TabIndex = 9;
             this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
             // comboBox6
             // 
             this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(95, 147);
+            this.comboBox6.Location = new System.Drawing.Point(113, 147);
             this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(219, 21);
+            this.comboBox6.Size = new System.Drawing.Size(201, 21);
             this.comboBox6.TabIndex = 11;
             this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
@@ -159,9 +159,9 @@ namespace CremeWorks
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(29, 150);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(60, 13);
+            this.label6.Size = new System.Drawing.Size(80, 13);
             this.label6.TabIndex = 10;
-            this.label6.Text = "Aux Instr. 3";
+            this.label6.Text = "Aux Instr. 3 (IO)";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // button1

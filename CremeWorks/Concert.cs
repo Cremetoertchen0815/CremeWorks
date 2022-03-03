@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CremeWorks
 {
@@ -25,19 +26,21 @@ namespace CremeWorks
 
         public void Connect()
         {
-            foreach (var element in Devices)
+            for (int i = 0; i < Devices.Length; i++)
             {
+                var element = Devices[i];
                 if (element.Name == null || element.Name == string.Empty) continue;
                 try
                 {
-                    if (element.Input == null) element.Input = InputDevice.GetByName(element.Name);
+                    if (element.Input == null && i != 1) element.Input = InputDevice.GetByName(element.Name);
                 }
-                catch { }
+                catch { MessageBox.Show("Input Device \"" + element.Name + "\" not found! Check connections and reconnect!", "MIDI Connection error!", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+                
                 try
                 {
-                    if (element.Output == null) element.Output = OutputDevice.GetByName(element.Name);
+                    if (element.Output == null && i != 0) element.Output = OutputDevice.GetByName(element.Name);
                 }
-                catch { }
+                catch { MessageBox.Show("Output Device \"" + element.Name + "\" not found! Check connections and reconnect!", "MIDI Connection error!", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             }
 
 
