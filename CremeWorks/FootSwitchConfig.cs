@@ -22,12 +22,12 @@ namespace CremeWorks
             _cont = new (ComboBox, NumericUpDown, NumericUpDown, Button)[] { (type1, valA1, valB1, det1), (type2, valA2, valB2, det2), (type3, valA3, valB3, det3),
                                                                              (type4, valA4, valB4, det4), (type5, valA5, valB5, det5), (type6, valA6, valB6, det6),
                                                                              (type7, valA7, valB7, det7), (type8, valA8, valB8, det8), (type9, valA9, valB9, det9), (type10, valA10, valB10, det10)};
-            
+
             //Load data into dialogue
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
-                var cfg = _c.FootSwitchConfig[i];
-                var cnt = _cont[i];
+                (MidiEventType, short, byte) cfg = _c.FootSwitchConfig[i];
+                (ComboBox, NumericUpDown, NumericUpDown, Button) cnt = _cont[i];
                 cnt.Item1.SelectedIndex = MidiEventTypeToIndex(cfg.Item1);
                 cnt.Item2.Value = cfg.Item2;
                 cnt.Item3.Value = Math.Max((int)cfg.Item3, 1);
@@ -43,7 +43,7 @@ namespace CremeWorks
             //Grad data
             var btn = (Button)sender;
             _scanID = int.Parse((string)btn.Tag);
-            var dev = _c.Devices[0].Input;
+            InputDevice dev = _c.Devices[0].Input;
             if (dev == null) return;
             _InTest = true;
             btn.Text = "Sensing...";
@@ -64,20 +64,22 @@ namespace CremeWorks
             _InTest = false;
 
             //Process data
-            var controls = _cont[_scanID];
-            if(e.Event.EventType == MidiEventType.NoteOn)
+            (ComboBox, NumericUpDown, NumericUpDown, Button) controls = _cont[_scanID];
+            if (e.Event.EventType == MidiEventType.NoteOn)
             {
                 var ev = (NoteOnEvent)e.Event;
                 controls.Item1.SelectedIndex = 0;
                 controls.Item2.Value = ev.NoteNumber;
                 controls.Item3.Value = ev.Channel + 1;
-            } else if (e.Event.EventType == MidiEventType.ControlChange)
+            }
+            else if (e.Event.EventType == MidiEventType.ControlChange)
             {
                 var ev = (ControlChangeEvent)e.Event;
                 controls.Item1.SelectedIndex = 1;
                 controls.Item2.Value = ev.ControlNumber;
                 controls.Item3.Value = ev.Channel + 1;
-            } else if (e.Event.EventType == MidiEventType.ProgramChange)
+            }
+            else if (e.Event.EventType == MidiEventType.ProgramChange)
             {
                 var ev = (ProgramChangeEvent)e.Event;
                 controls.Item1.SelectedIndex = 2;
@@ -90,9 +92,9 @@ namespace CremeWorks
         private void FootSwitchConfig_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Save data from dialogue
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
-                var cnt = _cont[i];
+                (ComboBox, NumericUpDown, NumericUpDown, Button) cnt = _cont[i];
                 _c.FootSwitchConfig[i] = (IndexToMidiEventType(cnt.Item1.SelectedIndex), (short)cnt.Item2.Value, (byte)(cnt.Item3.Value - 1));
             }
 

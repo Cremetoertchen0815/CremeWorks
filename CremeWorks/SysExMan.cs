@@ -4,7 +4,7 @@ using Melanchall.DryWetMidi.Multimedia;
 
 namespace CremeWorks
 {
-    class SysExMan
+    internal class SysExMan
     {
 
         private static byte GetModelID(DeviceType t)
@@ -35,7 +35,7 @@ namespace CremeWorks
             if (d == null) return;
 
             //Send byte by byte
-            for (int i = 0; i < data.Length; i++)
+            for (var i = 0; i < data.Length; i++)
                 d.SendEvent(new NormalSysExEvent(new byte[] { 0x43, 0x10, 0x7F, 0x1C, GetModelID(t), startAddr[0], startAddr[1], (byte)(startAddr[2] + i), data[i], 0xF7 })); //Send parameter change
         }
 

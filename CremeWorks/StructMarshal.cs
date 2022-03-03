@@ -7,8 +7,8 @@ namespace CremeWorks
     {
         public static byte[] getBytes(T str)
         {
-            int size = Marshal.SizeOf(str);
-            byte[] arr = new byte[size];
+            var size = Marshal.SizeOf(str);
+            var arr = new byte[size];
 
             IntPtr ptr = Marshal.AllocHGlobal(size);
             Marshal.StructureToPtr(str, ptr, true);
@@ -19,9 +19,9 @@ namespace CremeWorks
 
         public static T fromBytes(byte[] arr)
         {
-            T str = new T();
+            var str = new T();
 
-            int size = Marshal.SizeOf(str);
+            var size = Marshal.SizeOf(str);
             IntPtr ptr = Marshal.AllocHGlobal(size);
 
             Marshal.Copy(arr, 0, ptr, size);

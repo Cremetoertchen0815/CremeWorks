@@ -26,7 +26,7 @@ namespace CremeWorks
             _c = c;
             _s = s;
             _id = id;
-            _d = _c.Devices[2+id];
+            _d = _c.Devices[2 + id];
             CheckForIllegalCrossThreadCalls = false;
             _refaceDat = _s.AutoPatchSlots[id].Patch;
 
@@ -68,8 +68,11 @@ namespace CremeWorks
                 comboBox5.SelectedIndex = _refaceDat.SystemSettings.MIDICtrl;
                 numericUpDown6.Value = Math.Max(_refaceDat.SystemSettings.GlobalPBRange - 0x40, -24);
                 comboBox6.SelectedIndex = _refaceDat.SystemSettings.FootSwitchMode;
-            } else
+            }
+            else
+            {
                 deviceBox.Visible = false;
+            }
 
             //Prepare controls
             voiceBoxCS.Visible = false;
@@ -82,7 +85,7 @@ namespace CremeWorks
             switch (_refaceDat.Type)
             {
                 case DeviceType.RefaceCS:
-                    var cs = ((CSPatch)_refaceDat).VoiceSettings;
+                    CSPatch.RefaceCSVoiceData cs = ((CSPatch)_refaceDat).VoiceSettings;
                     numericUpDown17.Value = cs.Volume;
                     comboBox11.SelectedIndex = (int)cs.LFOAssign;
                     numericUpDown18.Value = cs.LFODepth;
@@ -109,7 +112,7 @@ namespace CremeWorks
                     fetchVoiceData.Enabled = false;
                     break;
                 case DeviceType.RefaceCP:
-                    var cp = ((CPPatch)_refaceDat).VoiceSettings;
+                    CPPatch.RefaceCPVoiceData cp = ((CPPatch)_refaceDat).VoiceSettings;
                     numericUpDown8.Value = cp.Volume;
                     comboBox7.SelectedIndex = (int)cp.WaveType;
                     numericUpDown9.Value = cp.Drive;
@@ -150,7 +153,8 @@ namespace CremeWorks
                 //System settings bulk received
                 _refaceDat.SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
                 UpdateControls();
-            } else if (ev.Data.Length == 28 && _refaceDat is CPPatch cp)
+            }
+            else if (ev.Data.Length == 28 && _refaceDat is CPPatch cp)
             {
                 //CP voice data bulk received
                 cp.VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
@@ -167,67 +171,73 @@ namespace CremeWorks
         private void SaveSystemData()
         {
             if (_refaceDat == null) return;
-            var sysDat = new RefaceSystemData();
-            sysDat.MIDIChannelTransmit = (byte)(numericUpDown1.Value == 0 ? 0x7F : numericUpDown1.Value - 1);
-            sysDat.MIDIChannelReceive = (byte)(numericUpDown2.Value == 0 ? 0x10 : numericUpDown2.Value - 1);
-            sysDat.MasterTune = (uint)numericUpDown3.Value;
-            sysDat.LocalControl = (byte)comboBox1.SelectedIndex;
-            sysDat.MasterTranspose = (byte)(numericUpDown4.Value + 0x40);
-            sysDat.Tempo = (ushort)numericUpDown5.Value;
-            sysDat.LCDContrast = (byte)numericUpDown7.Value;
-            sysDat.SustainPedalSelect = (byte)comboBox2.SelectedIndex;
-            sysDat.AutoPwrOff = (byte)comboBox3.SelectedIndex;
-            sysDat.SpkOut = (byte)comboBox4.SelectedIndex;
-            sysDat.MIDICtrl = (byte)comboBox5.SelectedIndex;
-            sysDat.GlobalPBRange = (byte)(numericUpDown4.Value + 0x40);
-            sysDat.FootSwitchMode = (byte)comboBox6.SelectedIndex;
+            var sysDat = new RefaceSystemData
+            {
+                MIDIChannelTransmit = (byte)(numericUpDown1.Value == 0 ? 0x7F : numericUpDown1.Value - 1),
+                MIDIChannelReceive = (byte)(numericUpDown2.Value == 0 ? 0x10 : numericUpDown2.Value - 1),
+                MasterTune = (uint)numericUpDown3.Value,
+                LocalControl = (byte)comboBox1.SelectedIndex,
+                MasterTranspose = (byte)(numericUpDown4.Value + 0x40),
+                Tempo = (ushort)numericUpDown5.Value,
+                LCDContrast = (byte)numericUpDown7.Value,
+                SustainPedalSelect = (byte)comboBox2.SelectedIndex,
+                AutoPwrOff = (byte)comboBox3.SelectedIndex,
+                SpkOut = (byte)comboBox4.SelectedIndex,
+                MIDICtrl = (byte)comboBox5.SelectedIndex,
+                GlobalPBRange = (byte)(numericUpDown4.Value + 0x40),
+                FootSwitchMode = (byte)comboBox6.SelectedIndex
+            };
             _refaceDat.SystemSettings = sysDat;
         }
 
         private void SaveVoiceData()
         {
-            switch(_refaceDat)
+            switch (_refaceDat)
             {
                 case CSPatch cs:
-                    var csDat = new CSPatch.RefaceCSVoiceData();
-                    csDat.Volume = (byte)numericUpDown17.Value;
-                    csDat.LFOAssign = (CSPatch.RefaceCSLFOAssign)comboBox11.SelectedIndex;
-                    csDat.LFODepth = (byte)numericUpDown18.Value;
-                    csDat.LFOSpeed = (byte)numericUpDown19.Value;
-                    csDat.Portamento = (byte)numericUpDown20.Value;
-                    csDat.OSCType = (CSPatch.RefaceCSOSCType)comboBox12.SelectedIndex;
-                    csDat.OSCTexture = (byte)numericUpDown21.Value;
-                    csDat.OSCMod = (byte)numericUpDown22.Value;
-                    csDat.FilterCutoff = (byte)numericUpDown23.Value;
-                    csDat.FilterResonance = (byte)numericUpDown24.Value;
-                    csDat.EGBalance = (byte)numericUpDown25.Value;
-                    csDat.EGAttack = (byte)numericUpDown26.Value;
-                    csDat.EGDecay = (byte)numericUpDown27.Value;
-                    csDat.EGSustain = (byte)numericUpDown28.Value;
-                    csDat.EGRelease = (byte)numericUpDown29.Value;
-                    csDat.FXType = (CSPatch.RefaceCSFXType)comboBox13.SelectedIndex;
-                    csDat.FXDepth = (byte)numericUpDown30.Value;
-                    csDat.FXRate = (byte)numericUpDown31.Value;
+                    var csDat = new CSPatch.RefaceCSVoiceData
+                    {
+                        Volume = (byte)numericUpDown17.Value,
+                        LFOAssign = (CSPatch.RefaceCSLFOAssign)comboBox11.SelectedIndex,
+                        LFODepth = (byte)numericUpDown18.Value,
+                        LFOSpeed = (byte)numericUpDown19.Value,
+                        Portamento = (byte)numericUpDown20.Value,
+                        OSCType = (CSPatch.RefaceCSOSCType)comboBox12.SelectedIndex,
+                        OSCTexture = (byte)numericUpDown21.Value,
+                        OSCMod = (byte)numericUpDown22.Value,
+                        FilterCutoff = (byte)numericUpDown23.Value,
+                        FilterResonance = (byte)numericUpDown24.Value,
+                        EGBalance = (byte)numericUpDown25.Value,
+                        EGAttack = (byte)numericUpDown26.Value,
+                        EGDecay = (byte)numericUpDown27.Value,
+                        EGSustain = (byte)numericUpDown28.Value,
+                        EGRelease = (byte)numericUpDown29.Value,
+                        FXType = (CSPatch.RefaceCSFXType)comboBox13.SelectedIndex,
+                        FXDepth = (byte)numericUpDown30.Value,
+                        FXRate = (byte)numericUpDown31.Value
+                    };
                     cs.VoiceSettings = csDat;
                     break;
                 case DXPatch dx:
                     dx.ProgramChangeNr = (byte)(numericUpDown32.Value - 1);
                     break;
                 case CPPatch cp:
-                    var cpDat = new CPPatch.RefaceCPVoiceData();
-                    cpDat.Volume = (byte)numericUpDown8.Value;
-                    cpDat.WaveType = (CPPatch.RefaceCPWaveType)comboBox7.SelectedIndex;
-                    cpDat.Drive = (byte)numericUpDown9.Value;
-                    cpDat.EffectAType = (CPPatch.RefaceCPEffectA)comboBox8.SelectedIndex;
-                    cpDat.EffectADepth = (byte)numericUpDown10.Value;
-                    cpDat.EffectARate = (byte)numericUpDown11.Value;
-                    cpDat.EffectBType = (CPPatch.RefaceCPEffectB)comboBox9.SelectedIndex;
-                    cpDat.EffectBDepth = (byte)numericUpDown12.Value;
-                    cpDat.EffectBSpeed = (byte)numericUpDown13.Value;
-                    cpDat.EffectCType = (CPPatch.RefaceCPEffectC)comboBox10.SelectedIndex;
-                    cpDat.EffectCDepth = (byte)numericUpDown14.Value;
-                    cpDat.EffectCTime = (byte)numericUpDown15.Value;
-                    cpDat.ReverbDepth = (byte)numericUpDown16.Value;
+                    var cpDat = new CPPatch.RefaceCPVoiceData
+                    {
+                        Volume = (byte)numericUpDown8.Value,
+                        WaveType = (CPPatch.RefaceCPWaveType)comboBox7.SelectedIndex,
+                        Drive = (byte)numericUpDown9.Value,
+                        EffectAType = (CPPatch.RefaceCPEffectA)comboBox8.SelectedIndex,
+                        EffectADepth = (byte)numericUpDown10.Value,
+                        EffectARate = (byte)numericUpDown11.Value,
+                        EffectBType = (CPPatch.RefaceCPEffectB)comboBox9.SelectedIndex,
+                        EffectBDepth = (byte)numericUpDown12.Value,
+                        EffectBSpeed = (byte)numericUpDown13.Value,
+                        EffectCType = (CPPatch.RefaceCPEffectC)comboBox10.SelectedIndex,
+                        EffectCDepth = (byte)numericUpDown14.Value,
+                        EffectCTime = (byte)numericUpDown15.Value,
+                        ReverbDepth = (byte)numericUpDown16.Value
+                    };
                     cp.VoiceSettings = cpDat;
                     break;
             }
@@ -235,8 +245,8 @@ namespace CremeWorks
 
         private byte[] CutOffBulkDumpHeader(byte[] dat)
         {
-            byte[] res = new byte[dat.Length - 12];
-            for (int i = 0; i < res.Length; i++) res[i] = dat[i + 10];
+            var res = new byte[dat.Length - 12];
+            for (var i = 0; i < res.Length; i++) res[i] = dat[i + 10];
             return res;
         }
 
@@ -281,7 +291,7 @@ namespace CremeWorks
         private void PushSysSettings(object sender, EventArgs e)
         {
             SaveSystemData();
-            _refaceDat?.ApplySettings(_d); 
+            _refaceDat?.ApplySettings(_d);
         }
 
         private void PushVoiceSettings(object sender, EventArgs e)

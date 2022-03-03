@@ -33,12 +33,14 @@ namespace CremeWorks
             ap1.Checked = apb1.Enabled = s.AutoPatchSlots[1].Enabled;
             ap2.Checked = apb2.Enabled = s.AutoPatchSlots[2].Enabled;
             ap3.Checked = apb3.Enabled = s.AutoPatchSlots[3].Enabled;
-            for (int x = 0; x < 4; x++)
-                for (int y = 0; y < 4; y++)
+            for (var x = 0; x < 4; x++)
+            {
+                for (var y = 0; y < 4; y++)
                 {
                     _mapMatrixA[x][y].Checked = s.NoteMap[x][y];
                     _mapMatrixB[x][y].Checked = s.CCMap[x][y];
                 }
+            }
         }
 
         private void CloseOK(object sender, EventArgs e)
@@ -59,12 +61,14 @@ namespace CremeWorks
             _s.Artist = txtArtist.Text;
             _s.Notes = txtNotes.Text;
             _s.Lyrics = txtLyrics.Text;
-            for (int x = 0; x < 4; x++)
-                for (int y = 0; y < 4; y++)
+            for (var x = 0; x < 4; x++)
+            {
+                for (var y = 0; y < 4; y++)
                 {
                     _s.NoteMap[x][y] = _mapMatrixA[x][y].Checked;
                     _s.CCMap[x][y] = _mapMatrixB[x][y].Checked;
                 }
+            }
         }
 
         private void SysExEdit(object sender, EventArgs e) => new APEditor(_c, _s, int.Parse((string)((Button)sender).Tag)).ShowDialog();
@@ -93,7 +97,7 @@ namespace CremeWorks
             }
 
             //Update database
-            var patchBuffer = _s.AutoPatchSlots[id].Patch;
+            Reface.IRefacePatch patchBuffer = _s.AutoPatchSlots[id].Patch;
             _s.AutoPatchSlots[id] = (chk.Checked, patchBuffer);
 
         }

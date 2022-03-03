@@ -17,22 +17,22 @@ namespace CremeWorks
         public List<Song> Playlist;
 
         public MIDIMatrix MidiMatrix;
-        public Action<bool> ConnectionChangeHandler = (x) => {return; };
+        public Action<bool> ConnectionChangeHandler = (x) => { return; };
 
-        public Concert() { MidiMatrix = new MIDIMatrix(this); }
+        public Concert() => MidiMatrix = new MIDIMatrix(this);
 
         public void Connect()
         {
-            for (int i = 0; i < Devices.Length; i++)
+            for (var i = 0; i < Devices.Length; i++)
             {
-                var element = Devices[i];
+                MIDIDevice element = Devices[i];
                 if (element.Name == null || element.Name == string.Empty) continue;
                 try
                 {
                     if (element.Input == null && i != 1) element.Input = InputDevice.GetByName(element.Name);
                 }
                 catch { MessageBox.Show("Input Device \"" + element.Name + "\" not found! Check connections and reconnect!", "MIDI Connection error!", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-                
+
                 try
                 {
                     if (element.Output == null && i != 0) element.Output = OutputDevice.GetByName(element.Name);
@@ -47,7 +47,7 @@ namespace CremeWorks
         public void Disconnect()
         {
             MidiMatrix.Unregister();
-            foreach (var element in Devices)
+            foreach (MIDIDevice element in Devices)
             {
                 if (element.Name == null || element.Name == string.Empty) continue;
                 if (element.Input != null) { element.Input.Dispose(); element.Input = null; }
@@ -59,11 +59,13 @@ namespace CremeWorks
 
         public static Concert Empty()
         {
-            var lol = new Concert();
-            lol.Devices = new MIDIDevice[] { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() };
-            lol.FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) };
-            lol.Playlist = new List<Song>();
-            lol.QAConfig = new QuickAccessConfig();
+            var lol = new Concert
+            {
+                Devices = new MIDIDevice[] { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() },
+                FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) },
+                Playlist = new List<Song>(),
+                QAConfig = new QuickAccessConfig()
+            };
             return lol;
         }
 
@@ -77,40 +79,42 @@ namespace CremeWorks
             if (br.ReadString() != cHeader) throw new Exception("Incorrect file!");
             nu.FilePath = filename;
             nu.Devices = new MIDIDevice[br.ReadInt32()];
-            for (int i = 0; i < nu.Devices.Length; i++) nu.Devices[i] = new MIDIDevice() { Name = br.ReadString() };
+            for (var i = 0; i < nu.Devices.Length; i++) nu.Devices[i] = new MIDIDevice() { Name = br.ReadString() };
             //Foot switch config
             nu.FootSwitchConfig = new (MidiEventType, short, byte)[br.ReadInt32()];
-            for (int i = 0; i < nu.FootSwitchConfig.Length; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
+            for (var i = 0; i < nu.FootSwitchConfig.Length; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
             //QA config
             nu.QAConfig = new QuickAccessConfig();
-            for (int i = 0; i < nu.QAConfig.PatchNames.Length; i++) nu.QAConfig.PatchNames[i] = br.ReadString();
-            for (int i = 0; i < nu.QAConfig.EventType.Length; i++)
+            for (var i = 0; i < nu.QAConfig.PatchNames.Length; i++) nu.QAConfig.PatchNames[i] = br.ReadString();
+            for (var i = 0; i < nu.QAConfig.EventType.Length; i++)
             {
-                int val = br.ReadInt32();
+                var val = br.ReadInt32();
                 nu.QAConfig.EventType[i] = val < 0 ? null : (MidiEventType?)val;
             }
-            for (int i = 0; i < nu.QAConfig.EventValue.Length; i++) nu.QAConfig.EventValue[i] = br.ReadByte();
-            for (int i = 0; i < nu.QAConfig.ActionType.Length; i++) nu.QAConfig.ActionType[i] = (QuickAccessConfig.QuickAccessSwitchType)br.ReadInt32();
+            for (var i = 0; i < nu.QAConfig.EventValue.Length; i++) nu.QAConfig.EventValue[i] = br.ReadByte();
+            for (var i = 0; i < nu.QAConfig.ActionType.Length; i++) nu.QAConfig.ActionType[i] = (QuickAccessConfig.QuickAccessSwitchType)br.ReadInt32();
             nu.QAConfig.TransmitChannel = br.ReadByte();
             //Playlist
             var count = br.ReadInt32();
             nu.Playlist = new List<Song>();
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
-                var s = new Song();
-                s.Title = br.ReadString();
-                s.Artist = br.ReadString();
-                s.Notes = br.ReadString();
-                s.Lyrics = br.ReadString();
-                s.NoteMap = new bool[4][];
-                s.CCMap = new bool[4][];
-                for (int j = 0; j < 4; j++)
+                var s = new Song
+                {
+                    Title = br.ReadString(),
+                    Artist = br.ReadString(),
+                    Notes = br.ReadString(),
+                    Lyrics = br.ReadString(),
+                    NoteMap = new bool[4][],
+                    CCMap = new bool[4][]
+                };
+                for (var j = 0; j < 4; j++)
                 {
                     s.NoteMap[j] = new bool[] { br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean() };
                     s.CCMap[j] = new bool[] { br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean() };
                 }
                 s.AutoPatchSlots = new (bool, IRefacePatch)[br.ReadInt32()];
-                for (int j = 0; j < s.AutoPatchSlots.Length; j++)
+                for (var j = 0; j < s.AutoPatchSlots.Length; j++)
                 {
                     var enabled = br.ReadBoolean();
                     var type = br.ReadInt32();
@@ -119,21 +123,27 @@ namespace CremeWorks
                     switch ((DeviceType)type)
                     {
                         case DeviceType.RefaceCS:
-                            var cs = new CSPatch();
-                            cs.SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32()));
-                            cs.VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()));
+                            var cs = new CSPatch
+                            {
+                                SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                            };
                             patch = cs;
                             break;
                         case DeviceType.RefaceDX:
-                            var dx = new DXPatch();
-                            dx.SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32()));
-                            dx.ProgramChangeNr = br.ReadByte();
+                            var dx = new DXPatch
+                            {
+                                SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                ProgramChangeNr = br.ReadByte()
+                            };
                             patch = dx;
                             break;
                         case DeviceType.RefaceCP:
-                            var cp = new CPPatch();
-                            cp.SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32()));
-                            cp.VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()));
+                            var cp = new CPPatch
+                            {
+                                SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                            };
                             patch = cp;
                             break;
                         default:
@@ -158,40 +168,40 @@ namespace CremeWorks
             //Misc
             bw.Write(cHeader);
             bw.Write(Devices.Length);
-            for (int i = 0; i < Devices.Length; i++) bw.Write(Devices[i]?.Name ?? string.Empty);
+            for (var i = 0; i < Devices.Length; i++) bw.Write(Devices[i]?.Name ?? string.Empty);
             //Foot switch config
             bw.Write(FootSwitchConfig.Length);
-            for (int i = 0; i < FootSwitchConfig.Length; i++)
+            for (var i = 0; i < FootSwitchConfig.Length; i++)
             {
                 bw.Write((int)FootSwitchConfig[i].Item1);
                 bw.Write(FootSwitchConfig[i].Item2);
                 bw.Write(FootSwitchConfig[i].Item3);
             }
-            
+
             //Quick Access config
-            for (int i = 0; i < QAConfig.PatchNames.Length; i++) bw.Write(QAConfig.PatchNames[i]);
-            for (int i = 0; i < QAConfig.EventType.Length; i++) bw.Write((int?)QAConfig.EventType[i] ?? -1);
-            for (int i = 0; i < QAConfig.EventValue.Length; i++) bw.Write(QAConfig.EventValue[i]);
-            for (int i = 0; i < QAConfig.ActionType.Length; i++) bw.Write((int)QAConfig.ActionType[i]);
+            for (var i = 0; i < QAConfig.PatchNames.Length; i++) bw.Write(QAConfig.PatchNames[i]);
+            for (var i = 0; i < QAConfig.EventType.Length; i++) bw.Write((int?)QAConfig.EventType[i] ?? -1);
+            for (var i = 0; i < QAConfig.EventValue.Length; i++) bw.Write(QAConfig.EventValue[i]);
+            for (var i = 0; i < QAConfig.ActionType.Length; i++) bw.Write((int)QAConfig.ActionType[i]);
             bw.Write(QAConfig.TransmitChannel);
             //Playlist
             bw.Write(Playlist.Count);
-            for (int i = 0; i < Playlist.Count; i++)
+            for (var i = 0; i < Playlist.Count; i++)
             {
-                var song = Playlist[i];
+                Song song = Playlist[i];
                 bw.Write(song.Title);
                 bw.Write(song.Artist);
                 bw.Write(song.Notes);
                 bw.Write(song.Lyrics);
-                for (int j = 0; j < 4; j++)
+                for (var j = 0; j < 4; j++)
                 {
-                    for (int k = 0; k < 4; k++) bw.Write(song.NoteMap[j][k]);
-                    for (int k = 0; k < 4; k++) bw.Write(song.CCMap[j][k]);
+                    for (var k = 0; k < 4; k++) bw.Write(song.NoteMap[j][k]);
+                    for (var k = 0; k < 4; k++) bw.Write(song.CCMap[j][k]);
                 }
                 bw.Write(song.AutoPatchSlots.Length);
-                for (int j = 0; j < song.AutoPatchSlots.Length; j++)
+                for (var j = 0; j < song.AutoPatchSlots.Length; j++)
                 {
-                    var obj = song.AutoPatchSlots[j];
+                    (bool Enabled, IRefacePatch Patch) obj = song.AutoPatchSlots[j];
                     bw.Write(obj.Enabled);
                     bw.Write((int?)obj.Patch?.Type ?? -1);
                     switch (obj.Patch)

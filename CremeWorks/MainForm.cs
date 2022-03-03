@@ -26,15 +26,17 @@ namespace CremeWorks
                 _c.MidiMatrix.Register();
             }
             else
+            {
                 _c.Disconnect();
+            }
         }
 
-        private void Form1_Load(object sender, EventArgs e) =>_c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
+        private void Form1_Load(object sender, EventArgs e) => _c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
 
         private void UpdatePlaylist()
         {
             playList.Items.Clear();
-            foreach (var element in _c.Playlist)
+            foreach (Song element in _c.Playlist)
                 playList.Items.Add(element.Title + " - " + element.Artist);
         }
 
@@ -55,7 +57,7 @@ namespace CremeWorks
             _c.MidiMatrix.NoteMap = _s.NoteMap;
             _c.MidiMatrix.CCMap = _s.CCMap;
 
-            for (int i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplyPatch(_c.Devices[i + 2]);
+            for (var i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplyPatch(_c.Devices[i + 2]);
         }
 
         private void ExecuteAction(int nr, bool enable)
@@ -69,7 +71,7 @@ namespace CremeWorks
                     if (enable && playList.SelectedIndex < playList.Items.Count - 1) playList.SelectedIndex++;
                     break;
                 case 2:
-                    if (enable) foreach (var item in _c.Devices) if (item.Output != null) item.Output.TurnAllNotesOff();
+                    if (enable) foreach (MIDIDevice item in _c.Devices) if (item.Output != null) item.Output.TurnAllNotesOff();
                     break;
                 default:
                     break;
@@ -110,10 +112,10 @@ namespace CremeWorks
         private void applySongSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_c == null || _s == null) return;
-            for (int i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplySettings(_c.Devices[i + 2]);
+            for (var i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplySettings(_c.Devices[i + 2]);
         }
 
-        int nIndex = -1;
+        private int nIndex = -1;
         private void playList_MouseDown(object sender, MouseEventArgs e) => nIndex = playList.SelectedIndex;
         private void playList_MouseUp(object sender, MouseEventArgs e) => nIndex = -1;
         private void playList_MouseMove(object sender, MouseEventArgs e)
@@ -122,7 +124,7 @@ namespace CremeWorks
             if (e.Button == MouseButtons.Left && nIndex > -1 && nIndex != sIndex)
             {
                 var aObj = playList.Items[nIndex];
-                var bObj = _c.Playlist[nIndex];
+                Song bObj = _c.Playlist[nIndex];
 
                 playList.Items[nIndex] = playList.Items[sIndex];
                 _c.Playlist[nIndex] = _c.Playlist[sIndex];
@@ -138,7 +140,7 @@ namespace CremeWorks
         private void DuplicateSong(object sender, EventArgs e)
         {
             if (playList.SelectedIndex < 0) return;
-            var cpy = _c.Playlist[playList.SelectedIndex].Clone();
+            Song cpy = _c.Playlist[playList.SelectedIndex].Clone();
             _c.Playlist.Add(cpy);
             UpdatePlaylist();
         }
@@ -171,7 +173,8 @@ namespace CremeWorks
             if (_c.FilePath == null || _c.FilePath == string.Empty)
             {
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK) _c.SaveToFile(saveFileDialog1.FileName);
-            } else
+            }
+            else
             {
                 _c.SaveToFile(_c.FilePath);
             }

@@ -12,6 +12,6 @@ namespace CremeWorks
         public QuickAccessSwitchType[] ActionType = { QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle,
                                                       QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle, QuickAccessSwitchType.Toggle};
 
-        public enum QuickAccessSwitchType { Linear, OneShot, Toggle  }
+        public enum QuickAccessSwitchType { Linear, OneShot, Toggle }
     }
 }

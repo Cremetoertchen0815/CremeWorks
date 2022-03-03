@@ -2,7 +2,7 @@
 
 namespace CremeWorks.Reface
 {
-    class CPPatch : IRefacePatch
+    internal class CPPatch : IRefacePatch
     {
         public RefaceSystemData SystemSettings { get; set; }
         public RefaceCPVoiceData VoiceSettings { get; set; }

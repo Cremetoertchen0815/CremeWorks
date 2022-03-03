@@ -24,7 +24,7 @@ namespace CremeWorks
             if (_c?.Devices[3]?.Input != null) _c.Devices[3].Input.EventReceived += ListenAux1;
             if (_c?.Devices[4]?.Input != null) _c.Devices[4].Input.EventReceived += ListenAux2;
             if (_c?.Devices[5]?.Input != null) _c.Devices[5].Input.EventReceived += ListenAux3;
-            foreach (var element in _c.Devices) element.Input?.StartEventsListening();
+            foreach (MIDIDevice element in _c.Devices) element.Input?.StartEventsListening();
             _reg = true;
         }
 
@@ -37,15 +37,16 @@ namespace CremeWorks
             if (_c?.Devices[3]?.Input != null) _c.Devices[3].Input.EventReceived -= ListenAux1;
             if (_c?.Devices[4]?.Input != null) _c.Devices[4].Input.EventReceived -= ListenAux2;
             if (_c?.Devices[5]?.Input != null) _c.Devices[5].Input.EventReceived -= ListenAux3;
-            foreach (var element in _c.Devices) element.Input?.StopEventsListening();
+            foreach (MIDIDevice element in _c.Devices) element.Input?.StopEventsListening();
             _reg = false;
         }
 
-        private void ListenFootPedal(object sender, MidiEventReceivedEventArgs e )
+        private void ListenFootPedal(object sender, MidiEventReceivedEventArgs e)
         {
 
-            for (int i = 0; i < _c.FootSwitchConfig.Length; i++)
-            if (e.Event.EventType == MidiEventType.NoteOn && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
+            for (var i = 0; i < _c.FootSwitchConfig.Length; i++)
+            {
+                if (e.Event.EventType == MidiEventType.NoteOn && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
                 {
                     var ev = (NoteOnEvent)e.Event;
                     if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
@@ -72,6 +73,7 @@ namespace CremeWorks
                         ExecuteAction(i, false);
                     }
                 }
+            }
         }
 
         private bool[] _actionActive = { false, false, false, false, false, false, false, false, false, false };
@@ -100,10 +102,11 @@ namespace CremeWorks
         {
             if (e.EventType == MidiEventType.NoteOn || e.EventType == MidiEventType.NoteOff)
             {
-                for (int i = 0; i < 4; i++) if (NoteMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
-            } else if (e.EventType == MidiEventType.ControlChange)
+                for (var i = 0; i < 4; i++) if (NoteMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+            }
+            else if (e.EventType == MidiEventType.ControlChange)
             {
-                for (int i = 0; i < 4; i++) if (CCMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+                for (var i = 0; i < 4; i++) if (CCMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
             }
         }
     }

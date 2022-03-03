@@ -1,10 +1,9 @@
 ﻿using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
-using Melanchall.DryWetMidi.Multimedia;
 
 namespace CremeWorks.Reface
 {
-    class DXPatch : IRefacePatch
+    internal class DXPatch : IRefacePatch
     {
         public RefaceSystemData SystemSettings { get; set; }
         public byte ProgramChangeNr { get; set; }
