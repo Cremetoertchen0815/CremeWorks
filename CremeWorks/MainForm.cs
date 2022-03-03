@@ -176,7 +176,6 @@ namespace CremeWorks
 
         private void Save(object sender, EventArgs e)
         {
-            saveFileDialog1.CheckFileExists = false;
             if (_c == null) return;
             if (_c.FilePath == null || _c.FilePath == string.Empty)
             {

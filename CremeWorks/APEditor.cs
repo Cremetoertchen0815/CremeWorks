@@ -163,6 +163,7 @@ namespace CremeWorks
 
         private void SaveSystemData()
         {
+            if (_refaceDat == null) return;
             var sysDat = new RefaceSystemData();
             sysDat.MIDIChannelTransmit = (byte)(numericUpDown1.Value == 0 ? 0x7F : numericUpDown1.Value - 1);
             sysDat.MIDIChannelReceive = (byte)(numericUpDown2.Value == 0 ? 0x10 : numericUpDown2.Value - 1);

@@ -390,7 +390,6 @@ namespace CremeWorks
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.CheckFileExists = true;
             this.saveFileDialog1.Filter = "CremeWorks Concert(.cwc)|*.cwc";
             this.saveFileDialog1.Title = "Save Concert";
             // 
