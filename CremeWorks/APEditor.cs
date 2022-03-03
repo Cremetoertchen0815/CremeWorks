@@ -130,6 +130,9 @@ namespace CremeWorks
 
         private void ListenForSysEx(object sender, MidiEventReceivedEventArgs e)
         {
+            //Implement feedback
+            _d.Output?.SendEvent(e.Event);
+
             if (e.Event.EventType == MidiEventType.ProgramChange && _refaceDat is DXPatch dx)
             {
                 //DX program change received
