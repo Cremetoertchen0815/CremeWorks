@@ -151,5 +151,17 @@ namespace CremeWorks
             _c.Playlist.Add(cpy);
             UpdatePlaylist();
         }
+
+        private void New(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UpdateConcert()
+        {
+            Text = "CremeWorks Stage Controller - " + _c?.FilePath ?? "Untitled";
+
+            UpdatePlaylist();
+        }
     }
 }

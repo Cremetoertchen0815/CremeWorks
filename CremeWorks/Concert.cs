@@ -13,7 +13,7 @@ namespace CremeWorks
         public string FilePath;
         public MIDIDevice[] Devices;
         public (MidiEventType, short, byte)[] FootSwitchConfig;
-        public object LightingConfig;
+        public QuickAccessConfig LightingConfig;
         public List<Song> Playlist;
 
         public MIDIMatrix MidiMatrix;

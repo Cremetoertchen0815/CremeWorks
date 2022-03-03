@@ -40,6 +40,7 @@ namespace CremeWorks
             this.footSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.applySongSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.playList = new System.Windows.Forms.ListBox();
@@ -57,7 +58,6 @@ namespace CremeWorks
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.applySongSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button12 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -88,25 +88,26 @@ namespace CremeWorks
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.New);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             // 
             // devicesToolStripMenuItem
@@ -146,6 +147,13 @@ namespace CremeWorks
             this.connectToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.connectToolStripMenuItem.Text = "Connect";
             this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
+            // 
+            // applySongSettingsToolStripMenuItem
+            // 
+            this.applySongSettingsToolStripMenuItem.Name = "applySongSettingsToolStripMenuItem";
+            this.applySongSettingsToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.applySongSettingsToolStripMenuItem.Text = "Apply Device Settings";
+            this.applySongSettingsToolStripMenuItem.Click += new System.EventHandler(this.applySongSettingsToolStripMenuItem_Click);
             // 
             // lightingToolStripMenuItem
             // 
@@ -358,13 +366,6 @@ namespace CremeWorks
             this.label3.Size = new System.Drawing.Size(47, 13);
             this.label3.TabIndex = 16;
             this.label3.Text = "Lighting:";
-            // 
-            // applySongSettingsToolStripMenuItem
-            // 
-            this.applySongSettingsToolStripMenuItem.Name = "applySongSettingsToolStripMenuItem";
-            this.applySongSettingsToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.applySongSettingsToolStripMenuItem.Text = "Apply Device Settings";
-            this.applySongSettingsToolStripMenuItem.Click += new System.EventHandler(this.applySongSettingsToolStripMenuItem_Click);
             // 
             // button12
             // 

@@ -67,6 +67,7 @@
     <Compile Include="FootSwitchConfig.Designer.cs">
       <DependentUpon>FootSwitchConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="QuickAccessConfig.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
