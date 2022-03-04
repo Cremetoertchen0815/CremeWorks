@@ -43,11 +43,13 @@ namespace CremeWorks
         {
             songTitle.Text = string.Empty;
             songLyrics.Text = string.Empty;
+            txtKey.Text = string.Empty;
             if (_s == null) return;
 
 
             songTitle.Text = _s.Title;
             songLyrics.Text = _s.Lyrics;
+            txtKey.Text = "Key: " + _s.Key;
             ConfigSongMIDI();
         }
 
