@@ -70,6 +70,18 @@
     <Compile Include="FootSwitchConfig.Designer.cs">
       <DependentUpon>FootSwitchConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="LightingConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LightingConfig.Designer.cs">
+      <DependentUpon>LightingConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LightingPreset.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LightingPreset.Designer.cs">
+      <DependentUpon>LightingPreset.cs</DependentUpon>
+    </Compile>
     <Compile Include="QuickAccessConfig.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -105,6 +117,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FootSwitchConfig.resx">
       <DependentUpon>FootSwitchConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LightingConfig.resx">
+      <DependentUpon>LightingConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LightingPreset.resx">
+      <DependentUpon>LightingPreset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

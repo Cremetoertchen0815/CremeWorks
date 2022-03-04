@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace CremeWorks
@@ -7,6 +8,18 @@ namespace CremeWorks
     {
         private Concert _c = Concert.Empty();
         private Song _s = null;
+
+        #region External
+        const int EM_LINESCROLL = 0x00B6;
+        [DllImport("user32.dll")]
+        static extern int SetScrollPos(IntPtr hWnd, int nBar,
+                               int nPos, bool bRedraw);
+        [DllImport("user32.dll")]
+        static extern int SendMessage(IntPtr hWnd, int wMsg,
+                                       int wParam, int lParam);
+        [DllImport("user32.dll")]
+        static extern int GetScrollPos(IntPtr hWnd, int nBar);
+        #endregion
 
         public MainForm()
         {
@@ -73,6 +86,16 @@ namespace CremeWorks
                     break;
                 case 2:
                     if (enable) foreach (MIDIDevice item in _c.Devices) if (item.Output != null) item.Output.TurnAllNotesOff();
+                    break;
+                case 3:
+                    if (!enable) break;
+                    SetScrollPos(songLyrics.Handle, 1, -10, true);
+                    SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, -10);
+                    break;
+                case 4:
+                    if (!enable) break;
+                    SetScrollPos(songLyrics.Handle, 1, 10, true);
+                    SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, 10);
                     break;
                 default:
                     break;
@@ -189,5 +212,7 @@ namespace CremeWorks
             _c.SaveToFile(saveFileDialog1.FileName);
             UpdateConcert();
         }
+
+        private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightingConfig(_c).ShowDialog();
     }
 }

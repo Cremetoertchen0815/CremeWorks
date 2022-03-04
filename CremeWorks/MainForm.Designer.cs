@@ -42,7 +42,6 @@ namespace CremeWorks
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applySongSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.playList = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -56,13 +55,13 @@ namespace CremeWorks
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.button12 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.txtKey = new System.Windows.Forms.Label();
+            this.quickAccessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lightControllerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,8 +69,7 @@ namespace CremeWorks
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.configToolStripMenuItem,
-            this.devicesToolStripMenuItem,
-            this.lightingToolStripMenuItem});
+            this.devicesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1014, 24);
@@ -122,6 +120,8 @@ namespace CremeWorks
             this.devicesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.configureToolStripMenuItem,
             this.footSwitchToolStripMenuItem,
+            this.lightControllerToolStripMenuItem,
+            this.quickAccessToolStripMenuItem,
             this.toolStripMenuItem1,
             this.connectToolStripMenuItem,
             this.applySongSettingsToolStripMenuItem});
@@ -161,12 +161,6 @@ namespace CremeWorks
             this.applySongSettingsToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.applySongSettingsToolStripMenuItem.Text = "Apply Device Settings";
             this.applySongSettingsToolStripMenuItem.Click += new System.EventHandler(this.applySongSettingsToolStripMenuItem_Click);
-            // 
-            // lightingToolStripMenuItem
-            // 
-            this.lightingToolStripMenuItem.Name = "lightingToolStripMenuItem";
-            this.lightingToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
-            this.lightingToolStripMenuItem.Text = "Lighting";
             // 
             // label1
             // 
@@ -274,7 +268,7 @@ namespace CremeWorks
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(100, 100);
             this.button5.TabIndex = 9;
-            this.button5.Tag = "1";
+            this.button5.Tag = "3";
             this.button5.Text = "Quick Access A";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
@@ -288,7 +282,7 @@ namespace CremeWorks
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(100, 100);
             this.button6.TabIndex = 11;
-            this.button6.Tag = "3";
+            this.button6.Tag = "5";
             this.button6.Text = "Quick Access C";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
@@ -302,7 +296,7 @@ namespace CremeWorks
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(100, 100);
             this.button7.TabIndex = 10;
-            this.button7.Tag = "2";
+            this.button7.Tag = "4";
             this.button7.Text = "Quick Access B";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
@@ -316,7 +310,7 @@ namespace CremeWorks
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(100, 100);
             this.button8.TabIndex = 13;
-            this.button8.Tag = "5";
+            this.button8.Tag = "7";
             this.button8.Text = "Quick Access E";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
@@ -330,39 +324,11 @@ namespace CremeWorks
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(100, 100);
             this.button9.TabIndex = 12;
-            this.button9.Tag = "4";
+            this.button9.Tag = "6";
             this.button9.Text = "Quick Access D";
             this.button9.UseVisualStyleBackColor = true;
             this.button9.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
             this.button9.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonUp);
-            // 
-            // button10
-            // 
-            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
-            this.button10.Location = new System.Drawing.Point(904, 376);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(100, 100);
-            this.button10.TabIndex = 15;
-            this.button10.Tag = "7";
-            this.button10.Text = "Quick Access G";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
-            this.button10.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonUp);
-            // 
-            // button11
-            // 
-            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
-            this.button11.Location = new System.Drawing.Point(798, 376);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(100, 100);
-            this.button11.TabIndex = 14;
-            this.button11.Tag = "6";
-            this.button11.Text = "Quick Access F";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
-            this.button11.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonUp);
             // 
             // label3
             // 
@@ -405,6 +371,19 @@ namespace CremeWorks
             this.txtKey.Size = new System.Drawing.Size(0, 20);
             this.txtKey.TabIndex = 18;
             // 
+            // quickAccessToolStripMenuItem
+            // 
+            this.quickAccessToolStripMenuItem.Name = "quickAccessToolStripMenuItem";
+            this.quickAccessToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.quickAccessToolStripMenuItem.Text = "Quick Access";
+            // 
+            // lightControllerToolStripMenuItem
+            // 
+            this.lightControllerToolStripMenuItem.Name = "lightControllerToolStripMenuItem";
+            this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.lightControllerToolStripMenuItem.Text = "Light Controller";
+            this.lightControllerToolStripMenuItem.Click += new System.EventHandler(this.lightControllerToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -415,8 +394,6 @@ namespace CremeWorks
             this.Controls.Add(this.playList);
             this.Controls.Add(this.songTitle);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.button10);
-            this.Controls.Add(this.button11);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button6);
@@ -462,11 +439,8 @@ namespace CremeWorks
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripMenuItem configureToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lightingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem footSwitchToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
@@ -475,6 +449,8 @@ namespace CremeWorks
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Label txtKey;
+        private System.Windows.Forms.ToolStripMenuItem lightControllerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem quickAccessToolStripMenuItem;
     }
 }
 

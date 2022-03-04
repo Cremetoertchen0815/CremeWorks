@@ -67,11 +67,9 @@ namespace CremeWorks
             this.valB9 = new System.Windows.Forms.NumericUpDown();
             this.valA9 = new System.Windows.Forms.NumericUpDown();
             this.type9 = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.valB8 = new System.Windows.Forms.NumericUpDown();
             this.valA8 = new System.Windows.Forms.NumericUpDown();
             this.type8 = new System.Windows.Forms.ComboBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.det1 = new System.Windows.Forms.Button();
             this.det2 = new System.Windows.Forms.Button();
             this.det3 = new System.Windows.Forms.Button();
@@ -82,6 +80,8 @@ namespace CremeWorks
             this.det5 = new System.Windows.Forms.Button();
             this.det10 = new System.Windows.Forms.Button();
             this.det9 = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.valA1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB2)).BeginInit();
@@ -302,7 +302,7 @@ namespace CremeWorks
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 121);
+            this.label4.Location = new System.Drawing.Point(12, 174);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(83, 13);
             this.label4.TabIndex = 13;
@@ -361,7 +361,7 @@ namespace CremeWorks
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 147);
+            this.label7.Location = new System.Drawing.Point(12, 200);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(83, 13);
             this.label7.TabIndex = 17;
@@ -420,7 +420,7 @@ namespace CremeWorks
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 173);
+            this.label8.Location = new System.Drawing.Point(12, 226);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(83, 13);
             this.label8.TabIndex = 21;
@@ -479,7 +479,7 @@ namespace CremeWorks
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 199);
+            this.label9.Location = new System.Drawing.Point(12, 252);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(84, 13);
             this.label9.TabIndex = 25;
@@ -538,7 +538,7 @@ namespace CremeWorks
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 225);
+            this.label10.Location = new System.Drawing.Point(12, 278);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(83, 13);
             this.label10.TabIndex = 29;
@@ -653,15 +653,6 @@ namespace CremeWorks
             this.type9.Tag = "8";
             this.type9.Text = "Note On";
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(12, 278);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(84, 13);
-            this.label12.TabIndex = 37;
-            this.label12.Text = "Quick Access G";
-            // 
             // valB8
             // 
             this.valB8.Location = new System.Drawing.Point(314, 225);
@@ -711,15 +702,6 @@ namespace CremeWorks
             this.type8.TabIndex = 34;
             this.type8.Tag = "7";
             this.type8.Text = "Note On";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(12, 252);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(82, 13);
-            this.label13.TabIndex = 33;
-            this.label13.Text = "Quick Access F";
             // 
             // det1
             // 
@@ -831,11 +813,31 @@ namespace CremeWorks
             this.det9.UseVisualStyleBackColor = true;
             this.det9.Click += new System.EventHandler(this.det1_Click);
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(12, 148);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(88, 13);
+            this.label12.TabIndex = 56;
+            this.label12.Text = "Scroll Text Down";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(12, 122);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(74, 13);
+            this.label13.TabIndex = 55;
+            this.label13.Text = "Scroll Text Up";
+            // 
             // FootSwitchConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(451, 307);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.det10);
             this.Controls.Add(this.det9);
             this.Controls.Add(this.det8);
@@ -853,11 +855,9 @@ namespace CremeWorks
             this.Controls.Add(this.valB9);
             this.Controls.Add(this.valA9);
             this.Controls.Add(this.type9);
-            this.Controls.Add(this.label12);
             this.Controls.Add(this.valB8);
             this.Controls.Add(this.valA8);
             this.Controls.Add(this.type8);
-            this.Controls.Add(this.label13);
             this.Controls.Add(this.valB7);
             this.Controls.Add(this.valA7);
             this.Controls.Add(this.type7);
@@ -960,11 +960,9 @@ namespace CremeWorks
         private System.Windows.Forms.NumericUpDown valB9;
         private System.Windows.Forms.NumericUpDown valA9;
         private System.Windows.Forms.ComboBox type9;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.NumericUpDown valB8;
         private System.Windows.Forms.NumericUpDown valA8;
         private System.Windows.Forms.ComboBox type8;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button det1;
         private System.Windows.Forms.Button det2;
         private System.Windows.Forms.Button det3;
@@ -975,5 +973,7 @@ namespace CremeWorks
         private System.Windows.Forms.Button det5;
         private System.Windows.Forms.Button det10;
         private System.Windows.Forms.Button det9;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
     }
 }
