@@ -50,7 +50,15 @@ namespace CremeWorks
             playList.Items.Clear();
             foreach (Song element in _c.Playlist)
                 playList.Items.Add(element.Title + " - " + element.Artist);
+
+            button5.Text = (_s?.QA[0] ?? -1) < 0 ? "Quick Access " + Buchstaben[0] : _c.LightConfig.Names[_s.QA[0]];
+            button7.Text = (_s?.QA[1] ?? -1) < 0 ? "Quick Access " + Buchstaben[1] : _c.LightConfig.Names[_s.QA[1]];
+            button6.Text = (_s?.QA[2] ?? -1) < 0 ? "Quick Access " + Buchstaben[2] : _c.LightConfig.Names[_s.QA[2]];
+            button9.Text = (_s?.QA[3] ?? -1) < 0 ? "Quick Access " + Buchstaben[3] : _c.LightConfig.Names[_s.QA[3]];
+            button8.Text = (_s?.QA[4] ?? -1) < 0 ? "Quick Access " + Buchstaben[4] : _c.LightConfig.Names[_s.QA[4]];
         }
+
+        private string[] Buchstaben = { "A", "B", "C", "D", "E", "F", "G", "H" };
 
         private void UpdateSong()
         {
