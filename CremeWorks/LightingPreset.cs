@@ -13,8 +13,8 @@ namespace CremeWorks
     public partial class LightingPreset : Form
     {
 
-        private LightControllerConfig _c;
-        public LightingPreset(LightControllerConfig c)
+        private LightController _c;
+        public LightingPreset(LightController c)
         {
             InitializeComponent();
             _c = c;

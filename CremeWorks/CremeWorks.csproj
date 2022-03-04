@@ -70,6 +70,7 @@
     <Compile Include="FootSwitchConfig.Designer.cs">
       <DependentUpon>FootSwitchConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="LightController.cs" />
     <Compile Include="LightingConfig.cs">
       <SubType>Form</SubType>
     </Compile>

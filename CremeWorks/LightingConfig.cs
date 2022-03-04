@@ -13,7 +13,7 @@ namespace CremeWorks
     public partial class LightingConfig : Form
     {
 
-        private LightControllerConfig _c;
+        private LightController _c;
         public LightingConfig(Concert c)
         {
             InitializeComponent();

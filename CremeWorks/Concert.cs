@@ -14,7 +14,7 @@ namespace CremeWorks
         public MIDIDevice[] Devices;
         public (MidiEventType, short, byte)[] FootSwitchConfig;
         public QuickAccessConfig QAConfig;
-        public LightControllerConfig LightConfig = new LightControllerConfig();
+        public LightController LightConfig = new LightController();
         public List<Song> Playlist;
 
         public MIDIMatrix MidiMatrix;
@@ -237,22 +237,6 @@ namespace CremeWorks
 
             bw.Close();
             bw.Dispose();
-        }
-    }
-
-    public class LightControllerConfig
-    {
-        public string[] Names;
-        public int[] ToggleGroups;
-        public bool[] ResetWhenSongChange;
-        public bool[] IsToggleable;
-
-        public LightControllerConfig()
-        {
-            Names = new string[128];
-            ToggleGroups = new int[128];
-            ResetWhenSongChange = new bool[128];
-            IsToggleable = new bool[128];
         }
     }
 
