@@ -63,7 +63,7 @@ namespace CremeWorks
             var lol = new Concert
             {
                 Devices = new MIDIDevice[] { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() },
-                FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) },
+                FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) },
                 Playlist = new List<Song>(),
                 QAConfig = new QuickAccessConfig()
             };
@@ -84,8 +84,9 @@ namespace CremeWorks
             nu.Devices = new MIDIDevice[br.ReadInt32()];
             for (var i = 0; i < nu.Devices.Length; i++) nu.Devices[i] = new MIDIDevice() { Name = br.ReadString() };
             //Foot switch config
-            nu.FootSwitchConfig = new (MidiEventType, short, byte)[br.ReadInt32()];
-            for (var i = 0; i < nu.FootSwitchConfig.Length; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
+            var cnt = br.ReadInt32();
+            nu.FootSwitchConfig = new (MidiEventType, short, byte)[12];
+            for (var i = 0; i < cnt; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
             //QA config
             nu.QAConfig = new QuickAccessConfig();
             for (var i = 0; i < nu.QAConfig.PatchNames.Length; i++) nu.QAConfig.PatchNames[i] = br.ReadString();

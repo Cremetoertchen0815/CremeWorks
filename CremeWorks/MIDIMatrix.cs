@@ -11,7 +11,7 @@ namespace CremeWorks
         public MIDIMatrix(Concert c) => _c = c;
         private bool _reg = false;
 
-        public Action<int, bool> ActionExecute = (a, b) => { return; };
+        public Action<int, bool?> ActionExecute = (a, b) => { return; };
         public bool[][] NoteMap = { new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false } };
         public bool[][] CCMap = { new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false } };
 
@@ -50,37 +50,26 @@ namespace CremeWorks
                 {
                     var ev = (NoteOnEvent)e.Event;
                     if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
-                        ExecuteAction(i, ev.Velocity > 0);
+                        ActionExecute(i, ev.Velocity > 0);
                 }
                 else if (e.Event.EventType == MidiEventType.NoteOff && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
                 {
                     var ev = (NoteOffEvent)e.Event;
                     if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
-                        ExecuteAction(i, false);
+                        ActionExecute(i, false);
                 }
-                else if (_c.FootSwitchConfig[i].Item1 == MidiEventType.ControlChange)
+                else if (e.Event.EventType == MidiEventType.ControlChange && _c.FootSwitchConfig[i].Item1 == MidiEventType.ControlChange)
                 {
                     var ev = (ControlChangeEvent)e.Event;
                     if (ev.ControlNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
-                        ExecuteAction(i, ev.ControlValue >= 64);
+                        ActionExecute(i, ev.ControlValue >= 64);
                 }
-                else if (_c.FootSwitchConfig[i].Item1 == MidiEventType.ProgramChange)
+                else if (e.Event.EventType == MidiEventType.ProgramChange && _c.FootSwitchConfig[i].Item1 == MidiEventType.ProgramChange)
                 {
                     var ev = (ProgramChangeEvent)e.Event;
-                    if (ev.ProgramNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, true);
+                    if (ev.ProgramNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3) ActionExecute(i, null);
                 }
             }
-        }
-
-        private bool[] _actionActive = { false, false, false, false, false, false, false, false, false, false };
-        private void ExecuteAction(int nr, bool enable)
-        {
-            ////Check for double triggers
-            //if (_actionActive[nr] == enable) return;
-            //_actionActive[nr] = enable;
-
-            //Execute actions
-            ActionExecute(nr, enable);
         }
 
         private void ListenLightController(object sender, MidiEventReceivedEventArgs e)

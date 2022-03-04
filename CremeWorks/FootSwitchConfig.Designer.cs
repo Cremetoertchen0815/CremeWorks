@@ -82,6 +82,16 @@ namespace CremeWorks
             this.det9 = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.det12 = new System.Windows.Forms.Button();
+            this.det11 = new System.Windows.Forms.Button();
+            this.valB12 = new System.Windows.Forms.NumericUpDown();
+            this.valA12 = new System.Windows.Forms.NumericUpDown();
+            this.type12 = new System.Windows.Forms.ComboBox();
+            this.valB11 = new System.Windows.Forms.NumericUpDown();
+            this.valA11 = new System.Windows.Forms.NumericUpDown();
+            this.type11 = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.valA1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB2)).BeginInit();
@@ -102,6 +112,10 @@ namespace CremeWorks
             ((System.ComponentModel.ISupportInitialize)(this.valA9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valA8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valB12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valA12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valB11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valA11)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -831,11 +845,161 @@ namespace CremeWorks
             this.label13.TabIndex = 55;
             this.label13.Text = "Scroll Text Up";
             // 
+            // det12
+            // 
+            this.det12.Location = new System.Drawing.Point(390, 328);
+            this.det12.Name = "det12";
+            this.det12.Size = new System.Drawing.Size(49, 21);
+            this.det12.TabIndex = 66;
+            this.det12.Tag = "11";
+            this.det12.Text = "Detect";
+            this.det12.UseVisualStyleBackColor = true;
+            this.det12.Click += new System.EventHandler(this.det1_Click);
+            // 
+            // det11
+            // 
+            this.det11.Location = new System.Drawing.Point(390, 303);
+            this.det11.Name = "det11";
+            this.det11.Size = new System.Drawing.Size(49, 21);
+            this.det11.TabIndex = 65;
+            this.det11.Tag = "10";
+            this.det11.Text = "Detect";
+            this.det11.UseVisualStyleBackColor = true;
+            this.det11.Click += new System.EventHandler(this.det1_Click);
+            // 
+            // valB12
+            // 
+            this.valB12.Location = new System.Drawing.Point(314, 329);
+            this.valB12.Maximum = new decimal(new int[] {
+            16,
+            0,
+            0,
+            0});
+            this.valB12.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.valB12.Name = "valB12";
+            this.valB12.Size = new System.Drawing.Size(70, 20);
+            this.valB12.TabIndex = 64;
+            this.valB12.Tag = "11";
+            this.valB12.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // valA12
+            // 
+            this.valA12.Location = new System.Drawing.Point(238, 329);
+            this.valA12.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.valA12.Name = "valA12";
+            this.valA12.Size = new System.Drawing.Size(70, 20);
+            this.valA12.TabIndex = 63;
+            this.valA12.Tag = "11";
+            // 
+            // type12
+            // 
+            this.type12.FormattingEnabled = true;
+            this.type12.Items.AddRange(new object[] {
+            "Note On",
+            "Control Change",
+            "Program Change"});
+            this.type12.Location = new System.Drawing.Point(145, 329);
+            this.type12.Name = "type12";
+            this.type12.Size = new System.Drawing.Size(87, 21);
+            this.type12.TabIndex = 62;
+            this.type12.Tag = "11";
+            this.type12.Text = "Note On";
+            // 
+            // valB11
+            // 
+            this.valB11.Location = new System.Drawing.Point(314, 303);
+            this.valB11.Maximum = new decimal(new int[] {
+            16,
+            0,
+            0,
+            0});
+            this.valB11.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.valB11.Name = "valB11";
+            this.valB11.Size = new System.Drawing.Size(70, 20);
+            this.valB11.TabIndex = 61;
+            this.valB11.Tag = "10";
+            this.valB11.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // valA11
+            // 
+            this.valA11.Location = new System.Drawing.Point(238, 303);
+            this.valA11.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.valA11.Name = "valA11";
+            this.valA11.Size = new System.Drawing.Size(70, 20);
+            this.valA11.TabIndex = 60;
+            this.valA11.Tag = "10";
+            // 
+            // type11
+            // 
+            this.type11.FormattingEnabled = true;
+            this.type11.Items.AddRange(new object[] {
+            "Note On",
+            "Control Change",
+            "Program Change"});
+            this.type11.Location = new System.Drawing.Point(145, 303);
+            this.type11.Name = "type11";
+            this.type11.Size = new System.Drawing.Size(87, 21);
+            this.type11.TabIndex = 59;
+            this.type11.Tag = "10";
+            this.type11.Text = "Note On";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(12, 331);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(84, 13);
+            this.label14.TabIndex = 58;
+            this.label14.Text = "Quick Access G";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(12, 305);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(82, 13);
+            this.label15.TabIndex = 57;
+            this.label15.Text = "Quick Access F";
+            // 
             // FootSwitchConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(451, 307);
+            this.ClientSize = new System.Drawing.Size(451, 424);
+            this.Controls.Add(this.det12);
+            this.Controls.Add(this.det11);
+            this.Controls.Add(this.valB12);
+            this.Controls.Add(this.valA12);
+            this.Controls.Add(this.type12);
+            this.Controls.Add(this.valB11);
+            this.Controls.Add(this.valA11);
+            this.Controls.Add(this.type11);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label15);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.det10);
@@ -915,6 +1079,10 @@ namespace CremeWorks
             ((System.ComponentModel.ISupportInitialize)(this.valA9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valA8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valB12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valA12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valB11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valA11)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -975,5 +1143,15 @@ namespace CremeWorks
         private System.Windows.Forms.Button det9;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button det12;
+        private System.Windows.Forms.Button det11;
+        private System.Windows.Forms.NumericUpDown valB12;
+        private System.Windows.Forms.NumericUpDown valA12;
+        private System.Windows.Forms.ComboBox type12;
+        private System.Windows.Forms.NumericUpDown valB11;
+        private System.Windows.Forms.NumericUpDown valA11;
+        private System.Windows.Forms.ComboBox type11;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
     }
 }

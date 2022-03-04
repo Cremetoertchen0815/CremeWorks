@@ -21,10 +21,11 @@ namespace CremeWorks
             //Prepare control array
             _cont = new (ComboBox, NumericUpDown, NumericUpDown, Button)[] { (type1, valA1, valB1, det1), (type2, valA2, valB2, det2), (type3, valA3, valB3, det3),
                                                                              (type4, valA4, valB4, det4), (type5, valA5, valB5, det5), (type6, valA6, valB6, det6),
-                                                                             (type7, valA7, valB7, det7), (type8, valA8, valB8, det8), (type9, valA9, valB9, det9), (type10, valA10, valB10, det10)};
+                                                                             (type7, valA7, valB7, det7), (type8, valA8, valB8, det8), (type9, valA9, valB9, det9),
+                                                                             (type10, valA10, valB10, det10), (type11, valA11, valB11, det11), (type12, valA12, valB12, det12)};
 
             //Load data into dialogue
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 12; i++)
             {
                 (MidiEventType, short, byte) cfg = _c.FootSwitchConfig[i];
                 (ComboBox, NumericUpDown, NumericUpDown, Button) cnt = _cont[i];
@@ -92,7 +93,7 @@ namespace CremeWorks
         private void FootSwitchConfig_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Save data from dialogue
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 12; i++)
             {
                 (ComboBox, NumericUpDown, NumericUpDown, Button) cnt = _cont[i];
                 _c.FootSwitchConfig[i] = (IndexToMidiEventType(cnt.Item1.SelectedIndex), (short)cnt.Item2.Value, (byte)(cnt.Item3.Value - 1));

@@ -39,6 +39,8 @@ namespace CremeWorks
             this.devicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.footSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lightControllerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.quickAccessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applySongSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,8 +62,8 @@ namespace CremeWorks
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.txtKey = new System.Windows.Forms.Label();
-            this.quickAccessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lightControllerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -142,6 +144,19 @@ namespace CremeWorks
             this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.footSwitchToolStripMenuItem.Text = "Foot Switch";
             this.footSwitchToolStripMenuItem.Click += new System.EventHandler(this.footSwitchToolStripMenuItem_Click);
+            // 
+            // lightControllerToolStripMenuItem
+            // 
+            this.lightControllerToolStripMenuItem.Name = "lightControllerToolStripMenuItem";
+            this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.lightControllerToolStripMenuItem.Text = "Light Controller";
+            this.lightControllerToolStripMenuItem.Click += new System.EventHandler(this.lightControllerToolStripMenuItem_Click);
+            // 
+            // quickAccessToolStripMenuItem
+            // 
+            this.quickAccessToolStripMenuItem.Name = "quickAccessToolStripMenuItem";
+            this.quickAccessToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.quickAccessToolStripMenuItem.Text = "Quick Access";
             // 
             // toolStripMenuItem1
             // 
@@ -371,24 +386,37 @@ namespace CremeWorks
             this.txtKey.Size = new System.Drawing.Size(0, 20);
             this.txtKey.TabIndex = 18;
             // 
-            // quickAccessToolStripMenuItem
+            // button10
             // 
-            this.quickAccessToolStripMenuItem.Name = "quickAccessToolStripMenuItem";
-            this.quickAccessToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.quickAccessToolStripMenuItem.Text = "Quick Access";
+            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
+            this.button10.Location = new System.Drawing.Point(904, 376);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(100, 100);
+            this.button10.TabIndex = 20;
+            this.button10.Tag = "9";
+            this.button10.Text = "Quick Access G";
+            this.button10.UseVisualStyleBackColor = true;
             // 
-            // lightControllerToolStripMenuItem
+            // button11
             // 
-            this.lightControllerToolStripMenuItem.Name = "lightControllerToolStripMenuItem";
-            this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.lightControllerToolStripMenuItem.Text = "Light Controller";
-            this.lightControllerToolStripMenuItem.Click += new System.EventHandler(this.lightControllerToolStripMenuItem_Click);
+            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
+            this.button11.Location = new System.Drawing.Point(798, 376);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(100, 100);
+            this.button11.TabIndex = 19;
+            this.button11.Tag = "8";
+            this.button11.Text = "Quick Access F";
+            this.button11.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1014, 606);
+            this.Controls.Add(this.button10);
+            this.Controls.Add(this.button11);
             this.Controls.Add(this.txtKey);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.playList);
@@ -451,6 +479,8 @@ namespace CremeWorks
         private System.Windows.Forms.Label txtKey;
         private System.Windows.Forms.ToolStripMenuItem lightControllerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quickAccessToolStripMenuItem;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button11;
     }
 }
 

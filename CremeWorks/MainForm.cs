@@ -56,6 +56,8 @@ namespace CremeWorks
             button6.Text = (_s?.QA[2] ?? -1) < 0 ? "Quick Access " + Buchstaben[2] : _c.LightConfig.Names[_s.QA[2]];
             button9.Text = (_s?.QA[3] ?? -1) < 0 ? "Quick Access " + Buchstaben[3] : _c.LightConfig.Names[_s.QA[3]];
             button8.Text = (_s?.QA[4] ?? -1) < 0 ? "Quick Access " + Buchstaben[4] : _c.LightConfig.Names[_s.QA[4]];
+            button11.Text = (_s?.QA[5] ?? -1) < 0 ? "Quick Access " + Buchstaben[5] : _c.LightConfig.Names[_s.QA[5]];
+            button10.Text = (_s?.QA[6] ?? -1) < 0 ? "Quick Access " + Buchstaben[6] : _c.LightConfig.Names[_s.QA[6]];
         }
 
         private string[] Buchstaben = { "A", "B", "C", "D", "E", "F", "G", "H" };
@@ -82,31 +84,32 @@ namespace CremeWorks
             for (var i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplyPatch(_c.Devices[i + 2]);
         }
 
-        private void ExecuteAction(int nr, bool enable)
+        private void ExecuteAction(int nr, bool? enable)
         {
+            var chk = (enable ?? true);
             switch (nr)
             {
                 case 0:
-                    if (enable && playList.SelectedIndex > 0) playList.SelectedIndex--;
+                    if (chk && playList.SelectedIndex > 0) playList.SelectedIndex--;
                     break;
                 case 1:
-                    if (enable && playList.SelectedIndex < playList.Items.Count - 1) playList.SelectedIndex++;
+                    if (chk && playList.SelectedIndex < playList.Items.Count - 1) playList.SelectedIndex++;
                     break;
                 case 2:
-                    if (enable) foreach (MIDIDevice item in _c.Devices) if (item.Output != null) item.Output.TurnAllNotesOff();
+                    if (chk) foreach (MIDIDevice item in _c.Devices) if (item.Output != null) item.Output.TurnAllNotesOff();
                     break;
                 case 3:
-                    if (!enable) break;
+                    if (!chk) break;
                     SetScrollPos(songLyrics.Handle, 1, -10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, -10);
                     break;
                 case 4:
-                    if (!enable) break;
+                    if (!chk) break;
                     SetScrollPos(songLyrics.Handle, 1, 10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, 10);
                     break;
                 default:
-                    _c.LightConfig.SetState(_s.QA[nr - 5]);
+                    _c.LightConfig.SetState(_s.QA[nr - 5], enable);
                     break;
             }
         }
