@@ -11,6 +11,7 @@ namespace CremeWorks
         public MainForm()
         {
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
             UpdateConcert();
         }
 
@@ -30,8 +31,6 @@ namespace CremeWorks
                 _c.Disconnect();
             }
         }
-
-        private void Form1_Load(object sender, EventArgs e) => _c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
 
         private void UpdatePlaylist()
         {
@@ -156,6 +155,7 @@ namespace CremeWorks
             var tit = _c?.FilePath ?? "Untitled";
             Text = "CremeWorks Stage Controller - " + (tit == string.Empty ? "Untitled" : tit);
             _c.MidiMatrix.ActionExecute = ExecuteAction;
+            _c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
             UpdatePlaylist();
             playList.SelectedIndex = -1;
         }
