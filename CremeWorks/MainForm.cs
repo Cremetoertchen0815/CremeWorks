@@ -98,6 +98,7 @@ namespace CremeWorks
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, 10);
                     break;
                 default:
+                    _c.LightConfig.SetState(_s.QA[nr - 5]);
                     break;
             }
         }

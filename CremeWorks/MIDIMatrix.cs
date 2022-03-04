@@ -67,11 +67,7 @@ namespace CremeWorks
                 else if (_c.FootSwitchConfig[i].Item1 == MidiEventType.ProgramChange)
                 {
                     var ev = (ProgramChangeEvent)e.Event;
-                    if (ev.ProgramNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
-                    {
-                        ExecuteAction(i, true);
-                        ExecuteAction(i, false);
-                    }
+                    if (ev.ProgramNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3) ExecuteAction(i, true);
                 }
             }
         }
@@ -79,9 +75,9 @@ namespace CremeWorks
         private bool[] _actionActive = { false, false, false, false, false, false, false, false, false, false };
         private void ExecuteAction(int nr, bool enable)
         {
-            //Check for double triggers
-            if (_actionActive[nr] == enable) return;
-            _actionActive[nr] = enable;
+            ////Check for double triggers
+            //if (_actionActive[nr] == enable) return;
+            //_actionActive[nr] = enable;
 
             //Execute actions
             ActionExecute(nr, enable);

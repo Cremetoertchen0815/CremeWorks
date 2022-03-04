@@ -19,16 +19,18 @@ namespace CremeWorks
         private bool[] _isSrcToggled;
         private Concert _c;
 
-        public void SetState(int note, bool value)
+        public void SetState(int note, bool? value = null)
         {
-            if (!IsToggleable[note] || (IsToggleable[note] && _isSrcToggled[note] != value))
+            if (note < 0) return;
+
+            if (!IsToggleable[note] || (IsToggleable[note] && (value == null || _isSrcToggled[note] != value)))
             {
-                _isSrcToggled[note] = value;
+                _isSrcToggled[note] = value ?? !_isSrcToggled[note];
                 _c?.Devices[1].Output?.SendEvent(new NoteOnEvent(new SevenBitNumber((byte)note), new SevenBitNumber(127)));
             }
 
             var grp = ToggleGroups[note];
-            if (grp <= 0 || !value) return;
+            if (grp <= 0 || (value != null && !value.Value)) return;
 
             for (int i = 0; i < 127; i++)
             {
