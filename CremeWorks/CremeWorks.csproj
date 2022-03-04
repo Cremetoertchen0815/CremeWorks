@@ -83,6 +83,12 @@
     <Compile Include="LightingPreset.Designer.cs">
       <DependentUpon>LightingPreset.cs</DependentUpon>
     </Compile>
+    <Compile Include="QASelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QASelector.Designer.cs">
+      <DependentUpon>QASelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="QuickAccessConfig.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -140,6 +146,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="QASelector.resx">
+      <DependentUpon>QASelector.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SongEditor.resx">
       <DependentUpon>SongEditor.cs</DependentUpon>
     </EmbeddedResource>

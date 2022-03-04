@@ -14,7 +14,7 @@ namespace CremeWorks
         public MIDIDevice[] Devices;
         public (MidiEventType, short, byte)[] FootSwitchConfig;
         public QuickAccessConfig QAConfig;
-        public LightController LightConfig = new LightController();
+        public LightController LightConfig;
         public List<Song> Playlist;
 
         public MIDIMatrix MidiMatrix;
@@ -67,6 +67,7 @@ namespace CremeWorks
                 Playlist = new List<Song>(),
                 QAConfig = new QuickAccessConfig()
             };
+            lol.LightConfig = new LightController(lol);
             return lol;
         }
 
@@ -77,6 +78,7 @@ namespace CremeWorks
             var nu = new Concert();
             var br = new BinaryReader(File.OpenRead(filename));
             //Read data
+            nu.LightConfig = new LightController(nu);
             if (br.ReadString() != cHeader) throw new Exception("Incorrect file!");
             nu.FilePath = filename;
             nu.Devices = new MIDIDevice[br.ReadInt32()];
