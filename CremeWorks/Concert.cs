@@ -103,7 +103,7 @@ namespace CremeWorks
                 {
                     Title = br.ReadString(),
                     Artist = br.ReadString(),
-                    Notes = br.ReadString(),
+                    Key = br.ReadString(),
                     Lyrics = br.ReadString(),
                     NoteMap = new bool[4][],
                     CCMap = new bool[4][]
@@ -191,7 +191,7 @@ namespace CremeWorks
                 Song song = Playlist[i];
                 bw.Write(song.Title);
                 bw.Write(song.Artist);
-                bw.Write(song.Notes);
+                bw.Write(song.Key);
                 bw.Write(song.Lyrics);
                 for (var j = 0; j < 4; j++)
                 {

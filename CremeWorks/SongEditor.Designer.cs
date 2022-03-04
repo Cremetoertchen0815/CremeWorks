@@ -35,7 +35,7 @@ namespace CremeWorks
             this.label4 = new System.Windows.Forms.Label();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.txtArtist = new System.Windows.Forms.TextBox();
-            this.txtNotes = new System.Windows.Forms.TextBox();
+            this.txtKey = new System.Windows.Forms.TextBox();
             this.txtLyrics = new System.Windows.Forms.TextBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -132,9 +132,9 @@ namespace CremeWorks
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 61);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.Size = new System.Drawing.Size(25, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Notes";
+            this.label3.Text = "Key";
             // 
             // label4
             // 
@@ -161,12 +161,12 @@ namespace CremeWorks
             this.txtArtist.TabIndex = 5;
             this.txtArtist.Text = "Unknown";
             // 
-            // txtNotes
+            // txtKey
             // 
-            this.txtNotes.Location = new System.Drawing.Point(66, 58);
-            this.txtNotes.Name = "txtNotes";
-            this.txtNotes.Size = new System.Drawing.Size(442, 20);
-            this.txtNotes.TabIndex = 6;
+            this.txtKey.Location = new System.Drawing.Point(66, 58);
+            this.txtKey.Name = "txtKey";
+            this.txtKey.Size = new System.Drawing.Size(442, 20);
+            this.txtKey.TabIndex = 6;
             // 
             // txtLyrics
             // 
@@ -933,7 +933,7 @@ namespace CremeWorks
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.txtLyrics);
-            this.Controls.Add(this.txtNotes);
+            this.Controls.Add(this.txtKey);
             this.Controls.Add(this.txtArtist);
             this.Controls.Add(this.txtTitle);
             this.Controls.Add(this.label4);
@@ -959,7 +959,7 @@ namespace CremeWorks
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtTitle;
         private System.Windows.Forms.TextBox txtArtist;
-        private System.Windows.Forms.TextBox txtNotes;
+        private System.Windows.Forms.TextBox txtKey;
         private System.Windows.Forms.TextBox txtLyrics;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;

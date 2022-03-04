@@ -27,7 +27,7 @@ namespace CremeWorks
             //Load data
             txtTitle.Text = s.Title;
             txtArtist.Text = s.Artist;
-            txtNotes.Text = s.Notes;
+            txtKey.Text = s.Key;
             txtLyrics.Text = s.Lyrics;
             apM.Checked = apbM.Enabled = s.AutoPatchSlots[0].Enabled;
             ap1.Checked = apb1.Enabled = s.AutoPatchSlots[1].Enabled;
@@ -59,7 +59,7 @@ namespace CremeWorks
             //Save changes
             _s.Title = txtTitle.Text;
             _s.Artist = txtArtist.Text;
-            _s.Notes = txtNotes.Text;
+            _s.Key = txtKey.Text;
             _s.Lyrics = txtLyrics.Text;
             for (var x = 0; x < 4; x++)
             {
