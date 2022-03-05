@@ -13,7 +13,6 @@ namespace CremeWorks
         public string FilePath;
         public MIDIDevice[] Devices;
         public (MidiEventType, short, byte)[] FootSwitchConfig;
-        public QuickAccessConfig QAConfig;
         public LightController LightConfig;
         public List<Song> Playlist;
 
@@ -64,8 +63,7 @@ namespace CremeWorks
             {
                 Devices = new MIDIDevice[] { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() },
                 FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) },
-                Playlist = new List<Song>(),
-                QAConfig = new QuickAccessConfig()
+                Playlist = new List<Song>()
             };
             lol.LightConfig = new LightController(lol);
             return lol;

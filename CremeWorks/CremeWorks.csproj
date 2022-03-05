@@ -89,7 +89,6 @@
     <Compile Include="QASelector.Designer.cs">
       <DependentUpon>QASelector.cs</DependentUpon>
     </Compile>
-    <Compile Include="QuickAccessConfig.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
