@@ -40,7 +40,6 @@ namespace CremeWorks
             this.configureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.footSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lightControllerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.quickAccessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applySongSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,7 +122,6 @@ namespace CremeWorks
             this.configureToolStripMenuItem,
             this.footSwitchToolStripMenuItem,
             this.lightControllerToolStripMenuItem,
-            this.quickAccessToolStripMenuItem,
             this.toolStripMenuItem1,
             this.connectToolStripMenuItem,
             this.applySongSettingsToolStripMenuItem});
@@ -151,12 +149,6 @@ namespace CremeWorks
             this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.lightControllerToolStripMenuItem.Text = "Light Controller";
             this.lightControllerToolStripMenuItem.Click += new System.EventHandler(this.lightControllerToolStripMenuItem_Click);
-            // 
-            // quickAccessToolStripMenuItem
-            // 
-            this.quickAccessToolStripMenuItem.Name = "quickAccessToolStripMenuItem";
-            this.quickAccessToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.quickAccessToolStripMenuItem.Text = "Quick Access";
             // 
             // toolStripMenuItem1
             // 
@@ -478,7 +470,6 @@ namespace CremeWorks
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Label txtKey;
         private System.Windows.Forms.ToolStripMenuItem lightControllerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem quickAccessToolStripMenuItem;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
     }
