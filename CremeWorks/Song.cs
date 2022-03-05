@@ -9,7 +9,7 @@
         public bool[][] NoteMap = { new bool[] { true, false, false, false }, new bool[] { false, true, false, false }, new bool[] { false, false, true, false }, new bool[] { false, false, false, true } };
         public bool[][] CCMap = { new bool[] { true, false, false, false }, new bool[] { false, true, false, false }, new bool[] { false, false, true, false }, new bool[] { false, false, false, true } };
         public (bool Enabled, Reface.IRefacePatch Patch)[] AutoPatchSlots = { (false, null), (false, null), (false, null), (false, null) };
-        public int[] QA = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+        public sbyte[] QA = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
 
         public Song Clone()
         {

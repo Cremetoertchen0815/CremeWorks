@@ -46,7 +46,7 @@ namespace CremeWorks
                     _c.Names[37] = "Previous Step";
                     _c.Names[38] = "Next Step";
                     _c.Names[39] = "Tap";
-                    _c.Names[126] = "Tap";
+                    _c.Names[126] = "Black Out";
                     _c.IsToggleable[35] = true;
                     _c.IsToggleable[36] = true;
                     _c.IsToggleable[126] = true;

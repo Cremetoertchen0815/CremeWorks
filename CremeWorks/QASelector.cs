@@ -16,7 +16,7 @@ namespace CremeWorks
         private Concert _c;
         private Song _s;
         private int _nr;
-        private List<int> _indices = new List<int>();
+        private List<sbyte> _indices = new List<sbyte>();
 
         public QASelector(Concert c, Song s, int nr)
         {
@@ -25,7 +25,7 @@ namespace CremeWorks
             _s = s;
             _nr = nr;
 
-            for (int i = 0; i < 128; i++)
+            for (sbyte i = 0; i < 127; i++)
             {
                 if (_c.LightConfig?.Names[i] == null || _c.LightConfig.Names[i] == string.Empty) continue;
                 comboBox1.Items.Add(_c.LightConfig.Names[i]);

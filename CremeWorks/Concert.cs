@@ -182,12 +182,22 @@ namespace CremeWorks
                 bw.Write(FootSwitchConfig[i].Item3);
             }
 
-            //Quick Access config
-            for (var i = 0; i < QAConfig.PatchNames.Length; i++) bw.Write(QAConfig.PatchNames[i]);
-            for (var i = 0; i < QAConfig.EventType.Length; i++) bw.Write((int?)QAConfig.EventType[i] ?? -1);
-            for (var i = 0; i < QAConfig.EventValue.Length; i++) bw.Write(QAConfig.EventValue[i]);
-            for (var i = 0; i < QAConfig.ActionType.Length; i++) bw.Write((int)QAConfig.ActionType[i]);
-            bw.Write(QAConfig.TransmitChannel);
+            ////Quick Access config
+            //for (var i = 0; i < QAConfig.PatchNames.Length; i++) bw.Write(QAConfig.PatchNames[i]);
+            //for (var i = 0; i < QAConfig.EventType.Length; i++) bw.Write((int?)QAConfig.EventType[i] ?? -1);
+            //for (var i = 0; i < QAConfig.EventValue.Length; i++) bw.Write(QAConfig.EventValue[i]);
+            //for (var i = 0; i < QAConfig.ActionType.Length; i++) bw.Write((int)QAConfig.ActionType[i]);
+            //bw.Write(QAConfig.TransmitChannel);
+
+            //Lighting
+            for (int i = 0; i < 128; i++)
+            {
+                bw.Write(LightConfig.Names[i] ?? string.Empty);
+                bw.Write(LightConfig.ToggleGroups[i]);
+                bw.Write(LightConfig.ResetWhenSongChange[i]);
+                bw.Write(LightConfig.IsToggleable[i]);
+            }
+
             //Playlist
             bw.Write(Playlist.Count);
             for (var i = 0; i < Playlist.Count; i++)
@@ -197,11 +207,14 @@ namespace CremeWorks
                 bw.Write(song.Artist);
                 bw.Write(song.Key);
                 bw.Write(song.Lyrics);
+                bw.Write(song.QA.Length);
+                bw.Write((byte[])(Array)song.QA);
                 for (var j = 0; j < 4; j++)
                 {
                     for (var k = 0; k < 4; k++) bw.Write(song.NoteMap[j][k]);
                     for (var k = 0; k < 4; k++) bw.Write(song.CCMap[j][k]);
                 }
+                
                 bw.Write(song.AutoPatchSlots.Length);
                 for (var j = 0; j < song.AutoPatchSlots.Length; j++)
                 {
