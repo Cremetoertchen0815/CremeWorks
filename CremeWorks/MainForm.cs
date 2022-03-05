@@ -10,15 +10,15 @@ namespace CremeWorks
         private Song _s = null;
 
         #region External
-        const int EM_LINESCROLL = 0x00B6;
+        private const int EM_LINESCROLL = 0x00B6;
         [DllImport("user32.dll")]
-        static extern int SetScrollPos(IntPtr hWnd, int nBar,
+        private static extern int SetScrollPos(IntPtr hWnd, int nBar,
                                int nPos, bool bRedraw);
         [DllImport("user32.dll")]
-        static extern int SendMessage(IntPtr hWnd, int wMsg,
+        private static extern int SendMessage(IntPtr hWnd, int wMsg,
                                        int wParam, int lParam);
         [DllImport("user32.dll")]
-        static extern int GetScrollPos(IntPtr hWnd, int nBar);
+        private static extern int GetScrollPos(IntPtr hWnd, int nBar);
         #endregion
 
         public MainForm()

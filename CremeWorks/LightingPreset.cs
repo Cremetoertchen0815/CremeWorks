@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CremeWorks
@@ -28,7 +21,7 @@ namespace CremeWorks
             {
                 case 0:
                     ClearData();
-                    for (int i = 0; i < 16; i++)
+                    for (var i = 0; i < 16; i++)
                     {
                         _c.Names[i] = "Scene " + (i + 1);
                         _c.Names[16 + i] = "Chaser " + (i + 1);
@@ -63,10 +56,10 @@ namespace CremeWorks
 
         private void ClearData()
         {
-            for (int i = 0; i < _c.Names.Length; i++) _c.Names[i] = null;
-            for (int i = 0; i < _c.ToggleGroups.Length; i++) _c.ToggleGroups[i] = 0;
-            for (int i = 0; i < _c.ResetWhenSongChange.Length; i++) _c.ResetWhenSongChange[i] = false;
-            for (int i = 0; i < _c.IsToggleable.Length; i++) _c.IsToggleable[i] = false;
+            for (var i = 0; i < _c.Names.Length; i++) _c.Names[i] = null;
+            for (var i = 0; i < _c.ToggleGroups.Length; i++) _c.ToggleGroups[i] = 0;
+            for (var i = 0; i < _c.ResetWhenSongChange.Length; i++) _c.ResetWhenSongChange[i] = false;
+            for (var i = 0; i < _c.IsToggleable.Length; i++) _c.IsToggleable[i] = false;
         }
     }
 }

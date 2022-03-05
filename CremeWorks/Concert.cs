@@ -86,14 +86,14 @@ namespace CremeWorks
             for (var i = 0; i < cnt; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
             //QA config
             nu.LightConfig = new LightController(nu);
-            for (int i = 0; i < 128; i++)
-                {
-                    var str = br.ReadString();
-                    nu.LightConfig.Names[i] = str == string.Empty ? null : str;
-                    nu.LightConfig.ToggleGroups[i] = br.ReadInt32();
-                    nu.LightConfig.ResetWhenSongChange[i] = br.ReadBoolean();
-                    nu.LightConfig.IsToggleable[i] = br.ReadBoolean();
-                }
+            for (var i = 0; i < 128; i++)
+            {
+                var str = br.ReadString();
+                nu.LightConfig.Names[i] = str == string.Empty ? null : str;
+                nu.LightConfig.ToggleGroups[i] = br.ReadInt32();
+                nu.LightConfig.ResetWhenSongChange[i] = br.ReadBoolean();
+                nu.LightConfig.IsToggleable[i] = br.ReadBoolean();
+            }
 
             //Playlist
             var count = br.ReadInt32();
@@ -183,7 +183,7 @@ namespace CremeWorks
             }
 
             //Lighting
-            for (int i = 0; i < 128; i++)
+            for (var i = 0; i < 128; i++)
             {
                 bw.Write(LightConfig.Names[i] ?? string.Empty);
                 bw.Write(LightConfig.ToggleGroups[i]);
@@ -209,7 +209,7 @@ namespace CremeWorks
                     for (var k = 0; k < 4; k++) bw.Write(song.NoteMap[j][k]);
                     for (var k = 0; k < 4; k++) bw.Write(song.CCMap[j][k]);
                 }
-                
+
                 bw.Write(song.AutoPatchSlots.Length);
                 for (var j = 0; j < song.AutoPatchSlots.Length; j++)
                 {

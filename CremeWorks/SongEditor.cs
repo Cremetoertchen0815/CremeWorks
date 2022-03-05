@@ -45,7 +45,7 @@ namespace CremeWorks
                 }
             }
 
-            for (int i = 0; i < _mapQA.Length; i++)
+            for (var i = 0; i < _mapQA.Length; i++)
             {
                 var val = _s.QA[i];
                 _mapQA[i].Text = val < 0 ? "Quick Access " + Buchstaben[i] : _c.LightConfig.Names[val];

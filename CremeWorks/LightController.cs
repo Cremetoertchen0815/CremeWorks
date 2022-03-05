@@ -1,10 +1,5 @@
 ﻿using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CremeWorks
 {
@@ -32,7 +27,7 @@ namespace CremeWorks
             var grp = ToggleGroups[note];
             if (grp <= 0 || (value != null && !value.Value)) return;
 
-            for (int i = 0; i < 127; i++)
+            for (var i = 0; i < 127; i++)
             {
                 if (i == note || grp != ToggleGroups[i] || !IsToggleable[i] || !_isSrcToggled[i]) continue;
                 _c?.Devices[1].Output?.SendEvent(new NoteOnEvent(new SevenBitNumber((byte)i), new SevenBitNumber(127)));
@@ -48,7 +43,7 @@ namespace CremeWorks
             ResetWhenSongChange = new bool[128];
             IsToggleable = new bool[128];
             _isSrcToggled = new bool[128];
-            for (int i = 0; i < 128; i++) _isSrcToggled[i] = false;
+            for (var i = 0; i < 128; i++) _isSrcToggled[i] = false;
         }
     }
 }
