@@ -78,7 +78,6 @@ namespace CremeWorks
             var nu = new Concert();
             var br = new BinaryReader(File.OpenRead(filename));
             //Read data
-            nu.LightConfig = new LightController(nu);
             if (br.ReadString() != cHeader) throw new Exception("Incorrect file!");
             nu.FilePath = filename;
             nu.Devices = new MIDIDevice[br.ReadInt32()];
@@ -88,16 +87,16 @@ namespace CremeWorks
             nu.FootSwitchConfig = new (MidiEventType, short, byte)[12];
             for (var i = 0; i < cnt; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
             //QA config
-            nu.QAConfig = new QuickAccessConfig();
-            for (var i = 0; i < nu.QAConfig.PatchNames.Length; i++) nu.QAConfig.PatchNames[i] = br.ReadString();
-            for (var i = 0; i < nu.QAConfig.EventType.Length; i++)
-            {
-                var val = br.ReadInt32();
-                nu.QAConfig.EventType[i] = val < 0 ? null : (MidiEventType?)val;
-            }
-            for (var i = 0; i < nu.QAConfig.EventValue.Length; i++) nu.QAConfig.EventValue[i] = br.ReadByte();
-            for (var i = 0; i < nu.QAConfig.ActionType.Length; i++) nu.QAConfig.ActionType[i] = (QuickAccessConfig.QuickAccessSwitchType)br.ReadInt32();
-            nu.QAConfig.TransmitChannel = br.ReadByte();
+            nu.LightConfig = new LightController(nu);
+            for (int i = 0; i < 128; i++)
+                {
+                    var str = br.ReadString();
+                    nu.LightConfig.Names[i] = str == string.Empty ? null : str;
+                    nu.LightConfig.ToggleGroups[i] = br.ReadInt32();
+                    nu.LightConfig.ResetWhenSongChange[i] = br.ReadBoolean();
+                    nu.LightConfig.IsToggleable[i] = br.ReadBoolean();
+                }
+
             //Playlist
             var count = br.ReadInt32();
             nu.Playlist = new List<Song>();
@@ -109,9 +108,12 @@ namespace CremeWorks
                     Artist = br.ReadString(),
                     Key = br.ReadString(),
                     Lyrics = br.ReadString(),
+                    QA = new sbyte[br.ReadInt32()],
                     NoteMap = new bool[4][],
                     CCMap = new bool[4][]
                 };
+                var byte_Dat = br.ReadBytes(s.QA.Length);
+                Buffer.BlockCopy(byte_Dat, 0, s.QA, 0, byte_Dat.Length);
                 for (var j = 0; j < 4; j++)
                 {
                     s.NoteMap[j] = new bool[] { br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean() };
@@ -182,13 +184,6 @@ namespace CremeWorks
                 bw.Write(FootSwitchConfig[i].Item3);
             }
 
-            ////Quick Access config
-            //for (var i = 0; i < QAConfig.PatchNames.Length; i++) bw.Write(QAConfig.PatchNames[i]);
-            //for (var i = 0; i < QAConfig.EventType.Length; i++) bw.Write((int?)QAConfig.EventType[i] ?? -1);
-            //for (var i = 0; i < QAConfig.EventValue.Length; i++) bw.Write(QAConfig.EventValue[i]);
-            //for (var i = 0; i < QAConfig.ActionType.Length; i++) bw.Write((int)QAConfig.ActionType[i]);
-            //bw.Write(QAConfig.TransmitChannel);
-
             //Lighting
             for (int i = 0; i < 128; i++)
             {
@@ -208,7 +203,9 @@ namespace CremeWorks
                 bw.Write(song.Key);
                 bw.Write(song.Lyrics);
                 bw.Write(song.QA.Length);
-                bw.Write((byte[])(Array)song.QA);
+                var byte_dat = new byte[song.QA.Length];
+                Buffer.BlockCopy(song.QA, 0, byte_dat, 0, byte_dat.Length);
+                bw.Write(byte_dat);
                 for (var j = 0; j < 4; j++)
                 {
                     for (var k = 0; k < 4; k++) bw.Write(song.NoteMap[j][k]);
