@@ -51,13 +51,6 @@ namespace CremeWorks
             foreach (Song element in _c.Playlist)
                 playList.Items.Add(element.Title + " - " + element.Artist);
 
-            button5.Text = (_s?.QA[0] ?? -1) < 0 ? "Quick Access " + Buchstaben[0] : _c.LightConfig.Names[_s.QA[0]];
-            button7.Text = (_s?.QA[1] ?? -1) < 0 ? "Quick Access " + Buchstaben[1] : _c.LightConfig.Names[_s.QA[1]];
-            button6.Text = (_s?.QA[2] ?? -1) < 0 ? "Quick Access " + Buchstaben[2] : _c.LightConfig.Names[_s.QA[2]];
-            button9.Text = (_s?.QA[3] ?? -1) < 0 ? "Quick Access " + Buchstaben[3] : _c.LightConfig.Names[_s.QA[3]];
-            button8.Text = (_s?.QA[4] ?? -1) < 0 ? "Quick Access " + Buchstaben[4] : _c.LightConfig.Names[_s.QA[4]];
-            button11.Text = (_s?.QA[5] ?? -1) < 0 ? "Quick Access " + Buchstaben[5] : _c.LightConfig.Names[_s.QA[5]];
-            button10.Text = (_s?.QA[6] ?? -1) < 0 ? "Quick Access " + Buchstaben[6] : _c.LightConfig.Names[_s.QA[6]];
         }
 
         private string[] Buchstaben = { "A", "B", "C", "D", "E", "F", "G", "H" };
@@ -67,6 +60,15 @@ namespace CremeWorks
             songTitle.Text = string.Empty;
             songLyrics.Text = string.Empty;
             txtKey.Text = string.Empty;
+
+            button5.Text = (_s?.QA[0] ?? -1) < 0 ? "Quick Access " + Buchstaben[0] : _c.LightConfig.Names[_s.QA[0]];
+            button7.Text = (_s?.QA[1] ?? -1) < 0 ? "Quick Access " + Buchstaben[1] : _c.LightConfig.Names[_s.QA[1]];
+            button6.Text = (_s?.QA[2] ?? -1) < 0 ? "Quick Access " + Buchstaben[2] : _c.LightConfig.Names[_s.QA[2]];
+            button9.Text = (_s?.QA[3] ?? -1) < 0 ? "Quick Access " + Buchstaben[3] : _c.LightConfig.Names[_s.QA[3]];
+            button8.Text = (_s?.QA[4] ?? -1) < 0 ? "Quick Access " + Buchstaben[4] : _c.LightConfig.Names[_s.QA[4]];
+            button11.Text = (_s?.QA[5] ?? -1) < 0 ? "Quick Access " + Buchstaben[5] : _c.LightConfig.Names[_s.QA[5]];
+            button10.Text = (_s?.QA[6] ?? -1) < 0 ? "Quick Access " + Buchstaben[6] : _c.LightConfig.Names[_s.QA[6]];
+
             if (_s == null) return;
 
 
