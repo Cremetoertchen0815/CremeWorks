@@ -71,11 +71,14 @@ namespace CremeWorks
 
             if (_s == null) return;
 
-
+            //Configure shit
             songTitle.Text = _s.Title;
             songLyrics.Text = _s.Lyrics;
             txtKey.Text = "Key: " + _s.Key;
             ConfigSongMIDI();
+
+            //Load default QA patch
+            ExecuteAction(12, null);
         }
 
         private void ConfigSongMIDI()
@@ -88,7 +91,7 @@ namespace CremeWorks
 
         private void ExecuteAction(int nr, bool? enable)
         {
-            var chk = (enable ?? true);
+            var chk = enable ?? true;
             switch (nr)
             {
                 case 0:

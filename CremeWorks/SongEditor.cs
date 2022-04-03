@@ -48,7 +48,7 @@ namespace CremeWorks
             for (var i = 0; i < _mapQA.Length; i++)
             {
                 var val = _s.QA[i];
-                _mapQA[i].Text = val < 0 ? "Quick Access " + Buchstaben[i] : _c.LightConfig.Names[val];
+                if (i < 7) _mapQA[i].Text = val < 0 ? "Quick Access " + Buchstaben[i] : _c.LightConfig.Names[val];
             }
         }
 
@@ -117,7 +117,7 @@ namespace CremeWorks
             var nr = int.Parse((string)src.Tag);
             new QASelector(_c, _s, nr).ShowDialog();
             var val = _s.QA[nr];
-            src.Text = val < 0 ? "Quick Access " + Buchstaben[nr] : _c.LightConfig.Names[val];
+            if (nr < 7) src.Text = val < 0 ? "Quick Access " + Buchstaben[nr] : _c.LightConfig.Names[val];
         }
 
         private string[] Buchstaben = { "A", "B", "C", "D", "E", "F", "G", "H" };
