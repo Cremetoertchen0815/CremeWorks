@@ -113,6 +113,9 @@ namespace CremeWorks
                     SetScrollPos(songLyrics.Handle, 1, 10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, 10);
                     break;
+                case 12:
+                    _c.LightConfig.SetState(_s.QA[7], true);
+                    break;
                 default:
                     _c.LightConfig.SetState(_s.QA[nr - 5], enable);
                     break;
@@ -141,8 +144,8 @@ namespace CremeWorks
             UpdateSong();
         }
 
-        private void ShortcutButtonDown(object sender, MouseEventArgs e) => ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, true);
-        private void ShortcutButtonUp(object sender, MouseEventArgs e) => ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, false);
+        private void ShortcutButtonDown(object sender, MouseEventArgs e) => ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, qAButtonToggleToolStripMenuItem.Checked ? null : (bool?)true);
+        private void ShortcutButtonUp(object sender, MouseEventArgs e) { if(!qAButtonToggleToolStripMenuItem.Checked) ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, false); }
 
         private void RemSong(object sender, EventArgs e)
         {
@@ -231,5 +234,10 @@ namespace CremeWorks
         }
 
         private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightingConfig(_c).ShowDialog();
+
+        private void qAButtonToggleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            qAButtonToggleToolStripMenuItem.Checked = !qAButtonToggleToolStripMenuItem.Checked;
+        }
     }
 }

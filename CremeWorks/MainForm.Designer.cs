@@ -63,6 +63,7 @@ namespace CremeWorks
             this.txtKey = new System.Windows.Forms.Label();
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
+            this.qAButtonToggleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,7 +125,8 @@ namespace CremeWorks
             this.lightControllerToolStripMenuItem,
             this.toolStripMenuItem1,
             this.connectToolStripMenuItem,
-            this.applySongSettingsToolStripMenuItem});
+            this.applySongSettingsToolStripMenuItem,
+            this.qAButtonToggleToolStripMenuItem});
             this.devicesToolStripMenuItem.Name = "devicesToolStripMenuItem";
             this.devicesToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
             this.devicesToolStripMenuItem.Text = "MIDI Devices";
@@ -402,6 +404,13 @@ namespace CremeWorks
             this.button11.Text = "Quick Access F";
             this.button11.UseVisualStyleBackColor = true;
             // 
+            // qAButtonToggleToolStripMenuItem
+            // 
+            this.qAButtonToggleToolStripMenuItem.Name = "qAButtonToggleToolStripMenuItem";
+            this.qAButtonToggleToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.qAButtonToggleToolStripMenuItem.Text = "QA Button Toggle";
+            this.qAButtonToggleToolStripMenuItem.Click += new System.EventHandler(this.qAButtonToggleToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -472,6 +481,7 @@ namespace CremeWorks
         private System.Windows.Forms.ToolStripMenuItem lightControllerToolStripMenuItem;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.ToolStripMenuItem qAButtonToggleToolStripMenuItem;
     }
 }
 
