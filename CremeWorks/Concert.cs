@@ -106,7 +106,7 @@ namespace CremeWorks
                     Artist = br.ReadString(),
                     Key = br.ReadString(),
                     Lyrics = br.ReadString(),
-                    QA = new sbyte[br.ReadInt32()],
+                    QA = new sbyte[br.ReadInt32(), 4],
                     NoteMap = new bool[4][],
                     CCMap = new bool[4][]
                 };

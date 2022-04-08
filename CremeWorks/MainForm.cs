@@ -53,14 +53,12 @@ namespace CremeWorks
 
         }
 
-        private string[] Buchstaben = { "A", "B", "C", "D", "E", "F", "G", "H" };
-
         private void UpdateSong()
         {
             songTitle.Text = string.Empty;
             songLyrics.Text = string.Empty;
             txtKey.Text = string.Empty;
-
+            /*
             button5.Text = (_s?.QA[0] ?? -1) < 0 ? "Quick Access " + Buchstaben[0] : _c.LightConfig.Names[_s.QA[0]];
             button7.Text = (_s?.QA[1] ?? -1) < 0 ? "Quick Access " + Buchstaben[1] : _c.LightConfig.Names[_s.QA[1]];
             button6.Text = (_s?.QA[2] ?? -1) < 0 ? "Quick Access " + Buchstaben[2] : _c.LightConfig.Names[_s.QA[2]];
@@ -68,6 +66,7 @@ namespace CremeWorks
             button8.Text = (_s?.QA[4] ?? -1) < 0 ? "Quick Access " + Buchstaben[4] : _c.LightConfig.Names[_s.QA[4]];
             button11.Text = (_s?.QA[5] ?? -1) < 0 ? "Quick Access " + Buchstaben[5] : _c.LightConfig.Names[_s.QA[5]];
             button10.Text = (_s?.QA[6] ?? -1) < 0 ? "Quick Access " + Buchstaben[6] : _c.LightConfig.Names[_s.QA[6]];
+            */
 
             if (_s == null) return;
 
@@ -113,14 +112,17 @@ namespace CremeWorks
                     SetScrollPos(songLyrics.Handle, 1, 10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, 10);
                     break;
-                case 12:
-                    _c.LightConfig.SetState(_s.QA[7], true);
-                    break;
-                default:
-                    _c.LightConfig.SetState(_s.QA[nr - 5], enable);
-                    break;
             }
         }
+
+        /*
+    case 12:
+        for (int i = 0; i < 4; i++) _c.LightConfig.SetState(_s.QA[7, i], true);
+        break;
+    default:
+        for (int i = 0; i < 4; i++) _c.LightConfig.SetState(_s.QA[nr - 5, i], enable);
+        break;
+        */
 
         private void AddNewSong(object sender, EventArgs e)
         {
