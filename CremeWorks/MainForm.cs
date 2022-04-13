@@ -61,6 +61,7 @@ namespace CremeWorks
             songLyrics.Text = string.Empty;
             txtKey.Text = string.Empty;
 
+
             button5.Text = (_s?.QA[0] ?? -1) < 0 ? "Quick Access " + Buchstaben[0] : _c.LightConfig.Names[_s.QA[0]];
             button7.Text = (_s?.QA[1] ?? -1) < 0 ? "Quick Access " + Buchstaben[1] : _c.LightConfig.Names[_s.QA[1]];
             button6.Text = (_s?.QA[2] ?? -1) < 0 ? "Quick Access " + Buchstaben[2] : _c.LightConfig.Names[_s.QA[2]];
