@@ -40,8 +40,8 @@ namespace CremeWorks
             {
                 for (var y = 0; y < 4; y++)
                 {
-                    _mapMatrixA[x][y].Checked = s.NoteMap[x][y];
-                    _mapMatrixB[x][y].Checked = s.CCMap[x][y];
+                    _mapMatrixA[x][y].Checked = s.NotePatchMap[x][y];
+                    _mapMatrixB[x][y].Checked = s.CCPatchMap[x][y];
                 }
             }
 
@@ -74,8 +74,8 @@ namespace CremeWorks
             {
                 for (var y = 0; y < 4; y++)
                 {
-                    _s.NoteMap[x][y] = _mapMatrixA[x][y].Checked;
-                    _s.CCMap[x][y] = _mapMatrixB[x][y].Checked;
+                    _s.NotePatchMap[x][y] = _mapMatrixA[x][y].Checked;
+                    _s.CCPatchMap[x][y] = _mapMatrixB[x][y].Checked;
                 }
             }
         }

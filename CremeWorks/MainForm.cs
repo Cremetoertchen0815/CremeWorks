@@ -83,8 +83,8 @@ namespace CremeWorks
 
         private void ConfigSongMIDI()
         {
-            _c.MidiMatrix.NoteMap = _s.NoteMap;
-            _c.MidiMatrix.CCMap = _s.CCMap;
+            _c.MidiMatrix.NoteMap = _s.NotePatchMap;
+            _c.MidiMatrix.CCMap = _s.CCPatchMap;
 
             for (var i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplyPatch(_c.Devices[i + 2]);
         }

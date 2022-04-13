@@ -107,15 +107,15 @@ namespace CremeWorks
                     Key = br.ReadString(),
                     Lyrics = br.ReadString(),
                     QA = new sbyte[br.ReadInt32()],
-                    NoteMap = new bool[4][],
-                    CCMap = new bool[4][]
+                    NotePatchMap = new bool[4][],
+                    CCPatchMap = new bool[4][]
                 };
                 var byte_Dat = br.ReadBytes(s.QA.Length);
                 Buffer.BlockCopy(byte_Dat, 0, s.QA, 0, byte_Dat.Length);
                 for (var j = 0; j < 4; j++)
                 {
-                    s.NoteMap[j] = new bool[] { br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean() };
-                    s.CCMap[j] = new bool[] { br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean() };
+                    s.NotePatchMap[j] = new bool[] { br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean() };
+                    s.CCPatchMap[j] = new bool[] { br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean() };
                 }
                 s.AutoPatchSlots = new (bool, IRefacePatch)[br.ReadInt32()];
                 for (var j = 0; j < s.AutoPatchSlots.Length; j++)
@@ -206,8 +206,8 @@ namespace CremeWorks
                 bw.Write(byte_dat);
                 for (var j = 0; j < 4; j++)
                 {
-                    for (var k = 0; k < 4; k++) bw.Write(song.NoteMap[j][k]);
-                    for (var k = 0; k < 4; k++) bw.Write(song.CCMap[j][k]);
+                    for (var k = 0; k < 4; k++) bw.Write(song.NotePatchMap[j][k]);
+                    for (var k = 0; k < 4; k++) bw.Write(song.CCPatchMap[j][k]);
                 }
 
                 bw.Write(song.AutoPatchSlots.Length);
