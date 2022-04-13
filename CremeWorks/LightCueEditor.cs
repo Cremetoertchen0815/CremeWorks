@@ -44,6 +44,7 @@ namespace CremeWorks
         private void button1_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
+            _dat.comment = textBox1.Text;
             Close();
         }
 

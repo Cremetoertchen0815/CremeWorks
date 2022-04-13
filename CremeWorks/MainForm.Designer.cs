@@ -453,6 +453,7 @@ namespace CremeWorks
             this.button14.TabIndex = 24;
             this.button14.Text = "Edit";
             this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // button15
             // 
@@ -463,6 +464,7 @@ namespace CremeWorks
             this.button15.TabIndex = 23;
             this.button15.Text = "Add";
             this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
             // MainForm
             // 

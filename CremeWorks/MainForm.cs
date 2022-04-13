@@ -60,7 +60,7 @@ namespace CremeWorks
             songTitle.Text = string.Empty;
             songLyrics.Text = string.Empty;
             txtKey.Text = string.Empty;
-
+            lightCue.Items.Clear();
 
             button5.Text = (_s?.QA[0] ?? -1) < 0 ? "Quick Access " + Buchstaben[0] : _c.LightConfig.Names[_s.QA[0]];
             button7.Text = (_s?.QA[1] ?? -1) < 0 ? "Quick Access " + Buchstaben[1] : _c.LightConfig.Names[_s.QA[1]];
@@ -71,6 +71,8 @@ namespace CremeWorks
             button10.Text = (_s?.QA[6] ?? -1) < 0 ? "Quick Access " + Buchstaben[6] : _c.LightConfig.Names[_s.QA[6]];
 
             if (_s == null) return;
+
+            for (int i = 0; i < _s.CueList.Count; i++) lightCue.Items.Add((i + 1).ToString() + ". " + _s.CueList[i].comment);
 
             //Configure shit
             songTitle.Text = _s.Title;
@@ -239,6 +241,21 @@ namespace CremeWorks
         private void qAButtonToggleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             qAButtonToggleToolStripMenuItem.Checked = !qAButtonToggleToolStripMenuItem.Checked;
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            if (LightCueEditor.AddToCue(_c.LightConfig, _s.CueList)) UpdateSong();
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            var tmp = _s.CueList[lightCue.SelectedIndex];
+            if (LightCueEditor.EditCue(_c.LightConfig, ref tmp))
+            {
+                _s.CueList[lightCue.SelectedIndex] = tmp;
+                UpdateSong();
+            }
         }
     }
 }
