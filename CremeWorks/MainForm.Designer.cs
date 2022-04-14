@@ -62,8 +62,6 @@ namespace CremeWorks
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.txtKey = new System.Windows.Forms.Label();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lightCue = new System.Windows.Forms.ListBox();
             this.button13 = new System.Windows.Forms.Button();
@@ -79,7 +77,7 @@ namespace CremeWorks
             this.devicesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1099, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1025, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -248,7 +246,7 @@ namespace CremeWorks
             this.songTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.songTitle.Location = new System.Drawing.Point(256, 24);
             this.songTitle.Name = "songTitle";
-            this.songTitle.Size = new System.Drawing.Size(527, 31);
+            this.songTitle.Size = new System.Drawing.Size(453, 31);
             this.songTitle.TabIndex = 6;
             this.songTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
@@ -271,7 +269,7 @@ namespace CremeWorks
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(789, 58);
+            this.button4.Location = new System.Drawing.Point(791, 58);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(70, 70);
             this.button4.TabIndex = 8;
@@ -285,7 +283,7 @@ namespace CremeWorks
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(865, 58);
+            this.button5.Location = new System.Drawing.Point(867, 58);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(70, 70);
             this.button5.TabIndex = 9;
@@ -299,7 +297,7 @@ namespace CremeWorks
             // 
             this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(1017, 58);
+            this.button6.Location = new System.Drawing.Point(791, 134);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(70, 70);
             this.button6.TabIndex = 11;
@@ -313,7 +311,7 @@ namespace CremeWorks
             // 
             this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.Location = new System.Drawing.Point(941, 58);
+            this.button7.Location = new System.Drawing.Point(943, 58);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(70, 70);
             this.button7.TabIndex = 10;
@@ -327,7 +325,7 @@ namespace CremeWorks
             // 
             this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button8.Location = new System.Drawing.Point(865, 134);
+            this.button8.Location = new System.Drawing.Point(943, 134);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(70, 70);
             this.button8.TabIndex = 13;
@@ -341,7 +339,7 @@ namespace CremeWorks
             // 
             this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button9.Location = new System.Drawing.Point(789, 134);
+            this.button9.Location = new System.Drawing.Point(867, 134);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(70, 70);
             this.button9.TabIndex = 12;
@@ -355,7 +353,7 @@ namespace CremeWorks
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(789, 42);
+            this.label3.Location = new System.Drawing.Point(791, 42);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(96, 13);
             this.label3.TabIndex = 16;
@@ -387,40 +385,16 @@ namespace CremeWorks
             this.txtKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtKey.AutoSize = true;
             this.txtKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.txtKey.Location = new System.Drawing.Point(883, 498);
+            this.txtKey.Location = new System.Drawing.Point(809, 498);
             this.txtKey.Name = "txtKey";
             this.txtKey.Size = new System.Drawing.Size(0, 20);
             this.txtKey.TabIndex = 18;
-            // 
-            // button10
-            // 
-            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button10.Location = new System.Drawing.Point(1017, 134);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(70, 70);
-            this.button10.TabIndex = 20;
-            this.button10.Tag = "9";
-            this.button10.Text = "Quick Access G";
-            this.button10.UseVisualStyleBackColor = true;
-            // 
-            // button11
-            // 
-            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button11.Location = new System.Drawing.Point(941, 134);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(70, 70);
-            this.button11.TabIndex = 19;
-            this.button11.Tag = "8";
-            this.button11.Text = "Quick Access F";
-            this.button11.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(789, 216);
+            this.label2.Location = new System.Drawing.Point(791, 216);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(74, 13);
             this.label2.TabIndex = 21;
@@ -431,7 +405,7 @@ namespace CremeWorks
             this.lightCue.FormattingEnabled = true;
             this.lightCue.Location = new System.Drawing.Point(789, 233);
             this.lightCue.Name = "lightCue";
-            this.lightCue.Size = new System.Drawing.Size(298, 329);
+            this.lightCue.Size = new System.Drawing.Size(224, 329);
             this.lightCue.TabIndex = 22;
             // 
             // button13
@@ -443,6 +417,7 @@ namespace CremeWorks
             this.button13.TabIndex = 25;
             this.button13.Text = "Remove";
             this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // button14
             // 
@@ -470,14 +445,12 @@ namespace CremeWorks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1099, 606);
+            this.ClientSize = new System.Drawing.Size(1025, 606);
             this.Controls.Add(this.button13);
             this.Controls.Add(this.button14);
             this.Controls.Add(this.button15);
             this.Controls.Add(this.lightCue);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button10);
-            this.Controls.Add(this.button11);
             this.Controls.Add(this.txtKey);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.playList);
@@ -539,8 +512,6 @@ namespace CremeWorks
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Label txtKey;
         private System.Windows.Forms.ToolStripMenuItem lightControllerToolStripMenuItem;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button11;
         private System.Windows.Forms.ToolStripMenuItem qAButtonToggleToolStripMenuItem;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox lightCue;

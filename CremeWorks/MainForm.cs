@@ -53,7 +53,7 @@ namespace CremeWorks
 
         }
 
-        private string[] Buchstaben = { "A", "B", "C", "D", "E", "F", "G", "H" };
+        private string[] Buchstaben = { "A", "B", "C", "D", "E"};
 
         private void UpdateSong()
         {
@@ -67,8 +67,6 @@ namespace CremeWorks
             button6.Text = (_s?.QA[2] ?? -1) < 0 ? "Quick Access " + Buchstaben[2] : _c.LightConfig.Names[_s.QA[2]];
             button9.Text = (_s?.QA[3] ?? -1) < 0 ? "Quick Access " + Buchstaben[3] : _c.LightConfig.Names[_s.QA[3]];
             button8.Text = (_s?.QA[4] ?? -1) < 0 ? "Quick Access " + Buchstaben[4] : _c.LightConfig.Names[_s.QA[4]];
-            button11.Text = (_s?.QA[5] ?? -1) < 0 ? "Quick Access " + Buchstaben[5] : _c.LightConfig.Names[_s.QA[5]];
-            button10.Text = (_s?.QA[6] ?? -1) < 0 ? "Quick Access " + Buchstaben[6] : _c.LightConfig.Names[_s.QA[6]];
 
             if (_s == null) return;
 
@@ -116,8 +114,12 @@ namespace CremeWorks
                     SetScrollPos(songLyrics.Handle, 1, 10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, 10);
                     break;
+                case 10:
+                    break;
+                case 11:
+                    break;
                 case 12:
-                    _c.LightConfig.SetState(_s.QA[7], true);
+                    _c.LightConfig.SetState(_s.QA[5], true);
                     break;
                 default:
                     _c.LightConfig.SetState(_s.QA[nr - 5], enable);
@@ -245,17 +247,26 @@ namespace CremeWorks
 
         private void button15_Click(object sender, EventArgs e)
         {
-            if (LightCueEditor.AddToCue(_c.LightConfig, _s.CueList)) UpdateSong();
+            if (_s != null && LightCueEditor.AddToCue(_c.LightConfig, _s.CueList)) UpdateSong();
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
+            if (_s == null || lightCue.SelectedIndex < 0) return;
+
             var tmp = _s.CueList[lightCue.SelectedIndex];
             if (LightCueEditor.EditCue(_c.LightConfig, ref tmp))
             {
                 _s.CueList[lightCue.SelectedIndex] = tmp;
                 UpdateSong();
             }
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            if (_s == null || lightCue.SelectedIndex < 0) return;
+            _s.CueList.RemoveAt(lightCue.SelectedIndex);
+            UpdateSong();
         }
     }
 }

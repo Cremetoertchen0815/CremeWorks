@@ -14,10 +14,9 @@ namespace CremeWorks
     {
         private (string comment, LightSwitchType[] data) _dat;
         private LightController _lConfig;
-        private LightCueEditor()
-        {
-            InitializeComponent();
-        }
+
+        private LightCueEditor() => InitializeComponent();
+        
 
         public static bool EditCue(LightController lConfig, ref (string comment, LightSwitchType[] data) item)
         {
@@ -32,7 +31,7 @@ namespace CremeWorks
 
         public static bool AddToCue(LightController lConfig, List<(string comment, LightSwitchType[] data)> cue)
         {
-            var inst = new LightCueEditor() { _dat = ("Empty", new LightSwitchType[0]), _lConfig = lConfig };
+            var inst = new LightCueEditor() { _dat = ("Empty", new LightSwitchType[128]), _lConfig = lConfig };
             if (inst.ShowDialog() == DialogResult.OK)
             {
                 cue.Add(inst._dat);
@@ -60,5 +59,23 @@ namespace CremeWorks
             textBox1.Text = _dat.comment;
         }
         private void LightCueEditor_Load(object sender, EventArgs e) => RefreshData();
+
+        bool ignoreValChange = false;
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ignoreValChange) return;
+
+            _dat.data[(int)numericUpDown1.Value] = (LightSwitchType)(comboBox1.SelectedIndex - 1);
+            RefreshData();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            ignoreValChange = true;
+            var val = _dat.data[(int)numericUpDown1.Value];
+            comboBox1.SelectedIndex = ((int)val + 1);
+            comboBox1.Text = val.ToString();
+            ignoreValChange = false;
+        }
     }
 }
