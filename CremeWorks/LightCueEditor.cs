@@ -31,7 +31,9 @@ namespace CremeWorks
 
         public static bool AddToCue(LightController lConfig, List<(string comment, LightSwitchType[] data)> cue)
         {
-            var inst = new LightCueEditor() { _dat = ("Empty", new LightSwitchType[128]), _lConfig = lConfig };
+            var datArr = new LightSwitchType[128];
+            for (int i = 0; i < 128; i++) datArr[i] = LightSwitchType.Ignore;
+            var inst = new LightCueEditor() { _dat = ("Empty", datArr), _lConfig = lConfig };
             if (inst.ShowDialog() == DialogResult.OK)
             {
                 cue.Add(inst._dat);
@@ -65,14 +67,14 @@ namespace CremeWorks
         {
             if (ignoreValChange) return;
 
-            _dat.data[(int)numericUpDown1.Value] = (LightSwitchType)(comboBox1.SelectedIndex - 1);
+            _dat.data[(int)numericUpDown1.Value - 1] = (LightSwitchType)(comboBox1.SelectedIndex - 1);
             RefreshData();
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             ignoreValChange = true;
-            var val = _dat.data[(int)numericUpDown1.Value];
+            var val = _dat.data[(int)numericUpDown1.Value - 1];
             comboBox1.SelectedIndex = ((int)val + 1);
             comboBox1.Text = val.ToString();
             ignoreValChange = false;

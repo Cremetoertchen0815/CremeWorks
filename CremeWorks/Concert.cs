@@ -244,6 +244,14 @@ namespace CremeWorks
                             break;
                     }
                 }
+
+                //Lighting cue
+                bw.Write(song.CueList.Count);
+                for (int j = 0; j < song.CueList.Count; j++)
+                {
+                    bw.Write(song.CueList[j].comment);
+                    for (int k = 0; k < 128; k++)  bw.Write((int)song.CueList[j].data[k]);
+                }
             }
 
             bw.Close();
