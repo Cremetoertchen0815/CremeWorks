@@ -157,6 +157,15 @@ namespace CremeWorks
 
                     s.AutoPatchSlots[j] = (enabled, patch);
                 }
+
+                int lightcueLen = br.ReadInt32();
+                for (int j = 0; j < lightcueLen; j++)
+                {
+                    var comment = br.ReadString();
+                    var data = new LightSwitchType[128];
+                    for (int k = 0; k < 128; k++) data[k] = (LightSwitchType)br.ReadInt32();
+                    s.CueList.Add((comment, data));
+                }
                 nu.Playlist.Add(s);
             }
             br.Close();
