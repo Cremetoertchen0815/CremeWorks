@@ -407,6 +407,7 @@ namespace CremeWorks
             this.lightCue.Name = "lightCue";
             this.lightCue.Size = new System.Drawing.Size(224, 329);
             this.lightCue.TabIndex = 22;
+            this.lightCue.SelectedIndexChanged += new System.EventHandler(this.lightCue_SelectedIndexChanged);
             // 
             // button13
             // 

@@ -79,7 +79,7 @@ namespace CremeWorks
             ConfigSongMIDI();
 
             //Load default QA patch
-            ExecuteAction(12, null);
+            if (lightCue.Items.Count > 0) lightCue.SelectedIndex = 0;
         }
 
         private void ConfigSongMIDI()
@@ -115,11 +115,10 @@ namespace CremeWorks
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, 10);
                     break;
                 case 10:
+                    if (lightCue.SelectedIndex > 0) lightCue.SelectedIndex--;
                     break;
                 case 11:
-                    break;
-                case 12:
-                    _c.LightConfig.SetState(_s.QA[5], true);
+                    if (lightCue.SelectedIndex < lightCue.Items.Count - 1) lightCue.SelectedIndex++;
                     break;
                 default:
                     _c.LightConfig.SetState(_s.QA[nr - 5], enable);
@@ -267,6 +266,18 @@ namespace CremeWorks
             if (_s == null || lightCue.SelectedIndex < 0) return;
             _s.CueList.RemoveAt(lightCue.SelectedIndex);
             UpdateSong();
+        }
+
+        private void lightCue_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_s != null && lightCue.SelectedIndex >= 0)
+            {
+                var dat = _s.CueList[lightCue.SelectedIndex].data;
+                for (int i = 0; i < dat.Length; i++)
+                {
+                    if (dat[i] != LightSwitchType.Ignore) _c.LightConfig.SetState(i, dat[i] == LightSwitchType.On ? true : false);
+                }
+            }
         }
     }
 }

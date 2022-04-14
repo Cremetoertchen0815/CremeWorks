@@ -972,18 +972,18 @@ namespace CremeWorks
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(12, 331);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(84, 13);
+            this.label14.Size = new System.Drawing.Size(107, 13);
             this.label14.TabIndex = 58;
-            this.label14.Text = "Quick Access G";
+            this.label14.Text = "Lighting Cue Forward";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(12, 305);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(82, 13);
+            this.label15.Size = new System.Drawing.Size(117, 13);
             this.label15.TabIndex = 57;
-            this.label15.Text = "Quick Access F";
+            this.label15.Text = "Lighting Cue Backward";
             // 
             // FootSwitchConfig
             // 

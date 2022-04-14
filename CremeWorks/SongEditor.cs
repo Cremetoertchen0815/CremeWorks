@@ -25,7 +25,7 @@ namespace CremeWorks
             _mapMatrixB = new CheckBox[][] { new CheckBox[] {ccMM, ccM1, ccM2, ccM3 }, new CheckBox[] { cc1M, cc11, cc12, cc13 },
                                             new CheckBox[] { cc2M, cc21, cc22, cc23 }, new CheckBox[] { cc3M, cc31, cc32, cc33 } };
 
-            _mapQA = new Button[] { button12, button5, button11, button6, button10, button7, button9, button8 };
+            _mapQA = new Button[] { button12, button5, button11, button6, button10 };
 
             //Load data
             txtTitle.Text = s.Title;
@@ -48,7 +48,7 @@ namespace CremeWorks
             for (var i = 0; i < _mapQA.Length; i++)
             {
                 var val = _s.QA[i];
-                if (i < 7) _mapQA[i].Text = val < 0 ? "Quick Access " + Buchstaben[i] : _c.LightConfig.Names[val];
+                if (i < 5) _mapQA[i].Text = val < 0 ? "Quick Access " + Buchstaben[i] : _c.LightConfig.Names[val];
             }
         }
 
@@ -117,9 +117,9 @@ namespace CremeWorks
             var nr = int.Parse((string)src.Tag);
             new QASelector(_c, _s, nr).ShowDialog();
             var val = _s.QA[nr];
-            if (nr < 7) src.Text = val < 0 ? "Quick Access " + Buchstaben[nr] : _c.LightConfig.Names[val];
+            if (nr < 5) src.Text = val < 0 ? "Quick Access " + Buchstaben[nr] : _c.LightConfig.Names[val];
         }
 
-        private string[] Buchstaben = { "A", "B", "C", "D", "E", "F", "G", "H" };
+        private string[] Buchstaben = { "A", "B", "C", "D", "E"};
     }
 }
