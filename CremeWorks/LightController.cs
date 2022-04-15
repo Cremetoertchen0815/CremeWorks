@@ -18,7 +18,7 @@ namespace CremeWorks
         {
             if (note < 0) return;
 
-            if (value == null || _isSrcToggled[note] != value)
+            if (!IsToggleable[note] || (IsToggleable[note] && (value == null || _isSrcToggled[note] != value)))
             {
                 _isSrcToggled[note] = value ?? !_isSrcToggled[note];
                 _c?.Devices[1].Output?.SendEvent(new NoteOnEvent(new SevenBitNumber((byte)note), new SevenBitNumber(127)));
