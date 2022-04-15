@@ -276,5 +276,13 @@ namespace CremeWorks
                 }
             }
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (_s == null || lightCue.SelectedIndex < 0) return;
+            var src = _s.CueList[lightCue.SelectedIndex];
+             _s.CueList.Add((src.comment, (LightSwitchType[])src.data.Clone()));
+            UpdateSong();
+        }
     }
 }
