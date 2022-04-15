@@ -18,10 +18,11 @@ namespace CremeWorks
         {
             if (note < 0) return;
 
-            if ((IsToggleable[note] && (value == null || _isSrcToggled[note] != value)))
+            if (value == null || _isSrcToggled[note] != value)
             {
                 _isSrcToggled[note] = value ?? !_isSrcToggled[note];
                 _c?.Devices[1].Output?.SendEvent(new NoteOnEvent(new SevenBitNumber((byte)note), new SevenBitNumber(127)));
+                System.Threading.Thread.Sleep(10);
             }
 
             int grp = ToggleGroups[note];
@@ -31,6 +32,8 @@ namespace CremeWorks
             {
                 if (i == note || grp != ToggleGroups[i] || !IsToggleable[i] || !_isSrcToggled[i]) continue;
                 _c?.Devices[1].Output?.SendEvent(new NoteOnEvent(new SevenBitNumber((byte)i), new SevenBitNumber(127)));
+                _c?.Devices[1].Output?.SendEvent(new NoteOffEvent(new SevenBitNumber((byte)i), new SevenBitNumber(0)));
+                
                 _isSrcToggled[i] = false;
             }
         }
