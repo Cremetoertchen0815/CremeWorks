@@ -23,9 +23,9 @@ namespace CremeWorks
 
         public void Connect()
         {
-            for (var i = 0; i < Devices.Length; i++)
+            for (int i = 0; i < Devices.Length; i++)
             {
-                MIDIDevice element = Devices[i];
+                var element = Devices[i];
                 if (element.Name == null || element.Name == string.Empty) continue;
                 try
                 {
@@ -47,7 +47,7 @@ namespace CremeWorks
         public void Disconnect()
         {
             MidiMatrix.Unregister();
-            foreach (MIDIDevice element in Devices)
+            foreach (var element in Devices)
             {
                 if (element.Name == null || element.Name == string.Empty) continue;
                 if (element.Input != null) { element.Input.Dispose(); element.Input = null; }
@@ -79,16 +79,16 @@ namespace CremeWorks
             if (br.ReadString() != cHeader) throw new Exception("Incorrect file!");
             nu.FilePath = filename;
             nu.Devices = new MIDIDevice[br.ReadInt32()];
-            for (var i = 0; i < nu.Devices.Length; i++) nu.Devices[i] = new MIDIDevice() { Name = br.ReadString() };
+            for (int i = 0; i < nu.Devices.Length; i++) nu.Devices[i] = new MIDIDevice() { Name = br.ReadString() };
             //Foot switch config
-            var cnt = br.ReadInt32();
+            int cnt = br.ReadInt32();
             nu.FootSwitchConfig = new (MidiEventType, short, byte)[12];
-            for (var i = 0; i < cnt; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
+            for (int i = 0; i < cnt; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
             //QA config
             nu.LightConfig = new LightController(nu);
-            for (var i = 0; i < 128; i++)
+            for (int i = 0; i < 128; i++)
             {
-                var str = br.ReadString();
+                string str = br.ReadString();
                 nu.LightConfig.Names[i] = str == string.Empty ? null : str;
                 nu.LightConfig.ToggleGroups[i] = br.ReadInt32();
                 nu.LightConfig.ResetWhenSongChange[i] = br.ReadBoolean();
@@ -96,9 +96,9 @@ namespace CremeWorks
             }
 
             //Playlist
-            var count = br.ReadInt32();
+            int count = br.ReadInt32();
             nu.Playlist = new List<Song>();
-            for (var i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 var s = new Song
                 {
@@ -110,18 +110,18 @@ namespace CremeWorks
                     NotePatchMap = new bool[4][],
                     CCPatchMap = new bool[4][]
                 };
-                var byte_Dat = br.ReadBytes(s.QA.Length);
+                byte[] byte_Dat = br.ReadBytes(s.QA.Length);
                 Buffer.BlockCopy(byte_Dat, 0, s.QA, 0, byte_Dat.Length);
-                for (var j = 0; j < 4; j++)
+                for (int j = 0; j < 4; j++)
                 {
                     s.NotePatchMap[j] = new bool[] { br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean() };
                     s.CCPatchMap[j] = new bool[] { br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean() };
                 }
                 s.AutoPatchSlots = new (bool, IRefacePatch)[br.ReadInt32()];
-                for (var j = 0; j < s.AutoPatchSlots.Length; j++)
+                for (int j = 0; j < s.AutoPatchSlots.Length; j++)
                 {
-                    var enabled = br.ReadBoolean();
-                    var type = br.ReadInt32();
+                    bool enabled = br.ReadBoolean();
+                    int type = br.ReadInt32();
 
                     IRefacePatch patch;
                     switch ((DeviceType)type)
@@ -161,7 +161,7 @@ namespace CremeWorks
                 int lightcueLen = br.ReadInt32();
                 for (int j = 0; j < lightcueLen; j++)
                 {
-                    var comment = br.ReadString();
+                    string comment = br.ReadString();
                     var data = new LightSwitchType[128];
                     for (int k = 0; k < 128; k++) data[k] = (LightSwitchType)br.ReadInt32();
                     s.CueList.Add((comment, data));
@@ -181,10 +181,10 @@ namespace CremeWorks
             //Misc
             bw.Write(cHeader);
             bw.Write(Devices.Length);
-            for (var i = 0; i < Devices.Length; i++) bw.Write(Devices[i]?.Name ?? string.Empty);
+            for (int i = 0; i < Devices.Length; i++) bw.Write(Devices[i]?.Name ?? string.Empty);
             //Foot switch config
             bw.Write(FootSwitchConfig.Length);
-            for (var i = 0; i < FootSwitchConfig.Length; i++)
+            for (int i = 0; i < FootSwitchConfig.Length; i++)
             {
                 bw.Write((int)FootSwitchConfig[i].Item1);
                 bw.Write(FootSwitchConfig[i].Item2);
@@ -192,7 +192,7 @@ namespace CremeWorks
             }
 
             //Lighting
-            for (var i = 0; i < 128; i++)
+            for (int i = 0; i < 128; i++)
             {
                 bw.Write(LightConfig.Names[i] ?? string.Empty);
                 bw.Write(LightConfig.ToggleGroups[i]);
@@ -202,34 +202,34 @@ namespace CremeWorks
 
             //Playlist
             bw.Write(Playlist.Count);
-            for (var i = 0; i < Playlist.Count; i++)
+            for (int i = 0; i < Playlist.Count; i++)
             {
-                Song song = Playlist[i];
+                var song = Playlist[i];
                 bw.Write(song.Title);
                 bw.Write(song.Artist);
                 bw.Write(song.Key);
                 bw.Write(song.Lyrics);
                 bw.Write(song.QA.Length);
-                var byte_dat = new byte[song.QA.Length];
+                byte[] byte_dat = new byte[song.QA.Length];
                 Buffer.BlockCopy(song.QA, 0, byte_dat, 0, byte_dat.Length);
                 bw.Write(byte_dat);
-                for (var j = 0; j < 4; j++)
+                for (int j = 0; j < 4; j++)
                 {
-                    for (var k = 0; k < 4; k++) bw.Write(song.NotePatchMap[j][k]);
-                    for (var k = 0; k < 4; k++) bw.Write(song.CCPatchMap[j][k]);
+                    for (int k = 0; k < 4; k++) bw.Write(song.NotePatchMap[j][k]);
+                    for (int k = 0; k < 4; k++) bw.Write(song.CCPatchMap[j][k]);
                 }
 
                 bw.Write(song.AutoPatchSlots.Length);
-                for (var j = 0; j < song.AutoPatchSlots.Length; j++)
+                for (int j = 0; j < song.AutoPatchSlots.Length; j++)
                 {
-                    (bool Enabled, IRefacePatch Patch) obj = song.AutoPatchSlots[j];
+                    var obj = song.AutoPatchSlots[j];
                     bw.Write(obj.Enabled);
                     bw.Write((int?)obj.Patch?.Type ?? -1);
                     switch (obj.Patch)
                     {
                         case CSPatch cs:
-                            var datA = StructMarshal<RefaceSystemData>.getBytes(cs.SystemSettings);
-                            var datB = StructMarshal<CSPatch.RefaceCSVoiceData>.getBytes(cs.VoiceSettings);
+                            byte[] datA = StructMarshal<RefaceSystemData>.getBytes(cs.SystemSettings);
+                            byte[] datB = StructMarshal<CSPatch.RefaceCSVoiceData>.getBytes(cs.VoiceSettings);
                             bw.Write(datA.Length);
                             bw.Write(datA);
                             bw.Write(datB.Length);
@@ -259,7 +259,7 @@ namespace CremeWorks
                 for (int j = 0; j < song.CueList.Count; j++)
                 {
                     bw.Write(song.CueList[j].comment);
-                    for (int k = 0; k < 128; k++)  bw.Write((int)song.CueList[j].data[k]);
+                    for (int k = 0; k < 128; k++) bw.Write((int)song.CueList[j].data[k]);
                 }
             }
 

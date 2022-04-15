@@ -14,7 +14,7 @@ namespace CremeWorks
         public Song _s;
         public MIDIDevice _d;
         public int _id;
-        private bool _wasListening;
+        private readonly bool _wasListening;
 
         private IRefacePatch _refaceDat;
 
@@ -85,7 +85,7 @@ namespace CremeWorks
             switch (_refaceDat.Type)
             {
                 case DeviceType.RefaceCS:
-                    CSPatch.RefaceCSVoiceData cs = ((CSPatch)_refaceDat).VoiceSettings;
+                    var cs = ((CSPatch)_refaceDat).VoiceSettings;
                     numericUpDown17.Value = cs.Volume;
                     comboBox11.SelectedIndex = (int)cs.LFOAssign;
                     numericUpDown18.Value = cs.LFODepth;
@@ -112,7 +112,7 @@ namespace CremeWorks
                     fetchVoiceData.Enabled = false;
                     break;
                 case DeviceType.RefaceCP:
-                    CPPatch.RefaceCPVoiceData cp = ((CPPatch)_refaceDat).VoiceSettings;
+                    var cp = ((CPPatch)_refaceDat).VoiceSettings;
                     numericUpDown8.Value = cp.Volume;
                     comboBox7.SelectedIndex = (int)cp.WaveType;
                     numericUpDown9.Value = cp.Drive;
@@ -245,8 +245,8 @@ namespace CremeWorks
 
         private byte[] CutOffBulkDumpHeader(byte[] dat)
         {
-            var res = new byte[dat.Length - 12];
-            for (var i = 0; i < res.Length; i++) res[i] = dat[i + 10];
+            byte[] res = new byte[dat.Length - 12];
+            for (int i = 0; i < res.Length; i++) res[i] = dat[i + 10];
             return res;
         }
 

@@ -7,8 +7,8 @@ namespace CremeWorks
 {
     public partial class FootSwitchConfig : Form
     {
-        private (ComboBox, NumericUpDown, NumericUpDown, Button)[] _cont;
-        private Concert _c;
+        private readonly (ComboBox, NumericUpDown, NumericUpDown, Button)[] _cont;
+        private readonly Concert _c;
         public FootSwitchConfig(Concert c)
         {
             InitializeComponent();
@@ -25,10 +25,10 @@ namespace CremeWorks
                                                                              (type10, valA10, valB10, det10), (type11, valA11, valB11, det11), (type12, valA12, valB12, det12)};
 
             //Load data into dialogue
-            for (var i = 0; i < 12; i++)
+            for (int i = 0; i < 12; i++)
             {
-                (MidiEventType, short, byte) cfg = _c.FootSwitchConfig[i];
-                (ComboBox, NumericUpDown, NumericUpDown, Button) cnt = _cont[i];
+                var cfg = _c.FootSwitchConfig[i];
+                var cnt = _cont[i];
                 cnt.Item1.SelectedIndex = MidiEventTypeToIndex(cfg.Item1);
                 cnt.Item2.Value = cfg.Item2;
                 cnt.Item3.Value = Math.Max((int)cfg.Item3, 1);
@@ -44,7 +44,7 @@ namespace CremeWorks
             //Grad data
             var btn = (Button)sender;
             _scanID = int.Parse((string)btn.Tag);
-            InputDevice dev = _c.Devices[0].Input;
+            var dev = _c.Devices[0].Input;
             if (dev == null) return;
             _InTest = true;
             btn.Text = "Sensing...";
@@ -65,7 +65,7 @@ namespace CremeWorks
             _InTest = false;
 
             //Process data
-            (ComboBox, NumericUpDown, NumericUpDown, Button) controls = _cont[_scanID];
+            var controls = _cont[_scanID];
             if (e.Event.EventType == MidiEventType.NoteOn)
             {
                 var ev = (NoteOnEvent)e.Event;
@@ -93,9 +93,9 @@ namespace CremeWorks
         private void FootSwitchConfig_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Save data from dialogue
-            for (var i = 0; i < 12; i++)
+            for (int i = 0; i < 12; i++)
             {
-                (ComboBox, NumericUpDown, NumericUpDown, Button) cnt = _cont[i];
+                var cnt = _cont[i];
                 _c.FootSwitchConfig[i] = (IndexToMidiEventType(cnt.Item1.SelectedIndex), (short)cnt.Item2.Value, (byte)(cnt.Item3.Value - 1));
             }
 

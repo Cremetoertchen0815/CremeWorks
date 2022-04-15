@@ -6,7 +6,7 @@ namespace CremeWorks
     public partial class LightingConfig : Form
     {
 
-        private LightController _c;
+        private readonly LightController _c;
         public LightingConfig(Concert c)
         {
             InitializeComponent();
@@ -16,7 +16,7 @@ namespace CremeWorks
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            var nr = (int)numericUpDown1.Value;
+            int nr = (int)numericUpDown1.Value;
             textBox1.Text = _c.Names[nr] ?? "";
             comboBox1.SelectedIndex = _c.ToggleGroups[nr];
             checkBox1.Checked = _c.ResetWhenSongChange[nr];

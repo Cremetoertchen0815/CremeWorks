@@ -5,11 +5,11 @@ namespace CremeWorks
 {
     public partial class SongEditor : Form
     {
-        private Concert _c;
-        private Song _s;
-        private CheckBox[][] _mapMatrixA;
-        private CheckBox[][] _mapMatrixB;
-        private Button[] _mapQA;
+        private readonly Concert _c;
+        private readonly Song _s;
+        private readonly CheckBox[][] _mapMatrixA;
+        private readonly CheckBox[][] _mapMatrixB;
+        private readonly Button[] _mapQA;
 
         public SongEditor(Concert c, Song s)
         {
@@ -36,18 +36,18 @@ namespace CremeWorks
             ap1.Checked = apb1.Enabled = s.AutoPatchSlots[1].Enabled;
             ap2.Checked = apb2.Enabled = s.AutoPatchSlots[2].Enabled;
             ap3.Checked = apb3.Enabled = s.AutoPatchSlots[3].Enabled;
-            for (var x = 0; x < 4; x++)
+            for (int x = 0; x < 4; x++)
             {
-                for (var y = 0; y < 4; y++)
+                for (int y = 0; y < 4; y++)
                 {
                     _mapMatrixA[x][y].Checked = s.NotePatchMap[x][y];
                     _mapMatrixB[x][y].Checked = s.CCPatchMap[x][y];
                 }
             }
 
-            for (var i = 0; i < _mapQA.Length; i++)
+            for (int i = 0; i < _mapQA.Length; i++)
             {
-                var val = _s.QA[i];
+                sbyte val = _s.QA[i];
                 if (i < 5) _mapQA[i].Text = val < 0 ? "Quick Access " + Buchstaben[i] : _c.LightConfig.Names[val];
             }
         }
@@ -70,9 +70,9 @@ namespace CremeWorks
             _s.Artist = txtArtist.Text;
             _s.Key = txtKey.Text;
             _s.Lyrics = txtLyrics.Text;
-            for (var x = 0; x < 4; x++)
+            for (int x = 0; x < 4; x++)
             {
-                for (var y = 0; y < 4; y++)
+                for (int y = 0; y < 4; y++)
                 {
                     _s.NotePatchMap[x][y] = _mapMatrixA[x][y].Checked;
                     _s.CCPatchMap[x][y] = _mapMatrixB[x][y].Checked;
@@ -86,7 +86,7 @@ namespace CremeWorks
         {
             //Update controls
             var chk = ((CheckBox)sender);
-            var id = int.Parse((string)chk.Tag);
+            int id = int.Parse((string)chk.Tag);
             switch (id)
             {
                 case 0:
@@ -106,7 +106,7 @@ namespace CremeWorks
             }
 
             //Update database
-            Reface.IRefacePatch patchBuffer = _s.AutoPatchSlots[id].Patch;
+            var patchBuffer = _s.AutoPatchSlots[id].Patch;
             _s.AutoPatchSlots[id] = (chk.Checked, patchBuffer);
 
         }
@@ -114,12 +114,12 @@ namespace CremeWorks
         private void button12_Click(object sender, EventArgs e)
         {
             var src = (Button)sender;
-            var nr = int.Parse((string)src.Tag);
+            int nr = int.Parse((string)src.Tag);
             new QASelector(_c, _s, nr).ShowDialog();
-            var val = _s.QA[nr];
+            sbyte val = _s.QA[nr];
             if (nr < 5) src.Text = val < 0 ? "Quick Access " + Buchstaben[nr] : _c.LightConfig.Names[val];
         }
 
-        private string[] Buchstaben = { "A", "B", "C", "D", "E"};
+        private readonly string[] Buchstaben = { "A", "B", "C", "D", "E" };
     }
 }

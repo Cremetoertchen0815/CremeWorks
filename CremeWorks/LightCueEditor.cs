@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CremeWorks
@@ -16,7 +10,7 @@ namespace CremeWorks
         private LightController _lConfig;
 
         private LightCueEditor() => InitializeComponent();
-        
+
 
         public static bool EditCue(LightController lConfig, ref (string comment, LightSwitchType[] data) item)
         {
@@ -62,7 +56,7 @@ namespace CremeWorks
         }
         private void LightCueEditor_Load(object sender, EventArgs e) => RefreshData();
 
-        bool ignoreValChange = false;
+        private bool ignoreValChange = false;
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ignoreValChange) return;

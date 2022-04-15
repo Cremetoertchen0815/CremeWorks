@@ -11,8 +11,8 @@ namespace CremeWorks
         public bool[] ResetWhenSongChange;
         public bool[] IsToggleable;
 
-        private bool[] _isSrcToggled;
-        private Concert _c;
+        private readonly bool[] _isSrcToggled;
+        private readonly Concert _c;
 
         public void SetState(int note, bool? value = null)
         {
@@ -24,10 +24,10 @@ namespace CremeWorks
                 _c?.Devices[1].Output?.SendEvent(new NoteOnEvent(new SevenBitNumber((byte)note), new SevenBitNumber(127)));
             }
 
-            var grp = ToggleGroups[note];
+            int grp = ToggleGroups[note];
             if (grp <= 0 || (value != null && !value.Value)) return;
 
-            for (var i = 0; i < 127; i++)
+            for (int i = 0; i < 127; i++)
             {
                 if (i == note || grp != ToggleGroups[i] || !IsToggleable[i] || !_isSrcToggled[i]) continue;
                 _c?.Devices[1].Output?.SendEvent(new NoteOnEvent(new SevenBitNumber((byte)i), new SevenBitNumber(127)));
@@ -43,7 +43,7 @@ namespace CremeWorks
             ResetWhenSongChange = new bool[128];
             IsToggleable = new bool[128];
             _isSrcToggled = new bool[128];
-            for (var i = 0; i < 128; i++) _isSrcToggled[i] = false;
+            for (int i = 0; i < 128; i++) _isSrcToggled[i] = false;
         }
     }
 }

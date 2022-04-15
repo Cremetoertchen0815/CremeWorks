@@ -22,9 +22,9 @@ namespace CremeWorks
             nu.CCPatchMap = new bool[CCPatchMap.Length][];
             nu.AutoPatchSlots = new (bool, Reface.IRefacePatch)[AutoPatchSlots.Length];
             nu.CueList = new List<(string comment, LightSwitchType[] data)>();
-            for (var i = 0; i < NotePatchMap.Length; i++) nu.NotePatchMap[i] = (bool[])NotePatchMap[i].Clone();
-            for (var i = 0; i < CCPatchMap.Length; i++) nu.CCPatchMap[i] = (bool[])CCPatchMap[i].Clone();
-            for (var i = 0; i < nu.AutoPatchSlots.Length; i++) nu.AutoPatchSlots[i] = (AutoPatchSlots[i].Enabled, AutoPatchSlots[i].Patch?.Clone());
+            for (int i = 0; i < NotePatchMap.Length; i++) nu.NotePatchMap[i] = (bool[])NotePatchMap[i].Clone();
+            for (int i = 0; i < CCPatchMap.Length; i++) nu.CCPatchMap[i] = (bool[])CCPatchMap[i].Clone();
+            for (int i = 0; i < nu.AutoPatchSlots.Length; i++) nu.AutoPatchSlots[i] = (AutoPatchSlots[i].Enabled, AutoPatchSlots[i].Patch?.Clone());
             foreach (var item in CueList) nu.CueList.Add((item.comment, item.data.Select((x) => x).ToArray()));
 
 

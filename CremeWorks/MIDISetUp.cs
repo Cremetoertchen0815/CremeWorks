@@ -12,7 +12,7 @@ namespace CremeWorks
     public partial class MIDISetUp : Form
     {
 
-        private Concert _c;
+        private readonly Concert _c;
         private List<string> _deviceList;
         public MIDISetUp(Concert c)
         {
@@ -37,17 +37,17 @@ namespace CremeWorks
         private void comboBoxValueChange(object sender, EventArgs e)
         {
             var snd = (ComboBox)sender;
-            var id = int.Parse(snd.Name.Replace("comboBox", "")) - 1;
+            int id = int.Parse(snd.Name.Replace("comboBox", "")) - 1;
             _c.Devices[id].Name = snd.Text;
         }
 
         private void RefreshAll()
         {
-            ICollection<OutputDevice> dev_list = OutputDevice.GetAll();
+            var dev_list = OutputDevice.GetAll();
             _deviceList = dev_list.Select((x) => x.Name).ToList();
-            foreach (OutputDevice el in dev_list) el.Dispose();
+            foreach (var el in dev_list) el.Dispose();
 
-            var nu_lst = _deviceList.ToArray();
+            string[] nu_lst = _deviceList.ToArray();
             comboBox1.Items.Clear();
             comboBox2.Items.Clear();
             comboBox3.Items.Clear();
@@ -64,9 +64,9 @@ namespace CremeWorks
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var id = int.Parse(((Button)sender).Name.Replace("button", "")) - 1;
+            int id = int.Parse(((Button)sender).Name.Replace("button", "")) - 1;
             _c.Connect();
-            OutputDevice play_dev = _c.Devices[id].Output;
+            var play_dev = _c.Devices[id].Output;
             if (play_dev != null)
             {
                 play_dev.SendEvent(new NoteOnEvent(new SevenBitNumber(84), new SevenBitNumber(80)));

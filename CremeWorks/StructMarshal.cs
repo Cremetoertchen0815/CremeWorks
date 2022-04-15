@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace CremeWorks
 {
@@ -7,10 +6,10 @@ namespace CremeWorks
     {
         public static byte[] getBytes(T str)
         {
-            var size = Marshal.SizeOf(str);
-            var arr = new byte[size];
+            int size = Marshal.SizeOf(str);
+            byte[] arr = new byte[size];
 
-            IntPtr ptr = Marshal.AllocHGlobal(size);
+            var ptr = Marshal.AllocHGlobal(size);
             Marshal.StructureToPtr(str, ptr, true);
             Marshal.Copy(ptr, arr, 0, size);
             Marshal.FreeHGlobal(ptr);
@@ -21,8 +20,8 @@ namespace CremeWorks
         {
             var str = new T();
 
-            var size = Marshal.SizeOf(str);
-            IntPtr ptr = Marshal.AllocHGlobal(size);
+            int size = Marshal.SizeOf(str);
+            var ptr = Marshal.AllocHGlobal(size);
 
             Marshal.Copy(arr, 0, ptr, size);
 

@@ -7,7 +7,7 @@ namespace CremeWorks
     public class MIDIMatrix
     {
 
-        private Concert _c;
+        private readonly Concert _c;
         public MIDIMatrix(Concert c) => _c = c;
         private bool _reg = false;
 
@@ -24,7 +24,7 @@ namespace CremeWorks
             if (_c?.Devices[3]?.Input != null) _c.Devices[3].Input.EventReceived += ListenAux1;
             if (_c?.Devices[4]?.Input != null) _c.Devices[4].Input.EventReceived += ListenAux2;
             if (_c?.Devices[5]?.Input != null) _c.Devices[5].Input.EventReceived += ListenAux3;
-            foreach (MIDIDevice element in _c.Devices) element.Input?.StartEventsListening();
+            foreach (var element in _c.Devices) element.Input?.StartEventsListening();
             _reg = true;
         }
 
@@ -37,14 +37,14 @@ namespace CremeWorks
             if (_c?.Devices[3]?.Input != null) _c.Devices[3].Input.EventReceived -= ListenAux1;
             if (_c?.Devices[4]?.Input != null) _c.Devices[4].Input.EventReceived -= ListenAux2;
             if (_c?.Devices[5]?.Input != null) _c.Devices[5].Input.EventReceived -= ListenAux3;
-            foreach (MIDIDevice element in _c.Devices) element.Input?.StopEventsListening();
+            foreach (var element in _c.Devices) element.Input?.StopEventsListening();
             _reg = false;
         }
 
         private void ListenFootPedal(object sender, MidiEventReceivedEventArgs e)
         {
 
-            for (var i = 0; i < _c.FootSwitchConfig.Length; i++)
+            for (int i = 0; i < _c.FootSwitchConfig.Length; i++)
             {
                 if (e.Event.EventType == MidiEventType.NoteOn && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
                 {
@@ -87,11 +87,11 @@ namespace CremeWorks
         {
             if (e.EventType == MidiEventType.NoteOn || e.EventType == MidiEventType.NoteOff)
             {
-                for (var i = 0; i < 4; i++) if (NoteMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+                for (int i = 0; i < 4; i++) if (NoteMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
             }
             else if (e.EventType == MidiEventType.ControlChange)
             {
-                for (var i = 0; i < 4; i++) if (CCMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+                for (int i = 0; i < 4; i++) if (CCMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
             }
         }
     }

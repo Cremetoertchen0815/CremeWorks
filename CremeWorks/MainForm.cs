@@ -48,12 +48,12 @@ namespace CremeWorks
         private void UpdatePlaylist()
         {
             playList.Items.Clear();
-            foreach (Song element in _c.Playlist)
+            foreach (var element in _c.Playlist)
                 playList.Items.Add(element.Title + " - " + element.Artist);
 
         }
 
-        private string[] Buchstaben = { "A", "B", "C", "D", "E"};
+        private readonly string[] Buchstaben = { "A", "B", "C", "D", "E" };
 
         private void UpdateSong()
         {
@@ -87,12 +87,12 @@ namespace CremeWorks
             _c.MidiMatrix.NoteMap = _s.NotePatchMap;
             _c.MidiMatrix.CCMap = _s.CCPatchMap;
 
-            for (var i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplyPatch(_c.Devices[i + 2]);
+            for (int i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplyPatch(_c.Devices[i + 2]);
         }
 
         private void ExecuteAction(int nr, bool? enable)
         {
-            var chk = enable ?? true;
+            bool chk = enable ?? true;
             switch (nr)
             {
                 case 0:
@@ -102,7 +102,7 @@ namespace CremeWorks
                     if (chk && playList.SelectedIndex < playList.Items.Count - 1) playList.SelectedIndex++;
                     break;
                 case 2:
-                    if (chk) foreach (MIDIDevice item in _c.Devices) if (item.Output != null) item.Output.TurnAllNotesOff();
+                    if (chk) foreach (var item in _c.Devices) if (item.Output != null) item.Output.TurnAllNotesOff();
                     break;
                 case 3:
                     if (!chk) break;
@@ -149,7 +149,7 @@ namespace CremeWorks
         }
 
         private void ShortcutButtonDown(object sender, MouseEventArgs e) => ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, qAButtonToggleToolStripMenuItem.Checked ? null : (bool?)true);
-        private void ShortcutButtonUp(object sender, MouseEventArgs e) { if(!qAButtonToggleToolStripMenuItem.Checked) ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, false); }
+        private void ShortcutButtonUp(object sender, MouseEventArgs e) { if (!qAButtonToggleToolStripMenuItem.Checked) ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, false); }
 
         private void RemSong(object sender, EventArgs e)
         {
@@ -160,7 +160,7 @@ namespace CremeWorks
         private void applySongSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_c == null || _s == null) return;
-            for (var i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplySettings(_c.Devices[i + 2]);
+            for (int i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplySettings(_c.Devices[i + 2]);
         }
 
         private int nIndex = -1;
@@ -168,11 +168,11 @@ namespace CremeWorks
         private void playList_MouseUp(object sender, MouseEventArgs e) => nIndex = -1;
         private void playList_MouseMove(object sender, MouseEventArgs e)
         {
-            var sIndex = playList.SelectedIndex;
+            int sIndex = playList.SelectedIndex;
             if (e.Button == MouseButtons.Left && nIndex > -1 && nIndex != sIndex)
             {
-                var aObj = playList.Items[nIndex];
-                Song bObj = _c.Playlist[nIndex];
+                object aObj = playList.Items[nIndex];
+                var bObj = _c.Playlist[nIndex];
 
                 playList.Items[nIndex] = playList.Items[sIndex];
                 _c.Playlist[nIndex] = _c.Playlist[sIndex];
@@ -188,7 +188,7 @@ namespace CremeWorks
         private void DuplicateSong(object sender, EventArgs e)
         {
             if (playList.SelectedIndex < 0) return;
-            Song cpy = _c.Playlist[playList.SelectedIndex].Clone();
+            var cpy = _c.Playlist[playList.SelectedIndex].Clone();
             _c.Playlist.Add(cpy);
             UpdatePlaylist();
         }
@@ -201,7 +201,7 @@ namespace CremeWorks
 
         private void UpdateConcert()
         {
-            var tit = _c?.FilePath ?? "Untitled";
+            string tit = _c?.FilePath ?? "Untitled";
             Text = "CremeWorks Stage Controller - " + (tit == string.Empty ? "Untitled" : tit);
             _c.MidiMatrix.ActionExecute = ExecuteAction;
             _c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
@@ -239,10 +239,7 @@ namespace CremeWorks
 
         private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightingConfig(_c).ShowDialog();
 
-        private void qAButtonToggleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            qAButtonToggleToolStripMenuItem.Checked = !qAButtonToggleToolStripMenuItem.Checked;
-        }
+        private void qAButtonToggleToolStripMenuItem_Click(object sender, EventArgs e) => qAButtonToggleToolStripMenuItem.Checked = !qAButtonToggleToolStripMenuItem.Checked;
 
         private void button15_Click(object sender, EventArgs e)
         {

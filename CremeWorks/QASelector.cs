@@ -7,10 +7,10 @@ namespace CremeWorks
     public partial class QASelector : Form
     {
 
-        private Concert _c;
-        private Song _s;
-        private int _nr;
-        private List<sbyte> _indices = new List<sbyte>();
+        private readonly Concert _c;
+        private readonly Song _s;
+        private readonly int _nr;
+        private readonly List<sbyte> _indices = new List<sbyte>();
 
         public QASelector(Concert c, Song s, int nr)
         {
@@ -26,7 +26,7 @@ namespace CremeWorks
                 _indices.Add(i);
             }
 
-            var val = _s.QA[_nr];
+            sbyte val = _s.QA[_nr];
             if (val > -1) comboBox1.SelectedIndex = comboBox1.Items.IndexOf(_c.LightConfig.Names[val]);
         }
 
