@@ -274,7 +274,7 @@ namespace CremeWorks
             this.button4.Size = new System.Drawing.Size(70, 70);
             this.button4.TabIndex = 8;
             this.button4.Tag = "0";
-            this.button4.Text = "All Notes Off";
+            this.button4.Text = "Reset Lights";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonDown);
             this.button4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ShortcutButtonUp);

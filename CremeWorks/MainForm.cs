@@ -102,7 +102,7 @@ namespace CremeWorks
                     if (chk && playList.SelectedIndex < playList.Items.Count - 1) playList.SelectedIndex++;
                     break;
                 case 2:
-                    if (chk) foreach (var item in _c.Devices) if (item.Output != null) item.Output.TurnAllNotesOff();
+                    if (chk) for (int i = 0; i < 128; i++) _c.LightConfig.SetState(i, false);
                     break;
                 case 3:
                     if (!chk) break;
