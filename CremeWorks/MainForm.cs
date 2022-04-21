@@ -60,7 +60,7 @@ namespace CremeWorks
         {
             songTitle.Text = string.Empty;
             songLyrics.Text = string.Empty;
-            txtKey.Text = string.Empty;
+            songKey.Text = "Key: -";
             lightCue.Items.Clear();
 
             button5.Text = (_s?.QA[0] ?? -1) < 0 ? "Quick Access " + Buchstaben[0] : _c.LightConfig.Names[_s.QA[0]];
@@ -76,7 +76,7 @@ namespace CremeWorks
             //Configure shit
             songTitle.Text = _s.Title;
             songLyrics.Text = _s.Lyrics;
-            txtKey.Text = "Key: " + _s.Key;
+            songKey.Text = "Key: " + _s.Key;
             ConfigSongMIDI();
 
             //Load default QA patch
