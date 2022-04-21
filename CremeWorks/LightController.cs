@@ -23,17 +23,17 @@ namespace CremeWorks
                 _isSrcToggled[note] = value ?? !_isSrcToggled[note];
                 _c?.Devices[1].Output?.SendEvent(new NoteOnEvent(new SevenBitNumber((byte)note), new SevenBitNumber(127)));
                 System.Threading.Thread.Sleep(10);
-            }
+            } 
 
             int grp = ToggleGroups[note];
-            if (grp <= 0 || (value != null && !value.Value)) return;
+            if (grp <= 0 || !IsToggleable[note] || value != true) return;
 
             for (int i = 0; i < 127; i++)
             {
                 if (i == note || grp != ToggleGroups[i] || !IsToggleable[i] || !_isSrcToggled[i]) continue;
                 _c?.Devices[1].Output?.SendEvent(new NoteOnEvent(new SevenBitNumber((byte)i), new SevenBitNumber(127)));
-                _c?.Devices[1].Output?.SendEvent(new NoteOffEvent(new SevenBitNumber((byte)i), new SevenBitNumber(0)));
-                
+                System.Threading.Thread.Sleep(10);
+
                 _isSrcToggled[i] = false;
             }
         }

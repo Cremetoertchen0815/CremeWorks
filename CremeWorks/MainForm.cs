@@ -21,6 +21,7 @@ namespace CremeWorks
         private static extern int GetScrollPos(IntPtr hWnd, int nBar);
         #endregion
 
+
         public MainForm()
         {
             InitializeComponent();
