@@ -164,25 +164,25 @@ namespace CremeWorks
             for (int i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplySettings(_c.Devices[i + 2]);
         }
 
-        private int nIndex = -1;
-        private void playList_MouseDown(object sender, MouseEventArgs e) => nIndex = playList.SelectedIndex;
-        private void playList_MouseUp(object sender, MouseEventArgs e) => nIndex = -1;
+        private int nIndexA = -1;
+        private void playList_MouseDown(object sender, MouseEventArgs e) => nIndexA = playList.SelectedIndex;
+        private void playList_MouseUp(object sender, MouseEventArgs e) => nIndexA = -1;
         private void playList_MouseMove(object sender, MouseEventArgs e)
         {
             int sIndex = playList.SelectedIndex;
-            if (e.Button == MouseButtons.Left && nIndex > -1 && nIndex != sIndex)
+            if (e.Button == MouseButtons.Left && nIndexA > -1 && nIndexA != sIndex)
             {
-                object aObj = playList.Items[nIndex];
-                var bObj = _c.Playlist[nIndex];
+                object aObj = playList.Items[nIndexA];
+                var bObj = _c.Playlist[nIndexA];
 
-                playList.Items[nIndex] = playList.Items[sIndex];
-                _c.Playlist[nIndex] = _c.Playlist[sIndex];
+                playList.Items[nIndexA] = playList.Items[sIndex];
+                _c.Playlist[nIndexA] = _c.Playlist[sIndex];
 
 
                 playList.Items[sIndex] = aObj;
                 _c.Playlist[sIndex] = bObj;
 
-                nIndex = sIndex;
+                nIndexA = sIndex;
             }
         }
 
@@ -284,6 +284,30 @@ namespace CremeWorks
             var src = _s.CueList[lightCue.SelectedIndex];
              _s.CueList.Add((src.comment, (LightSwitchType[])src.data.Clone()));
             UpdateSong();
+        }
+
+
+        private int nIndexB = -1;
+        private void lightCue_MouseDown(object sender, MouseEventArgs e) => nIndexB = lightCue.SelectedIndex;
+        private void lightCue_MouseUp(object sender, MouseEventArgs e) => nIndexB = -1;
+
+        private void lightCue_MouseMove(object sender, MouseEventArgs e)
+        {
+            int sIndex = lightCue.SelectedIndex;
+            if(e.Button == MouseButtons.Left && nIndexB > -1 && nIndexB != sIndex)
+            {
+                object aObj = lightCue.Items[nIndexB];
+                var bObj = _s.CueList[nIndexB];
+
+                lightCue.Items[nIndexB] = lightCue.Items[sIndex];
+                _s.CueList[nIndexB] = _s.CueList[sIndex];
+
+                lightCue.Items[sIndex] = aObj;
+                _s.CueList[sIndex] = bObj;
+
+                nIndexB = sIndex;
+
+            }
         }
     }
 }

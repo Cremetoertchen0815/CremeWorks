@@ -393,16 +393,21 @@ namespace CremeWorks
             // 
             // lightCue
             // 
+            this.lightCue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lightCue.FormattingEnabled = true;
             this.lightCue.Location = new System.Drawing.Point(789, 227);
             this.lightCue.Name = "lightCue";
             this.lightCue.Size = new System.Drawing.Size(224, 355);
             this.lightCue.TabIndex = 22;
             this.lightCue.SelectedIndexChanged += new System.EventHandler(this.lightCue_SelectedIndexChanged);
+            this.lightCue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lightCue_MouseDown);
+            this.lightCue.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lightCue_MouseMove);
+            this.lightCue.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lightCue_MouseUp);
             // 
             // button13
             // 
-            this.button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button13.Location = new System.Drawing.Point(884, 591);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(55, 23);
@@ -413,7 +418,7 @@ namespace CremeWorks
             // 
             // button14
             // 
-            this.button14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button14.Location = new System.Drawing.Point(836, 591);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(42, 23);
@@ -424,7 +429,7 @@ namespace CremeWorks
             // 
             // button15
             // 
-            this.button15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button15.Location = new System.Drawing.Point(789, 591);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(41, 23);
@@ -435,7 +440,7 @@ namespace CremeWorks
             // 
             // button10
             // 
-            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button10.Location = new System.Drawing.Point(945, 591);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(68, 23);
@@ -446,6 +451,7 @@ namespace CremeWorks
             // 
             // songKey
             // 
+            this.songKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.songKey.AutoSize = true;
             this.songKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.songKey.Location = new System.Drawing.Point(256, 591);
