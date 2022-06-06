@@ -309,5 +309,10 @@ namespace CremeWorks
 
             }
         }
+
+        private void mapMasterCCToAllDevicesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (var item in _c.Playlist) item.CCPatchMap[0] = new bool[] { false, true, true, true };
+        }
     }
 }
