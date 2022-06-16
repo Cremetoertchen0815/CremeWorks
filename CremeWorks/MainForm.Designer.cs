@@ -493,6 +493,7 @@ namespace CremeWorks
             this.applyDefaultQASettingsToolStripMenuItem.Name = "applyDefaultQASettingsToolStripMenuItem";
             this.applyDefaultQASettingsToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.applyDefaultQASettingsToolStripMenuItem.Text = "Apply Default QA Settings";
+            this.applyDefaultQASettingsToolStripMenuItem.Click += new System.EventHandler(this.applyDefaultQASettingsToolStripMenuItem_Click);
             // 
             // MainForm
             // 

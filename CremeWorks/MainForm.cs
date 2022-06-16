@@ -317,5 +317,17 @@ namespace CremeWorks
         }
 
         private void resetToolStripMenuItem_Click(object sender, EventArgs e) => ExecuteAction(2, true);
+
+        private void applyDefaultQASettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (var item in _c.Playlist)
+            {
+                item.QA[0] = 38;
+                item.QA[1] = 39;
+                item.QA[2] = 36;
+                item.QA[4] = 8;
+                item.QA[5] = 11;
+            }
+        }
     }
 }
