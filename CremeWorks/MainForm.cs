@@ -54,7 +54,7 @@ namespace CremeWorks
 
         }
 
-        private readonly string[] Buchstaben = { "A", "B", "C", "D", "E" };
+        private readonly string[] Buchstaben = { "A", "B", "C", "D", "E", "F" };
 
         private void UpdateSong()
         {
@@ -68,6 +68,7 @@ namespace CremeWorks
             button6.Text = (_s?.QA[2] ?? -1) < 0 ? "Quick Access " + Buchstaben[2] : _c.LightConfig.Names[_s.QA[2]];
             button9.Text = (_s?.QA[3] ?? -1) < 0 ? "Quick Access " + Buchstaben[3] : _c.LightConfig.Names[_s.QA[3]];
             button8.Text = (_s?.QA[4] ?? -1) < 0 ? "Quick Access " + Buchstaben[4] : _c.LightConfig.Names[_s.QA[4]];
+            button4.Text = (_s?.QA[5] ?? -1) < 0 ? "Quick Access " + Buchstaben[5] : _c.LightConfig.Names[_s.QA[5]];
 
             if (_s == null) return;
 
@@ -314,5 +315,7 @@ namespace CremeWorks
         {
             foreach (var item in _c.Playlist) item.CCPatchMap[0] = new bool[] { false, true, true, true };
         }
+
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e) => ExecuteAction(2, true);
     }
 }
