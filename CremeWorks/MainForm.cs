@@ -116,10 +116,10 @@ namespace CremeWorks
                     SetScrollPos(songLyrics.Handle, 1, 10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, 10);
                     break;
-                case 10:
+                case 11:
                     if (lightCue.SelectedIndex > 0) lightCue.SelectedIndex--;
                     break;
-                case 11:
+                case 12:
                     if (lightCue.SelectedIndex < lightCue.Items.Count - 1) lightCue.SelectedIndex++;
                     break;
                 default:
