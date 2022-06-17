@@ -62,7 +62,7 @@ namespace CremeWorks
             var lol = new Concert
             {
                 Devices = new MIDIDevice[] { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() },
-                FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) },
+                FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) },
                 Playlist = new List<Song>()
             };
             lol.LightConfig = new LightController(lol);
@@ -82,7 +82,7 @@ namespace CremeWorks
             for (int i = 0; i < nu.Devices.Length; i++) nu.Devices[i] = new MIDIDevice() { Name = br.ReadString() };
             //Foot switch config
             int cnt = br.ReadInt32();
-            nu.FootSwitchConfig = new (MidiEventType, short, byte)[12];
+            nu.FootSwitchConfig = new (MidiEventType, short, byte)[13];
             for (int i = 0; i < cnt; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
             //QA config
             nu.LightConfig = new LightController(nu);
