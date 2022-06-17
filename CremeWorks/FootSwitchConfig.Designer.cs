@@ -1001,6 +1001,7 @@ namespace CremeWorks
             this.det11.Tag = "10";
             this.det11.Text = "Detect";
             this.det11.UseVisualStyleBackColor = true;
+            this.det11.Click += new System.EventHandler(this.det1_Click);
             // 
             // valB11
             // 
