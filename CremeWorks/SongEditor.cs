@@ -121,5 +121,11 @@ namespace CremeWorks
         }
 
         private readonly string[] Buchstaben = { "A", "B", "C", "D", "E" };
+        
+        private void btnChordMakro_Click(object sender, EventArgs e)
+        {
+            var edit = new ChordMacroEditor(_s, _c);
+            edit.ShowDialog();
+        }
     }
 }

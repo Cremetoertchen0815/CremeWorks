@@ -4,6 +4,7 @@ using Melanchall.DryWetMidi.Multimedia;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace CremeWorks
@@ -70,13 +71,17 @@ namespace CremeWorks
         }
 
         private const string cHeader = "CW";
+        private const string cHeaderVersioned = "CW2";
         public static Concert LoadFromFile(string filename)
         {
             //Init stuff
             var nu = new Concert();
             var br = new BinaryReader(File.OpenRead(filename));
-            //Read data
-            if (br.ReadString() != cHeader) throw new Exception("Incorrect file!");
+            //Read header
+            var version = 0;
+            var headerStr = br.ReadString();
+            if (!headerStr.StartsWith(cHeader)) throw new Exception("Incorrect file!");
+            if (headerStr.Length > 2 && int.TryParse(headerStr.Substring(2), out int v)) version = v;
             nu.FilePath = filename;
             nu.Devices = new MIDIDevice[br.ReadInt32()];
             for (int i = 0; i < nu.Devices.Length; i++) nu.Devices[i] = new MIDIDevice() { Name = br.ReadString() };
@@ -158,6 +163,7 @@ namespace CremeWorks
                     s.AutoPatchSlots[j] = (enabled, patch);
                 }
 
+                //Read lighting cue
                 int lightcueLen = br.ReadInt32();
                 for (int j = 0; j < lightcueLen; j++)
                 {
@@ -167,6 +173,23 @@ namespace CremeWorks
                     s.CueList.Add((comment, data));
                 }
                 nu.Playlist.Add(s);
+
+                //Read chord macros
+                if (version > 0)
+                {
+                    s.ChordMacroSrc = br.ReadInt32();
+                    s.ChordMacroDst = br.ReadInt32();
+                    int macroCount = br.ReadInt32();
+                    for (int j = 0; j < lightcueLen; j++)
+                    {
+                        string name = br.ReadString();
+                        int triggerNote = br.ReadInt32();
+                        int velocity = br.ReadInt32();
+                        var keys = new int[br.ReadInt32()];
+                        for (int k = 0; k < keys.Length; k++) keys[k] = br.ReadInt32();
+                        s.ChordMacros.Add((name, triggerNote, velocity, keys.ToList()));
+                    }
+                }
             }
             br.Close();
             br.Dispose();
@@ -179,7 +202,7 @@ namespace CremeWorks
             var bw = new BinaryWriter(File.OpenWrite(filename));
             FilePath = filename;
             //Misc
-            bw.Write(cHeader);
+            bw.Write(cHeaderVersioned);
             bw.Write(Devices.Length);
             for (int i = 0; i < Devices.Length; i++) bw.Write(Devices[i]?.Name ?? string.Empty);
             //Foot switch config
@@ -260,6 +283,20 @@ namespace CremeWorks
                 {
                     bw.Write(song.CueList[j].comment);
                     for (int k = 0; k < 128; k++) bw.Write((int)song.CueList[j].data[k]);
+                }
+
+                //Write chord macros
+                bw.Write(song.ChordMacroSrc);
+                bw.Write(song.ChordMacroDst);
+                bw.Write(song.ChordMacros.Count);
+                for (int j = 0; j < song.ChordMacros.Count; j++)
+                {
+                    var item = song.ChordMacros[j];
+                    bw.Write(item.Name);
+                    bw.Write(item.TriggerNote);
+                    bw.Write(item.Velocity);
+                    bw.Write(item.PlayNotes.Count);
+                    for (int k = 0; k < item.PlayNotes.Count; k++) bw.Write(item.PlayNotes[k]);
                 }
             }
 

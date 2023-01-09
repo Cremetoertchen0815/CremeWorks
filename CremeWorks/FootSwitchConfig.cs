@@ -51,8 +51,10 @@ namespace CremeWorks
             btn.Text = "Sensing...";
 
             //Enable testing
+            var hasListened = dev.IsListeningForEvents;
             dev.StartEventsListening();
             dev.EventReceived += ScanSub;
+            if (!hasListened) dev.StopEventsListening();
         }
 
         private void ScanSub(object sender, MidiEventReceivedEventArgs e)

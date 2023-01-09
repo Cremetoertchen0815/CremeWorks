@@ -14,6 +14,9 @@ namespace CremeWorks
         public (bool Enabled, Reface.IRefacePatch Patch)[] AutoPatchSlots = { (false, null), (false, null), (false, null), (false, null) };
         public sbyte[] QA = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }; //Quick Access buttons
         public List<(string comment, LightSwitchType[] data)> CueList = new List<(string comment, LightSwitchType[] data)>(); //Cue list for managing light show
+        public int ChordMacroSrc = 0;
+        public int ChordMacroDst = 0;
+        public List<(string Name, int TriggerNote, int Velocity, List<int> PlayNotes)> ChordMacros = new List<(string Name, int TriggerNote, int Velocity, List<int> PlayNotes)>();
 
         public Song Clone()
         {

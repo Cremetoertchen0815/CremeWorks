@@ -64,6 +64,12 @@
     <Compile Include="APEditor.Designer.cs">
       <DependentUpon>APEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChordMacroEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChordMacroEditor.Designer.cs">
+      <DependentUpon>ChordMacroEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Concert.cs" />
     <Compile Include="FootSwitchConfig.cs">
       <SubType>Form</SubType>
@@ -127,6 +133,9 @@
     <Compile Include="SysExMan.cs" />
     <EmbeddedResource Include="APEditor.resx">
       <DependentUpon>APEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChordMacroEditor.resx">
+      <DependentUpon>ChordMacroEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FootSwitchConfig.resx">
       <DependentUpon>FootSwitchConfig.cs</DependentUpon>

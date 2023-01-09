@@ -105,6 +105,7 @@ namespace CremeWorks
             this.button11 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnChordMakro = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -177,9 +178,9 @@ namespace CremeWorks
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(617, 444);
+            this.btnOk.Location = new System.Drawing.Point(620, 444);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(103, 38);
+            this.btnOk.Size = new System.Drawing.Size(100, 38);
             this.btnOk.TabIndex = 8;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -187,9 +188,9 @@ namespace CremeWorks
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(617, 488);
+            this.btnCancel.Location = new System.Drawing.Point(620, 488);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(103, 38);
+            this.btnCancel.Size = new System.Drawing.Size(100, 38);
             this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -828,7 +829,7 @@ namespace CremeWorks
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(621, 218);
+            this.button1.Location = new System.Drawing.Point(620, 218);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 100);
             this.button1.TabIndex = 77;
@@ -837,11 +838,22 @@ namespace CremeWorks
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button12_Click);
             // 
+            // btnChordMakro
+            // 
+            this.btnChordMakro.Location = new System.Drawing.Point(514, 488);
+            this.btnChordMakro.Name = "btnChordMakro";
+            this.btnChordMakro.Size = new System.Drawing.Size(100, 38);
+            this.btnChordMakro.TabIndex = 78;
+            this.btnChordMakro.Text = "Chord Makros";
+            this.btnChordMakro.UseVisualStyleBackColor = true;
+            this.btnChordMakro.Click += new System.EventHandler(this.btnChordMakro_Click);
+            // 
             // SongEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(733, 542);
+            this.Controls.Add(this.btnChordMakro);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.button11);
@@ -1007,5 +1019,6 @@ namespace CremeWorks
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnChordMakro;
     }
 }
