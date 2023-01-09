@@ -83,11 +83,10 @@ namespace CremeWorks
             //Load default QA patch
             if (lightCue.Items.Count > 0) lightCue.SelectedIndex = 0;
         }
-
+        
         private void ConfigSongMIDI()
         {
-            _c.MidiMatrix.NoteMap = _s.NotePatchMap;
-            _c.MidiMatrix.CCMap = _s.CCPatchMap;
+            _c.MidiMatrix.ActiveSong = _s;
 
             for (int i = 0; i < 4; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplyPatch(_c.Devices[i + 2]);
         }

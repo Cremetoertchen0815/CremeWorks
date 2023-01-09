@@ -180,7 +180,7 @@ namespace CremeWorks
                     s.ChordMacroSrc = br.ReadInt32();
                     s.ChordMacroDst = br.ReadInt32();
                     int macroCount = br.ReadInt32();
-                    for (int j = 0; j < lightcueLen; j++)
+                    for (int j = 0; j < macroCount; j++)
                     {
                         string name = br.ReadString();
                         int triggerNote = br.ReadInt32();

@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,6 +18,7 @@ namespace CremeWorks
         private Concert _c;
         private Song _s;
         private bool _inTest = false;
+        private bool _disconnectAfterTest = false;
         private bool _ignoreMacroListSelChange = true;
         private bool _ignoreMacroListValChange = false;
         public ChordMacroEditor(Song s, Concert c)
@@ -72,6 +74,7 @@ namespace CremeWorks
             _ignoreMacroListSelChange = true;
             var sel = _s.ChordMacros[lstMacros.SelectedIndex];
             sel.Name = valItemName.Text;
+            _s.ChordMacros[lstMacros.SelectedIndex] = sel;
             lstMacros.Items[lstMacros.SelectedIndex] = sel.Name;
             _ignoreMacroListSelChange = false;
             valItemName.Focus();
@@ -114,17 +117,16 @@ namespace CremeWorks
 
         private void btnItemTriggerCapture_Click(object sender, EventArgs e)
         {
-            var dev = _c.Devices?[_s.ChordMacroSrc].Input;
+            var dev = _c.Devices?[_s.ChordMacroSrc + 2].Input;
             if (_inTest || dev == null) return;
 
             _inTest = true;
             btnItemTriggerCapture.Text = "Sensing...";
             valSrcDev.Enabled = false;
 
-            var hasListened = dev.IsListeningForEvents;
-            dev.StartEventsListening();
+            _disconnectAfterTest = !dev.IsListeningForEvents;
+            if (_disconnectAfterTest) dev.StartEventsListening();
             dev.EventReceived += TriggerCapture;
-            if (!hasListened) dev.StopEventsListening();
         }
 
 
@@ -135,7 +137,7 @@ namespace CremeWorks
             //Disable capture
             var scon = (InputDevice)sender;
             scon.EventReceived -= TriggerCapture;
-            scon.StopEventsListening();
+            if (_disconnectAfterTest) scon.StopEventsListening();
             _inTest = false;
 
             //Process data
@@ -143,6 +145,9 @@ namespace CremeWorks
             var sel = _s.ChordMacros[lstMacros.SelectedIndex];
             sel.TriggerNote = note.NoteNumber;
             sel.Velocity = note.Velocity;
+            valItemTrigger.Value = sel.TriggerNote;
+            valItemVelocity.Value = sel.Velocity;
+            _s.ChordMacros[lstMacros.SelectedIndex] = sel;
 
             btnItemTriggerCapture.Text = "Detect";
             valSrcDev.Enabled = true;
@@ -150,30 +155,33 @@ namespace CremeWorks
 
         private void btnItemNoteCapture_Click(object sender, EventArgs e)
         {
-            var dev = _c.Devices?[_s.ChordMacroDst].Input;
+            var dev = _c.Devices?[_s.ChordMacroDst + 2].Input;
             if (_inTest || dev == null) return;
 
             _inTest = true;
-            btnItemTriggerCapture.Text = "Press Sustain to capture";
+            btnItemNoteCapture.Text = "Press Sustain to capture";
             valDstDev.Enabled = false;
             _activeSenseKeys.Clear();
 
-            var hasListened = dev.IsListeningForEvents;
-            dev.StartEventsListening();
+            _disconnectAfterTest = !dev.IsListeningForEvents;
+            if (_disconnectAfterTest) dev.StartEventsListening();
             dev.EventReceived += NoteCapture;
-            if (!hasListened) dev.StopEventsListening();
         }
 
         private List<int> _activeSenseKeys = new List<int>();
         private void NoteCapture(object sender, MidiEventReceivedEventArgs e)
         {
             //Capture key presses
-            if (e.Event.EventType != MidiEventType.NoteOn)
+            if (e.Event.EventType == MidiEventType.NoteOn)
+            {
                 _activeSenseKeys.Add(((NoteOnEvent)e.Event).NoteNumber);
-            else if (e.Event.EventType != MidiEventType.NoteOff)
+                return;
+            }
+            else if (e.Event.EventType == MidiEventType.NoteOff)
             {
                 var noteVal = (e.Event as NoteOnEvent).NoteNumber;
                 if (_activeSenseKeys.Contains(noteVal)) _activeSenseKeys.Remove(noteVal);
+                return;
             } 
             else if (e.Event.EventType != MidiEventType.ControlChange)
                 return;
@@ -184,7 +192,7 @@ namespace CremeWorks
             //Disable capture
             var scon = (InputDevice)sender;
             scon.EventReceived -= NoteCapture;
-            scon.StopEventsListening();
+            if (_disconnectAfterTest) scon.StopEventsListening();
             _inTest = false;
 
             //Process data

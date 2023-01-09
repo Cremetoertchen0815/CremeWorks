@@ -1,6 +1,9 @@
-﻿using Melanchall.DryWetMidi.Core;
+﻿using Melanchall.DryWetMidi.Common;
+using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
+using Melanchall.DryWetMidi.MusicTheory;
 using System;
+using System.Runtime.InteropServices;
 
 namespace CremeWorks
 {
@@ -12,9 +15,7 @@ namespace CremeWorks
         private bool _reg = false;
 
         public Action<int, bool?> ActionExecute = (a, b) => { return; };
-        public bool[][] NoteMap = { new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false } };
-        public bool[][] CCMap = { new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false }, new bool[] { false, false, false, false } };
-
+        public Song ActiveSong;
         public void Register()
         {
             if (_reg) return;
@@ -87,11 +88,33 @@ namespace CremeWorks
         {
             if (e.EventType == MidiEventType.NoteOn || e.EventType == MidiEventType.NoteOff)
             {
-                for (int i = 0; i < 4; i++) if (NoteMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+                //Check for chord macros
+                if (sender == ActiveSong.ChordMacroSrc)
+                {
+                    var note = (NoteEvent)e;
+                    for (int i = 0; i < ActiveSong.ChordMacros.Count; i++)
+                    {
+                        var macro = ActiveSong.ChordMacros[i];
+                        if (macro.TriggerNote != note.NoteNumber || ActiveSong.ChordMacroDst < 0) continue;
+                        var dstDev = _c.Devices[ActiveSong.ChordMacroDst + 2].Output;
+                        if (dstDev == null) continue;
+
+                        if (note.Velocity > 0) note.Velocity = new SevenBitNumber((byte)macro.Velocity);
+                        for (int j = 0; j < macro.PlayNotes.Count; j++)
+                        {
+                            note.NoteNumber = new SevenBitNumber((byte)macro.PlayNotes[j]);
+                            dstDev.SendEvent(note);
+                        }
+                        return;
+                    }
+                }
+                
+                //If no chord macro, simply forward
+                for (int i = 0; i < 4; i++) if (ActiveSong.NotePatchMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
             }
             else if (e.EventType == MidiEventType.ControlChange)
             {
-                for (int i = 0; i < 4; i++) if (CCMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+                for (int i = 0; i < 4; i++) if (ActiveSong.CCPatchMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
             }
         }
     }
