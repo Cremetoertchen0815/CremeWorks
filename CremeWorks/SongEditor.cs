@@ -20,10 +20,12 @@ namespace CremeWorks
             _c.MidiMatrix.Unregister();
 
             //Map matrix
-            _mapMatrixA = new CheckBox[][] { new CheckBox[] {chkMM, chkM1, chkM2, chkM3 }, new CheckBox[] { chk1M, chk11, chk12, chk13 },
-                                            new CheckBox[] { chk2M, chk21, chk22, chk23 }, new CheckBox[] { chk3M, chk31, chk32, chk33 } };
-            _mapMatrixB = new CheckBox[][] { new CheckBox[] {ccMM, ccM1, ccM2, ccM3 }, new CheckBox[] { cc1M, cc11, cc12, cc13 },
-                                            new CheckBox[] { cc2M, cc21, cc22, cc23 }, new CheckBox[] { cc3M, cc31, cc32, cc33 } };
+            _mapMatrixA = new CheckBox[][] { new CheckBox[] {chkMM, chkM1, chkM2, chkM3, chkM4, chkM5 }, new CheckBox[] { chk1M, chk11, chk12, chk13, chk14, chk15 },
+                                            new CheckBox[] { chk2M, chk21, chk22, chk23, chk24, chk25 }, new CheckBox[] { chk3M, chk31, chk32, chk33, chk34, chk35 },
+                                            new CheckBox[] { chk4M, chk41, chk42, chk43, chk44, chk45 }, new CheckBox[] { chk5M, chk51, chk52, chk53, chk54, chk55 }};
+            _mapMatrixB = new CheckBox[][] { new CheckBox[] {ccMM, ccM1, ccM2, ccM3, ccM4, ccM5 }, new CheckBox[] { cc1M, cc11, cc12, cc13, cc14, cc15 },
+                                            new CheckBox[] { cc2M, cc21, cc22, cc23, cc24, cc25 }, new CheckBox[] { cc3M, cc31, cc32, cc33, cc34, cc35 },
+                                            new CheckBox[] { cc4M, cc41, cc42, cc43, cc44, cc45 }, new CheckBox[] { cc5M, cc51, cc52, cc53, cc54, cc55 }};
 
             _mapQA = new Button[] { button12, button5, button11, button6, button10 };
 
@@ -36,9 +38,11 @@ namespace CremeWorks
             ap1.Checked = apb1.Enabled = s.AutoPatchSlots[1].Enabled;
             ap2.Checked = apb2.Enabled = s.AutoPatchSlots[2].Enabled;
             ap3.Checked = apb3.Enabled = s.AutoPatchSlots[3].Enabled;
+            ap4.Checked = apb4.Enabled = s.AutoPatchSlots[4].Enabled;
+            ap5.Checked = apb5.Enabled = s.AutoPatchSlots[5].Enabled;
             for (int x = 0; x < 4; x++)
             {
-                for (int y = 0; y < 4; y++)
+                for (int y = 0; y < Concert.PATCH_DEVICE_COUNT; y++)
                 {
                     _mapMatrixA[x][y].Checked = s.NotePatchMap[x][y];
                     _mapMatrixB[x][y].Checked = s.CCPatchMap[x][y];
@@ -70,9 +74,9 @@ namespace CremeWorks
             _s.Artist = txtArtist.Text;
             _s.Key = txtKey.Text;
             _s.Lyrics = txtLyrics.Text;
-            for (int x = 0; x < 4; x++)
+            for (int x = 0; x < Concert.PATCH_DEVICE_COUNT; x++)
             {
-                for (int y = 0; y < 4; y++)
+                for (int y = 0; y < Concert.PATCH_DEVICE_COUNT; y++)
                 {
                     _s.NotePatchMap[x][y] = _mapMatrixA[x][y].Checked;
                     _s.CCPatchMap[x][y] = _mapMatrixB[x][y].Checked;
@@ -100,6 +104,12 @@ namespace CremeWorks
                     break;
                 case 3:
                     apb3.Enabled = chk.Checked;
+                    break;
+                case 4:
+                    apb4.Enabled = chk.Checked;
+                    break;
+                case 5:
+                    apb5.Enabled = chk.Checked;
                     break;
                 default:
                     break;

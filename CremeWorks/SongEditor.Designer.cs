@@ -106,6 +106,58 @@ namespace CremeWorks
             this.button12 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnChordMakro = new System.Windows.Forms.Button();
+            this.label25 = new System.Windows.Forms.Label();
+            this.chk14 = new System.Windows.Forms.CheckBox();
+            this.chk24 = new System.Windows.Forms.CheckBox();
+            this.chk34 = new System.Windows.Forms.CheckBox();
+            this.chkM4 = new System.Windows.Forms.CheckBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.chk15 = new System.Windows.Forms.CheckBox();
+            this.chk25 = new System.Windows.Forms.CheckBox();
+            this.chk35 = new System.Windows.Forms.CheckBox();
+            this.chkM5 = new System.Windows.Forms.CheckBox();
+            this.chk45 = new System.Windows.Forms.CheckBox();
+            this.chk55 = new System.Windows.Forms.CheckBox();
+            this.chk44 = new System.Windows.Forms.CheckBox();
+            this.chk54 = new System.Windows.Forms.CheckBox();
+            this.chk5M = new System.Windows.Forms.CheckBox();
+            this.chk4M = new System.Windows.Forms.CheckBox();
+            this.chk51 = new System.Windows.Forms.CheckBox();
+            this.chk43 = new System.Windows.Forms.CheckBox();
+            this.chk53 = new System.Windows.Forms.CheckBox();
+            this.chk42 = new System.Windows.Forms.CheckBox();
+            this.chk52 = new System.Windows.Forms.CheckBox();
+            this.chk41 = new System.Windows.Forms.CheckBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.apb5 = new System.Windows.Forms.Button();
+            this.apb4 = new System.Windows.Forms.Button();
+            this.ap5 = new System.Windows.Forms.CheckBox();
+            this.ap4 = new System.Windows.Forms.CheckBox();
+            this.cc5M = new System.Windows.Forms.CheckBox();
+            this.cc4M = new System.Windows.Forms.CheckBox();
+            this.cc51 = new System.Windows.Forms.CheckBox();
+            this.cc43 = new System.Windows.Forms.CheckBox();
+            this.cc53 = new System.Windows.Forms.CheckBox();
+            this.cc42 = new System.Windows.Forms.CheckBox();
+            this.cc52 = new System.Windows.Forms.CheckBox();
+            this.cc41 = new System.Windows.Forms.CheckBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.cc45 = new System.Windows.Forms.CheckBox();
+            this.cc55 = new System.Windows.Forms.CheckBox();
+            this.cc44 = new System.Windows.Forms.CheckBox();
+            this.cc54 = new System.Windows.Forms.CheckBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.cc15 = new System.Windows.Forms.CheckBox();
+            this.cc25 = new System.Windows.Forms.CheckBox();
+            this.ccM4 = new System.Windows.Forms.CheckBox();
+            this.cc35 = new System.Windows.Forms.CheckBox();
+            this.cc14 = new System.Windows.Forms.CheckBox();
+            this.cc24 = new System.Windows.Forms.CheckBox();
+            this.cc34 = new System.Windows.Forms.CheckBox();
+            this.ccM5 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -178,7 +230,7 @@ namespace CremeWorks
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(620, 444);
+            this.btnOk.Location = new System.Drawing.Point(621, 611);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 38);
             this.btnOk.TabIndex = 8;
@@ -188,7 +240,7 @@ namespace CremeWorks
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(620, 488);
+            this.btnCancel.Location = new System.Drawing.Point(514, 611);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 38);
             this.btnCancel.TabIndex = 9;
@@ -433,7 +485,7 @@ namespace CremeWorks
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(309, 435);
+            this.label15.Location = new System.Drawing.Point(376, 435);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(13, 13);
             this.label15.TabIndex = 60;
@@ -442,7 +494,7 @@ namespace CremeWorks
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(288, 435);
+            this.label16.Location = new System.Drawing.Point(355, 435);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(13, 13);
             this.label16.TabIndex = 59;
@@ -451,7 +503,7 @@ namespace CremeWorks
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(267, 435);
+            this.label17.Location = new System.Drawing.Point(334, 435);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(13, 13);
             this.label17.TabIndex = 58;
@@ -460,7 +512,7 @@ namespace CremeWorks
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(245, 435);
+            this.label18.Location = new System.Drawing.Point(312, 435);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(16, 13);
             this.label18.TabIndex = 57;
@@ -469,7 +521,7 @@ namespace CremeWorks
             // cc3M
             // 
             this.cc3M.AutoSize = true;
-            this.cc3M.Location = new System.Drawing.Point(246, 511);
+            this.cc3M.Location = new System.Drawing.Point(313, 511);
             this.cc3M.Name = "cc3M";
             this.cc3M.Size = new System.Drawing.Size(15, 14);
             this.cc3M.TabIndex = 56;
@@ -478,7 +530,7 @@ namespace CremeWorks
             // cc2M
             // 
             this.cc2M.AutoSize = true;
-            this.cc2M.Location = new System.Drawing.Point(246, 491);
+            this.cc2M.Location = new System.Drawing.Point(313, 491);
             this.cc2M.Name = "cc2M";
             this.cc2M.Size = new System.Drawing.Size(15, 14);
             this.cc2M.TabIndex = 55;
@@ -487,7 +539,7 @@ namespace CremeWorks
             // cc13
             // 
             this.cc13.AutoSize = true;
-            this.cc13.Location = new System.Drawing.Point(309, 471);
+            this.cc13.Location = new System.Drawing.Point(376, 471);
             this.cc13.Name = "cc13";
             this.cc13.Size = new System.Drawing.Size(15, 14);
             this.cc13.TabIndex = 54;
@@ -496,7 +548,7 @@ namespace CremeWorks
             // cc31
             // 
             this.cc31.AutoSize = true;
-            this.cc31.Location = new System.Drawing.Point(267, 511);
+            this.cc31.Location = new System.Drawing.Point(334, 511);
             this.cc31.Name = "cc31";
             this.cc31.Size = new System.Drawing.Size(15, 14);
             this.cc31.TabIndex = 53;
@@ -505,7 +557,7 @@ namespace CremeWorks
             // cc23
             // 
             this.cc23.AutoSize = true;
-            this.cc23.Location = new System.Drawing.Point(309, 491);
+            this.cc23.Location = new System.Drawing.Point(376, 491);
             this.cc23.Name = "cc23";
             this.cc23.Size = new System.Drawing.Size(15, 14);
             this.cc23.TabIndex = 52;
@@ -514,7 +566,7 @@ namespace CremeWorks
             // ccM2
             // 
             this.ccM2.AutoSize = true;
-            this.ccM2.Location = new System.Drawing.Point(288, 451);
+            this.ccM2.Location = new System.Drawing.Point(355, 451);
             this.ccM2.Name = "ccM2";
             this.ccM2.Size = new System.Drawing.Size(15, 14);
             this.ccM2.TabIndex = 51;
@@ -523,7 +575,7 @@ namespace CremeWorks
             // cc33
             // 
             this.cc33.AutoSize = true;
-            this.cc33.Location = new System.Drawing.Point(309, 511);
+            this.cc33.Location = new System.Drawing.Point(376, 511);
             this.cc33.Name = "cc33";
             this.cc33.Size = new System.Drawing.Size(15, 14);
             this.cc33.TabIndex = 50;
@@ -532,7 +584,7 @@ namespace CremeWorks
             // cc12
             // 
             this.cc12.AutoSize = true;
-            this.cc12.Location = new System.Drawing.Point(288, 471);
+            this.cc12.Location = new System.Drawing.Point(355, 471);
             this.cc12.Name = "cc12";
             this.cc12.Size = new System.Drawing.Size(15, 14);
             this.cc12.TabIndex = 49;
@@ -541,7 +593,7 @@ namespace CremeWorks
             // cc22
             // 
             this.cc22.AutoSize = true;
-            this.cc22.Location = new System.Drawing.Point(288, 491);
+            this.cc22.Location = new System.Drawing.Point(355, 491);
             this.cc22.Name = "cc22";
             this.cc22.Size = new System.Drawing.Size(15, 14);
             this.cc22.TabIndex = 48;
@@ -550,7 +602,7 @@ namespace CremeWorks
             // cc11
             // 
             this.cc11.AutoSize = true;
-            this.cc11.Location = new System.Drawing.Point(267, 471);
+            this.cc11.Location = new System.Drawing.Point(334, 471);
             this.cc11.Name = "cc11";
             this.cc11.Size = new System.Drawing.Size(15, 14);
             this.cc11.TabIndex = 47;
@@ -559,7 +611,7 @@ namespace CremeWorks
             // cc32
             // 
             this.cc32.AutoSize = true;
-            this.cc32.Location = new System.Drawing.Point(288, 511);
+            this.cc32.Location = new System.Drawing.Point(355, 511);
             this.cc32.Name = "cc32";
             this.cc32.Size = new System.Drawing.Size(15, 14);
             this.cc32.TabIndex = 46;
@@ -568,7 +620,7 @@ namespace CremeWorks
             // ccM3
             // 
             this.ccM3.AutoSize = true;
-            this.ccM3.Location = new System.Drawing.Point(309, 451);
+            this.ccM3.Location = new System.Drawing.Point(376, 451);
             this.ccM3.Name = "ccM3";
             this.ccM3.Size = new System.Drawing.Size(15, 14);
             this.ccM3.TabIndex = 45;
@@ -577,7 +629,7 @@ namespace CremeWorks
             // ccM1
             // 
             this.ccM1.AutoSize = true;
-            this.ccM1.Location = new System.Drawing.Point(267, 451);
+            this.ccM1.Location = new System.Drawing.Point(334, 451);
             this.ccM1.Name = "ccM1";
             this.ccM1.Size = new System.Drawing.Size(15, 14);
             this.ccM1.TabIndex = 44;
@@ -586,7 +638,7 @@ namespace CremeWorks
             // cc1M
             // 
             this.cc1M.AutoSize = true;
-            this.cc1M.Location = new System.Drawing.Point(246, 471);
+            this.cc1M.Location = new System.Drawing.Point(313, 471);
             this.cc1M.Name = "cc1M";
             this.cc1M.Size = new System.Drawing.Size(15, 14);
             this.cc1M.TabIndex = 43;
@@ -595,7 +647,7 @@ namespace CremeWorks
             // cc21
             // 
             this.cc21.AutoSize = true;
-            this.cc21.Location = new System.Drawing.Point(267, 491);
+            this.cc21.Location = new System.Drawing.Point(334, 491);
             this.cc21.Name = "cc21";
             this.cc21.Size = new System.Drawing.Size(15, 14);
             this.cc21.TabIndex = 42;
@@ -604,7 +656,7 @@ namespace CremeWorks
             // ccMM
             // 
             this.ccMM.AutoSize = true;
-            this.ccMM.Location = new System.Drawing.Point(246, 451);
+            this.ccMM.Location = new System.Drawing.Point(313, 451);
             this.ccMM.Name = "ccMM";
             this.ccMM.Size = new System.Drawing.Size(15, 14);
             this.ccMM.TabIndex = 41;
@@ -613,7 +665,7 @@ namespace CremeWorks
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(206, 511);
+            this.label19.Location = new System.Drawing.Point(273, 511);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(34, 13);
             this.label19.TabIndex = 40;
@@ -622,7 +674,7 @@ namespace CremeWorks
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(206, 491);
+            this.label20.Location = new System.Drawing.Point(273, 491);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(34, 13);
             this.label20.TabIndex = 39;
@@ -631,7 +683,7 @@ namespace CremeWorks
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(206, 471);
+            this.label21.Location = new System.Drawing.Point(273, 471);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(34, 13);
             this.label21.TabIndex = 38;
@@ -640,7 +692,7 @@ namespace CremeWorks
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(206, 451);
+            this.label22.Location = new System.Drawing.Point(273, 451);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(39, 13);
             this.label22.TabIndex = 37;
@@ -649,7 +701,7 @@ namespace CremeWorks
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(206, 435);
+            this.label23.Location = new System.Drawing.Point(273, 435);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(40, 13);
             this.label23.TabIndex = 36;
@@ -658,7 +710,7 @@ namespace CremeWorks
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(342, 436);
+            this.label24.Location = new System.Drawing.Point(513, 436);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(60, 13);
             this.label24.TabIndex = 61;
@@ -667,7 +719,7 @@ namespace CremeWorks
             // apM
             // 
             this.apM.AutoSize = true;
-            this.apM.Location = new System.Drawing.Point(413, 435);
+            this.apM.Location = new System.Drawing.Point(584, 435);
             this.apM.Name = "apM";
             this.apM.Size = new System.Drawing.Size(58, 17);
             this.apM.TabIndex = 62;
@@ -679,7 +731,7 @@ namespace CremeWorks
             // ap1
             // 
             this.ap1.AutoSize = true;
-            this.ap1.Location = new System.Drawing.Point(413, 461);
+            this.ap1.Location = new System.Drawing.Point(584, 461);
             this.ap1.Name = "ap1";
             this.ap1.Size = new System.Drawing.Size(53, 17);
             this.ap1.TabIndex = 63;
@@ -691,7 +743,7 @@ namespace CremeWorks
             // ap2
             // 
             this.ap2.AutoSize = true;
-            this.ap2.Location = new System.Drawing.Point(413, 487);
+            this.ap2.Location = new System.Drawing.Point(584, 487);
             this.ap2.Name = "ap2";
             this.ap2.Size = new System.Drawing.Size(53, 17);
             this.ap2.TabIndex = 64;
@@ -703,7 +755,7 @@ namespace CremeWorks
             // ap3
             // 
             this.ap3.AutoSize = true;
-            this.ap3.Location = new System.Drawing.Point(413, 514);
+            this.ap3.Location = new System.Drawing.Point(584, 514);
             this.ap3.Name = "ap3";
             this.ap3.Size = new System.Drawing.Size(53, 17);
             this.ap3.TabIndex = 65;
@@ -715,7 +767,7 @@ namespace CremeWorks
             // apbM
             // 
             this.apbM.Enabled = false;
-            this.apbM.Location = new System.Drawing.Point(477, 431);
+            this.apbM.Location = new System.Drawing.Point(648, 431);
             this.apbM.Name = "apbM";
             this.apbM.Size = new System.Drawing.Size(31, 23);
             this.apbM.TabIndex = 66;
@@ -727,7 +779,7 @@ namespace CremeWorks
             // apb1
             // 
             this.apb1.Enabled = false;
-            this.apb1.Location = new System.Drawing.Point(477, 457);
+            this.apb1.Location = new System.Drawing.Point(648, 457);
             this.apb1.Name = "apb1";
             this.apb1.Size = new System.Drawing.Size(31, 23);
             this.apb1.TabIndex = 67;
@@ -739,7 +791,7 @@ namespace CremeWorks
             // apb2
             // 
             this.apb2.Enabled = false;
-            this.apb2.Location = new System.Drawing.Point(477, 483);
+            this.apb2.Location = new System.Drawing.Point(648, 483);
             this.apb2.Name = "apb2";
             this.apb2.Size = new System.Drawing.Size(31, 23);
             this.apb2.TabIndex = 68;
@@ -751,7 +803,7 @@ namespace CremeWorks
             // apb3
             // 
             this.apb3.Enabled = false;
-            this.apb3.Location = new System.Drawing.Point(477, 510);
+            this.apb3.Location = new System.Drawing.Point(648, 510);
             this.apb3.Name = "apb3";
             this.apb3.Size = new System.Drawing.Size(31, 23);
             this.apb3.TabIndex = 69;
@@ -840,7 +892,7 @@ namespace CremeWorks
             // 
             // btnChordMakro
             // 
-            this.btnChordMakro.Location = new System.Drawing.Point(514, 488);
+            this.btnChordMakro.Location = new System.Drawing.Point(66, 611);
             this.btnChordMakro.Name = "btnChordMakro";
             this.btnChordMakro.Size = new System.Drawing.Size(100, 38);
             this.btnChordMakro.TabIndex = 78;
@@ -848,11 +900,543 @@ namespace CremeWorks
             this.btnChordMakro.UseVisualStyleBackColor = true;
             this.btnChordMakro.Click += new System.EventHandler(this.btnChordMakro_Click);
             // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(195, 436);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(13, 13);
+            this.label25.TabIndex = 83;
+            this.label25.Text = "4";
+            // 
+            // chk14
+            // 
+            this.chk14.AutoSize = true;
+            this.chk14.Location = new System.Drawing.Point(195, 472);
+            this.chk14.Name = "chk14";
+            this.chk14.Size = new System.Drawing.Size(15, 14);
+            this.chk14.TabIndex = 82;
+            this.chk14.UseVisualStyleBackColor = true;
+            // 
+            // chk24
+            // 
+            this.chk24.AutoSize = true;
+            this.chk24.Location = new System.Drawing.Point(195, 492);
+            this.chk24.Name = "chk24";
+            this.chk24.Size = new System.Drawing.Size(15, 14);
+            this.chk24.TabIndex = 81;
+            this.chk24.UseVisualStyleBackColor = true;
+            // 
+            // chk34
+            // 
+            this.chk34.AutoSize = true;
+            this.chk34.Location = new System.Drawing.Point(195, 512);
+            this.chk34.Name = "chk34";
+            this.chk34.Size = new System.Drawing.Size(15, 14);
+            this.chk34.TabIndex = 80;
+            this.chk34.UseVisualStyleBackColor = true;
+            // 
+            // chkM4
+            // 
+            this.chkM4.AutoSize = true;
+            this.chkM4.Location = new System.Drawing.Point(195, 452);
+            this.chkM4.Name = "chkM4";
+            this.chkM4.Size = new System.Drawing.Size(15, 14);
+            this.chkM4.TabIndex = 79;
+            this.chkM4.UseVisualStyleBackColor = true;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(216, 436);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(13, 13);
+            this.label26.TabIndex = 88;
+            this.label26.Text = "5";
+            // 
+            // chk15
+            // 
+            this.chk15.AutoSize = true;
+            this.chk15.Location = new System.Drawing.Point(216, 472);
+            this.chk15.Name = "chk15";
+            this.chk15.Size = new System.Drawing.Size(15, 14);
+            this.chk15.TabIndex = 87;
+            this.chk15.UseVisualStyleBackColor = true;
+            // 
+            // chk25
+            // 
+            this.chk25.AutoSize = true;
+            this.chk25.Location = new System.Drawing.Point(216, 492);
+            this.chk25.Name = "chk25";
+            this.chk25.Size = new System.Drawing.Size(15, 14);
+            this.chk25.TabIndex = 86;
+            this.chk25.UseVisualStyleBackColor = true;
+            // 
+            // chk35
+            // 
+            this.chk35.AutoSize = true;
+            this.chk35.Location = new System.Drawing.Point(216, 512);
+            this.chk35.Name = "chk35";
+            this.chk35.Size = new System.Drawing.Size(15, 14);
+            this.chk35.TabIndex = 85;
+            this.chk35.UseVisualStyleBackColor = true;
+            // 
+            // chkM5
+            // 
+            this.chkM5.AutoSize = true;
+            this.chkM5.Location = new System.Drawing.Point(216, 452);
+            this.chkM5.Name = "chkM5";
+            this.chkM5.Size = new System.Drawing.Size(15, 14);
+            this.chkM5.TabIndex = 84;
+            this.chkM5.UseVisualStyleBackColor = true;
+            // 
+            // chk45
+            // 
+            this.chk45.AutoSize = true;
+            this.chk45.Location = new System.Drawing.Point(216, 532);
+            this.chk45.Name = "chk45";
+            this.chk45.Size = new System.Drawing.Size(15, 14);
+            this.chk45.TabIndex = 102;
+            this.chk45.UseVisualStyleBackColor = true;
+            // 
+            // chk55
+            // 
+            this.chk55.AutoSize = true;
+            this.chk55.Location = new System.Drawing.Point(216, 552);
+            this.chk55.Name = "chk55";
+            this.chk55.Size = new System.Drawing.Size(15, 14);
+            this.chk55.TabIndex = 101;
+            this.chk55.UseVisualStyleBackColor = true;
+            // 
+            // chk44
+            // 
+            this.chk44.AutoSize = true;
+            this.chk44.Location = new System.Drawing.Point(195, 532);
+            this.chk44.Name = "chk44";
+            this.chk44.Size = new System.Drawing.Size(15, 14);
+            this.chk44.TabIndex = 100;
+            this.chk44.UseVisualStyleBackColor = true;
+            // 
+            // chk54
+            // 
+            this.chk54.AutoSize = true;
+            this.chk54.Location = new System.Drawing.Point(195, 552);
+            this.chk54.Name = "chk54";
+            this.chk54.Size = new System.Drawing.Size(15, 14);
+            this.chk54.TabIndex = 99;
+            this.chk54.UseVisualStyleBackColor = true;
+            // 
+            // chk5M
+            // 
+            this.chk5M.AutoSize = true;
+            this.chk5M.Location = new System.Drawing.Point(111, 552);
+            this.chk5M.Name = "chk5M";
+            this.chk5M.Size = new System.Drawing.Size(15, 14);
+            this.chk5M.TabIndex = 98;
+            this.chk5M.UseVisualStyleBackColor = true;
+            // 
+            // chk4M
+            // 
+            this.chk4M.AutoSize = true;
+            this.chk4M.Location = new System.Drawing.Point(111, 532);
+            this.chk4M.Name = "chk4M";
+            this.chk4M.Size = new System.Drawing.Size(15, 14);
+            this.chk4M.TabIndex = 97;
+            this.chk4M.UseVisualStyleBackColor = true;
+            // 
+            // chk51
+            // 
+            this.chk51.AutoSize = true;
+            this.chk51.Location = new System.Drawing.Point(132, 552);
+            this.chk51.Name = "chk51";
+            this.chk51.Size = new System.Drawing.Size(15, 14);
+            this.chk51.TabIndex = 96;
+            this.chk51.UseVisualStyleBackColor = true;
+            // 
+            // chk43
+            // 
+            this.chk43.AutoSize = true;
+            this.chk43.Location = new System.Drawing.Point(174, 532);
+            this.chk43.Name = "chk43";
+            this.chk43.Size = new System.Drawing.Size(15, 14);
+            this.chk43.TabIndex = 95;
+            this.chk43.UseVisualStyleBackColor = true;
+            // 
+            // chk53
+            // 
+            this.chk53.AutoSize = true;
+            this.chk53.Location = new System.Drawing.Point(174, 552);
+            this.chk53.Name = "chk53";
+            this.chk53.Size = new System.Drawing.Size(15, 14);
+            this.chk53.TabIndex = 94;
+            this.chk53.UseVisualStyleBackColor = true;
+            // 
+            // chk42
+            // 
+            this.chk42.AutoSize = true;
+            this.chk42.Location = new System.Drawing.Point(153, 532);
+            this.chk42.Name = "chk42";
+            this.chk42.Size = new System.Drawing.Size(15, 14);
+            this.chk42.TabIndex = 93;
+            this.chk42.UseVisualStyleBackColor = true;
+            // 
+            // chk52
+            // 
+            this.chk52.AutoSize = true;
+            this.chk52.Location = new System.Drawing.Point(153, 552);
+            this.chk52.Name = "chk52";
+            this.chk52.Size = new System.Drawing.Size(15, 14);
+            this.chk52.TabIndex = 92;
+            this.chk52.UseVisualStyleBackColor = true;
+            // 
+            // chk41
+            // 
+            this.chk41.AutoSize = true;
+            this.chk41.Location = new System.Drawing.Point(132, 532);
+            this.chk41.Name = "chk41";
+            this.chk41.Size = new System.Drawing.Size(15, 14);
+            this.chk41.TabIndex = 91;
+            this.chk41.UseVisualStyleBackColor = true;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(71, 552);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(34, 13);
+            this.label27.TabIndex = 90;
+            this.label27.Text = "Aux 5";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(71, 532);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(34, 13);
+            this.label28.TabIndex = 89;
+            this.label28.Text = "Aux 4";
+            // 
+            // apb5
+            // 
+            this.apb5.Enabled = false;
+            this.apb5.Location = new System.Drawing.Point(648, 565);
+            this.apb5.Name = "apb5";
+            this.apb5.Size = new System.Drawing.Size(31, 23);
+            this.apb5.TabIndex = 106;
+            this.apb5.Tag = "5";
+            this.apb5.Text = "...";
+            this.apb5.UseVisualStyleBackColor = true;
+            this.apb5.Click += new System.EventHandler(this.SysExEdit);
+            // 
+            // apb4
+            // 
+            this.apb4.Enabled = false;
+            this.apb4.Location = new System.Drawing.Point(648, 538);
+            this.apb4.Name = "apb4";
+            this.apb4.Size = new System.Drawing.Size(31, 23);
+            this.apb4.TabIndex = 105;
+            this.apb4.Tag = "4";
+            this.apb4.Text = "...";
+            this.apb4.UseVisualStyleBackColor = true;
+            this.apb4.Click += new System.EventHandler(this.SysExEdit);
+            // 
+            // ap5
+            // 
+            this.ap5.AutoSize = true;
+            this.ap5.Location = new System.Drawing.Point(584, 569);
+            this.ap5.Name = "ap5";
+            this.ap5.Size = new System.Drawing.Size(53, 17);
+            this.ap5.TabIndex = 104;
+            this.ap5.Tag = "5";
+            this.ap5.Text = "Aux 5";
+            this.ap5.UseVisualStyleBackColor = true;
+            this.ap5.Click += new System.EventHandler(this.apM_Click);
+            // 
+            // ap4
+            // 
+            this.ap4.AutoSize = true;
+            this.ap4.Location = new System.Drawing.Point(584, 541);
+            this.ap4.Name = "ap4";
+            this.ap4.Size = new System.Drawing.Size(53, 17);
+            this.ap4.TabIndex = 103;
+            this.ap4.Tag = "4";
+            this.ap4.Text = "Aux 4";
+            this.ap4.UseVisualStyleBackColor = true;
+            this.ap4.Click += new System.EventHandler(this.apM_Click);
+            // 
+            // cc5M
+            // 
+            this.cc5M.AutoSize = true;
+            this.cc5M.Location = new System.Drawing.Point(313, 551);
+            this.cc5M.Name = "cc5M";
+            this.cc5M.Size = new System.Drawing.Size(15, 14);
+            this.cc5M.TabIndex = 116;
+            this.cc5M.UseVisualStyleBackColor = true;
+            // 
+            // cc4M
+            // 
+            this.cc4M.AutoSize = true;
+            this.cc4M.Location = new System.Drawing.Point(313, 531);
+            this.cc4M.Name = "cc4M";
+            this.cc4M.Size = new System.Drawing.Size(15, 14);
+            this.cc4M.TabIndex = 115;
+            this.cc4M.UseVisualStyleBackColor = true;
+            // 
+            // cc51
+            // 
+            this.cc51.AutoSize = true;
+            this.cc51.Location = new System.Drawing.Point(334, 551);
+            this.cc51.Name = "cc51";
+            this.cc51.Size = new System.Drawing.Size(15, 14);
+            this.cc51.TabIndex = 114;
+            this.cc51.UseVisualStyleBackColor = true;
+            // 
+            // cc43
+            // 
+            this.cc43.AutoSize = true;
+            this.cc43.Location = new System.Drawing.Point(376, 531);
+            this.cc43.Name = "cc43";
+            this.cc43.Size = new System.Drawing.Size(15, 14);
+            this.cc43.TabIndex = 113;
+            this.cc43.UseVisualStyleBackColor = true;
+            // 
+            // cc53
+            // 
+            this.cc53.AutoSize = true;
+            this.cc53.Location = new System.Drawing.Point(376, 551);
+            this.cc53.Name = "cc53";
+            this.cc53.Size = new System.Drawing.Size(15, 14);
+            this.cc53.TabIndex = 112;
+            this.cc53.UseVisualStyleBackColor = true;
+            // 
+            // cc42
+            // 
+            this.cc42.AutoSize = true;
+            this.cc42.Location = new System.Drawing.Point(355, 531);
+            this.cc42.Name = "cc42";
+            this.cc42.Size = new System.Drawing.Size(15, 14);
+            this.cc42.TabIndex = 111;
+            this.cc42.UseVisualStyleBackColor = true;
+            // 
+            // cc52
+            // 
+            this.cc52.AutoSize = true;
+            this.cc52.Location = new System.Drawing.Point(355, 551);
+            this.cc52.Name = "cc52";
+            this.cc52.Size = new System.Drawing.Size(15, 14);
+            this.cc52.TabIndex = 110;
+            this.cc52.UseVisualStyleBackColor = true;
+            // 
+            // cc41
+            // 
+            this.cc41.AutoSize = true;
+            this.cc41.Location = new System.Drawing.Point(334, 531);
+            this.cc41.Name = "cc41";
+            this.cc41.Size = new System.Drawing.Size(15, 14);
+            this.cc41.TabIndex = 109;
+            this.cc41.UseVisualStyleBackColor = true;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(273, 551);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(34, 13);
+            this.label29.TabIndex = 108;
+            this.label29.Text = "Aux 5";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(273, 531);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(34, 13);
+            this.label30.TabIndex = 107;
+            this.label30.Text = "Aux 4";
+            // 
+            // cc45
+            // 
+            this.cc45.AutoSize = true;
+            this.cc45.Location = new System.Drawing.Point(418, 531);
+            this.cc45.Name = "cc45";
+            this.cc45.Size = new System.Drawing.Size(15, 14);
+            this.cc45.TabIndex = 130;
+            this.cc45.UseVisualStyleBackColor = true;
+            // 
+            // cc55
+            // 
+            this.cc55.AutoSize = true;
+            this.cc55.Location = new System.Drawing.Point(418, 551);
+            this.cc55.Name = "cc55";
+            this.cc55.Size = new System.Drawing.Size(15, 14);
+            this.cc55.TabIndex = 129;
+            this.cc55.UseVisualStyleBackColor = true;
+            // 
+            // cc44
+            // 
+            this.cc44.AutoSize = true;
+            this.cc44.Location = new System.Drawing.Point(397, 531);
+            this.cc44.Name = "cc44";
+            this.cc44.Size = new System.Drawing.Size(15, 14);
+            this.cc44.TabIndex = 128;
+            this.cc44.UseVisualStyleBackColor = true;
+            // 
+            // cc54
+            // 
+            this.cc54.AutoSize = true;
+            this.cc54.Location = new System.Drawing.Point(397, 551);
+            this.cc54.Name = "cc54";
+            this.cc54.Size = new System.Drawing.Size(15, 14);
+            this.cc54.TabIndex = 127;
+            this.cc54.UseVisualStyleBackColor = true;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(418, 435);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(13, 13);
+            this.label31.TabIndex = 126;
+            this.label31.Text = "5";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(397, 435);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(13, 13);
+            this.label32.TabIndex = 125;
+            this.label32.Text = "4";
+            // 
+            // cc15
+            // 
+            this.cc15.AutoSize = true;
+            this.cc15.Location = new System.Drawing.Point(418, 471);
+            this.cc15.Name = "cc15";
+            this.cc15.Size = new System.Drawing.Size(15, 14);
+            this.cc15.TabIndex = 124;
+            this.cc15.UseVisualStyleBackColor = true;
+            // 
+            // cc25
+            // 
+            this.cc25.AutoSize = true;
+            this.cc25.Location = new System.Drawing.Point(418, 491);
+            this.cc25.Name = "cc25";
+            this.cc25.Size = new System.Drawing.Size(15, 14);
+            this.cc25.TabIndex = 123;
+            this.cc25.UseVisualStyleBackColor = true;
+            // 
+            // ccM4
+            // 
+            this.ccM4.AutoSize = true;
+            this.ccM4.Location = new System.Drawing.Point(397, 451);
+            this.ccM4.Name = "ccM4";
+            this.ccM4.Size = new System.Drawing.Size(15, 14);
+            this.ccM4.TabIndex = 122;
+            this.ccM4.UseVisualStyleBackColor = true;
+            // 
+            // cc35
+            // 
+            this.cc35.AutoSize = true;
+            this.cc35.Location = new System.Drawing.Point(418, 511);
+            this.cc35.Name = "cc35";
+            this.cc35.Size = new System.Drawing.Size(15, 14);
+            this.cc35.TabIndex = 121;
+            this.cc35.UseVisualStyleBackColor = true;
+            // 
+            // cc14
+            // 
+            this.cc14.AutoSize = true;
+            this.cc14.Location = new System.Drawing.Point(397, 471);
+            this.cc14.Name = "cc14";
+            this.cc14.Size = new System.Drawing.Size(15, 14);
+            this.cc14.TabIndex = 120;
+            this.cc14.UseVisualStyleBackColor = true;
+            // 
+            // cc24
+            // 
+            this.cc24.AutoSize = true;
+            this.cc24.Location = new System.Drawing.Point(397, 491);
+            this.cc24.Name = "cc24";
+            this.cc24.Size = new System.Drawing.Size(15, 14);
+            this.cc24.TabIndex = 119;
+            this.cc24.UseVisualStyleBackColor = true;
+            // 
+            // cc34
+            // 
+            this.cc34.AutoSize = true;
+            this.cc34.Location = new System.Drawing.Point(397, 511);
+            this.cc34.Name = "cc34";
+            this.cc34.Size = new System.Drawing.Size(15, 14);
+            this.cc34.TabIndex = 118;
+            this.cc34.UseVisualStyleBackColor = true;
+            // 
+            // ccM5
+            // 
+            this.ccM5.AutoSize = true;
+            this.ccM5.Location = new System.Drawing.Point(418, 451);
+            this.ccM5.Name = "ccM5";
+            this.ccM5.Size = new System.Drawing.Size(15, 14);
+            this.ccM5.TabIndex = 117;
+            this.ccM5.UseVisualStyleBackColor = true;
+            // 
             // SongEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(733, 542);
+            this.ClientSize = new System.Drawing.Size(733, 661);
+            this.Controls.Add(this.cc45);
+            this.Controls.Add(this.cc55);
+            this.Controls.Add(this.cc44);
+            this.Controls.Add(this.cc54);
+            this.Controls.Add(this.label31);
+            this.Controls.Add(this.label32);
+            this.Controls.Add(this.cc15);
+            this.Controls.Add(this.cc25);
+            this.Controls.Add(this.ccM4);
+            this.Controls.Add(this.cc35);
+            this.Controls.Add(this.cc14);
+            this.Controls.Add(this.cc24);
+            this.Controls.Add(this.cc34);
+            this.Controls.Add(this.ccM5);
+            this.Controls.Add(this.cc5M);
+            this.Controls.Add(this.cc4M);
+            this.Controls.Add(this.cc51);
+            this.Controls.Add(this.cc43);
+            this.Controls.Add(this.cc53);
+            this.Controls.Add(this.cc42);
+            this.Controls.Add(this.cc52);
+            this.Controls.Add(this.cc41);
+            this.Controls.Add(this.label29);
+            this.Controls.Add(this.label30);
+            this.Controls.Add(this.apb5);
+            this.Controls.Add(this.apb4);
+            this.Controls.Add(this.ap5);
+            this.Controls.Add(this.ap4);
+            this.Controls.Add(this.chk45);
+            this.Controls.Add(this.chk55);
+            this.Controls.Add(this.chk44);
+            this.Controls.Add(this.chk54);
+            this.Controls.Add(this.chk5M);
+            this.Controls.Add(this.chk4M);
+            this.Controls.Add(this.chk51);
+            this.Controls.Add(this.chk43);
+            this.Controls.Add(this.chk53);
+            this.Controls.Add(this.chk42);
+            this.Controls.Add(this.chk52);
+            this.Controls.Add(this.chk41);
+            this.Controls.Add(this.label27);
+            this.Controls.Add(this.label28);
+            this.Controls.Add(this.label26);
+            this.Controls.Add(this.chk15);
+            this.Controls.Add(this.chk25);
+            this.Controls.Add(this.chk35);
+            this.Controls.Add(this.chkM5);
+            this.Controls.Add(this.label25);
+            this.Controls.Add(this.chk14);
+            this.Controls.Add(this.chk24);
+            this.Controls.Add(this.chk34);
+            this.Controls.Add(this.chkM4);
             this.Controls.Add(this.btnChordMakro);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button10);
@@ -1020,5 +1604,57 @@ namespace CremeWorks
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnChordMakro;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.CheckBox chk14;
+        private System.Windows.Forms.CheckBox chk24;
+        private System.Windows.Forms.CheckBox chk34;
+        private System.Windows.Forms.CheckBox chkM4;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.CheckBox chk15;
+        private System.Windows.Forms.CheckBox chk25;
+        private System.Windows.Forms.CheckBox chk35;
+        private System.Windows.Forms.CheckBox chkM5;
+        private System.Windows.Forms.CheckBox chk45;
+        private System.Windows.Forms.CheckBox chk55;
+        private System.Windows.Forms.CheckBox chk44;
+        private System.Windows.Forms.CheckBox chk54;
+        private System.Windows.Forms.CheckBox chk5M;
+        private System.Windows.Forms.CheckBox chk4M;
+        private System.Windows.Forms.CheckBox chk51;
+        private System.Windows.Forms.CheckBox chk43;
+        private System.Windows.Forms.CheckBox chk53;
+        private System.Windows.Forms.CheckBox chk42;
+        private System.Windows.Forms.CheckBox chk52;
+        private System.Windows.Forms.CheckBox chk41;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Button apb5;
+        private System.Windows.Forms.Button apb4;
+        private System.Windows.Forms.CheckBox ap5;
+        private System.Windows.Forms.CheckBox ap4;
+        private System.Windows.Forms.CheckBox cc5M;
+        private System.Windows.Forms.CheckBox cc4M;
+        private System.Windows.Forms.CheckBox cc51;
+        private System.Windows.Forms.CheckBox cc43;
+        private System.Windows.Forms.CheckBox cc53;
+        private System.Windows.Forms.CheckBox cc42;
+        private System.Windows.Forms.CheckBox cc52;
+        private System.Windows.Forms.CheckBox cc41;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.CheckBox cc45;
+        private System.Windows.Forms.CheckBox cc55;
+        private System.Windows.Forms.CheckBox cc44;
+        private System.Windows.Forms.CheckBox cc54;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.CheckBox cc15;
+        private System.Windows.Forms.CheckBox cc25;
+        private System.Windows.Forms.CheckBox ccM4;
+        private System.Windows.Forms.CheckBox cc35;
+        private System.Windows.Forms.CheckBox cc14;
+        private System.Windows.Forms.CheckBox cc24;
+        private System.Windows.Forms.CheckBox cc34;
+        private System.Windows.Forms.CheckBox ccM5;
     }
 }

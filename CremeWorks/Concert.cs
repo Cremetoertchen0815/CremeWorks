@@ -11,6 +11,9 @@ namespace CremeWorks
 {
     public class Concert
     {
+        public const int MIN_DEVICE_COUNT = 8;
+        public const int PATCH_DEVICE_COUNT_PRE3 = 4;
+        public const int PATCH_DEVICE_COUNT = 6;
         public string FilePath;
         public MIDIDevice[] Devices;
         public (MidiEventType, short, byte)[] FootSwitchConfig;
@@ -71,7 +74,7 @@ namespace CremeWorks
         }
 
         private const string cHeader = "CW";
-        private const string cHeaderVersioned = "CW2";
+        private const string cHeaderVersioned = "CW3";
         public static Concert LoadFromFile(string filename)
         {
             //Init stuff
@@ -83,8 +86,10 @@ namespace CremeWorks
             if (!headerStr.StartsWith(cHeader)) throw new Exception("Incorrect file!");
             if (headerStr.Length > 2 && int.TryParse(headerStr.Substring(2), out int v)) version = v;
             nu.FilePath = filename;
-            nu.Devices = new MIDIDevice[br.ReadInt32()];
-            for (int i = 0; i < nu.Devices.Length; i++) nu.Devices[i] = new MIDIDevice() { Name = br.ReadString() };
+
+            var devCount = br.ReadInt32();
+            nu.Devices = new MIDIDevice[Math.Max(devCount, MIN_DEVICE_COUNT)];
+            for (int i = 0; i < MIN_DEVICE_COUNT; i++) nu.Devices[i] = new MIDIDevice() { Name = (i < devCount ? br.ReadString() : null) };
             //Foot switch config
             int cnt = br.ReadInt32();
             nu.FootSwitchConfig = new (MidiEventType, short, byte)[13];
@@ -112,18 +117,21 @@ namespace CremeWorks
                     Key = br.ReadString(),
                     Lyrics = br.ReadString(),
                     QA = new sbyte[br.ReadInt32()],
-                    NotePatchMap = new bool[4][],
-                    CCPatchMap = new bool[4][]
+                    NotePatchMap = new bool[PATCH_DEVICE_COUNT][],
+                    CCPatchMap = new bool[PATCH_DEVICE_COUNT][]
                 };
                 byte[] byte_Dat = br.ReadBytes(s.QA.Length);
                 Buffer.BlockCopy(byte_Dat, 0, s.QA, 0, byte_Dat.Length);
-                for (int j = 0; j < 4; j++)
+
+                var patchCount = (version < 3 ? PATCH_DEVICE_COUNT_PRE3 : PATCH_DEVICE_COUNT);
+                for (int j = 0; j < patchCount; j++)
                 {
-                    s.NotePatchMap[j] = new bool[] { br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean() };
-                    s.CCPatchMap[j] = new bool[] { br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean(), br.ReadBoolean() };
+                    s.NotePatchMap[j] = LoadBoolArray(br, patchCount);
+                    s.CCPatchMap[j] = LoadBoolArray(br, patchCount);
                 }
-                s.AutoPatchSlots = new (bool, IRefacePatch)[br.ReadInt32()];
-                for (int j = 0; j < s.AutoPatchSlots.Length; j++)
+                var autoPatchCount = br.ReadInt32();
+                s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, PATCH_DEVICE_COUNT)).Select(x => ((bool, IRefacePatch))(false, null)).ToArray();
+                for (int j = 0; j < autoPatchCount; j++)
                 {
                     bool enabled = br.ReadBoolean();
                     int type = br.ReadInt32();
@@ -205,6 +213,16 @@ namespace CremeWorks
             return nu;
         }
 
+        private static bool[] LoadBoolArray(BinaryReader br, int count)
+        {
+            var arr = new bool[PATCH_DEVICE_COUNT];
+            for (int i = 0; i < count; i++)
+            {
+                arr[i] = br.ReadBoolean();
+            }
+            return arr;
+        }
+
         public void SaveToFile(string filename)
         {
             var bw = new BinaryWriter(File.OpenWrite(filename));
@@ -244,10 +262,10 @@ namespace CremeWorks
                 byte[] byte_dat = new byte[song.QA.Length];
                 Buffer.BlockCopy(song.QA, 0, byte_dat, 0, byte_dat.Length);
                 bw.Write(byte_dat);
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < PATCH_DEVICE_COUNT; j++)
                 {
-                    for (int k = 0; k < 4; k++) bw.Write(song.NotePatchMap[j][k]);
-                    for (int k = 0; k < 4; k++) bw.Write(song.CCPatchMap[j][k]);
+                    for (int k = 0; k < PATCH_DEVICE_COUNT; k++) bw.Write(song.NotePatchMap[j][k]);
+                    for (int k = 0; k < PATCH_DEVICE_COUNT; k++) bw.Write(song.CCPatchMap[j][k]);
                 }
 
                 bw.Write(song.AutoPatchSlots.Length);
