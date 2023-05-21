@@ -62,7 +62,7 @@ namespace CremeWorks
         {
             var lol = new Concert
             {
-                Devices = new MIDIDevice[] { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() },
+                Devices = new MIDIDevice[] { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() },
                 FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) },
                 Playlist = new List<Song>()
             };
@@ -154,6 +154,14 @@ namespace CremeWorks
                                 VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
                             };
                             patch = cp;
+                            break;
+                        case DeviceType.RefaceYC:
+                            var yc = new YCPatch
+                            {
+                                SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                            };
+                            patch = yc;
                             break;
                         default:
                             patch = null;
@@ -267,6 +275,14 @@ namespace CremeWorks
                         case CPPatch cp:
                             datA = StructMarshal<RefaceSystemData>.getBytes(cp.SystemSettings);
                             datB = StructMarshal<CPPatch.RefaceCPVoiceData>.getBytes(cp.VoiceSettings);
+                            bw.Write(datA.Length);
+                            bw.Write(datA);
+                            bw.Write(datB.Length);
+                            bw.Write(datB);
+                            break;
+                        case YCPatch yc:
+                            datA = StructMarshal<RefaceSystemData>.getBytes(yc.SystemSettings);
+                            datB = StructMarshal<YCPatch.RefaceYCVoiceData>.getBytes(yc.VoiceSettings);
                             bw.Write(datA.Length);
                             bw.Write(datA);
                             bw.Write(datB.Length);

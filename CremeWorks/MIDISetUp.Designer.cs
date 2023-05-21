@@ -48,6 +48,12 @@ namespace CremeWorks
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.RefreshButton = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.comboBox8 = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.comboBox7 = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -226,7 +232,7 @@ namespace CremeWorks
             // 
             // RefreshButton
             // 
-            this.RefreshButton.Location = new System.Drawing.Point(274, 174);
+            this.RefreshButton.Location = new System.Drawing.Point(273, 230);
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(89, 26);
             this.RefreshButton.TabIndex = 18;
@@ -234,11 +240,71 @@ namespace CremeWorks
             this.RefreshButton.UseVisualStyleBackColor = true;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(320, 201);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(43, 23);
+            this.button8.TabIndex = 24;
+            this.button8.Text = "Test";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(320, 174);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(43, 23);
+            this.button7.TabIndex = 23;
+            this.button7.Text = "Test";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // comboBox8
+            // 
+            this.comboBox8.FormattingEnabled = true;
+            this.comboBox8.Location = new System.Drawing.Point(113, 201);
+            this.comboBox8.Name = "comboBox8";
+            this.comboBox8.Size = new System.Drawing.Size(201, 21);
+            this.comboBox8.TabIndex = 22;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(29, 204);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(80, 13);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Aux Instr. 5 (IO)";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // comboBox7
+            // 
+            this.comboBox7.FormattingEnabled = true;
+            this.comboBox7.Location = new System.Drawing.Point(113, 174);
+            this.comboBox7.Name = "comboBox7";
+            this.comboBox7.Size = new System.Drawing.Size(201, 21);
+            this.comboBox7.TabIndex = 20;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(29, 177);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(80, 13);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "Aux Instr. 4 (IO)";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // MIDISetUp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 212);
+            this.ClientSize = new System.Drawing.Size(374, 265);
+            this.Controls.Add(this.button8);
+            this.Controls.Add(this.button7);
+            this.Controls.Add(this.comboBox8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.comboBox7);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -290,5 +356,11 @@ namespace CremeWorks
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button RefreshButton;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.ComboBox comboBox8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox comboBox7;
+        private System.Windows.Forms.Label label8;
     }
 }

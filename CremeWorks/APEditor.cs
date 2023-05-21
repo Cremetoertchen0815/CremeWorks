@@ -78,6 +78,7 @@ namespace CremeWorks
             voiceBoxCS.Visible = false;
             voiceBoxDX.Visible = false;
             voiceBoxCP.Visible = false;
+            voiceBoxYC.Visible = false;
             fetchVoiceData.Enabled = true;
 
             if (_refaceDat == null) return;
@@ -128,6 +129,29 @@ namespace CremeWorks
                     numericUpDown16.Value = cp.ReverbDepth;
                     voiceBoxCP.Visible = true;
                     break;
+                case DeviceType.RefaceYC:
+                    var yc = ((YCPatch)_refaceDat).VoiceSettings;
+                    numericUpDown47.Value = yc.Volume;
+                    comboBox16.SelectedIndex = (int)yc.VoiceType;
+                    comboBox15.SelectedIndex = (int)yc.VibratoChorusSwitch;
+                    numericUpDown43.Value = yc.VibratoChorusDepth;
+                    comboBox14.SelectedIndex = yc.PercussionOnOff != 0 ? (int)yc.PercussionType + 1 : 0;
+                    numericUpDown34.Value = yc.PercussionLength;
+                    comboBox17.SelectedIndex = (int)yc.RotarySpeakerSpeed;
+                    numericUpDown39.Value = yc.DistortionDrive;
+                    numericUpDown38.Value = yc.ReverbDepth;
+
+                    trackBarA.Value = 6 - yc.Footage16;
+                    trackBarB.Value = 6 - yc.Footage5_13;
+                    trackBarC.Value = 6 - yc.Footage8;
+                    trackBarD.Value = 6 - yc.Footage4;
+                    trackBarE.Value = 6 - yc.Footage2_23;
+                    trackBarF.Value = 6 - yc.Footage2;
+                    trackBarG.Value = 6 - yc.Footage1_35;
+                    trackBarH.Value = 6 - yc.Footage1_13;
+                    trackBarI.Value = 6 - yc.Footage1;
+                    voiceBoxYC.Visible = true;
+                    break;
             }
         }
 
@@ -164,6 +188,12 @@ namespace CremeWorks
             {
                 //CS voice data bulk received
                 cs.VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
+                UpdateControls();
+            }
+            else if (ev.Data.Length == 34 && _refaceDat is YCPatch yc)
+            {
+                //CS voice data bulk received
+                yc.VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
                 UpdateControls();
             }
         }
@@ -240,6 +270,31 @@ namespace CremeWorks
                     };
                     cp.VoiceSettings = cpDat;
                     break;
+                case YCPatch yc:
+                    var ycDat = new YCPatch.RefaceYCVoiceData
+                    {
+                        Volume = (byte)numericUpDown47.Value,
+                        VoiceType = (YCPatch.RefaceYCVoiceType)comboBox16.SelectedIndex,
+                        VibratoChorusSwitch = (YCPatch.RefaceYCVibratoSwitch)comboBox15.SelectedIndex,
+                        VibratoChorusDepth = (byte)numericUpDown43.Value,
+                        PercussionOnOff = (byte)(comboBox14.SelectedIndex > 0 ? 1 : 0),
+                        PercussionType = (YCPatch.RefaceYCPercussionType)(comboBox14.SelectedIndex > 0 ? comboBox14.SelectedIndex - 1 : 0),
+                        PercussionLength = (byte)numericUpDown43.Value,
+                        RotarySpeakerSpeed = (YCPatch.RefaceYCRotarySpeakerSetting)comboBox17.SelectedIndex,
+                        DistortionDrive = (byte)numericUpDown39.Value,
+                        ReverbDepth = (byte)numericUpDown38.Value,
+                        Footage16 = (byte)(6 - trackBarA.Value),
+                        Footage5_13 = (byte)(6 - trackBarB.Value),
+                        Footage8 = (byte)(6 - trackBarC.Value),
+                        Footage4 = (byte)(6 - trackBarD.Value),
+                        Footage2_23 = (byte)(6 - trackBarE.Value),
+                        Footage2 = (byte)(6 - trackBarF.Value),
+                        Footage1_35 = (byte)(6 - trackBarG.Value),
+                        Footage1_13 = (byte)(6 - trackBarH.Value),
+                        Footage1 = (byte)(6 - trackBarI.Value),
+                    };
+                    yc.VoiceSettings = ycDat;
+                    break;
             }
         }
 
@@ -266,6 +321,9 @@ namespace CremeWorks
                         break;
                     case DeviceType.RefaceCP:
                         _refaceDat = new CPPatch();
+                        break;
+                    case DeviceType.RefaceYC:
+                        _refaceDat = new YCPatch();
                         break;
                     default:
                         _refaceDat = null;

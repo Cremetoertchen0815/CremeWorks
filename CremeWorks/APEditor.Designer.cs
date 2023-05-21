@@ -129,6 +129,44 @@ namespace CremeWorks
             this.label46 = new System.Windows.Forms.Label();
             this.numericUpDown32 = new System.Windows.Forms.NumericUpDown();
             this.fetchVoiceData = new System.Windows.Forms.Button();
+            this.voiceBoxYC = new System.Windows.Forms.GroupBox();
+            this.label47 = new System.Windows.Forms.Label();
+            this.label48 = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.label54 = new System.Windows.Forms.Label();
+            this.label55 = new System.Windows.Forms.Label();
+            this.label59 = new System.Windows.Forms.Label();
+            this.label63 = new System.Windows.Forms.Label();
+            this.label64 = new System.Windows.Forms.Label();
+            this.numericUpDown34 = new System.Windows.Forms.NumericUpDown();
+            this.comboBox14 = new System.Windows.Forms.ComboBox();
+            this.numericUpDown38 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown39 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown43 = new System.Windows.Forms.NumericUpDown();
+            this.comboBox15 = new System.Windows.Forms.ComboBox();
+            this.comboBox16 = new System.Windows.Forms.ComboBox();
+            this.numericUpDown47 = new System.Windows.Forms.NumericUpDown();
+            this.comboBox17 = new System.Windows.Forms.ComboBox();
+            this.trackBarA = new System.Windows.Forms.TrackBar();
+            this.trackBarB = new System.Windows.Forms.TrackBar();
+            this.trackBarD = new System.Windows.Forms.TrackBar();
+            this.trackBarC = new System.Windows.Forms.TrackBar();
+            this.trackBarH = new System.Windows.Forms.TrackBar();
+            this.trackBarG = new System.Windows.Forms.TrackBar();
+            this.trackBarF = new System.Windows.Forms.TrackBar();
+            this.trackBarE = new System.Windows.Forms.TrackBar();
+            this.trackBarI = new System.Windows.Forms.TrackBar();
+            this.label50 = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.label56 = new System.Windows.Forms.Label();
+            this.label57 = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
+            this.label60 = new System.Windows.Forms.Label();
+            this.label61 = new System.Windows.Forms.Label();
+            this.label62 = new System.Windows.Forms.Label();
+            this.label65 = new System.Windows.Forms.Label();
             this.deviceBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
@@ -165,6 +203,21 @@ namespace CremeWorks
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).BeginInit();
             this.voiceBoxDX.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown32)).BeginInit();
+            this.voiceBoxYC.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown34)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown38)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown39)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown43)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown47)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarA)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarC)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarF)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarE)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarI)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -1345,11 +1398,439 @@ namespace CremeWorks
             this.fetchVoiceData.UseVisualStyleBackColor = true;
             this.fetchVoiceData.Click += new System.EventHandler(this.fetchVoiceData_Click);
             // 
+            // voiceBoxYC
+            // 
+            this.voiceBoxYC.Controls.Add(this.label65);
+            this.voiceBoxYC.Controls.Add(this.label58);
+            this.voiceBoxYC.Controls.Add(this.label60);
+            this.voiceBoxYC.Controls.Add(this.label61);
+            this.voiceBoxYC.Controls.Add(this.label62);
+            this.voiceBoxYC.Controls.Add(this.label56);
+            this.voiceBoxYC.Controls.Add(this.label57);
+            this.voiceBoxYC.Controls.Add(this.label53);
+            this.voiceBoxYC.Controls.Add(this.label51);
+            this.voiceBoxYC.Controls.Add(this.label50);
+            this.voiceBoxYC.Controls.Add(this.trackBarI);
+            this.voiceBoxYC.Controls.Add(this.trackBarH);
+            this.voiceBoxYC.Controls.Add(this.trackBarG);
+            this.voiceBoxYC.Controls.Add(this.trackBarF);
+            this.voiceBoxYC.Controls.Add(this.trackBarE);
+            this.voiceBoxYC.Controls.Add(this.trackBarD);
+            this.voiceBoxYC.Controls.Add(this.trackBarC);
+            this.voiceBoxYC.Controls.Add(this.trackBarB);
+            this.voiceBoxYC.Controls.Add(this.trackBarA);
+            this.voiceBoxYC.Controls.Add(this.comboBox17);
+            this.voiceBoxYC.Controls.Add(this.label47);
+            this.voiceBoxYC.Controls.Add(this.label48);
+            this.voiceBoxYC.Controls.Add(this.label49);
+            this.voiceBoxYC.Controls.Add(this.label52);
+            this.voiceBoxYC.Controls.Add(this.label54);
+            this.voiceBoxYC.Controls.Add(this.label55);
+            this.voiceBoxYC.Controls.Add(this.label59);
+            this.voiceBoxYC.Controls.Add(this.label63);
+            this.voiceBoxYC.Controls.Add(this.label64);
+            this.voiceBoxYC.Controls.Add(this.numericUpDown34);
+            this.voiceBoxYC.Controls.Add(this.comboBox14);
+            this.voiceBoxYC.Controls.Add(this.numericUpDown38);
+            this.voiceBoxYC.Controls.Add(this.numericUpDown39);
+            this.voiceBoxYC.Controls.Add(this.numericUpDown43);
+            this.voiceBoxYC.Controls.Add(this.comboBox15);
+            this.voiceBoxYC.Controls.Add(this.comboBox16);
+            this.voiceBoxYC.Controls.Add(this.numericUpDown47);
+            this.voiceBoxYC.Location = new System.Drawing.Point(284, 33);
+            this.voiceBoxYC.Name = "voiceBoxYC";
+            this.voiceBoxYC.Size = new System.Drawing.Size(435, 364);
+            this.voiceBoxYC.TabIndex = 36;
+            this.voiceBoxYC.TabStop = false;
+            this.voiceBoxYC.Text = "Voice Settings";
+            this.voiceBoxYC.Visible = false;
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(12, 183);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(81, 13);
+            this.label47.TabIndex = 35;
+            this.label47.Text = "Rotary Speaker";
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(12, 157);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(84, 13);
+            this.label48.TabIndex = 34;
+            this.label48.Text = "Percuss. Length";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(12, 130);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(75, 13);
+            this.label49.TabIndex = 33;
+            this.label49.Text = "Percuss. Type";
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Location = new System.Drawing.Point(11, 103);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(52, 13);
+            this.label52.TabIndex = 30;
+            this.label52.Text = "FX Depth";
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Location = new System.Drawing.Point(11, 235);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(74, 13);
+            this.label54.TabIndex = 28;
+            this.label54.Text = "Reverb Depth";
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Location = new System.Drawing.Point(11, 209);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(79, 13);
+            this.label55.TabIndex = 27;
+            this.label55.Text = "Distortion Drive";
+            // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.Location = new System.Drawing.Point(11, 77);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(47, 13);
+            this.label59.TabIndex = 23;
+            this.label59.Text = "FX Type";
+            // 
+            // label63
+            // 
+            this.label63.AutoSize = true;
+            this.label63.Location = new System.Drawing.Point(11, 49);
+            this.label63.Name = "label63";
+            this.label63.Size = new System.Drawing.Size(61, 13);
+            this.label63.TabIndex = 19;
+            this.label63.Text = "Voice Type";
+            // 
+            // label64
+            // 
+            this.label64.AutoSize = true;
+            this.label64.Location = new System.Drawing.Point(11, 22);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(42, 13);
+            this.label64.TabIndex = 18;
+            this.label64.Text = "Volume";
+            // 
+            // numericUpDown34
+            // 
+            this.numericUpDown34.Location = new System.Drawing.Point(104, 154);
+            this.numericUpDown34.Maximum = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.numericUpDown34.Name = "numericUpDown34";
+            this.numericUpDown34.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown34.TabIndex = 16;
+            // 
+            // comboBox14
+            // 
+            this.comboBox14.FormattingEnabled = true;
+            this.comboBox14.Items.AddRange(new object[] {
+            "Off",
+            "A",
+            "B"});
+            this.comboBox14.Location = new System.Drawing.Point(104, 126);
+            this.comboBox14.Name = "comboBox14";
+            this.comboBox14.Size = new System.Drawing.Size(121, 21);
+            this.comboBox14.TabIndex = 15;
+            // 
+            // numericUpDown38
+            // 
+            this.numericUpDown38.Location = new System.Drawing.Point(104, 233);
+            this.numericUpDown38.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.numericUpDown38.Name = "numericUpDown38";
+            this.numericUpDown38.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown38.TabIndex = 11;
+            // 
+            // numericUpDown39
+            // 
+            this.numericUpDown39.Location = new System.Drawing.Point(104, 207);
+            this.numericUpDown39.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.numericUpDown39.Name = "numericUpDown39";
+            this.numericUpDown39.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown39.TabIndex = 10;
+            // 
+            // numericUpDown43
+            // 
+            this.numericUpDown43.Location = new System.Drawing.Point(104, 99);
+            this.numericUpDown43.Maximum = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.numericUpDown43.Name = "numericUpDown43";
+            this.numericUpDown43.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown43.TabIndex = 6;
+            // 
+            // comboBox15
+            // 
+            this.comboBox15.FormattingEnabled = true;
+            this.comboBox15.Items.AddRange(new object[] {
+            "Vibrato",
+            "Chorus"});
+            this.comboBox15.Location = new System.Drawing.Point(104, 72);
+            this.comboBox15.Name = "comboBox15";
+            this.comboBox15.Size = new System.Drawing.Size(121, 21);
+            this.comboBox15.TabIndex = 5;
+            // 
+            // comboBox16
+            // 
+            this.comboBox16.FormattingEnabled = true;
+            this.comboBox16.Items.AddRange(new object[] {
+            "H",
+            "V",
+            "F",
+            "A",
+            "Y"});
+            this.comboBox16.Location = new System.Drawing.Point(104, 45);
+            this.comboBox16.Name = "comboBox16";
+            this.comboBox16.Size = new System.Drawing.Size(121, 21);
+            this.comboBox16.TabIndex = 1;
+            // 
+            // numericUpDown47
+            // 
+            this.numericUpDown47.Location = new System.Drawing.Point(104, 19);
+            this.numericUpDown47.Maximum = new decimal(new int[] {
+            127,
+            0,
+            0,
+            0});
+            this.numericUpDown47.Name = "numericUpDown47";
+            this.numericUpDown47.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown47.TabIndex = 0;
+            // 
+            // comboBox17
+            // 
+            this.comboBox17.FormattingEnabled = true;
+            this.comboBox17.Items.AddRange(new object[] {
+            "Off",
+            "Stop",
+            "Slow",
+            "Fast"});
+            this.comboBox17.Location = new System.Drawing.Point(104, 180);
+            this.comboBox17.Name = "comboBox17";
+            this.comboBox17.Size = new System.Drawing.Size(121, 21);
+            this.comboBox17.TabIndex = 36;
+            // 
+            // trackBarA
+            // 
+            this.trackBarA.AutoSize = false;
+            this.trackBarA.LargeChange = 1;
+            this.trackBarA.Location = new System.Drawing.Point(98, 286);
+            this.trackBarA.Maximum = 6;
+            this.trackBarA.Name = "trackBarA";
+            this.trackBarA.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarA.Size = new System.Drawing.Size(32, 78);
+            this.trackBarA.TabIndex = 37;
+            // 
+            // trackBarB
+            // 
+            this.trackBarB.AutoSize = false;
+            this.trackBarB.LargeChange = 1;
+            this.trackBarB.Location = new System.Drawing.Point(136, 286);
+            this.trackBarB.Maximum = 6;
+            this.trackBarB.Name = "trackBarB";
+            this.trackBarB.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarB.Size = new System.Drawing.Size(32, 78);
+            this.trackBarB.TabIndex = 38;
+            // 
+            // trackBarD
+            // 
+            this.trackBarD.AutoSize = false;
+            this.trackBarD.LargeChange = 1;
+            this.trackBarD.Location = new System.Drawing.Point(212, 286);
+            this.trackBarD.Maximum = 6;
+            this.trackBarD.Name = "trackBarD";
+            this.trackBarD.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarD.Size = new System.Drawing.Size(32, 78);
+            this.trackBarD.TabIndex = 40;
+            // 
+            // trackBarC
+            // 
+            this.trackBarC.AutoSize = false;
+            this.trackBarC.LargeChange = 1;
+            this.trackBarC.Location = new System.Drawing.Point(174, 286);
+            this.trackBarC.Maximum = 6;
+            this.trackBarC.Name = "trackBarC";
+            this.trackBarC.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarC.Size = new System.Drawing.Size(32, 78);
+            this.trackBarC.TabIndex = 39;
+            // 
+            // trackBarH
+            // 
+            this.trackBarH.AutoSize = false;
+            this.trackBarH.LargeChange = 1;
+            this.trackBarH.Location = new System.Drawing.Point(364, 286);
+            this.trackBarH.Maximum = 6;
+            this.trackBarH.Name = "trackBarH";
+            this.trackBarH.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarH.Size = new System.Drawing.Size(32, 78);
+            this.trackBarH.TabIndex = 44;
+            // 
+            // trackBarG
+            // 
+            this.trackBarG.AutoSize = false;
+            this.trackBarG.LargeChange = 1;
+            this.trackBarG.Location = new System.Drawing.Point(326, 286);
+            this.trackBarG.Maximum = 6;
+            this.trackBarG.Name = "trackBarG";
+            this.trackBarG.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarG.Size = new System.Drawing.Size(32, 78);
+            this.trackBarG.TabIndex = 43;
+            // 
+            // trackBarF
+            // 
+            this.trackBarF.AutoSize = false;
+            this.trackBarF.LargeChange = 1;
+            this.trackBarF.Location = new System.Drawing.Point(288, 286);
+            this.trackBarF.Maximum = 6;
+            this.trackBarF.Name = "trackBarF";
+            this.trackBarF.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarF.Size = new System.Drawing.Size(32, 78);
+            this.trackBarF.TabIndex = 42;
+            // 
+            // trackBarE
+            // 
+            this.trackBarE.AutoSize = false;
+            this.trackBarE.LargeChange = 1;
+            this.trackBarE.Location = new System.Drawing.Point(250, 286);
+            this.trackBarE.Maximum = 6;
+            this.trackBarE.Name = "trackBarE";
+            this.trackBarE.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarE.Size = new System.Drawing.Size(32, 78);
+            this.trackBarE.TabIndex = 41;
+            // 
+            // trackBarI
+            // 
+            this.trackBarI.AutoSize = false;
+            this.trackBarI.LargeChange = 1;
+            this.trackBarI.Location = new System.Drawing.Point(402, 286);
+            this.trackBarI.Maximum = 6;
+            this.trackBarI.Name = "trackBarI";
+            this.trackBarI.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trackBarI.Size = new System.Drawing.Size(32, 78);
+            this.trackBarI.TabIndex = 45;
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(12, 295);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(51, 13);
+            this.label50.TabIndex = 46;
+            this.label50.Text = "Registers";
+            // 
+            // label51
+            // 
+            this.label51.Location = new System.Drawing.Point(95, 256);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(32, 27);
+            this.label51.TabIndex = 47;
+            this.label51.Text = "16\"";
+            this.label51.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label53
+            // 
+            this.label53.Location = new System.Drawing.Point(133, 256);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(32, 27);
+            this.label53.TabIndex = 48;
+            this.label53.Text = "5 1/3\"";
+            this.label53.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label56
+            // 
+            this.label56.Location = new System.Drawing.Point(209, 256);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(32, 27);
+            this.label56.TabIndex = 50;
+            this.label56.Text = "4\"";
+            this.label56.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label57
+            // 
+            this.label57.Location = new System.Drawing.Point(171, 256);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(32, 27);
+            this.label57.TabIndex = 49;
+            this.label57.Text = "8\"";
+            this.label57.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label58
+            // 
+            this.label58.Location = new System.Drawing.Point(361, 256);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(32, 27);
+            this.label58.TabIndex = 54;
+            this.label58.Text = "1 1/3\"";
+            this.label58.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label60
+            // 
+            this.label60.Location = new System.Drawing.Point(323, 256);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(32, 27);
+            this.label60.TabIndex = 53;
+            this.label60.Text = "1 3/5\"";
+            this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label61
+            // 
+            this.label61.Location = new System.Drawing.Point(285, 256);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(32, 27);
+            this.label61.TabIndex = 52;
+            this.label61.Text = "2\"";
+            this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label62
+            // 
+            this.label62.Location = new System.Drawing.Point(247, 256);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(32, 27);
+            this.label62.TabIndex = 51;
+            this.label62.Text = "2 2/3\"";
+            this.label62.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label65
+            // 
+            this.label65.Location = new System.Drawing.Point(399, 256);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(32, 27);
+            this.label65.TabIndex = 55;
+            this.label65.Text = "1\"";
+            this.label65.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // APEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(731, 450);
+            this.Controls.Add(this.voiceBoxYC);
             this.Controls.Add(this.fetchVoiceData);
             this.Controls.Add(this.voiceBoxCS);
             this.Controls.Add(this.voiceBoxDX);
@@ -1406,6 +1887,22 @@ namespace CremeWorks
             this.voiceBoxDX.ResumeLayout(false);
             this.voiceBoxDX.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown32)).EndInit();
+            this.voiceBoxYC.ResumeLayout(false);
+            this.voiceBoxYC.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown34)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown38)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown39)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown43)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown47)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarA)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarC)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarH)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarF)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarE)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarI)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1513,5 +2010,43 @@ namespace CremeWorks
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.NumericUpDown numericUpDown32;
         private System.Windows.Forms.Button fetchVoiceData;
+        private System.Windows.Forms.GroupBox voiceBoxYC;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.Label label55;
+        private System.Windows.Forms.Label label59;
+        private System.Windows.Forms.Label label63;
+        private System.Windows.Forms.Label label64;
+        private System.Windows.Forms.NumericUpDown numericUpDown34;
+        private System.Windows.Forms.ComboBox comboBox14;
+        private System.Windows.Forms.NumericUpDown numericUpDown38;
+        private System.Windows.Forms.NumericUpDown numericUpDown39;
+        private System.Windows.Forms.NumericUpDown numericUpDown43;
+        private System.Windows.Forms.ComboBox comboBox15;
+        private System.Windows.Forms.ComboBox comboBox16;
+        private System.Windows.Forms.NumericUpDown numericUpDown47;
+        private System.Windows.Forms.Label label65;
+        private System.Windows.Forms.Label label58;
+        private System.Windows.Forms.Label label60;
+        private System.Windows.Forms.Label label61;
+        private System.Windows.Forms.Label label62;
+        private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.Label label57;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.TrackBar trackBarI;
+        private System.Windows.Forms.TrackBar trackBarH;
+        private System.Windows.Forms.TrackBar trackBarG;
+        private System.Windows.Forms.TrackBar trackBarF;
+        private System.Windows.Forms.TrackBar trackBarE;
+        private System.Windows.Forms.TrackBar trackBarD;
+        private System.Windows.Forms.TrackBar trackBarC;
+        private System.Windows.Forms.TrackBar trackBarB;
+        private System.Windows.Forms.TrackBar trackBarA;
+        private System.Windows.Forms.ComboBox comboBox17;
     }
 }

@@ -26,5 +26,5 @@ namespace CremeWorks.Reface
         public int Reserved6;
     }
 
-    public enum DeviceType { Undefined = 0, RefaceCS = 1, RefaceDX = 2, RefaceCP = 3 }
+    public enum DeviceType { Undefined = 0, RefaceCS = 1, RefaceDX = 2, RefaceCP = 3, RefaceYC = 4 }
 }

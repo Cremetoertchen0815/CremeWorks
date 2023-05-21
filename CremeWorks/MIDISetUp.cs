@@ -31,6 +31,10 @@ namespace CremeWorks
             comboBox4.Text = _c.Devices[3].Name;
             comboBox5.Text = _c.Devices[4].Name;
             comboBox6.Text = _c.Devices[5].Name;
+            if (_c.Devices.Length <= 6) return;
+
+            comboBox7.Text = _c.Devices[6].Name;
+            comboBox8.Text = _c.Devices[7].Name;
         }
 
         private void RefreshButton_Click(object sender, EventArgs e) => RefreshAll();
@@ -54,12 +58,16 @@ namespace CremeWorks
             comboBox4.Items.Clear();
             comboBox5.Items.Clear();
             comboBox6.Items.Clear();
+            comboBox7.Items.Clear();
+            comboBox8.Items.Clear();
             comboBox1.Items.AddRange(nu_lst);
             comboBox2.Items.AddRange(nu_lst);
             comboBox3.Items.AddRange(nu_lst);
             comboBox4.Items.AddRange(nu_lst);
             comboBox5.Items.AddRange(nu_lst);
             comboBox6.Items.AddRange(nu_lst);
+            comboBox7.Items.AddRange(nu_lst);
+            comboBox8.Items.AddRange(nu_lst);
         }
 
         private void button1_Click(object sender, EventArgs e)
