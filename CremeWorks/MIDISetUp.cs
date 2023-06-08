@@ -75,13 +75,19 @@ namespace CremeWorks
             int id = int.Parse(((Button)sender).Name.Replace("button", "")) - 1;
             _c.Connect();
             var play_dev = _c.Devices[id].Output;
-            if (play_dev != null)
+            try
             {
-                play_dev.SendEvent(new NoteOnEvent(new SevenBitNumber(84), new SevenBitNumber(80)));
-                System.Threading.Thread.Sleep(200);
-                play_dev.SendEvent(new NoteOffEvent(new SevenBitNumber(84), new SevenBitNumber(80)));
+                if (play_dev != null)
+                {
+                    play_dev.SendEvent(new NoteOnEvent(new SevenBitNumber(84), new SevenBitNumber(80)));
+                    System.Threading.Thread.Sleep(200);
+                    play_dev.SendEvent(new NoteOffEvent(new SevenBitNumber(84), new SevenBitNumber(80)));
+                }
             }
-            _c.Disconnect();
+            finally
+            {
+                _c.Disconnect();
+            }
         }
     }
 }

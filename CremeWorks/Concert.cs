@@ -129,6 +129,9 @@ namespace CremeWorks
                     s.NotePatchMap[j] = LoadBoolArray(br, patchCount);
                     s.CCPatchMap[j] = LoadBoolArray(br, patchCount);
                 }
+                s.NotePatchMap = Convert2DArrayToSize(s.NotePatchMap, PATCH_DEVICE_COUNT);
+                s.CCPatchMap = Convert2DArrayToSize(s.CCPatchMap, PATCH_DEVICE_COUNT);
+
                 var autoPatchCount = br.ReadInt32();
                 s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, PATCH_DEVICE_COUNT)).Select(x => ((bool, IRefacePatch))(false, null)).ToArray();
                 for (int j = 0; j < autoPatchCount; j++)
@@ -223,6 +226,22 @@ namespace CremeWorks
             return arr;
         }
 
+        private static T[][] Convert2DArrayToSize<T>(T[][] orig, int size)
+        {
+            var res = new T[size][];
+            for (int i = 0; i < size; i++)
+            {
+                var inner = new T[size];
+                if (i < orig.Length && orig[i] != null)
+                {
+                    var origInner = orig[i];
+                    for (int j = 0; j < Math.Min(origInner.Length, size); j++) inner[j] = origInner[j];
+                }
+                res[i] = inner;
+            }
+            return res;
+        }
+
         public void SaveToFile(string filename)
         {
             var bw = new BinaryWriter(File.OpenWrite(filename));
@@ -264,8 +283,8 @@ namespace CremeWorks
                 bw.Write(byte_dat);
                 for (int j = 0; j < PATCH_DEVICE_COUNT; j++)
                 {
-                    for (int k = 0; k < PATCH_DEVICE_COUNT; k++) bw.Write(song.NotePatchMap[j][k]);
-                    for (int k = 0; k < PATCH_DEVICE_COUNT; k++) bw.Write(song.CCPatchMap[j][k]);
+                    for (int k = 0; k < PATCH_DEVICE_COUNT; k++) bw.Write(song.NotePatchMap?[j]?[k] ?? false);
+                    for (int k = 0; k < PATCH_DEVICE_COUNT; k++) bw.Write(song.CCPatchMap?[j]?[k] ?? false);
                 }
 
                 bw.Write(song.AutoPatchSlots.Length);

@@ -40,7 +40,7 @@ namespace CremeWorks
             ap3.Checked = apb3.Enabled = s.AutoPatchSlots[3].Enabled;
             ap4.Checked = apb4.Enabled = s.AutoPatchSlots[4].Enabled;
             ap5.Checked = apb5.Enabled = s.AutoPatchSlots[5].Enabled;
-            for (int x = 0; x < 4; x++)
+            for (int x = 0; x < Concert.PATCH_DEVICE_COUNT; x++)
             {
                 for (int y = 0; y < Concert.PATCH_DEVICE_COUNT; y++)
                 {

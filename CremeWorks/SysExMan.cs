@@ -17,6 +17,8 @@ namespace CremeWorks
                     return 0x05;
                 case DeviceType.RefaceCP:
                     return 0x04;
+                case DeviceType.RefaceYC:
+                    return 0x06;
                 default:
                     return 0;
             }

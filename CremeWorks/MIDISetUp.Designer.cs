@@ -248,6 +248,7 @@ namespace CremeWorks
             this.button8.TabIndex = 24;
             this.button8.Text = "Test";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button1_Click);
             // 
             // button7
             // 
@@ -257,6 +258,7 @@ namespace CremeWorks
             this.button7.TabIndex = 23;
             this.button7.Text = "Test";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button1_Click);
             // 
             // comboBox8
             // 
@@ -265,6 +267,7 @@ namespace CremeWorks
             this.comboBox8.Name = "comboBox8";
             this.comboBox8.Size = new System.Drawing.Size(201, 21);
             this.comboBox8.TabIndex = 22;
+            this.comboBox8.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
             // label7
             // 
@@ -283,6 +286,7 @@ namespace CremeWorks
             this.comboBox7.Name = "comboBox7";
             this.comboBox7.Size = new System.Drawing.Size(201, 21);
             this.comboBox7.TabIndex = 20;
+            this.comboBox7.SelectedIndexChanged += new System.EventHandler(this.comboBoxValueChange);
             // 
             // label8
             // 

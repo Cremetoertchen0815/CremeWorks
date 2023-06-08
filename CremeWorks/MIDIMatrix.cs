@@ -25,6 +25,8 @@ namespace CremeWorks
             if (_c?.Devices[3]?.Input != null) _c.Devices[3].Input.EventReceived += ListenAux1;
             if (_c?.Devices[4]?.Input != null) _c.Devices[4].Input.EventReceived += ListenAux2;
             if (_c?.Devices[5]?.Input != null) _c.Devices[5].Input.EventReceived += ListenAux3;
+            if (_c?.Devices[6]?.Input != null) _c.Devices[6].Input.EventReceived += ListenAux4;
+            if (_c?.Devices[7]?.Input != null) _c.Devices[7].Input.EventReceived += ListenAux5;
             foreach (var element in _c.Devices) element.Input?.StartEventsListening();
             _reg = true;
         }
@@ -38,6 +40,8 @@ namespace CremeWorks
             if (_c?.Devices[3]?.Input != null) _c.Devices[3].Input.EventReceived -= ListenAux1;
             if (_c?.Devices[4]?.Input != null) _c.Devices[4].Input.EventReceived -= ListenAux2;
             if (_c?.Devices[5]?.Input != null) _c.Devices[5].Input.EventReceived -= ListenAux3;
+            if (_c?.Devices[6]?.Input != null) _c.Devices[6].Input.EventReceived -= ListenAux4;
+            if (_c?.Devices[7]?.Input != null) _c.Devices[7].Input.EventReceived -= ListenAux5;
             foreach (var element in _c.Devices) element.Input?.StopEventsListening();
             _reg = false;
         }
@@ -84,6 +88,8 @@ namespace CremeWorks
         private void ListenAux1(object sender, MidiEventReceivedEventArgs e) => SendInstrData(1, e.Event);
         private void ListenAux2(object sender, MidiEventReceivedEventArgs e) => SendInstrData(2, e.Event);
         private void ListenAux3(object sender, MidiEventReceivedEventArgs e) => SendInstrData(3, e.Event);
+        private void ListenAux4(object sender, MidiEventReceivedEventArgs e) => SendInstrData(4, e.Event);
+        private void ListenAux5(object sender, MidiEventReceivedEventArgs e) => SendInstrData(5, e.Event);
         private void SendInstrData(int sender, MidiEvent e)
         {
             if (e.EventType == MidiEventType.NoteOn || e.EventType == MidiEventType.NoteOff)
@@ -108,13 +114,13 @@ namespace CremeWorks
                         return;
                     }
                 }
-                
+
                 //If no chord macro, simply forward
-                for (int i = 0; i < 4; i++) if (ActiveSong.NotePatchMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+                for (int i = 0; i < 6; i++) if (ActiveSong.NotePatchMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
             }
             else if (e.EventType == MidiEventType.ControlChange)
             {
-                for (int i = 0; i < 4; i++) if (ActiveSong.CCPatchMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+                for (int i = 0; i < 6; i++) if (ActiveSong.CCPatchMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
             }
         }
     }
