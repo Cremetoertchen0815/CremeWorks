@@ -52,9 +52,8 @@ namespace CremeWorks
 
             //Enable testing
             var hasListened = dev.IsListeningForEvents;
-            dev.StartEventsListening();
             dev.EventReceived += ScanSub;
-            if (!hasListened) dev.StopEventsListening();
+            if (!hasListened) dev.StartEventsListening();
         }
 
         private void ScanSub(object sender, MidiEventReceivedEventArgs e)
@@ -95,6 +94,9 @@ namespace CremeWorks
 
         private void FootSwitchConfig_FormClosing(object sender, FormClosingEventArgs e)
         {
+            var dev = _c.Devices[0].Input;
+            if (dev.IsListeningForEvents) dev.StopEventsListening();
+
             //Save data from dialogue
             for (int i = 0; i < 13; i++)
             {
