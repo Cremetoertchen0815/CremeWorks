@@ -99,12 +99,6 @@ namespace CremeWorks
             this.apb1 = new System.Windows.Forms.Button();
             this.apb2 = new System.Windows.Forms.Button();
             this.apb3 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.btnChordMakro = new System.Windows.Forms.Button();
             this.label25 = new System.Windows.Forms.Label();
             this.chk14 = new System.Windows.Forms.CheckBox();
@@ -812,84 +806,6 @@ namespace CremeWorks
             this.apb3.UseVisualStyleBackColor = true;
             this.apb3.Click += new System.EventHandler(this.SysExEdit);
             // 
-            // button5
-            // 
-            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(620, 6);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(100, 100);
-            this.button5.TabIndex = 70;
-            this.button5.Tag = "1";
-            this.button5.Text = "Quick Access B";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // button6
-            // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(620, 112);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(100, 100);
-            this.button6.TabIndex = 71;
-            this.button6.Tag = "3";
-            this.button6.Text = "Quick Access D";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // button10
-            // 
-            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button10.Location = new System.Drawing.Point(514, 218);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(100, 100);
-            this.button10.TabIndex = 76;
-            this.button10.Tag = "4";
-            this.button10.Text = "Quick Access E";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // button11
-            // 
-            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button11.Location = new System.Drawing.Point(514, 112);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(100, 100);
-            this.button11.TabIndex = 75;
-            this.button11.Tag = "2";
-            this.button11.Text = "Quick Access C";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // button12
-            // 
-            this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button12.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button12.Location = new System.Drawing.Point(514, 6);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(100, 100);
-            this.button12.TabIndex = 74;
-            this.button12.Tag = "0";
-            this.button12.Text = "Quick Access A";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(620, 218);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 100);
-            this.button1.TabIndex = 77;
-            this.button1.Tag = "5";
-            this.button1.Text = "Quick Access F";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button12_Click);
-            // 
             // btnChordMakro
             // 
             this.btnChordMakro.Location = new System.Drawing.Point(66, 611);
@@ -1438,12 +1354,6 @@ namespace CremeWorks
             this.Controls.Add(this.chk34);
             this.Controls.Add(this.chkM4);
             this.Controls.Add(this.btnChordMakro);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.button10);
-            this.Controls.Add(this.button11);
-            this.Controls.Add(this.button12);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
             this.Controls.Add(this.apb3);
             this.Controls.Add(this.apb2);
             this.Controls.Add(this.apb1);
@@ -1597,12 +1507,6 @@ namespace CremeWorks
         private System.Windows.Forms.Button apb1;
         private System.Windows.Forms.Button apb2;
         private System.Windows.Forms.Button apb3;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnChordMakro;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.CheckBox chk14;

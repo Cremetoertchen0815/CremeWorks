@@ -97,6 +97,12 @@
     <Compile Include="LightingPreset.Designer.cs">
       <DependentUpon>LightingPreset.cs</DependentUpon>
     </Compile>
+    <Compile Include="QAEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QAEditor.Designer.cs">
+      <DependentUpon>QAEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="QASelector.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="QAEditor.resx">
+      <DependentUpon>QAEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="QASelector.resx">
       <DependentUpon>QASelector.cs</DependentUpon>
     </EmbeddedResource>

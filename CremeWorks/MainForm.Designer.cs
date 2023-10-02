@@ -43,8 +43,8 @@ namespace CremeWorks
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applySongSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.qAButtonToggleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mapMasterCCToAllDevicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.playList = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -69,9 +69,9 @@ namespace CremeWorks
             this.button15 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.songKey = new System.Windows.Forms.Label();
-            this.lightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.applyDefaultQASettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.quickAccessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editFunctionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.qAButtonToggleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -134,9 +134,7 @@ namespace CremeWorks
             this.lightControllerToolStripMenuItem,
             this.toolStripMenuItem1,
             this.connectToolStripMenuItem,
-            this.applySongSettingsToolStripMenuItem,
-            this.qAButtonToggleToolStripMenuItem,
-            this.mapMasterCCToAllDevicesToolStripMenuItem});
+            this.applySongSettingsToolStripMenuItem});
             this.devicesToolStripMenuItem.Name = "devicesToolStripMenuItem";
             this.devicesToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
             this.devicesToolStripMenuItem.Text = "MIDI Devices";
@@ -144,56 +142,58 @@ namespace CremeWorks
             // configureToolStripMenuItem
             // 
             this.configureToolStripMenuItem.Name = "configureToolStripMenuItem";
-            this.configureToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.configureToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.configureToolStripMenuItem.Text = "Set Up";
             this.configureToolStripMenuItem.Click += new System.EventHandler(this.configureToolStripMenuItem_Click);
             // 
             // footSwitchToolStripMenuItem
             // 
             this.footSwitchToolStripMenuItem.Name = "footSwitchToolStripMenuItem";
-            this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.footSwitchToolStripMenuItem.Text = "Foot Switch";
             this.footSwitchToolStripMenuItem.Click += new System.EventHandler(this.footSwitchToolStripMenuItem_Click);
             // 
             // lightControllerToolStripMenuItem
             // 
             this.lightControllerToolStripMenuItem.Name = "lightControllerToolStripMenuItem";
-            this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.lightControllerToolStripMenuItem.Text = "Light Controller";
             this.lightControllerToolStripMenuItem.Click += new System.EventHandler(this.lightControllerToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(228, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(185, 6);
             // 
             // connectToolStripMenuItem
             // 
             this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-            this.connectToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.connectToolStripMenuItem.Text = "Connect";
             this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
             // 
             // applySongSettingsToolStripMenuItem
             // 
             this.applySongSettingsToolStripMenuItem.Name = "applySongSettingsToolStripMenuItem";
-            this.applySongSettingsToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.applySongSettingsToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.applySongSettingsToolStripMenuItem.Text = "Apply Device Settings";
             this.applySongSettingsToolStripMenuItem.Click += new System.EventHandler(this.applySongSettingsToolStripMenuItem_Click);
             // 
-            // qAButtonToggleToolStripMenuItem
+            // lightingToolStripMenuItem
             // 
-            this.qAButtonToggleToolStripMenuItem.Name = "qAButtonToggleToolStripMenuItem";
-            this.qAButtonToggleToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.qAButtonToggleToolStripMenuItem.Text = "QA Button Toggle";
-            this.qAButtonToggleToolStripMenuItem.Click += new System.EventHandler(this.qAButtonToggleToolStripMenuItem_Click);
+            this.lightingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.resetToolStripMenuItem,
+            this.quickAccessToolStripMenuItem});
+            this.lightingToolStripMenuItem.Name = "lightingToolStripMenuItem";
+            this.lightingToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+            this.lightingToolStripMenuItem.Text = "Lighting";
             // 
-            // mapMasterCCToAllDevicesToolStripMenuItem
+            // resetToolStripMenuItem
             // 
-            this.mapMasterCCToAllDevicesToolStripMenuItem.Name = "mapMasterCCToAllDevicesToolStripMenuItem";
-            this.mapMasterCCToAllDevicesToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.mapMasterCCToAllDevicesToolStripMenuItem.Text = "Map Master CC To All Devices";
-            this.mapMasterCCToAllDevicesToolStripMenuItem.Click += new System.EventHandler(this.mapMasterCCToAllDevicesToolStripMenuItem_Click);
+            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.resetToolStripMenuItem.Text = "Reset";
+            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -472,28 +472,28 @@ namespace CremeWorks
             this.songKey.Size = new System.Drawing.Size(0, 20);
             this.songKey.TabIndex = 27;
             // 
-            // lightingToolStripMenuItem
+            // quickAccessToolStripMenuItem
             // 
-            this.lightingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.resetToolStripMenuItem,
-            this.applyDefaultQASettingsToolStripMenuItem});
-            this.lightingToolStripMenuItem.Name = "lightingToolStripMenuItem";
-            this.lightingToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
-            this.lightingToolStripMenuItem.Text = "Lighting";
+            this.quickAccessToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editFunctionsToolStripMenuItem,
+            this.qAButtonToggleToolStripMenuItem});
+            this.quickAccessToolStripMenuItem.Name = "quickAccessToolStripMenuItem";
+            this.quickAccessToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.quickAccessToolStripMenuItem.Text = "Quick Access";
             // 
-            // resetToolStripMenuItem
+            // editFunctionsToolStripMenuItem
             // 
-            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.resetToolStripMenuItem.Text = "Reset";
-            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
+            this.editFunctionsToolStripMenuItem.Name = "editFunctionsToolStripMenuItem";
+            this.editFunctionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editFunctionsToolStripMenuItem.Text = "Edit";
+            this.editFunctionsToolStripMenuItem.Click += new System.EventHandler(this.editFunctionsToolStripMenuItem_Click);
             // 
-            // applyDefaultQASettingsToolStripMenuItem
+            // qAButtonToggleToolStripMenuItem
             // 
-            this.applyDefaultQASettingsToolStripMenuItem.Name = "applyDefaultQASettingsToolStripMenuItem";
-            this.applyDefaultQASettingsToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.applyDefaultQASettingsToolStripMenuItem.Text = "Apply Default QA Settings";
-            this.applyDefaultQASettingsToolStripMenuItem.Click += new System.EventHandler(this.applyDefaultQASettingsToolStripMenuItem_Click);
+            this.qAButtonToggleToolStripMenuItem.Name = "qAButtonToggleToolStripMenuItem";
+            this.qAButtonToggleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.qAButtonToggleToolStripMenuItem.Text = "Toggle Buttons";
+            this.qAButtonToggleToolStripMenuItem.Click += new System.EventHandler(this.qAButtonToggleToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -566,7 +566,6 @@ namespace CremeWorks
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem lightControllerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem qAButtonToggleToolStripMenuItem;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox lightCue;
         private System.Windows.Forms.Button button13;
@@ -574,10 +573,11 @@ namespace CremeWorks
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Label songKey;
-        private System.Windows.Forms.ToolStripMenuItem mapMasterCCToAllDevicesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lightingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem applyDefaultQASettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem quickAccessToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editFunctionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem qAButtonToggleToolStripMenuItem;
     }
 }
 

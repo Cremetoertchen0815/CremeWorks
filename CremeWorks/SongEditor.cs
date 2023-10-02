@@ -9,7 +9,6 @@ namespace CremeWorks
         private readonly Song _s;
         private readonly CheckBox[][] _mapMatrixA;
         private readonly CheckBox[][] _mapMatrixB;
-        private readonly Button[] _mapQA;
 
         public SongEditor(Concert c, Song s)
         {
@@ -26,8 +25,6 @@ namespace CremeWorks
             _mapMatrixB = new CheckBox[][] { new CheckBox[] {ccMM, ccM1, ccM2, ccM3, ccM4, ccM5 }, new CheckBox[] { cc1M, cc11, cc12, cc13, cc14, cc15 },
                                             new CheckBox[] { cc2M, cc21, cc22, cc23, cc24, cc25 }, new CheckBox[] { cc3M, cc31, cc32, cc33, cc34, cc35 },
                                             new CheckBox[] { cc4M, cc41, cc42, cc43, cc44, cc45 }, new CheckBox[] { cc5M, cc51, cc52, cc53, cc54, cc55 }};
-
-            _mapQA = new Button[] { button12, button5, button11, button6, button10 };
 
             //Load data
             txtTitle.Text = s.Title;
@@ -47,12 +44,6 @@ namespace CremeWorks
                     _mapMatrixA[x][y].Checked = s.NotePatchMap[x][y];
                     _mapMatrixB[x][y].Checked = s.CCPatchMap[x][y];
                 }
-            }
-
-            for (int i = 0; i < _mapQA.Length; i++)
-            {
-                sbyte val = _s.QA[i];
-                if (i < 5) _mapQA[i].Text = val < 0 ? "Quick Access " + Buchstaben[i] : _c.LightConfig.Names[val];
             }
         }
 
@@ -120,17 +111,6 @@ namespace CremeWorks
             _s.AutoPatchSlots[id] = (chk.Checked, patchBuffer);
 
         }
-
-        private void button12_Click(object sender, EventArgs e)
-        {
-            var src = (Button)sender;
-            int nr = int.Parse((string)src.Tag);
-            new QASelector(_c, _s, nr).ShowDialog();
-            sbyte val = _s.QA[nr];
-            if (nr < 5) src.Text = val < 0 ? "Quick Access " + Buchstaben[nr] : _c.LightConfig.Names[val];
-        }
-
-        private readonly string[] Buchstaben = { "A", "B", "C", "D", "E" };
         
         private void btnChordMakro_Click(object sender, EventArgs e)
         {

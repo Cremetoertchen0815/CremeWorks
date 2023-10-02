@@ -63,13 +63,6 @@ namespace CremeWorks
             songKey.Text = "Key: -";
             lightCue.Items.Clear();
 
-            button5.Text = (_s?.QA[0] ?? -1) < 0 ? "Quick Access " + Buchstaben[0] : _c.LightConfig.Names[_s.QA[0]];
-            button7.Text = (_s?.QA[1] ?? -1) < 0 ? "Quick Access " + Buchstaben[1] : _c.LightConfig.Names[_s.QA[1]];
-            button6.Text = (_s?.QA[2] ?? -1) < 0 ? "Quick Access " + Buchstaben[2] : _c.LightConfig.Names[_s.QA[2]];
-            button9.Text = (_s?.QA[3] ?? -1) < 0 ? "Quick Access " + Buchstaben[3] : _c.LightConfig.Names[_s.QA[3]];
-            button8.Text = (_s?.QA[4] ?? -1) < 0 ? "Quick Access " + Buchstaben[4] : _c.LightConfig.Names[_s.QA[4]];
-            button4.Text = (_s?.QA[5] ?? -1) < 0 ? "Quick Access " + Buchstaben[5] : _c.LightConfig.Names[_s.QA[5]];
-
             if (_s == null) return;
 
             for (int i = 0; i < _s.CueList.Count; i++) lightCue.Items.Add((i + 1).ToString() + ". " + _s.CueList[i].comment);
@@ -122,7 +115,7 @@ namespace CremeWorks
                     if (lightCue.SelectedIndex < lightCue.Items.Count - 1) lightCue.SelectedIndex++;
                     break;
                 default:
-                    _c.LightConfig.SetState(_s.QA[nr - 5], enable);
+                    _c.LightConfig.SetState(_c.QA[nr - 5], enable);
                     break;
             }
         }
@@ -206,6 +199,14 @@ namespace CremeWorks
             Text = "CremeWorks Stage Controller - " + (tit == string.Empty ? "Untitled" : tit);
             _c.MidiMatrix.ActionExecute = ExecuteAction;
             _c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
+
+            button5.Text = (_c?.QA[0] ?? -1) < 0 ? "Quick Access " + Buchstaben[0] : _c.LightConfig.Names[_c.QA[0]];
+            button7.Text = (_c?.QA[1] ?? -1) < 0 ? "Quick Access " + Buchstaben[1] : _c.LightConfig.Names[_c.QA[1]];
+            button6.Text = (_c?.QA[2] ?? -1) < 0 ? "Quick Access " + Buchstaben[2] : _c.LightConfig.Names[_c.QA[2]];
+            button9.Text = (_c?.QA[3] ?? -1) < 0 ? "Quick Access " + Buchstaben[3] : _c.LightConfig.Names[_c.QA[3]];
+            button8.Text = (_c?.QA[4] ?? -1) < 0 ? "Quick Access " + Buchstaben[4] : _c.LightConfig.Names[_c.QA[4]];
+            button4.Text = (_c?.QA[5] ?? -1) < 0 ? "Quick Access " + Buchstaben[5] : _c.LightConfig.Names[_c.QA[5]];
+
             UpdatePlaylist();
             playList.SelectedIndex = -1;
         }
@@ -310,23 +311,12 @@ namespace CremeWorks
             }
         }
 
-        private void mapMasterCCToAllDevicesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (var item in _c.Playlist) item.CCPatchMap[0] = new bool[] { false, true, true, true };
-        }
-
         private void resetToolStripMenuItem_Click(object sender, EventArgs e) => ExecuteAction(2, true);
 
-        private void applyDefaultQASettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void editFunctionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (var item in _c.Playlist)
-            {
-                item.QA[0] = 38;
-                item.QA[1] = 39;
-                item.QA[2] = 36;
-                item.QA[4] = 8;
-                item.QA[5] = 11;
-            }
+            new QAEditor(_c).ShowDialog();
+            UpdateConcert();
         }
     }
 }

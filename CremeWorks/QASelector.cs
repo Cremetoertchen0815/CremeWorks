@@ -8,15 +8,13 @@ namespace CremeWorks
     {
 
         private readonly Concert _c;
-        private readonly Song _s;
         private readonly int _nr;
         private readonly List<sbyte> _indices = new List<sbyte>();
 
-        public QASelector(Concert c, Song s, int nr)
+        public QASelector(Concert c, int nr)
         {
             InitializeComponent();
             _c = c;
-            _s = s;
             _nr = nr;
 
             for (sbyte i = 0; i < 127; i++)
@@ -26,7 +24,7 @@ namespace CremeWorks
                 _indices.Add(i);
             }
 
-            sbyte val = _s.QA[_nr];
+            sbyte val = _c.QA[_nr];
             if (val > -1) comboBox1.SelectedIndex = comboBox1.Items.IndexOf(_c.LightConfig.Names[val]);
         }
 
@@ -34,7 +32,7 @@ namespace CremeWorks
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedIndex > -1) _s.QA[_nr] = _indices[comboBox1.SelectedIndex];
+            if (comboBox1.SelectedIndex > -1) _c.QA[_nr] = _indices[comboBox1.SelectedIndex];
             Close();
         }
     }

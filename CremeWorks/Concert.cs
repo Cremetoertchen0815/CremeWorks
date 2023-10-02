@@ -19,6 +19,7 @@ namespace CremeWorks
         public (MidiEventType, short, byte)[] FootSwitchConfig;
         public LightController LightConfig;
         public List<Song> Playlist;
+        public sbyte[] QA = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }; //Quick Access buttons
 
         public MIDIMatrix MidiMatrix;
         public Action<bool> ConnectionChangeHandler = (x) => { return; };
@@ -73,8 +74,8 @@ namespace CremeWorks
             return lol;
         }
 
+        private const int cVersion = 4;
         private const string cHeader = "CW";
-        private const string cHeaderVersioned = "CW3";
         public static Concert LoadFromFile(string filename)
         {
             //Init stuff
@@ -105,23 +106,47 @@ namespace CremeWorks
                 nu.LightConfig.IsToggleable[i] = br.ReadBoolean();
             }
 
+            //Quick Access - from Version >= 4
+            if (version > 3)
+            {
+                nu.QA = new sbyte[br.ReadInt32()];
+                byte[] byte_Dat = br.ReadBytes(nu.QA.Length);
+                Buffer.BlockCopy(byte_Dat, 0, nu.QA, 0, byte_Dat.Length);
+            } else
+            {
+                nu.QA = null;
+            }
+
             //Playlist
             int count = br.ReadInt32();
             nu.Playlist = new List<Song>();
             for (int i = 0; i < count; i++)
             {
+                var nuTitle = br.ReadString();
+                var nuArtist = br.ReadString();
+                var nuKey = br.ReadString();
+                var nuLyrics = br.ReadString();
                 var s = new Song
                 {
-                    Title = br.ReadString(),
-                    Artist = br.ReadString(),
-                    Key = br.ReadString(),
-                    Lyrics = br.ReadString(),
-                    QA = new sbyte[br.ReadInt32()],
+                    Title = nuTitle,
+                    Artist = nuArtist,
+                    Key = nuKey,
+                    Lyrics = nuLyrics,
                     NotePatchMap = new bool[PATCH_DEVICE_COUNT][],
                     CCPatchMap = new bool[PATCH_DEVICE_COUNT][]
                 };
-                byte[] byte_Dat = br.ReadBytes(s.QA.Length);
-                Buffer.BlockCopy(byte_Dat, 0, s.QA, 0, byte_Dat.Length);
+
+                //Quick Access - from Version < 4
+                if (version < 4)
+                {
+                    int len = br.ReadInt32();
+                    byte[] byte_Dat = br.ReadBytes(len);
+                    if (nu.QA is null)
+                    {
+                        nu.QA = new sbyte[len];
+                        Buffer.BlockCopy(byte_Dat, 0, nu.QA, 0, byte_Dat.Length);
+                    }
+                }
 
                 var patchCount = (version < 3 ? PATCH_DEVICE_COUNT_PRE3 : PATCH_DEVICE_COUNT);
                 for (int j = 0; j < patchCount; j++)
@@ -247,7 +272,7 @@ namespace CremeWorks
             var bw = new BinaryWriter(File.OpenWrite(filename));
             FilePath = filename;
             //Misc
-            bw.Write(cHeaderVersioned);
+            bw.Write(cHeader + cVersion);
             bw.Write(Devices.Length);
             for (int i = 0; i < Devices.Length; i++) bw.Write(Devices[i]?.Name ?? string.Empty);
             //Foot switch config
@@ -268,6 +293,12 @@ namespace CremeWorks
                 bw.Write(LightConfig.IsToggleable[i]);
             }
 
+            //Quick Access
+            bw.Write(QA.Length);
+            byte[] byte_dat = new byte[QA.Length];
+            Buffer.BlockCopy(QA, 0, byte_dat, 0, byte_dat.Length);
+            bw.Write(byte_dat);
+
             //Playlist
             bw.Write(Playlist.Count);
             for (int i = 0; i < Playlist.Count; i++)
@@ -277,10 +308,6 @@ namespace CremeWorks
                 bw.Write(song.Artist);
                 bw.Write(song.Key);
                 bw.Write(song.Lyrics);
-                bw.Write(song.QA.Length);
-                byte[] byte_dat = new byte[song.QA.Length];
-                Buffer.BlockCopy(song.QA, 0, byte_dat, 0, byte_dat.Length);
-                bw.Write(byte_dat);
                 for (int j = 0; j < PATCH_DEVICE_COUNT; j++)
                 {
                     for (int k = 0; k < PATCH_DEVICE_COUNT; k++) bw.Write(song.NotePatchMap?[j]?[k] ?? false);
