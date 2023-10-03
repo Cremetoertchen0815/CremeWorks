@@ -95,7 +95,7 @@ namespace CremeWorks
         private void FootSwitchConfig_FormClosing(object sender, FormClosingEventArgs e)
         {
             var dev = _c.Devices[0].Input;
-            if (dev.IsListeningForEvents) dev.StopEventsListening();
+            if (dev?.IsListeningForEvents == true) dev.StopEventsListening();
 
             //Save data from dialogue
             for (int i = 0; i < 13; i++)
