@@ -26,7 +26,7 @@ namespace CremeWorks
             } 
 
             int grp = ToggleGroups[note];
-            if (grp <= 0 || !IsToggleable[note] || value != true) return;
+            if (grp <= 0 || !IsToggleable[note] || value == false) return;
 
             for (int i = 0; i < 127; i++)
             {
