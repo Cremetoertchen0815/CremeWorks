@@ -152,6 +152,14 @@ namespace CremeWorks
             this.cc24 = new System.Windows.Forms.CheckBox();
             this.cc34 = new System.Windows.Forms.CheckBox();
             this.ccM5 = new System.Windows.Forms.CheckBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label34 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -184,7 +192,7 @@ namespace CremeWorks
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 87);
+            this.label4.Location = new System.Drawing.Point(11, 189);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(34, 13);
             this.label4.TabIndex = 3;
@@ -192,39 +200,39 @@ namespace CremeWorks
             // 
             // txtTitle
             // 
-            this.txtTitle.Location = new System.Drawing.Point(66, 6);
+            this.txtTitle.Location = new System.Drawing.Point(79, 6);
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(442, 20);
+            this.txtTitle.Size = new System.Drawing.Size(429, 20);
             this.txtTitle.TabIndex = 4;
             this.txtTitle.Text = "Name";
             // 
             // txtArtist
             // 
-            this.txtArtist.Location = new System.Drawing.Point(66, 32);
+            this.txtArtist.Location = new System.Drawing.Point(79, 32);
             this.txtArtist.Name = "txtArtist";
-            this.txtArtist.Size = new System.Drawing.Size(442, 20);
+            this.txtArtist.Size = new System.Drawing.Size(429, 20);
             this.txtArtist.TabIndex = 5;
             this.txtArtist.Text = "Unknown";
             // 
             // txtKey
             // 
-            this.txtKey.Location = new System.Drawing.Point(66, 58);
+            this.txtKey.Location = new System.Drawing.Point(79, 58);
             this.txtKey.Name = "txtKey";
-            this.txtKey.Size = new System.Drawing.Size(442, 20);
+            this.txtKey.Size = new System.Drawing.Size(429, 20);
             this.txtKey.TabIndex = 6;
             // 
             // txtLyrics
             // 
-            this.txtLyrics.Location = new System.Drawing.Point(66, 84);
+            this.txtLyrics.Location = new System.Drawing.Point(78, 186);
             this.txtLyrics.Multiline = true;
             this.txtLyrics.Name = "txtLyrics";
             this.txtLyrics.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLyrics.Size = new System.Drawing.Size(442, 340);
+            this.txtLyrics.Size = new System.Drawing.Size(429, 285);
             this.txtLyrics.TabIndex = 7;
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(621, 611);
+            this.btnOk.Location = new System.Drawing.Point(514, 6);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 38);
             this.btnOk.TabIndex = 8;
@@ -234,7 +242,7 @@ namespace CremeWorks
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(514, 611);
+            this.btnCancel.Location = new System.Drawing.Point(514, 48);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 38);
             this.btnCancel.TabIndex = 9;
@@ -245,7 +253,7 @@ namespace CremeWorks
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 436);
+            this.label5.Location = new System.Drawing.Point(12, 483);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(44, 13);
             this.label5.TabIndex = 10;
@@ -254,7 +262,7 @@ namespace CremeWorks
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(63, 436);
+            this.label6.Location = new System.Drawing.Point(63, 483);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(49, 13);
             this.label6.TabIndex = 11;
@@ -263,7 +271,7 @@ namespace CremeWorks
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(71, 452);
+            this.label7.Location = new System.Drawing.Point(71, 499);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(39, 13);
             this.label7.TabIndex = 12;
@@ -272,7 +280,7 @@ namespace CremeWorks
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(71, 472);
+            this.label8.Location = new System.Drawing.Point(71, 519);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(34, 13);
             this.label8.TabIndex = 13;
@@ -281,7 +289,7 @@ namespace CremeWorks
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(71, 492);
+            this.label9.Location = new System.Drawing.Point(71, 539);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(34, 13);
             this.label9.TabIndex = 14;
@@ -290,7 +298,7 @@ namespace CremeWorks
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(71, 512);
+            this.label10.Location = new System.Drawing.Point(71, 559);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(34, 13);
             this.label10.TabIndex = 15;
@@ -299,7 +307,7 @@ namespace CremeWorks
             // chkMM
             // 
             this.chkMM.AutoSize = true;
-            this.chkMM.Location = new System.Drawing.Point(111, 452);
+            this.chkMM.Location = new System.Drawing.Point(111, 499);
             this.chkMM.Name = "chkMM";
             this.chkMM.Size = new System.Drawing.Size(15, 14);
             this.chkMM.TabIndex = 16;
@@ -308,7 +316,7 @@ namespace CremeWorks
             // chk21
             // 
             this.chk21.AutoSize = true;
-            this.chk21.Location = new System.Drawing.Point(132, 492);
+            this.chk21.Location = new System.Drawing.Point(132, 539);
             this.chk21.Name = "chk21";
             this.chk21.Size = new System.Drawing.Size(15, 14);
             this.chk21.TabIndex = 17;
@@ -317,7 +325,7 @@ namespace CremeWorks
             // chk1M
             // 
             this.chk1M.AutoSize = true;
-            this.chk1M.Location = new System.Drawing.Point(111, 472);
+            this.chk1M.Location = new System.Drawing.Point(111, 519);
             this.chk1M.Name = "chk1M";
             this.chk1M.Size = new System.Drawing.Size(15, 14);
             this.chk1M.TabIndex = 18;
@@ -326,7 +334,7 @@ namespace CremeWorks
             // chkM1
             // 
             this.chkM1.AutoSize = true;
-            this.chkM1.Location = new System.Drawing.Point(132, 452);
+            this.chkM1.Location = new System.Drawing.Point(132, 499);
             this.chkM1.Name = "chkM1";
             this.chkM1.Size = new System.Drawing.Size(15, 14);
             this.chkM1.TabIndex = 19;
@@ -335,7 +343,7 @@ namespace CremeWorks
             // chkM3
             // 
             this.chkM3.AutoSize = true;
-            this.chkM3.Location = new System.Drawing.Point(174, 452);
+            this.chkM3.Location = new System.Drawing.Point(174, 499);
             this.chkM3.Name = "chkM3";
             this.chkM3.Size = new System.Drawing.Size(15, 14);
             this.chkM3.TabIndex = 20;
@@ -344,7 +352,7 @@ namespace CremeWorks
             // chk32
             // 
             this.chk32.AutoSize = true;
-            this.chk32.Location = new System.Drawing.Point(153, 512);
+            this.chk32.Location = new System.Drawing.Point(153, 559);
             this.chk32.Name = "chk32";
             this.chk32.Size = new System.Drawing.Size(15, 14);
             this.chk32.TabIndex = 21;
@@ -353,7 +361,7 @@ namespace CremeWorks
             // chk11
             // 
             this.chk11.AutoSize = true;
-            this.chk11.Location = new System.Drawing.Point(132, 472);
+            this.chk11.Location = new System.Drawing.Point(132, 519);
             this.chk11.Name = "chk11";
             this.chk11.Size = new System.Drawing.Size(15, 14);
             this.chk11.TabIndex = 22;
@@ -362,7 +370,7 @@ namespace CremeWorks
             // chk22
             // 
             this.chk22.AutoSize = true;
-            this.chk22.Location = new System.Drawing.Point(153, 492);
+            this.chk22.Location = new System.Drawing.Point(153, 539);
             this.chk22.Name = "chk22";
             this.chk22.Size = new System.Drawing.Size(15, 14);
             this.chk22.TabIndex = 23;
@@ -371,7 +379,7 @@ namespace CremeWorks
             // chk12
             // 
             this.chk12.AutoSize = true;
-            this.chk12.Location = new System.Drawing.Point(153, 472);
+            this.chk12.Location = new System.Drawing.Point(153, 519);
             this.chk12.Name = "chk12";
             this.chk12.Size = new System.Drawing.Size(15, 14);
             this.chk12.TabIndex = 24;
@@ -380,7 +388,7 @@ namespace CremeWorks
             // chk33
             // 
             this.chk33.AutoSize = true;
-            this.chk33.Location = new System.Drawing.Point(174, 512);
+            this.chk33.Location = new System.Drawing.Point(174, 559);
             this.chk33.Name = "chk33";
             this.chk33.Size = new System.Drawing.Size(15, 14);
             this.chk33.TabIndex = 25;
@@ -389,7 +397,7 @@ namespace CremeWorks
             // chkM2
             // 
             this.chkM2.AutoSize = true;
-            this.chkM2.Location = new System.Drawing.Point(153, 452);
+            this.chkM2.Location = new System.Drawing.Point(153, 499);
             this.chkM2.Name = "chkM2";
             this.chkM2.Size = new System.Drawing.Size(15, 14);
             this.chkM2.TabIndex = 26;
@@ -398,7 +406,7 @@ namespace CremeWorks
             // chk23
             // 
             this.chk23.AutoSize = true;
-            this.chk23.Location = new System.Drawing.Point(174, 492);
+            this.chk23.Location = new System.Drawing.Point(174, 539);
             this.chk23.Name = "chk23";
             this.chk23.Size = new System.Drawing.Size(15, 14);
             this.chk23.TabIndex = 27;
@@ -407,7 +415,7 @@ namespace CremeWorks
             // chk31
             // 
             this.chk31.AutoSize = true;
-            this.chk31.Location = new System.Drawing.Point(132, 512);
+            this.chk31.Location = new System.Drawing.Point(132, 559);
             this.chk31.Name = "chk31";
             this.chk31.Size = new System.Drawing.Size(15, 14);
             this.chk31.TabIndex = 28;
@@ -416,7 +424,7 @@ namespace CremeWorks
             // chk13
             // 
             this.chk13.AutoSize = true;
-            this.chk13.Location = new System.Drawing.Point(174, 472);
+            this.chk13.Location = new System.Drawing.Point(174, 519);
             this.chk13.Name = "chk13";
             this.chk13.Size = new System.Drawing.Size(15, 14);
             this.chk13.TabIndex = 29;
@@ -425,7 +433,7 @@ namespace CremeWorks
             // chk2M
             // 
             this.chk2M.AutoSize = true;
-            this.chk2M.Location = new System.Drawing.Point(111, 492);
+            this.chk2M.Location = new System.Drawing.Point(111, 539);
             this.chk2M.Name = "chk2M";
             this.chk2M.Size = new System.Drawing.Size(15, 14);
             this.chk2M.TabIndex = 30;
@@ -434,7 +442,7 @@ namespace CremeWorks
             // chk3M
             // 
             this.chk3M.AutoSize = true;
-            this.chk3M.Location = new System.Drawing.Point(111, 512);
+            this.chk3M.Location = new System.Drawing.Point(111, 559);
             this.chk3M.Name = "chk3M";
             this.chk3M.Size = new System.Drawing.Size(15, 14);
             this.chk3M.TabIndex = 31;
@@ -443,7 +451,7 @@ namespace CremeWorks
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(110, 436);
+            this.label11.Location = new System.Drawing.Point(110, 483);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(16, 13);
             this.label11.TabIndex = 32;
@@ -452,7 +460,7 @@ namespace CremeWorks
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(132, 436);
+            this.label12.Location = new System.Drawing.Point(132, 483);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(13, 13);
             this.label12.TabIndex = 33;
@@ -461,7 +469,7 @@ namespace CremeWorks
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(153, 436);
+            this.label13.Location = new System.Drawing.Point(153, 483);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(13, 13);
             this.label13.TabIndex = 34;
@@ -470,7 +478,7 @@ namespace CremeWorks
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(174, 436);
+            this.label14.Location = new System.Drawing.Point(174, 483);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(13, 13);
             this.label14.TabIndex = 35;
@@ -479,7 +487,7 @@ namespace CremeWorks
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(376, 435);
+            this.label15.Location = new System.Drawing.Point(368, 482);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(13, 13);
             this.label15.TabIndex = 60;
@@ -488,7 +496,7 @@ namespace CremeWorks
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(355, 435);
+            this.label16.Location = new System.Drawing.Point(347, 482);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(13, 13);
             this.label16.TabIndex = 59;
@@ -497,7 +505,7 @@ namespace CremeWorks
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(334, 435);
+            this.label17.Location = new System.Drawing.Point(326, 482);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(13, 13);
             this.label17.TabIndex = 58;
@@ -506,7 +514,7 @@ namespace CremeWorks
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(312, 435);
+            this.label18.Location = new System.Drawing.Point(304, 482);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(16, 13);
             this.label18.TabIndex = 57;
@@ -515,7 +523,7 @@ namespace CremeWorks
             // cc3M
             // 
             this.cc3M.AutoSize = true;
-            this.cc3M.Location = new System.Drawing.Point(313, 511);
+            this.cc3M.Location = new System.Drawing.Point(305, 558);
             this.cc3M.Name = "cc3M";
             this.cc3M.Size = new System.Drawing.Size(15, 14);
             this.cc3M.TabIndex = 56;
@@ -524,7 +532,7 @@ namespace CremeWorks
             // cc2M
             // 
             this.cc2M.AutoSize = true;
-            this.cc2M.Location = new System.Drawing.Point(313, 491);
+            this.cc2M.Location = new System.Drawing.Point(305, 538);
             this.cc2M.Name = "cc2M";
             this.cc2M.Size = new System.Drawing.Size(15, 14);
             this.cc2M.TabIndex = 55;
@@ -533,7 +541,7 @@ namespace CremeWorks
             // cc13
             // 
             this.cc13.AutoSize = true;
-            this.cc13.Location = new System.Drawing.Point(376, 471);
+            this.cc13.Location = new System.Drawing.Point(368, 518);
             this.cc13.Name = "cc13";
             this.cc13.Size = new System.Drawing.Size(15, 14);
             this.cc13.TabIndex = 54;
@@ -542,7 +550,7 @@ namespace CremeWorks
             // cc31
             // 
             this.cc31.AutoSize = true;
-            this.cc31.Location = new System.Drawing.Point(334, 511);
+            this.cc31.Location = new System.Drawing.Point(326, 558);
             this.cc31.Name = "cc31";
             this.cc31.Size = new System.Drawing.Size(15, 14);
             this.cc31.TabIndex = 53;
@@ -551,7 +559,7 @@ namespace CremeWorks
             // cc23
             // 
             this.cc23.AutoSize = true;
-            this.cc23.Location = new System.Drawing.Point(376, 491);
+            this.cc23.Location = new System.Drawing.Point(368, 538);
             this.cc23.Name = "cc23";
             this.cc23.Size = new System.Drawing.Size(15, 14);
             this.cc23.TabIndex = 52;
@@ -560,7 +568,7 @@ namespace CremeWorks
             // ccM2
             // 
             this.ccM2.AutoSize = true;
-            this.ccM2.Location = new System.Drawing.Point(355, 451);
+            this.ccM2.Location = new System.Drawing.Point(347, 498);
             this.ccM2.Name = "ccM2";
             this.ccM2.Size = new System.Drawing.Size(15, 14);
             this.ccM2.TabIndex = 51;
@@ -569,7 +577,7 @@ namespace CremeWorks
             // cc33
             // 
             this.cc33.AutoSize = true;
-            this.cc33.Location = new System.Drawing.Point(376, 511);
+            this.cc33.Location = new System.Drawing.Point(368, 558);
             this.cc33.Name = "cc33";
             this.cc33.Size = new System.Drawing.Size(15, 14);
             this.cc33.TabIndex = 50;
@@ -578,7 +586,7 @@ namespace CremeWorks
             // cc12
             // 
             this.cc12.AutoSize = true;
-            this.cc12.Location = new System.Drawing.Point(355, 471);
+            this.cc12.Location = new System.Drawing.Point(347, 518);
             this.cc12.Name = "cc12";
             this.cc12.Size = new System.Drawing.Size(15, 14);
             this.cc12.TabIndex = 49;
@@ -587,7 +595,7 @@ namespace CremeWorks
             // cc22
             // 
             this.cc22.AutoSize = true;
-            this.cc22.Location = new System.Drawing.Point(355, 491);
+            this.cc22.Location = new System.Drawing.Point(347, 538);
             this.cc22.Name = "cc22";
             this.cc22.Size = new System.Drawing.Size(15, 14);
             this.cc22.TabIndex = 48;
@@ -596,7 +604,7 @@ namespace CremeWorks
             // cc11
             // 
             this.cc11.AutoSize = true;
-            this.cc11.Location = new System.Drawing.Point(334, 471);
+            this.cc11.Location = new System.Drawing.Point(326, 518);
             this.cc11.Name = "cc11";
             this.cc11.Size = new System.Drawing.Size(15, 14);
             this.cc11.TabIndex = 47;
@@ -605,7 +613,7 @@ namespace CremeWorks
             // cc32
             // 
             this.cc32.AutoSize = true;
-            this.cc32.Location = new System.Drawing.Point(355, 511);
+            this.cc32.Location = new System.Drawing.Point(347, 558);
             this.cc32.Name = "cc32";
             this.cc32.Size = new System.Drawing.Size(15, 14);
             this.cc32.TabIndex = 46;
@@ -614,7 +622,7 @@ namespace CremeWorks
             // ccM3
             // 
             this.ccM3.AutoSize = true;
-            this.ccM3.Location = new System.Drawing.Point(376, 451);
+            this.ccM3.Location = new System.Drawing.Point(368, 498);
             this.ccM3.Name = "ccM3";
             this.ccM3.Size = new System.Drawing.Size(15, 14);
             this.ccM3.TabIndex = 45;
@@ -623,7 +631,7 @@ namespace CremeWorks
             // ccM1
             // 
             this.ccM1.AutoSize = true;
-            this.ccM1.Location = new System.Drawing.Point(334, 451);
+            this.ccM1.Location = new System.Drawing.Point(326, 498);
             this.ccM1.Name = "ccM1";
             this.ccM1.Size = new System.Drawing.Size(15, 14);
             this.ccM1.TabIndex = 44;
@@ -632,7 +640,7 @@ namespace CremeWorks
             // cc1M
             // 
             this.cc1M.AutoSize = true;
-            this.cc1M.Location = new System.Drawing.Point(313, 471);
+            this.cc1M.Location = new System.Drawing.Point(305, 518);
             this.cc1M.Name = "cc1M";
             this.cc1M.Size = new System.Drawing.Size(15, 14);
             this.cc1M.TabIndex = 43;
@@ -641,7 +649,7 @@ namespace CremeWorks
             // cc21
             // 
             this.cc21.AutoSize = true;
-            this.cc21.Location = new System.Drawing.Point(334, 491);
+            this.cc21.Location = new System.Drawing.Point(326, 538);
             this.cc21.Name = "cc21";
             this.cc21.Size = new System.Drawing.Size(15, 14);
             this.cc21.TabIndex = 42;
@@ -650,7 +658,7 @@ namespace CremeWorks
             // ccMM
             // 
             this.ccMM.AutoSize = true;
-            this.ccMM.Location = new System.Drawing.Point(313, 451);
+            this.ccMM.Location = new System.Drawing.Point(305, 498);
             this.ccMM.Name = "ccMM";
             this.ccMM.Size = new System.Drawing.Size(15, 14);
             this.ccMM.TabIndex = 41;
@@ -659,7 +667,7 @@ namespace CremeWorks
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(273, 511);
+            this.label19.Location = new System.Drawing.Point(265, 558);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(34, 13);
             this.label19.TabIndex = 40;
@@ -668,7 +676,7 @@ namespace CremeWorks
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(273, 491);
+            this.label20.Location = new System.Drawing.Point(265, 538);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(34, 13);
             this.label20.TabIndex = 39;
@@ -677,7 +685,7 @@ namespace CremeWorks
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(273, 471);
+            this.label21.Location = new System.Drawing.Point(265, 518);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(34, 13);
             this.label21.TabIndex = 38;
@@ -686,7 +694,7 @@ namespace CremeWorks
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(273, 451);
+            this.label22.Location = new System.Drawing.Point(265, 498);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(39, 13);
             this.label22.TabIndex = 37;
@@ -695,7 +703,7 @@ namespace CremeWorks
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(273, 435);
+            this.label23.Location = new System.Drawing.Point(265, 482);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(40, 13);
             this.label23.TabIndex = 36;
@@ -704,7 +712,7 @@ namespace CremeWorks
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(513, 436);
+            this.label24.Location = new System.Drawing.Point(448, 483);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(60, 13);
             this.label24.TabIndex = 61;
@@ -713,7 +721,7 @@ namespace CremeWorks
             // apM
             // 
             this.apM.AutoSize = true;
-            this.apM.Location = new System.Drawing.Point(584, 435);
+            this.apM.Location = new System.Drawing.Point(519, 482);
             this.apM.Name = "apM";
             this.apM.Size = new System.Drawing.Size(58, 17);
             this.apM.TabIndex = 62;
@@ -725,7 +733,7 @@ namespace CremeWorks
             // ap1
             // 
             this.ap1.AutoSize = true;
-            this.ap1.Location = new System.Drawing.Point(584, 461);
+            this.ap1.Location = new System.Drawing.Point(519, 508);
             this.ap1.Name = "ap1";
             this.ap1.Size = new System.Drawing.Size(53, 17);
             this.ap1.TabIndex = 63;
@@ -737,7 +745,7 @@ namespace CremeWorks
             // ap2
             // 
             this.ap2.AutoSize = true;
-            this.ap2.Location = new System.Drawing.Point(584, 487);
+            this.ap2.Location = new System.Drawing.Point(519, 534);
             this.ap2.Name = "ap2";
             this.ap2.Size = new System.Drawing.Size(53, 17);
             this.ap2.TabIndex = 64;
@@ -749,7 +757,7 @@ namespace CremeWorks
             // ap3
             // 
             this.ap3.AutoSize = true;
-            this.ap3.Location = new System.Drawing.Point(584, 514);
+            this.ap3.Location = new System.Drawing.Point(519, 561);
             this.ap3.Name = "ap3";
             this.ap3.Size = new System.Drawing.Size(53, 17);
             this.ap3.TabIndex = 65;
@@ -761,7 +769,7 @@ namespace CremeWorks
             // apbM
             // 
             this.apbM.Enabled = false;
-            this.apbM.Location = new System.Drawing.Point(648, 431);
+            this.apbM.Location = new System.Drawing.Point(583, 478);
             this.apbM.Name = "apbM";
             this.apbM.Size = new System.Drawing.Size(31, 23);
             this.apbM.TabIndex = 66;
@@ -773,7 +781,7 @@ namespace CremeWorks
             // apb1
             // 
             this.apb1.Enabled = false;
-            this.apb1.Location = new System.Drawing.Point(648, 457);
+            this.apb1.Location = new System.Drawing.Point(583, 504);
             this.apb1.Name = "apb1";
             this.apb1.Size = new System.Drawing.Size(31, 23);
             this.apb1.TabIndex = 67;
@@ -785,7 +793,7 @@ namespace CremeWorks
             // apb2
             // 
             this.apb2.Enabled = false;
-            this.apb2.Location = new System.Drawing.Point(648, 483);
+            this.apb2.Location = new System.Drawing.Point(583, 530);
             this.apb2.Name = "apb2";
             this.apb2.Size = new System.Drawing.Size(31, 23);
             this.apb2.TabIndex = 68;
@@ -797,7 +805,7 @@ namespace CremeWorks
             // apb3
             // 
             this.apb3.Enabled = false;
-            this.apb3.Location = new System.Drawing.Point(648, 510);
+            this.apb3.Location = new System.Drawing.Point(583, 557);
             this.apb3.Name = "apb3";
             this.apb3.Size = new System.Drawing.Size(31, 23);
             this.apb3.TabIndex = 69;
@@ -808,7 +816,7 @@ namespace CremeWorks
             // 
             // btnChordMakro
             // 
-            this.btnChordMakro.Location = new System.Drawing.Point(66, 611);
+            this.btnChordMakro.Location = new System.Drawing.Point(514, 92);
             this.btnChordMakro.Name = "btnChordMakro";
             this.btnChordMakro.Size = new System.Drawing.Size(100, 38);
             this.btnChordMakro.TabIndex = 78;
@@ -819,7 +827,7 @@ namespace CremeWorks
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(195, 436);
+            this.label25.Location = new System.Drawing.Point(195, 483);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(13, 13);
             this.label25.TabIndex = 83;
@@ -828,7 +836,7 @@ namespace CremeWorks
             // chk14
             // 
             this.chk14.AutoSize = true;
-            this.chk14.Location = new System.Drawing.Point(195, 472);
+            this.chk14.Location = new System.Drawing.Point(195, 519);
             this.chk14.Name = "chk14";
             this.chk14.Size = new System.Drawing.Size(15, 14);
             this.chk14.TabIndex = 82;
@@ -837,7 +845,7 @@ namespace CremeWorks
             // chk24
             // 
             this.chk24.AutoSize = true;
-            this.chk24.Location = new System.Drawing.Point(195, 492);
+            this.chk24.Location = new System.Drawing.Point(195, 539);
             this.chk24.Name = "chk24";
             this.chk24.Size = new System.Drawing.Size(15, 14);
             this.chk24.TabIndex = 81;
@@ -846,7 +854,7 @@ namespace CremeWorks
             // chk34
             // 
             this.chk34.AutoSize = true;
-            this.chk34.Location = new System.Drawing.Point(195, 512);
+            this.chk34.Location = new System.Drawing.Point(195, 559);
             this.chk34.Name = "chk34";
             this.chk34.Size = new System.Drawing.Size(15, 14);
             this.chk34.TabIndex = 80;
@@ -855,7 +863,7 @@ namespace CremeWorks
             // chkM4
             // 
             this.chkM4.AutoSize = true;
-            this.chkM4.Location = new System.Drawing.Point(195, 452);
+            this.chkM4.Location = new System.Drawing.Point(195, 499);
             this.chkM4.Name = "chkM4";
             this.chkM4.Size = new System.Drawing.Size(15, 14);
             this.chkM4.TabIndex = 79;
@@ -864,7 +872,7 @@ namespace CremeWorks
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(216, 436);
+            this.label26.Location = new System.Drawing.Point(216, 483);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(13, 13);
             this.label26.TabIndex = 88;
@@ -873,7 +881,7 @@ namespace CremeWorks
             // chk15
             // 
             this.chk15.AutoSize = true;
-            this.chk15.Location = new System.Drawing.Point(216, 472);
+            this.chk15.Location = new System.Drawing.Point(216, 519);
             this.chk15.Name = "chk15";
             this.chk15.Size = new System.Drawing.Size(15, 14);
             this.chk15.TabIndex = 87;
@@ -882,7 +890,7 @@ namespace CremeWorks
             // chk25
             // 
             this.chk25.AutoSize = true;
-            this.chk25.Location = new System.Drawing.Point(216, 492);
+            this.chk25.Location = new System.Drawing.Point(216, 539);
             this.chk25.Name = "chk25";
             this.chk25.Size = new System.Drawing.Size(15, 14);
             this.chk25.TabIndex = 86;
@@ -891,7 +899,7 @@ namespace CremeWorks
             // chk35
             // 
             this.chk35.AutoSize = true;
-            this.chk35.Location = new System.Drawing.Point(216, 512);
+            this.chk35.Location = new System.Drawing.Point(216, 559);
             this.chk35.Name = "chk35";
             this.chk35.Size = new System.Drawing.Size(15, 14);
             this.chk35.TabIndex = 85;
@@ -900,7 +908,7 @@ namespace CremeWorks
             // chkM5
             // 
             this.chkM5.AutoSize = true;
-            this.chkM5.Location = new System.Drawing.Point(216, 452);
+            this.chkM5.Location = new System.Drawing.Point(216, 499);
             this.chkM5.Name = "chkM5";
             this.chkM5.Size = new System.Drawing.Size(15, 14);
             this.chkM5.TabIndex = 84;
@@ -909,7 +917,7 @@ namespace CremeWorks
             // chk45
             // 
             this.chk45.AutoSize = true;
-            this.chk45.Location = new System.Drawing.Point(216, 532);
+            this.chk45.Location = new System.Drawing.Point(216, 579);
             this.chk45.Name = "chk45";
             this.chk45.Size = new System.Drawing.Size(15, 14);
             this.chk45.TabIndex = 102;
@@ -918,7 +926,7 @@ namespace CremeWorks
             // chk55
             // 
             this.chk55.AutoSize = true;
-            this.chk55.Location = new System.Drawing.Point(216, 552);
+            this.chk55.Location = new System.Drawing.Point(216, 599);
             this.chk55.Name = "chk55";
             this.chk55.Size = new System.Drawing.Size(15, 14);
             this.chk55.TabIndex = 101;
@@ -927,7 +935,7 @@ namespace CremeWorks
             // chk44
             // 
             this.chk44.AutoSize = true;
-            this.chk44.Location = new System.Drawing.Point(195, 532);
+            this.chk44.Location = new System.Drawing.Point(195, 579);
             this.chk44.Name = "chk44";
             this.chk44.Size = new System.Drawing.Size(15, 14);
             this.chk44.TabIndex = 100;
@@ -936,7 +944,7 @@ namespace CremeWorks
             // chk54
             // 
             this.chk54.AutoSize = true;
-            this.chk54.Location = new System.Drawing.Point(195, 552);
+            this.chk54.Location = new System.Drawing.Point(195, 599);
             this.chk54.Name = "chk54";
             this.chk54.Size = new System.Drawing.Size(15, 14);
             this.chk54.TabIndex = 99;
@@ -945,7 +953,7 @@ namespace CremeWorks
             // chk5M
             // 
             this.chk5M.AutoSize = true;
-            this.chk5M.Location = new System.Drawing.Point(111, 552);
+            this.chk5M.Location = new System.Drawing.Point(111, 599);
             this.chk5M.Name = "chk5M";
             this.chk5M.Size = new System.Drawing.Size(15, 14);
             this.chk5M.TabIndex = 98;
@@ -954,7 +962,7 @@ namespace CremeWorks
             // chk4M
             // 
             this.chk4M.AutoSize = true;
-            this.chk4M.Location = new System.Drawing.Point(111, 532);
+            this.chk4M.Location = new System.Drawing.Point(111, 579);
             this.chk4M.Name = "chk4M";
             this.chk4M.Size = new System.Drawing.Size(15, 14);
             this.chk4M.TabIndex = 97;
@@ -963,7 +971,7 @@ namespace CremeWorks
             // chk51
             // 
             this.chk51.AutoSize = true;
-            this.chk51.Location = new System.Drawing.Point(132, 552);
+            this.chk51.Location = new System.Drawing.Point(132, 599);
             this.chk51.Name = "chk51";
             this.chk51.Size = new System.Drawing.Size(15, 14);
             this.chk51.TabIndex = 96;
@@ -972,7 +980,7 @@ namespace CremeWorks
             // chk43
             // 
             this.chk43.AutoSize = true;
-            this.chk43.Location = new System.Drawing.Point(174, 532);
+            this.chk43.Location = new System.Drawing.Point(174, 579);
             this.chk43.Name = "chk43";
             this.chk43.Size = new System.Drawing.Size(15, 14);
             this.chk43.TabIndex = 95;
@@ -981,7 +989,7 @@ namespace CremeWorks
             // chk53
             // 
             this.chk53.AutoSize = true;
-            this.chk53.Location = new System.Drawing.Point(174, 552);
+            this.chk53.Location = new System.Drawing.Point(174, 599);
             this.chk53.Name = "chk53";
             this.chk53.Size = new System.Drawing.Size(15, 14);
             this.chk53.TabIndex = 94;
@@ -990,7 +998,7 @@ namespace CremeWorks
             // chk42
             // 
             this.chk42.AutoSize = true;
-            this.chk42.Location = new System.Drawing.Point(153, 532);
+            this.chk42.Location = new System.Drawing.Point(153, 579);
             this.chk42.Name = "chk42";
             this.chk42.Size = new System.Drawing.Size(15, 14);
             this.chk42.TabIndex = 93;
@@ -999,7 +1007,7 @@ namespace CremeWorks
             // chk52
             // 
             this.chk52.AutoSize = true;
-            this.chk52.Location = new System.Drawing.Point(153, 552);
+            this.chk52.Location = new System.Drawing.Point(153, 599);
             this.chk52.Name = "chk52";
             this.chk52.Size = new System.Drawing.Size(15, 14);
             this.chk52.TabIndex = 92;
@@ -1008,7 +1016,7 @@ namespace CremeWorks
             // chk41
             // 
             this.chk41.AutoSize = true;
-            this.chk41.Location = new System.Drawing.Point(132, 532);
+            this.chk41.Location = new System.Drawing.Point(132, 579);
             this.chk41.Name = "chk41";
             this.chk41.Size = new System.Drawing.Size(15, 14);
             this.chk41.TabIndex = 91;
@@ -1017,7 +1025,7 @@ namespace CremeWorks
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(71, 552);
+            this.label27.Location = new System.Drawing.Point(71, 599);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(34, 13);
             this.label27.TabIndex = 90;
@@ -1026,7 +1034,7 @@ namespace CremeWorks
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(71, 532);
+            this.label28.Location = new System.Drawing.Point(71, 579);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(34, 13);
             this.label28.TabIndex = 89;
@@ -1035,7 +1043,7 @@ namespace CremeWorks
             // apb5
             // 
             this.apb5.Enabled = false;
-            this.apb5.Location = new System.Drawing.Point(648, 565);
+            this.apb5.Location = new System.Drawing.Point(583, 612);
             this.apb5.Name = "apb5";
             this.apb5.Size = new System.Drawing.Size(31, 23);
             this.apb5.TabIndex = 106;
@@ -1047,7 +1055,7 @@ namespace CremeWorks
             // apb4
             // 
             this.apb4.Enabled = false;
-            this.apb4.Location = new System.Drawing.Point(648, 538);
+            this.apb4.Location = new System.Drawing.Point(583, 585);
             this.apb4.Name = "apb4";
             this.apb4.Size = new System.Drawing.Size(31, 23);
             this.apb4.TabIndex = 105;
@@ -1059,7 +1067,7 @@ namespace CremeWorks
             // ap5
             // 
             this.ap5.AutoSize = true;
-            this.ap5.Location = new System.Drawing.Point(584, 569);
+            this.ap5.Location = new System.Drawing.Point(519, 616);
             this.ap5.Name = "ap5";
             this.ap5.Size = new System.Drawing.Size(53, 17);
             this.ap5.TabIndex = 104;
@@ -1071,7 +1079,7 @@ namespace CremeWorks
             // ap4
             // 
             this.ap4.AutoSize = true;
-            this.ap4.Location = new System.Drawing.Point(584, 541);
+            this.ap4.Location = new System.Drawing.Point(519, 588);
             this.ap4.Name = "ap4";
             this.ap4.Size = new System.Drawing.Size(53, 17);
             this.ap4.TabIndex = 103;
@@ -1083,7 +1091,7 @@ namespace CremeWorks
             // cc5M
             // 
             this.cc5M.AutoSize = true;
-            this.cc5M.Location = new System.Drawing.Point(313, 551);
+            this.cc5M.Location = new System.Drawing.Point(305, 598);
             this.cc5M.Name = "cc5M";
             this.cc5M.Size = new System.Drawing.Size(15, 14);
             this.cc5M.TabIndex = 116;
@@ -1092,7 +1100,7 @@ namespace CremeWorks
             // cc4M
             // 
             this.cc4M.AutoSize = true;
-            this.cc4M.Location = new System.Drawing.Point(313, 531);
+            this.cc4M.Location = new System.Drawing.Point(305, 578);
             this.cc4M.Name = "cc4M";
             this.cc4M.Size = new System.Drawing.Size(15, 14);
             this.cc4M.TabIndex = 115;
@@ -1101,7 +1109,7 @@ namespace CremeWorks
             // cc51
             // 
             this.cc51.AutoSize = true;
-            this.cc51.Location = new System.Drawing.Point(334, 551);
+            this.cc51.Location = new System.Drawing.Point(326, 598);
             this.cc51.Name = "cc51";
             this.cc51.Size = new System.Drawing.Size(15, 14);
             this.cc51.TabIndex = 114;
@@ -1110,7 +1118,7 @@ namespace CremeWorks
             // cc43
             // 
             this.cc43.AutoSize = true;
-            this.cc43.Location = new System.Drawing.Point(376, 531);
+            this.cc43.Location = new System.Drawing.Point(368, 578);
             this.cc43.Name = "cc43";
             this.cc43.Size = new System.Drawing.Size(15, 14);
             this.cc43.TabIndex = 113;
@@ -1119,7 +1127,7 @@ namespace CremeWorks
             // cc53
             // 
             this.cc53.AutoSize = true;
-            this.cc53.Location = new System.Drawing.Point(376, 551);
+            this.cc53.Location = new System.Drawing.Point(368, 598);
             this.cc53.Name = "cc53";
             this.cc53.Size = new System.Drawing.Size(15, 14);
             this.cc53.TabIndex = 112;
@@ -1128,7 +1136,7 @@ namespace CremeWorks
             // cc42
             // 
             this.cc42.AutoSize = true;
-            this.cc42.Location = new System.Drawing.Point(355, 531);
+            this.cc42.Location = new System.Drawing.Point(347, 578);
             this.cc42.Name = "cc42";
             this.cc42.Size = new System.Drawing.Size(15, 14);
             this.cc42.TabIndex = 111;
@@ -1137,7 +1145,7 @@ namespace CremeWorks
             // cc52
             // 
             this.cc52.AutoSize = true;
-            this.cc52.Location = new System.Drawing.Point(355, 551);
+            this.cc52.Location = new System.Drawing.Point(347, 598);
             this.cc52.Name = "cc52";
             this.cc52.Size = new System.Drawing.Size(15, 14);
             this.cc52.TabIndex = 110;
@@ -1146,7 +1154,7 @@ namespace CremeWorks
             // cc41
             // 
             this.cc41.AutoSize = true;
-            this.cc41.Location = new System.Drawing.Point(334, 531);
+            this.cc41.Location = new System.Drawing.Point(326, 578);
             this.cc41.Name = "cc41";
             this.cc41.Size = new System.Drawing.Size(15, 14);
             this.cc41.TabIndex = 109;
@@ -1155,7 +1163,7 @@ namespace CremeWorks
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(273, 551);
+            this.label29.Location = new System.Drawing.Point(265, 598);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(34, 13);
             this.label29.TabIndex = 108;
@@ -1164,7 +1172,7 @@ namespace CremeWorks
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(273, 531);
+            this.label30.Location = new System.Drawing.Point(265, 578);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(34, 13);
             this.label30.TabIndex = 107;
@@ -1173,7 +1181,7 @@ namespace CremeWorks
             // cc45
             // 
             this.cc45.AutoSize = true;
-            this.cc45.Location = new System.Drawing.Point(418, 531);
+            this.cc45.Location = new System.Drawing.Point(410, 578);
             this.cc45.Name = "cc45";
             this.cc45.Size = new System.Drawing.Size(15, 14);
             this.cc45.TabIndex = 130;
@@ -1182,7 +1190,7 @@ namespace CremeWorks
             // cc55
             // 
             this.cc55.AutoSize = true;
-            this.cc55.Location = new System.Drawing.Point(418, 551);
+            this.cc55.Location = new System.Drawing.Point(410, 598);
             this.cc55.Name = "cc55";
             this.cc55.Size = new System.Drawing.Size(15, 14);
             this.cc55.TabIndex = 129;
@@ -1191,7 +1199,7 @@ namespace CremeWorks
             // cc44
             // 
             this.cc44.AutoSize = true;
-            this.cc44.Location = new System.Drawing.Point(397, 531);
+            this.cc44.Location = new System.Drawing.Point(389, 578);
             this.cc44.Name = "cc44";
             this.cc44.Size = new System.Drawing.Size(15, 14);
             this.cc44.TabIndex = 128;
@@ -1200,7 +1208,7 @@ namespace CremeWorks
             // cc54
             // 
             this.cc54.AutoSize = true;
-            this.cc54.Location = new System.Drawing.Point(397, 551);
+            this.cc54.Location = new System.Drawing.Point(389, 598);
             this.cc54.Name = "cc54";
             this.cc54.Size = new System.Drawing.Size(15, 14);
             this.cc54.TabIndex = 127;
@@ -1209,7 +1217,7 @@ namespace CremeWorks
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(418, 435);
+            this.label31.Location = new System.Drawing.Point(410, 482);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(13, 13);
             this.label31.TabIndex = 126;
@@ -1218,7 +1226,7 @@ namespace CremeWorks
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(397, 435);
+            this.label32.Location = new System.Drawing.Point(389, 482);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(13, 13);
             this.label32.TabIndex = 125;
@@ -1227,7 +1235,7 @@ namespace CremeWorks
             // cc15
             // 
             this.cc15.AutoSize = true;
-            this.cc15.Location = new System.Drawing.Point(418, 471);
+            this.cc15.Location = new System.Drawing.Point(410, 518);
             this.cc15.Name = "cc15";
             this.cc15.Size = new System.Drawing.Size(15, 14);
             this.cc15.TabIndex = 124;
@@ -1236,7 +1244,7 @@ namespace CremeWorks
             // cc25
             // 
             this.cc25.AutoSize = true;
-            this.cc25.Location = new System.Drawing.Point(418, 491);
+            this.cc25.Location = new System.Drawing.Point(410, 538);
             this.cc25.Name = "cc25";
             this.cc25.Size = new System.Drawing.Size(15, 14);
             this.cc25.TabIndex = 123;
@@ -1245,7 +1253,7 @@ namespace CremeWorks
             // ccM4
             // 
             this.ccM4.AutoSize = true;
-            this.ccM4.Location = new System.Drawing.Point(397, 451);
+            this.ccM4.Location = new System.Drawing.Point(389, 498);
             this.ccM4.Name = "ccM4";
             this.ccM4.Size = new System.Drawing.Size(15, 14);
             this.ccM4.TabIndex = 122;
@@ -1254,7 +1262,7 @@ namespace CremeWorks
             // cc35
             // 
             this.cc35.AutoSize = true;
-            this.cc35.Location = new System.Drawing.Point(418, 511);
+            this.cc35.Location = new System.Drawing.Point(410, 558);
             this.cc35.Name = "cc35";
             this.cc35.Size = new System.Drawing.Size(15, 14);
             this.cc35.TabIndex = 121;
@@ -1263,7 +1271,7 @@ namespace CremeWorks
             // cc14
             // 
             this.cc14.AutoSize = true;
-            this.cc14.Location = new System.Drawing.Point(397, 471);
+            this.cc14.Location = new System.Drawing.Point(389, 518);
             this.cc14.Name = "cc14";
             this.cc14.Size = new System.Drawing.Size(15, 14);
             this.cc14.TabIndex = 120;
@@ -1272,7 +1280,7 @@ namespace CremeWorks
             // cc24
             // 
             this.cc24.AutoSize = true;
-            this.cc24.Location = new System.Drawing.Point(397, 491);
+            this.cc24.Location = new System.Drawing.Point(389, 538);
             this.cc24.Name = "cc24";
             this.cc24.Size = new System.Drawing.Size(15, 14);
             this.cc24.TabIndex = 119;
@@ -1281,7 +1289,7 @@ namespace CremeWorks
             // cc34
             // 
             this.cc34.AutoSize = true;
-            this.cc34.Location = new System.Drawing.Point(397, 511);
+            this.cc34.Location = new System.Drawing.Point(389, 558);
             this.cc34.Name = "cc34";
             this.cc34.Size = new System.Drawing.Size(15, 14);
             this.cc34.TabIndex = 118;
@@ -1290,17 +1298,86 @@ namespace CremeWorks
             // ccM5
             // 
             this.ccM5.AutoSize = true;
-            this.ccM5.Location = new System.Drawing.Point(418, 451);
+            this.ccM5.Location = new System.Drawing.Point(410, 498);
             this.ccM5.Name = "ccM5";
             this.ccM5.Size = new System.Drawing.Size(15, 14);
             this.ccM5.TabIndex = 117;
             this.ccM5.UseVisualStyleBackColor = true;
             // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(12, 87);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(30, 13);
+            this.label33.TabIndex = 131;
+            this.label33.Text = "Click";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(176, 84);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDown1.TabIndex = 132;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(239, 87);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(30, 13);
+            this.label34.TabIndex = 133;
+            this.label34.Text = "BPM";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Location = new System.Drawing.Point(284, 84);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(20, 20);
+            this.panel1.TabIndex = 134;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(81, 85);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(73, 17);
+            this.checkBox1.TabIndex = 135;
+            this.checkBox1.Text = "Aktivieren";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(78, 110);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(429, 70);
+            this.textBox1.TabIndex = 137;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(11, 113);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(61, 13);
+            this.label35.TabIndex = 136;
+            this.label35.Text = "Instructions";
+            // 
             // SongEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(733, 661);
+            this.ClientSize = new System.Drawing.Size(622, 648);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label35);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.label34);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.label33);
             this.Controls.Add(this.cc45);
             this.Controls.Add(this.cc55);
             this.Controls.Add(this.cc44);
@@ -1430,6 +1507,7 @@ namespace CremeWorks
             this.Name = "SongEditor";
             this.Text = "Edit Song";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SongEditor_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1560,5 +1638,12 @@ namespace CremeWorks
         private System.Windows.Forms.CheckBox cc24;
         private System.Windows.Forms.CheckBox cc34;
         private System.Windows.Forms.CheckBox ccM5;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label35;
     }
 }
