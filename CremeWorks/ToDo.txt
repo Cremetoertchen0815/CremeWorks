@@ -1,0 +1,4 @@
+-Throw out old lighting code
+-Implement new cue system
+-Set up networking
+-Set up chat system
