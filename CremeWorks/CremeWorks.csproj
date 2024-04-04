@@ -71,6 +71,7 @@
     <Compile Include="ChordMacroEditor.Designer.cs">
       <DependentUpon>ChordMacroEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="CompatibilityFileParser.cs" />
     <Compile Include="Concert.cs" />
     <Compile Include="FootSwitchConfig.cs">
       <SubType>Form</SubType>
@@ -78,18 +79,11 @@
     <Compile Include="FootSwitchConfig.Designer.cs">
       <DependentUpon>FootSwitchConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="LightController.cs" />
     <Compile Include="LightCueEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LightCueEditor.Designer.cs">
       <DependentUpon>LightCueEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="LightingConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LightingConfig.Designer.cs">
-      <DependentUpon>LightingConfig.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -132,9 +126,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LightCueEditor.resx">
       <DependentUpon>LightCueEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LightingConfig.resx">
-      <DependentUpon>LightingConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -96,26 +96,20 @@ namespace CremeWorks
                     if (chk && playList.SelectedIndex < playList.Items.Count - 1) playList.SelectedIndex++;
                     break;
                 case 2:
-                    if (chk) for (int i = 0; i < 128; i++) _c.LightConfig.SetState(i, false);
-                    break;
-                case 3:
                     if (!chk) break;
                     SetScrollPos(songLyrics.Handle, 1, -10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, -10);
                     break;
-                case 4:
+                case 3:
                     if (!chk) break;
                     SetScrollPos(songLyrics.Handle, 1, 10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, 10);
                     break;
-                case 11:
+                case 4:
                     if (lightCue.SelectedIndex > 0) lightCue.SelectedIndex--;
                     break;
-                case 12:
+                case 5:
                     if (lightCue.SelectedIndex < lightCue.Items.Count - 1) lightCue.SelectedIndex++;
-                    break;
-                default:
-                    _c.LightConfig.SetState(_c.QA[nr - 5], enable);
                     break;
             }
         }

@@ -40,19 +40,14 @@ namespace CremeWorks
             this.valA2 = new System.Windows.Forms.NumericUpDown();
             this.type2 = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.valB3 = new System.Windows.Forms.NumericUpDown();
-            this.valA3 = new System.Windows.Forms.NumericUpDown();
-            this.type3 = new System.Windows.Forms.ComboBox();
             this.valB4 = new System.Windows.Forms.NumericUpDown();
             this.valA4 = new System.Windows.Forms.NumericUpDown();
             this.type4 = new System.Windows.Forms.ComboBox();
             this.valB5 = new System.Windows.Forms.NumericUpDown();
             this.valA5 = new System.Windows.Forms.NumericUpDown();
             this.type5 = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.det1 = new System.Windows.Forms.Button();
             this.det2 = new System.Windows.Forms.Button();
-            this.det3 = new System.Windows.Forms.Button();
             this.det4 = new System.Windows.Forms.Button();
             this.det5 = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
@@ -71,8 +66,6 @@ namespace CremeWorks
             ((System.ComponentModel.ISupportInitialize)(this.valB1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valA2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.valB3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.valA3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valA4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB5)).BeginInit();
@@ -239,62 +232,9 @@ namespace CremeWorks
             this.label3.TabIndex = 9;
             this.label3.Text = "Previous Song";
             // 
-            // valB3
-            // 
-            this.valB3.Location = new System.Drawing.Point(419, 114);
-            this.valB3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.valB3.Maximum = new decimal(new int[] {
-            16,
-            0,
-            0,
-            0});
-            this.valB3.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.valB3.Name = "valB3";
-            this.valB3.Size = new System.Drawing.Size(93, 22);
-            this.valB3.TabIndex = 16;
-            this.valB3.Tag = "2";
-            this.valB3.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // valA3
-            // 
-            this.valA3.Location = new System.Drawing.Point(317, 114);
-            this.valA3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.valA3.Maximum = new decimal(new int[] {
-            127,
-            0,
-            0,
-            0});
-            this.valA3.Name = "valA3";
-            this.valA3.Size = new System.Drawing.Size(93, 22);
-            this.valA3.TabIndex = 15;
-            this.valA3.Tag = "2";
-            // 
-            // type3
-            // 
-            this.type3.FormattingEnabled = true;
-            this.type3.Items.AddRange(new object[] {
-            "Note On",
-            "Control Change",
-            "Program Change"});
-            this.type3.Location = new System.Drawing.Point(193, 114);
-            this.type3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.type3.Name = "type3";
-            this.type3.Size = new System.Drawing.Size(115, 24);
-            this.type3.TabIndex = 14;
-            this.type3.Tag = "2";
-            this.type3.Text = "Note On";
-            // 
             // valB4
             // 
-            this.valB4.Location = new System.Drawing.Point(419, 146);
+            this.valB4.Location = new System.Drawing.Point(419, 115);
             this.valB4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.valB4.Maximum = new decimal(new int[] {
             16,
@@ -309,7 +249,7 @@ namespace CremeWorks
             this.valB4.Name = "valB4";
             this.valB4.Size = new System.Drawing.Size(93, 22);
             this.valB4.TabIndex = 20;
-            this.valB4.Tag = "3";
+            this.valB4.Tag = "2";
             this.valB4.Value = new decimal(new int[] {
             1,
             0,
@@ -318,7 +258,7 @@ namespace CremeWorks
             // 
             // valA4
             // 
-            this.valA4.Location = new System.Drawing.Point(317, 146);
+            this.valA4.Location = new System.Drawing.Point(317, 115);
             this.valA4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.valA4.Maximum = new decimal(new int[] {
             127,
@@ -328,7 +268,7 @@ namespace CremeWorks
             this.valA4.Name = "valA4";
             this.valA4.Size = new System.Drawing.Size(93, 22);
             this.valA4.TabIndex = 19;
-            this.valA4.Tag = "3";
+            this.valA4.Tag = "2";
             // 
             // type4
             // 
@@ -337,17 +277,17 @@ namespace CremeWorks
             "Note On",
             "Control Change",
             "Program Change"});
-            this.type4.Location = new System.Drawing.Point(193, 146);
+            this.type4.Location = new System.Drawing.Point(193, 115);
             this.type4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.type4.Name = "type4";
             this.type4.Size = new System.Drawing.Size(115, 24);
             this.type4.TabIndex = 18;
-            this.type4.Tag = "3";
+            this.type4.Tag = "2";
             this.type4.Text = "Note On";
             // 
             // valB5
             // 
-            this.valB5.Location = new System.Drawing.Point(419, 182);
+            this.valB5.Location = new System.Drawing.Point(419, 151);
             this.valB5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.valB5.Maximum = new decimal(new int[] {
             16,
@@ -362,7 +302,7 @@ namespace CremeWorks
             this.valB5.Name = "valB5";
             this.valB5.Size = new System.Drawing.Size(93, 22);
             this.valB5.TabIndex = 24;
-            this.valB5.Tag = "4";
+            this.valB5.Tag = "3";
             this.valB5.Value = new decimal(new int[] {
             1,
             0,
@@ -371,7 +311,7 @@ namespace CremeWorks
             // 
             // valA5
             // 
-            this.valA5.Location = new System.Drawing.Point(317, 182);
+            this.valA5.Location = new System.Drawing.Point(317, 151);
             this.valA5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.valA5.Maximum = new decimal(new int[] {
             127,
@@ -381,7 +321,7 @@ namespace CremeWorks
             this.valA5.Name = "valA5";
             this.valA5.Size = new System.Drawing.Size(93, 22);
             this.valA5.TabIndex = 23;
-            this.valA5.Tag = "4";
+            this.valA5.Tag = "3";
             // 
             // type5
             // 
@@ -390,23 +330,13 @@ namespace CremeWorks
             "Note On",
             "Control Change",
             "Program Change"});
-            this.type5.Location = new System.Drawing.Point(193, 180);
+            this.type5.Location = new System.Drawing.Point(193, 149);
             this.type5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.type5.Name = "type5";
             this.type5.Size = new System.Drawing.Size(115, 24);
             this.type5.TabIndex = 22;
-            this.type5.Tag = "4";
+            this.type5.Tag = "3";
             this.type5.Text = "Note On";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(16, 118);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(92, 16);
-            this.label11.TabIndex = 41;
-            this.label11.Text = "Lighting Reset";
             // 
             // det1
             // 
@@ -432,38 +362,26 @@ namespace CremeWorks
             this.det2.UseVisualStyleBackColor = true;
             this.det2.Click += new System.EventHandler(this.det1_Click);
             // 
-            // det3
-            // 
-            this.det3.Location = new System.Drawing.Point(520, 114);
-            this.det3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.det3.Name = "det3";
-            this.det3.Size = new System.Drawing.Size(65, 26);
-            this.det3.TabIndex = 47;
-            this.det3.Tag = "2";
-            this.det3.Text = "Detect";
-            this.det3.UseVisualStyleBackColor = true;
-            this.det3.Click += new System.EventHandler(this.det1_Click);
-            // 
             // det4
             // 
-            this.det4.Location = new System.Drawing.Point(520, 146);
+            this.det4.Location = new System.Drawing.Point(520, 115);
             this.det4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.det4.Name = "det4";
             this.det4.Size = new System.Drawing.Size(65, 26);
             this.det4.TabIndex = 48;
-            this.det4.Tag = "3";
+            this.det4.Tag = "2";
             this.det4.Text = "Detect";
             this.det4.UseVisualStyleBackColor = true;
             this.det4.Click += new System.EventHandler(this.det1_Click);
             // 
             // det5
             // 
-            this.det5.Location = new System.Drawing.Point(520, 178);
+            this.det5.Location = new System.Drawing.Point(520, 147);
             this.det5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.det5.Name = "det5";
             this.det5.Size = new System.Drawing.Size(65, 26);
             this.det5.TabIndex = 49;
-            this.det5.Tag = "4";
+            this.det5.Tag = "3";
             this.det5.Text = "Detect";
             this.det5.UseVisualStyleBackColor = true;
             this.det5.Click += new System.EventHandler(this.det1_Click);
@@ -471,7 +389,7 @@ namespace CremeWorks
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(16, 185);
+            this.label12.Location = new System.Drawing.Point(16, 154);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(107, 16);
@@ -481,7 +399,7 @@ namespace CremeWorks
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(16, 151);
+            this.label13.Location = new System.Drawing.Point(16, 120);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(91, 16);
@@ -490,31 +408,31 @@ namespace CremeWorks
             // 
             // det13
             // 
-            this.det13.Location = new System.Drawing.Point(520, 246);
+            this.det13.Location = new System.Drawing.Point(520, 215);
             this.det13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.det13.Name = "det13";
             this.det13.Size = new System.Drawing.Size(65, 26);
             this.det13.TabIndex = 66;
-            this.det13.Tag = "6";
+            this.det13.Tag = "5";
             this.det13.Text = "Detect";
             this.det13.UseVisualStyleBackColor = true;
             this.det13.Click += new System.EventHandler(this.det1_Click);
             // 
             // det12
             // 
-            this.det12.Location = new System.Drawing.Point(520, 212);
+            this.det12.Location = new System.Drawing.Point(520, 181);
             this.det12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.det12.Name = "det12";
             this.det12.Size = new System.Drawing.Size(65, 26);
             this.det12.TabIndex = 65;
-            this.det12.Tag = "5";
+            this.det12.Tag = "4";
             this.det12.Text = "Detect";
             this.det12.UseVisualStyleBackColor = true;
             this.det12.Click += new System.EventHandler(this.det1_Click);
             // 
             // valB13
             // 
-            this.valB13.Location = new System.Drawing.Point(419, 248);
+            this.valB13.Location = new System.Drawing.Point(419, 217);
             this.valB13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.valB13.Maximum = new decimal(new int[] {
             16,
@@ -529,7 +447,7 @@ namespace CremeWorks
             this.valB13.Name = "valB13";
             this.valB13.Size = new System.Drawing.Size(93, 22);
             this.valB13.TabIndex = 64;
-            this.valB13.Tag = "6";
+            this.valB13.Tag = "5";
             this.valB13.Value = new decimal(new int[] {
             1,
             0,
@@ -538,7 +456,7 @@ namespace CremeWorks
             // 
             // valA13
             // 
-            this.valA13.Location = new System.Drawing.Point(317, 248);
+            this.valA13.Location = new System.Drawing.Point(317, 217);
             this.valA13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.valA13.Maximum = new decimal(new int[] {
             127,
@@ -548,7 +466,7 @@ namespace CremeWorks
             this.valA13.Name = "valA13";
             this.valA13.Size = new System.Drawing.Size(93, 22);
             this.valA13.TabIndex = 63;
-            this.valA13.Tag = "6";
+            this.valA13.Tag = "5";
             // 
             // type13
             // 
@@ -557,17 +475,17 @@ namespace CremeWorks
             "Note On",
             "Control Change",
             "Program Change"});
-            this.type13.Location = new System.Drawing.Point(193, 248);
+            this.type13.Location = new System.Drawing.Point(193, 217);
             this.type13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.type13.Name = "type13";
             this.type13.Size = new System.Drawing.Size(115, 24);
             this.type13.TabIndex = 62;
-            this.type13.Tag = "6";
+            this.type13.Tag = "5";
             this.type13.Text = "Note On";
             // 
             // valB12
             // 
-            this.valB12.Location = new System.Drawing.Point(419, 216);
+            this.valB12.Location = new System.Drawing.Point(419, 185);
             this.valB12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.valB12.Maximum = new decimal(new int[] {
             16,
@@ -582,7 +500,7 @@ namespace CremeWorks
             this.valB12.Name = "valB12";
             this.valB12.Size = new System.Drawing.Size(93, 22);
             this.valB12.TabIndex = 61;
-            this.valB12.Tag = "5";
+            this.valB12.Tag = "4";
             this.valB12.Value = new decimal(new int[] {
             1,
             0,
@@ -591,7 +509,7 @@ namespace CremeWorks
             // 
             // valA12
             // 
-            this.valA12.Location = new System.Drawing.Point(317, 216);
+            this.valA12.Location = new System.Drawing.Point(317, 185);
             this.valA12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.valA12.Maximum = new decimal(new int[] {
             127,
@@ -601,7 +519,7 @@ namespace CremeWorks
             this.valA12.Name = "valA12";
             this.valA12.Size = new System.Drawing.Size(93, 22);
             this.valA12.TabIndex = 60;
-            this.valA12.Tag = "5";
+            this.valA12.Tag = "4";
             // 
             // type12
             // 
@@ -610,18 +528,18 @@ namespace CremeWorks
             "Note On",
             "Control Change",
             "Program Change"});
-            this.type12.Location = new System.Drawing.Point(193, 216);
+            this.type12.Location = new System.Drawing.Point(193, 185);
             this.type12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.type12.Name = "type12";
             this.type12.Size = new System.Drawing.Size(115, 24);
             this.type12.TabIndex = 59;
-            this.type12.Tag = "5";
+            this.type12.Tag = "4";
             this.type12.Text = "Note On";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(16, 250);
+            this.label14.Location = new System.Drawing.Point(16, 219);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(132, 16);
@@ -631,7 +549,7 @@ namespace CremeWorks
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(16, 218);
+            this.label15.Location = new System.Drawing.Point(16, 187);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(143, 16);
@@ -642,7 +560,7 @@ namespace CremeWorks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(601, 284);
+            this.ClientSize = new System.Drawing.Size(601, 245);
             this.Controls.Add(this.det13);
             this.Controls.Add(this.det12);
             this.Controls.Add(this.valB13);
@@ -657,19 +575,14 @@ namespace CremeWorks
             this.Controls.Add(this.label13);
             this.Controls.Add(this.det5);
             this.Controls.Add(this.det4);
-            this.Controls.Add(this.det3);
             this.Controls.Add(this.det2);
             this.Controls.Add(this.det1);
-            this.Controls.Add(this.label11);
             this.Controls.Add(this.valB5);
             this.Controls.Add(this.valA5);
             this.Controls.Add(this.type5);
             this.Controls.Add(this.valB4);
             this.Controls.Add(this.valA4);
             this.Controls.Add(this.type4);
-            this.Controls.Add(this.valB3);
-            this.Controls.Add(this.valA3);
-            this.Controls.Add(this.type3);
             this.Controls.Add(this.valB2);
             this.Controls.Add(this.valA2);
             this.Controls.Add(this.type2);
@@ -692,8 +605,6 @@ namespace CremeWorks
             ((System.ComponentModel.ISupportInitialize)(this.valB1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valA2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.valB3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.valA3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valA4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.valB5)).EndInit();
@@ -720,19 +631,14 @@ namespace CremeWorks
         private System.Windows.Forms.NumericUpDown valA2;
         private System.Windows.Forms.ComboBox type2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown valB3;
-        private System.Windows.Forms.NumericUpDown valA3;
-        private System.Windows.Forms.ComboBox type3;
         private System.Windows.Forms.NumericUpDown valB4;
         private System.Windows.Forms.NumericUpDown valA4;
         private System.Windows.Forms.ComboBox type4;
         private System.Windows.Forms.NumericUpDown valB5;
         private System.Windows.Forms.NumericUpDown valA5;
         private System.Windows.Forms.ComboBox type5;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button det1;
         private System.Windows.Forms.Button det2;
-        private System.Windows.Forms.Button det3;
         private System.Windows.Forms.Button det4;
         private System.Windows.Forms.Button det5;
         private System.Windows.Forms.Label label12;

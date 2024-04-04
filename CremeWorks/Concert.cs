@@ -12,14 +12,12 @@ namespace CremeWorks
     public class Concert
     {
         public const int MIN_DEVICE_COUNT = 8;
-        public const int PATCH_DEVICE_COUNT_PRE3 = 4;
         public const int PATCH_DEVICE_COUNT = 6;
         public string FilePath;
         public MIDIDevice[] Devices;
         public (MidiEventType, short, byte)[] FootSwitchConfig;
-        public LightController LightConfig;
+        public List<(string name, byte noteOnNr)> LightingCues;
         public List<Song> Playlist;
-        public sbyte[] QA = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }; //Quick Access buttons
 
         public MIDIMatrix MidiMatrix;
         public Action<bool> ConnectionChangeHandler = (x) => { return; };
@@ -62,17 +60,13 @@ namespace CremeWorks
             ConnectionChangeHandler(false);
         }
 
-        public static Concert Empty()
+        public static Concert Empty() => new Concert
         {
-            var lol = new Concert
-            {
-                Devices = new MIDIDevice[] { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() },
-                FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) },
-                Playlist = new List<Song>()
-            };
-            lol.LightConfig = new LightController(lol);
-            return lol;
-        }
+            Devices = new MIDIDevice[] { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() },
+            FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1)},
+            Playlist = new List<Song>(),
+            LightingCues = new List<(string name, byte noteOnNr)>()
+        };
 
         private const int cVersion = 4;
         private const string cHeader = "CW";
@@ -88,34 +82,24 @@ namespace CremeWorks
             if (headerStr.Length > 2 && int.TryParse(headerStr.Substring(2), out int v)) version = v;
             nu.FilePath = filename;
 
+            if (version <= 4)
+            {
+                CompatibilityFileParser.LoadFilePreVer5(nu, br, version);
+                return nu;
+            }
+
             var devCount = br.ReadInt32();
             nu.Devices = new MIDIDevice[Math.Max(devCount, MIN_DEVICE_COUNT)];
             for (int i = 0; i < MIN_DEVICE_COUNT; i++) nu.Devices[i] = new MIDIDevice() { Name = (i < devCount ? br.ReadString() : null) };
+            
             //Foot switch config
             int cnt = br.ReadInt32();
-            nu.FootSwitchConfig = new (MidiEventType, short, byte)[13];
+            nu.FootSwitchConfig = new (MidiEventType, short, byte)[6];
             for (int i = 0; i < cnt; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
-            //QA config
-            nu.LightConfig = new LightController(nu);
-            for (int i = 0; i < 128; i++)
-            {
-                string str = br.ReadString();
-                nu.LightConfig.Names[i] = str == string.Empty ? null : str;
-                nu.LightConfig.ToggleGroups[i] = br.ReadInt32();
-                nu.LightConfig.ResetWhenSongChange[i] = br.ReadBoolean();
-                nu.LightConfig.IsToggleable[i] = br.ReadBoolean();
-            }
 
-            //Quick Access - from Version >= 4
-            if (version > 3)
-            {
-                nu.QA = new sbyte[br.ReadInt32()];
-                byte[] byte_Dat = br.ReadBytes(nu.QA.Length);
-                Buffer.BlockCopy(byte_Dat, 0, nu.QA, 0, byte_Dat.Length);
-            } else
-            {
-                nu.QA = null;
-            }
+            //Lighting cues config
+            var cueCount = br.ReadInt32();
+            for (int i = 0; i < cueCount; i++) nu.LightingCues.Add((br.ReadString(), br.ReadByte()));
 
             //Playlist
             int count = br.ReadInt32();
@@ -136,23 +120,10 @@ namespace CremeWorks
                     CCPatchMap = new bool[PATCH_DEVICE_COUNT][]
                 };
 
-                //Quick Access - from Version < 4
-                if (version < 4)
+                for (int j = 0; j < PATCH_DEVICE_COUNT; j++)
                 {
-                    int len = br.ReadInt32();
-                    byte[] byte_Dat = br.ReadBytes(len);
-                    if (nu.QA is null)
-                    {
-                        nu.QA = new sbyte[len];
-                        Buffer.BlockCopy(byte_Dat, 0, nu.QA, 0, byte_Dat.Length);
-                    }
-                }
-
-                var patchCount = (version < 3 ? PATCH_DEVICE_COUNT_PRE3 : PATCH_DEVICE_COUNT);
-                for (int j = 0; j < patchCount; j++)
-                {
-                    s.NotePatchMap[j] = LoadBoolArray(br, patchCount);
-                    s.CCPatchMap[j] = LoadBoolArray(br, patchCount);
+                    s.NotePatchMap[j] = LoadBoolArray(br, PATCH_DEVICE_COUNT);
+                    s.CCPatchMap[j] = LoadBoolArray(br, PATCH_DEVICE_COUNT);
                 }
                 s.NotePatchMap = Convert2DArrayToSize(s.NotePatchMap, PATCH_DEVICE_COUNT);
                 s.CCPatchMap = Convert2DArrayToSize(s.CCPatchMap, PATCH_DEVICE_COUNT);
@@ -207,16 +178,9 @@ namespace CremeWorks
                     s.AutoPatchSlots[j] = (enabled, patch);
                 }
 
-                //Read lighting cue
+                //Read lighting cues
                 int lightcueLen = br.ReadInt32();
-                for (int j = 0; j < lightcueLen; j++)
-                {
-                    string comment = br.ReadString();
-                    var data = new LightSwitchType[128];
-                    for (int k = 0; k < 128; k++) data[k] = (LightSwitchType)br.ReadInt32();
-                    s.CueList.Add((comment, data));
-                }
-                nu.Playlist.Add(s);
+                for (int j = 0; j < lightcueLen; j++) s.CueList.Add((br.ReadString(), br.ReadByte()));
 
                 //Read chord macros
                 if (version > 0)
@@ -241,7 +205,7 @@ namespace CremeWorks
             return nu;
         }
 
-        private static bool[] LoadBoolArray(BinaryReader br, int count)
+        public static bool[] LoadBoolArray(BinaryReader br, int count)
         {
             var arr = new bool[PATCH_DEVICE_COUNT];
             for (int i = 0; i < count; i++)
@@ -251,7 +215,7 @@ namespace CremeWorks
             return arr;
         }
 
-        private static T[][] Convert2DArrayToSize<T>(T[][] orig, int size)
+        public static T[][] Convert2DArrayToSize<T>(T[][] orig, int size)
         {
             var res = new T[size][];
             for (int i = 0; i < size; i++)
@@ -284,20 +248,13 @@ namespace CremeWorks
                 bw.Write(FootSwitchConfig[i].Item3);
             }
 
-            //Lighting
-            for (int i = 0; i < 128; i++)
+            //Lighting cues
+            bw.Write(LightingCues.Count);
+            for (int i = 0; i < LightingCues.Count; i++)
             {
-                bw.Write(LightConfig.Names[i] ?? string.Empty);
-                bw.Write(LightConfig.ToggleGroups[i]);
-                bw.Write(LightConfig.ResetWhenSongChange[i]);
-                bw.Write(LightConfig.IsToggleable[i]);
+                bw.Write(LightingCues[i].name);
+                bw.Write(LightingCues[i].noteOnNr);
             }
-
-            //Quick Access
-            bw.Write(QA.Length);
-            byte[] byte_dat = new byte[QA.Length];
-            Buffer.BlockCopy(QA, 0, byte_dat, 0, byte_dat.Length);
-            bw.Write(byte_dat);
 
             //Playlist
             bw.Write(Playlist.Count);
@@ -362,7 +319,7 @@ namespace CremeWorks
                 for (int j = 0; j < song.CueList.Count; j++)
                 {
                     bw.Write(song.CueList[j].comment);
-                    for (int k = 0; k < 128; k++) bw.Write((int)song.CueList[j].data[k]);
+                    bw.Write(song.CueList[j].cueNr);
                 }
 
                 //Write chord macros
