@@ -1,36 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace CremeWorks
 {
     public partial class LightCueEditor : Form
     {
-        private (string comment, LightSwitchType[] data) _dat;
-        private LightController _lConfig;
+        private string _comment = "Empty";
+        private int _cue = -1;
+        private List<(string, byte)> _availableCues;
 
         private LightCueEditor() => InitializeComponent();
 
 
-        public static bool EditCue(LightController lConfig, ref (string comment, LightSwitchType[] data) item)
+        public static bool EditCue(List<(string, byte)> availableCues, ref (string comment, byte cue) item)
         {
-            var inst = new LightCueEditor() { _dat = item, _lConfig = lConfig };
-            if (inst.ShowDialog() == DialogResult.OK)
+            var inst = new LightCueEditor() { _comment = item.comment, _cue = item.cue, _availableCues = availableCues };
+            if (inst.ShowDialog() == DialogResult.OK && inst._cue >= 0)
             {
-                item = inst._dat;
+                item.comment = inst._comment;
+                item.cue = (byte)inst._cue;
                 return true;
             }
             return false;
         }
 
-        public static bool AddToCue(LightController lConfig, List<(string comment, LightSwitchType[] data)> cue)
+        public static bool AddToCue(List<(string, byte)> availableCues, List<(string, byte)> songCues)
         {
-            var datArr = new LightSwitchType[128];
-            for (int i = 0; i < 128; i++) datArr[i] = LightSwitchType.Ignore;
-            var inst = new LightCueEditor() { _dat = ("Empty", datArr), _lConfig = lConfig };
-            if (inst.ShowDialog() == DialogResult.OK)
+            var inst = new LightCueEditor() { _availableCues = availableCues };
+            if (inst.ShowDialog() == DialogResult.OK && inst._cue >= 0)
             {
-                cue.Add(inst._dat);
+                songCues.Add((inst._comment, (byte)inst._cue));
                 return true;
             }
             return false;
@@ -39,39 +40,21 @@ namespace CremeWorks
         private void button1_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
-            _dat.comment = textBox1.Text;
+            _comment = textBox1.Text;
+            _cue = _availableCues.Select(x => ToNullable(x)).FirstOrDefault(x => x?.Item1 == (string)comboBox1.SelectedItem)?.Item2 ?? -1;
             Close();
         }
 
+        private T? ToNullable<T>(T obj) where T : struct => new T?(obj);
+
         private void button2_Click(object sender, EventArgs e) => Close();
 
-        private void RefreshData()
+        private void LightCueEditor_Load(object sender, EventArgs e)
         {
-            listBox1.Items.Clear();
-            for (int i = 0; i < 128; i++)
-            {
-                listBox1.Items.Add((i + 1).ToString() + ". " + (_lConfig.Names[i] ?? "Empty") + ": " + _dat.data[i].ToString());
-            }
-            textBox1.Text = _dat.comment;
-        }
-        private void LightCueEditor_Load(object sender, EventArgs e) => RefreshData();
 
-        private bool ignoreValChange = false;
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (ignoreValChange) return;
-
-            _dat.data[(int)numericUpDown1.Value - 1] = (LightSwitchType)(comboBox1.SelectedIndex - 1);
-            RefreshData();
-        }
-
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            ignoreValChange = true;
-            var val = _dat.data[(int)numericUpDown1.Value - 1];
-            comboBox1.SelectedIndex = ((int)val + 1);
-            comboBox1.Text = val.ToString();
-            ignoreValChange = false;
+            textBox1.Text = _comment;
+            comboBox1.Items.AddRange(_availableCues.Select(x => (object)x.Item1).ToArray());
+            comboBox1.SelectedText = _availableCues.FirstOrDefault(x => x.Item2 == _cue).Item1 ?? "-";
         }
     }
 }

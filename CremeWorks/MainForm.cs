@@ -223,11 +223,11 @@ namespace CremeWorks
             UpdateConcert();
         }
 
-        private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightingConfig(_c).ShowDialog();
+        private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) { } //=> new LightingConfig(_c).ShowDialog();
 
         private void button15_Click(object sender, EventArgs e)
         {
-            if (_s != null && LightCueEditor.AddToCue(_c.LightConfig, _s.CueList)) UpdateSong();
+            if (_s != null && LightCueEditor.AddToCue(_c.LightingCues, _s.CueList)) UpdateSong();
         }
 
         private void button14_Click(object sender, EventArgs e)
@@ -235,7 +235,7 @@ namespace CremeWorks
             if (_s == null || lightCue.SelectedIndex < 0) return;
 
             var tmp = _s.CueList[lightCue.SelectedIndex];
-            if (LightCueEditor.EditCue(_c.LightConfig, ref tmp))
+            if (LightCueEditor.EditCue(_c.LightingCues, ref tmp))
             {
                 _s.CueList[lightCue.SelectedIndex] = tmp;
                 UpdateSong();
@@ -253,19 +253,15 @@ namespace CremeWorks
         {
             if (_s != null && lightCue.SelectedIndex >= 0)
             {
-                var dat = _s.CueList[lightCue.SelectedIndex].data;
-                for (int i = 0; i < dat.Length; i++)
-                {
-                    if (dat[i] != LightSwitchType.Ignore) _c.LightConfig.SetState(i, dat[i] == LightSwitchType.On ? true : false);
-                }
+                var dat = _s.CueList[lightCue.SelectedIndex].cueNr;
+                //TODO: Send cue via TCP/IP
             }
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
             if (_s == null || lightCue.SelectedIndex < 0) return;
-            var src = _s.CueList[lightCue.SelectedIndex];
-             _s.CueList.Add((src.comment, (LightSwitchType[])src.data.Clone()));
+             _s.CueList.Add(_s.CueList[lightCue.SelectedIndex]);
             UpdateSong();
         }
 
