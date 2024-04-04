@@ -91,24 +91,6 @@
     <Compile Include="LightingConfig.Designer.cs">
       <DependentUpon>LightingConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="LightingPreset.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LightingPreset.Designer.cs">
-      <DependentUpon>LightingPreset.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QAEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="QAEditor.Designer.cs">
-      <DependentUpon>QAEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QASelector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="QASelector.Designer.cs">
-      <DependentUpon>QASelector.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,9 +136,6 @@
     <EmbeddedResource Include="LightingConfig.resx">
       <DependentUpon>LightingConfig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LightingPreset.resx">
-      <DependentUpon>LightingPreset.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -173,12 +152,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="QAEditor.resx">
-      <DependentUpon>QAEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QASelector.resx">
-      <DependentUpon>QASelector.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SongEditor.resx">
       <DependentUpon>SongEditor.cs</DependentUpon>
     </EmbeddedResource>

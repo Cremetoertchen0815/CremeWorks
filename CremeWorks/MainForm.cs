@@ -142,9 +142,6 @@ namespace CremeWorks
             UpdateSong();
         }
 
-        private void ShortcutButtonDown(object sender, MouseEventArgs e) => ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, qAButtonToggleToolStripMenuItem.Checked ? null : (bool?)true);
-        private void ShortcutButtonUp(object sender, MouseEventArgs e) { if (!qAButtonToggleToolStripMenuItem.Checked) ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, false); }
-
         private void RemSong(object sender, EventArgs e)
         {
             if (playList.SelectedIndex >= 0) _c.Playlist.RemoveAt(playList.SelectedIndex);
@@ -200,13 +197,6 @@ namespace CremeWorks
             _c.MidiMatrix.ActionExecute = ExecuteAction;
             _c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
 
-            button5.Text = (_c?.QA[0] ?? -1) < 0 ? "Quick Access " + Buchstaben[0] : _c.LightConfig.Names[_c.QA[0]];
-            button7.Text = (_c?.QA[1] ?? -1) < 0 ? "Quick Access " + Buchstaben[1] : _c.LightConfig.Names[_c.QA[1]];
-            button6.Text = (_c?.QA[2] ?? -1) < 0 ? "Quick Access " + Buchstaben[2] : _c.LightConfig.Names[_c.QA[2]];
-            button9.Text = (_c?.QA[3] ?? -1) < 0 ? "Quick Access " + Buchstaben[3] : _c.LightConfig.Names[_c.QA[3]];
-            button8.Text = (_c?.QA[4] ?? -1) < 0 ? "Quick Access " + Buchstaben[4] : _c.LightConfig.Names[_c.QA[4]];
-            button4.Text = (_c?.QA[5] ?? -1) < 0 ? "Quick Access " + Buchstaben[5] : _c.LightConfig.Names[_c.QA[5]];
-
             UpdatePlaylist();
             playList.SelectedIndex = -1;
         }
@@ -240,8 +230,6 @@ namespace CremeWorks
         }
 
         private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightingConfig(_c).ShowDialog();
-
-        private void qAButtonToggleToolStripMenuItem_Click(object sender, EventArgs e) => qAButtonToggleToolStripMenuItem.Checked = !qAButtonToggleToolStripMenuItem.Checked;
 
         private void button15_Click(object sender, EventArgs e)
         {
@@ -309,14 +297,6 @@ namespace CremeWorks
                 nIndexB = sIndex;
 
             }
-        }
-
-        private void resetToolStripMenuItem_Click(object sender, EventArgs e) => ExecuteAction(2, true);
-
-        private void editFunctionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new QAEditor(_c).ShowDialog();
-            UpdateConcert();
         }
     }
 }

@@ -25,7 +25,5 @@ namespace CremeWorks
         private void textBox1_TextChanged(object sender, EventArgs e) => _c.Names[(int)numericUpDown1.Value] = textBox1.Text == string.Empty ? null : textBox1.Text;
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) => _c.ToggleGroups[(int)numericUpDown1.Value] = comboBox1.SelectedIndex;
         private void checkBox1_CheckedChanged(object sender, EventArgs e) => _c.ResetWhenSongChange[(int)numericUpDown1.Value] = checkBox1.Checked;
-
-        private void button1_Click(object sender, EventArgs e) => new LightingPreset(_c).ShowDialog();
     }
 }
