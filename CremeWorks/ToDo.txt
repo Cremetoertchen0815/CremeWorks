@@ -1,4 +1,3 @@
--Throw out old lighting code
 -Implement new cue system
 -Set up networking
--Set up chat system
+-Set up chat system, Mischa instructions, click track playback
