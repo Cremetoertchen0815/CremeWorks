@@ -60,6 +60,7 @@
             this.btnTrigger.TabIndex = 1;
             this.btnTrigger.Text = "Trigger";
             this.btnTrigger.UseVisualStyleBackColor = true;
+            this.btnTrigger.Click += new System.EventHandler(this.btnTrigger_Click);
             // 
             // btnRemove
             // 
@@ -69,6 +70,7 @@
             this.btnRemove.TabIndex = 2;
             this.btnRemove.Text = "Remove";
             this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // groupBox1
             // 
@@ -115,6 +117,7 @@
             this.txtNoteOn.Name = "txtNoteOn";
             this.txtNoteOn.Size = new System.Drawing.Size(133, 22);
             this.txtNoteOn.TabIndex = 3;
+            this.txtNoteOn.ValueChanged += new System.EventHandler(this.txtNoteOn_ValueChanged);
             // 
             // btnAdd
             // 
@@ -124,6 +127,7 @@
             this.btnAdd.TabIndex = 4;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // LightCueManager
             // 
@@ -140,7 +144,10 @@
             this.MinimizeBox = false;
             this.Name = "LightCueManager";
             this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Manage Cues";
+            this.Load += new System.EventHandler(this.LightCueManager_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtNoteOn)).EndInit();

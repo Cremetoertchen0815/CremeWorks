@@ -39,9 +39,10 @@ namespace CremeWorks
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(233, 10);
+            this.button1.Location = new System.Drawing.Point(311, 12);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(72, 21);
+            this.button1.Size = new System.Drawing.Size(96, 26);
             this.button1.TabIndex = 0;
             this.button1.Text = "OK";
             this.button1.UseVisualStyleBackColor = true;
@@ -50,9 +51,10 @@ namespace CremeWorks
             // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(233, 37);
+            this.button2.Location = new System.Drawing.Point(311, 46);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(72, 20);
+            this.button2.Size = new System.Drawing.Size(96, 25);
             this.button2.TabIndex = 1;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
@@ -61,26 +63,29 @@ namespace CremeWorks
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(46, 13);
+            this.label1.Location = new System.Drawing.Point(61, 16);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.Size = new System.Drawing.Size(34, 16);
             this.label1.TabIndex = 5;
             this.label1.Text = "Cue:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 41);
+            this.label2.Location = new System.Drawing.Point(16, 50);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 13);
+            this.label2.Size = new System.Drawing.Size(78, 16);
             this.label2.TabIndex = 6;
             this.label2.Text = "Description:";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(90, 38);
+            this.textBox1.Location = new System.Drawing.Point(120, 47);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(124, 20);
+            this.textBox1.Size = new System.Drawing.Size(164, 22);
             this.textBox1.TabIndex = 7;
             // 
             // comboBox1
@@ -88,16 +93,17 @@ namespace CremeWorks
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "-"});
-            this.comboBox1.Location = new System.Drawing.Point(90, 11);
+            this.comboBox1.Location = new System.Drawing.Point(120, 14);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(124, 21);
+            this.comboBox1.Size = new System.Drawing.Size(164, 24);
             this.comboBox1.TabIndex = 8;
             // 
             // LightCueEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(317, 63);
+            this.ClientSize = new System.Drawing.Size(423, 78);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label2);
@@ -105,7 +111,11 @@ namespace CremeWorks
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "LightCueEditor";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Cue Instance";
             this.Load += new System.EventHandler(this.LightCueEditor_Load);
             this.ResumeLayout(false);

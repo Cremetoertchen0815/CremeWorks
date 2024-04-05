@@ -320,6 +320,9 @@ namespace CremeWorks
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MIDISetUp";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Set Up";
             this.Load += new System.EventHandler(this.MIDISetUp_Load);
             this.ResumeLayout(false);

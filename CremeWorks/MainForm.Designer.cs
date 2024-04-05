@@ -38,10 +38,18 @@ namespace CremeWorks
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.devicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lightControllerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applySongSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.serverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeClientNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectedClientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configureToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.footSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lightControllerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clickOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lightingOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.playList = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -63,17 +71,9 @@ namespace CremeWorks
             this.label3 = new System.Windows.Forms.Label();
             this.chatInput = new System.Windows.Forms.TextBox();
             this.btnChatSend = new System.Windows.Forms.Button();
-            this.serverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.changeClientNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.connectedClientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.clickOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lightingOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblBpm = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.configureToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.footSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -100,34 +100,34 @@ namespace CremeWorks
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem});
             this.configToolStripMenuItem.Name = "configToolStripMenuItem";
-            this.configToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
-            this.configToolStripMenuItem.Text = "Concert";
+            this.configToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+            this.configToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.New);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.Save);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAs);
             // 
@@ -135,8 +135,6 @@ namespace CremeWorks
             // 
             this.devicesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.configureToolStripMenuItem,
-            this.footSwitchToolStripMenuItem,
-            this.lightControllerToolStripMenuItem,
             this.toolStripMenuItem1,
             this.connectToolStripMenuItem,
             this.applySongSettingsToolStripMenuItem});
@@ -150,13 +148,6 @@ namespace CremeWorks
             this.configureToolStripMenuItem.Size = new System.Drawing.Size(237, 26);
             this.configureToolStripMenuItem.Text = "Set Up";
             this.configureToolStripMenuItem.Click += new System.EventHandler(this.configureToolStripMenuItem_Click);
-            // 
-            // lightControllerToolStripMenuItem
-            // 
-            this.lightControllerToolStripMenuItem.Name = "lightControllerToolStripMenuItem";
-            this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(237, 26);
-            this.lightControllerToolStripMenuItem.Text = "Cues";
-            this.lightControllerToolStripMenuItem.Click += new System.EventHandler(this.lightControllerToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -177,6 +168,72 @@ namespace CremeWorks
             this.applySongSettingsToolStripMenuItem.Text = "Apply Device Settings";
             this.applySongSettingsToolStripMenuItem.Click += new System.EventHandler(this.applySongSettingsToolStripMenuItem_Click);
             // 
+            // serverToolStripMenuItem
+            // 
+            this.serverToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startToolStripMenuItem,
+            this.changeClientNameToolStripMenuItem,
+            this.connectedClientsToolStripMenuItem});
+            this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
+            this.serverToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
+            this.serverToolStripMenuItem.Text = "Server";
+            // 
+            // startToolStripMenuItem
+            // 
+            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.startToolStripMenuItem.Text = "Start";
+            // 
+            // changeClientNameToolStripMenuItem
+            // 
+            this.changeClientNameToolStripMenuItem.Name = "changeClientNameToolStripMenuItem";
+            this.changeClientNameToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.changeClientNameToolStripMenuItem.Text = "Change Name";
+            // 
+            // connectedClientsToolStripMenuItem
+            // 
+            this.connectedClientsToolStripMenuItem.Name = "connectedClientsToolStripMenuItem";
+            this.connectedClientsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.connectedClientsToolStripMenuItem.Text = "Connected Clients";
+            // 
+            // configureToolStripMenuItem1
+            // 
+            this.configureToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.footSwitchToolStripMenuItem,
+            this.lightControllerToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.clickOutputToolStripMenuItem,
+            this.lightingOutputToolStripMenuItem});
+            this.configureToolStripMenuItem1.Name = "configureToolStripMenuItem1";
+            this.configureToolStripMenuItem1.Size = new System.Drawing.Size(67, 24);
+            this.configureToolStripMenuItem1.Text = "Config";
+            // 
+            // footSwitchToolStripMenuItem
+            // 
+            this.footSwitchToolStripMenuItem.Name = "footSwitchToolStripMenuItem";
+            this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.footSwitchToolStripMenuItem.Text = "Foot Switch";
+            this.footSwitchToolStripMenuItem.Click += new System.EventHandler(this.footSwitchToolStripMenuItem_Click);
+            // 
+            // lightControllerToolStripMenuItem
+            // 
+            this.lightControllerToolStripMenuItem.Name = "lightControllerToolStripMenuItem";
+            this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.lightControllerToolStripMenuItem.Text = "Cues";
+            this.lightControllerToolStripMenuItem.Click += new System.EventHandler(this.lightControllerToolStripMenuItem_Click);
+            // 
+            // clickOutputToolStripMenuItem
+            // 
+            this.clickOutputToolStripMenuItem.Name = "clickOutputToolStripMenuItem";
+            this.clickOutputToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.clickOutputToolStripMenuItem.Text = "Click Output";
+            // 
+            // lightingOutputToolStripMenuItem
+            // 
+            this.lightingOutputToolStripMenuItem.Name = "lightingOutputToolStripMenuItem";
+            this.lightingOutputToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.lightingOutputToolStripMenuItem.Text = "Lighting Output";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -196,7 +253,7 @@ namespace CremeWorks
             this.playList.IntegralHeight = false;
             this.playList.ItemHeight = 25;
             this.playList.Location = new System.Drawing.Point(16, 71);
-            this.playList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.playList.Margin = new System.Windows.Forms.Padding(4);
             this.playList.Name = "playList";
             this.playList.Size = new System.Drawing.Size(316, 629);
             this.playList.TabIndex = 2;
@@ -209,7 +266,7 @@ namespace CremeWorks
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button1.Location = new System.Drawing.Point(14, 708);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(67, 28);
             this.button1.TabIndex = 3;
@@ -221,7 +278,7 @@ namespace CremeWorks
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button2.Location = new System.Drawing.Point(89, 708);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(67, 28);
             this.button2.TabIndex = 4;
@@ -233,7 +290,7 @@ namespace CremeWorks
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button3.Location = new System.Drawing.Point(163, 708);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(73, 28);
             this.button3.TabIndex = 5;
@@ -260,7 +317,7 @@ namespace CremeWorks
             | System.Windows.Forms.AnchorStyles.Right)));
             this.songLyrics.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.songLyrics.Location = new System.Drawing.Point(341, 71);
-            this.songLyrics.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.songLyrics.Margin = new System.Windows.Forms.Padding(4);
             this.songLyrics.Multiline = true;
             this.songLyrics.Name = "songLyrics";
             this.songLyrics.ReadOnly = true;
@@ -273,7 +330,7 @@ namespace CremeWorks
             // 
             this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button12.Location = new System.Drawing.Point(245, 708);
-            this.button12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button12.Margin = new System.Windows.Forms.Padding(4);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(87, 28);
             this.button12.TabIndex = 17;
@@ -309,7 +366,7 @@ namespace CremeWorks
             this.lightCue.IntegralHeight = false;
             this.lightCue.ItemHeight = 16;
             this.lightCue.Location = new System.Drawing.Point(1049, 423);
-            this.lightCue.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lightCue.Margin = new System.Windows.Forms.Padding(4);
             this.lightCue.Name = "lightCue";
             this.lightCue.Size = new System.Drawing.Size(300, 276);
             this.lightCue.TabIndex = 22;
@@ -322,7 +379,7 @@ namespace CremeWorks
             // 
             this.button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button13.Location = new System.Drawing.Point(1177, 707);
-            this.button13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button13.Margin = new System.Windows.Forms.Padding(4);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(73, 28);
             this.button13.TabIndex = 25;
@@ -334,7 +391,7 @@ namespace CremeWorks
             // 
             this.button14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button14.Location = new System.Drawing.Point(1113, 707);
-            this.button14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button14.Margin = new System.Windows.Forms.Padding(4);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(56, 28);
             this.button14.TabIndex = 24;
@@ -346,7 +403,7 @@ namespace CremeWorks
             // 
             this.button15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button15.Location = new System.Drawing.Point(1050, 707);
-            this.button15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button15.Margin = new System.Windows.Forms.Padding(4);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(55, 28);
             this.button15.TabIndex = 23;
@@ -358,7 +415,7 @@ namespace CremeWorks
             // 
             this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button10.Location = new System.Drawing.Point(1258, 707);
-            this.button10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button10.Margin = new System.Windows.Forms.Padding(4);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(91, 28);
             this.button10.TabIndex = 26;
@@ -421,54 +478,6 @@ namespace CremeWorks
             this.btnChatSend.UseVisualStyleBackColor = true;
             this.btnChatSend.Click += new System.EventHandler(this.btnChatSend_Click);
             // 
-            // serverToolStripMenuItem
-            // 
-            this.serverToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startToolStripMenuItem,
-            this.changeClientNameToolStripMenuItem,
-            this.connectedClientsToolStripMenuItem,
-            this.toolStripMenuItem2,
-            this.clickOutputToolStripMenuItem,
-            this.lightingOutputToolStripMenuItem});
-            this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
-            this.serverToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
-            this.serverToolStripMenuItem.Text = "Server";
-            // 
-            // startToolStripMenuItem
-            // 
-            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.startToolStripMenuItem.Text = "Start";
-            // 
-            // changeClientNameToolStripMenuItem
-            // 
-            this.changeClientNameToolStripMenuItem.Name = "changeClientNameToolStripMenuItem";
-            this.changeClientNameToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.changeClientNameToolStripMenuItem.Text = "Change Name";
-            // 
-            // connectedClientsToolStripMenuItem
-            // 
-            this.connectedClientsToolStripMenuItem.Name = "connectedClientsToolStripMenuItem";
-            this.connectedClientsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.connectedClientsToolStripMenuItem.Text = "Connected Clients";
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(221, 6);
-            // 
-            // clickOutputToolStripMenuItem
-            // 
-            this.clickOutputToolStripMenuItem.Name = "clickOutputToolStripMenuItem";
-            this.clickOutputToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.clickOutputToolStripMenuItem.Text = "Click Output";
-            // 
-            // lightingOutputToolStripMenuItem
-            // 
-            this.lightingOutputToolStripMenuItem.Name = "lightingOutputToolStripMenuItem";
-            this.lightingOutputToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.lightingOutputToolStripMenuItem.Text = "Lighting Output";
-            // 
             // lblBpm
             // 
             this.lblBpm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -490,18 +499,10 @@ namespace CremeWorks
             this.panel1.Size = new System.Drawing.Size(24, 24);
             this.panel1.TabIndex = 33;
             // 
-            // configureToolStripMenuItem1
+            // toolStripMenuItem3
             // 
-            this.configureToolStripMenuItem1.Name = "configureToolStripMenuItem1";
-            this.configureToolStripMenuItem1.Size = new System.Drawing.Size(88, 24);
-            this.configureToolStripMenuItem1.Text = "Configure";
-            // 
-            // footSwitchToolStripMenuItem
-            // 
-            this.footSwitchToolStripMenuItem.Name = "footSwitchToolStripMenuItem";
-            this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(237, 26);
-            this.footSwitchToolStripMenuItem.Text = "Foot Switch";
-            this.footSwitchToolStripMenuItem.Click += new System.EventHandler(this.footSwitchToolStripMenuItem_Click);
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(221, 6);
             // 
             // MainForm
             // 
@@ -533,7 +534,7 @@ namespace CremeWorks
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "CremeWorks Stage Controller";
             this.menuStrip1.ResumeLayout(false);
@@ -582,13 +583,13 @@ namespace CremeWorks
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeClientNameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem connectedClientsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem clickOutputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lightingOutputToolStripMenuItem;
         private System.Windows.Forms.Label lblBpm;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripMenuItem footSwitchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configureToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
     }
 }
 

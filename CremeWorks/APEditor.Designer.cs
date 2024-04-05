@@ -223,9 +223,10 @@ namespace CremeWorks
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(16, 11);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 13);
+            this.label1.Size = new System.Drawing.Size(88, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "Device Type:";
             // 
@@ -238,18 +239,20 @@ namespace CremeWorks
             "Yamaha Reface DX",
             "Yamaha Reface CP",
             "Yamaha Reface YC"});
-            this.typeSelector.Location = new System.Drawing.Point(89, 6);
+            this.typeSelector.Location = new System.Drawing.Point(119, 7);
+            this.typeSelector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.typeSelector.Name = "typeSelector";
-            this.typeSelector.Size = new System.Drawing.Size(284, 21);
+            this.typeSelector.Size = new System.Drawing.Size(377, 24);
             this.typeSelector.TabIndex = 1;
             this.typeSelector.Text = "Undefined";
             this.typeSelector.SelectedIndexChanged += new System.EventHandler(this.typeSelector_SelectedIndexChanged);
             // 
             // pushSysData
             // 
-            this.pushSysData.Location = new System.Drawing.Point(112, 403);
+            this.pushSysData.Location = new System.Drawing.Point(149, 496);
+            this.pushSysData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pushSysData.Name = "pushSysData";
-            this.pushSysData.Size = new System.Drawing.Size(94, 35);
+            this.pushSysData.Size = new System.Drawing.Size(125, 43);
             this.pushSysData.TabIndex = 4;
             this.pushSysData.Text = "Push System Settings";
             this.pushSysData.UseVisualStyleBackColor = true;
@@ -257,9 +260,10 @@ namespace CremeWorks
             // 
             // fetchSysData
             // 
-            this.fetchSysData.Location = new System.Drawing.Point(12, 403);
+            this.fetchSysData.Location = new System.Drawing.Point(16, 496);
+            this.fetchSysData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.fetchSysData.Name = "fetchSysData";
-            this.fetchSysData.Size = new System.Drawing.Size(94, 35);
+            this.fetchSysData.Size = new System.Drawing.Size(125, 43);
             this.fetchSysData.TabIndex = 5;
             this.fetchSysData.Text = "Fetch System Settings";
             this.fetchSysData.UseVisualStyleBackColor = true;
@@ -267,9 +271,10 @@ namespace CremeWorks
             // 
             // pushVoiceData
             // 
-            this.pushVoiceData.Location = new System.Drawing.Point(625, 403);
+            this.pushVoiceData.Location = new System.Drawing.Point(833, 496);
+            this.pushVoiceData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pushVoiceData.Name = "pushVoiceData";
-            this.pushVoiceData.Size = new System.Drawing.Size(94, 35);
+            this.pushVoiceData.Size = new System.Drawing.Size(125, 43);
             this.pushVoiceData.TabIndex = 7;
             this.pushVoiceData.Text = "Push Voice Settings";
             this.pushVoiceData.UseVisualStyleBackColor = true;
@@ -303,9 +308,11 @@ namespace CremeWorks
             this.deviceBox.Controls.Add(this.label4);
             this.deviceBox.Controls.Add(this.label3);
             this.deviceBox.Controls.Add(this.label2);
-            this.deviceBox.Location = new System.Drawing.Point(12, 33);
+            this.deviceBox.Location = new System.Drawing.Point(16, 41);
+            this.deviceBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.deviceBox.Name = "deviceBox";
-            this.deviceBox.Size = new System.Drawing.Size(266, 364);
+            this.deviceBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.deviceBox.Size = new System.Drawing.Size(355, 448);
             this.deviceBox.TabIndex = 8;
             this.deviceBox.TabStop = false;
             this.deviceBox.Text = "Device Settings";
@@ -313,14 +320,15 @@ namespace CremeWorks
             // 
             // numericUpDown7
             // 
-            this.numericUpDown7.Location = new System.Drawing.Point(133, 176);
+            this.numericUpDown7.Location = new System.Drawing.Point(177, 217);
+            this.numericUpDown7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown7.Maximum = new decimal(new int[] {
             63,
             0,
             0,
             0});
             this.numericUpDown7.Name = "numericUpDown7";
-            this.numericUpDown7.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown7.Size = new System.Drawing.Size(160, 22);
             this.numericUpDown7.TabIndex = 25;
             // 
             // comboBox6
@@ -329,15 +337,17 @@ namespace CremeWorks
             this.comboBox6.Items.AddRange(new object[] {
             "Foot Volume",
             "Sustain Switch"});
-            this.comboBox6.Location = new System.Drawing.Point(133, 336);
+            this.comboBox6.Location = new System.Drawing.Point(177, 414);
+            this.comboBox6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(121, 21);
+            this.comboBox6.Size = new System.Drawing.Size(160, 24);
             this.comboBox6.TabIndex = 24;
             this.comboBox6.Text = "Foot Volume";
             // 
             // numericUpDown6
             // 
-            this.numericUpDown6.Location = new System.Drawing.Point(133, 310);
+            this.numericUpDown6.Location = new System.Drawing.Point(177, 382);
+            this.numericUpDown6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown6.Maximum = new decimal(new int[] {
             24,
             0,
@@ -349,7 +359,7 @@ namespace CremeWorks
             0,
             -2147483648});
             this.numericUpDown6.Name = "numericUpDown6";
-            this.numericUpDown6.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown6.Size = new System.Drawing.Size(160, 22);
             this.numericUpDown6.TabIndex = 23;
             // 
             // comboBox5
@@ -358,9 +368,10 @@ namespace CremeWorks
             this.comboBox5.Items.AddRange(new object[] {
             "Off",
             "On"});
-            this.comboBox5.Location = new System.Drawing.Point(133, 283);
+            this.comboBox5.Location = new System.Drawing.Point(177, 348);
+            this.comboBox5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(120, 21);
+            this.comboBox5.Size = new System.Drawing.Size(159, 24);
             this.comboBox5.TabIndex = 22;
             this.comboBox5.Text = "Off";
             // 
@@ -370,9 +381,10 @@ namespace CremeWorks
             this.comboBox4.Items.AddRange(new object[] {
             "Off",
             "On"});
-            this.comboBox4.Location = new System.Drawing.Point(133, 256);
+            this.comboBox4.Location = new System.Drawing.Point(177, 315);
+            this.comboBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(120, 21);
+            this.comboBox4.Size = new System.Drawing.Size(159, 24);
             this.comboBox4.TabIndex = 21;
             this.comboBox4.Text = "Off";
             // 
@@ -382,9 +394,10 @@ namespace CremeWorks
             this.comboBox3.Items.AddRange(new object[] {
             "Off",
             "On"});
-            this.comboBox3.Location = new System.Drawing.Point(133, 229);
+            this.comboBox3.Location = new System.Drawing.Point(177, 282);
+            this.comboBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(120, 21);
+            this.comboBox3.Size = new System.Drawing.Size(159, 24);
             this.comboBox3.TabIndex = 20;
             this.comboBox3.Text = "Off";
             // 
@@ -394,27 +407,30 @@ namespace CremeWorks
             this.comboBox2.Items.AddRange(new object[] {
             "FC3",
             "FC4/5"});
-            this.comboBox2.Location = new System.Drawing.Point(133, 202);
+            this.comboBox2.Location = new System.Drawing.Point(177, 249);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(120, 21);
+            this.comboBox2.Size = new System.Drawing.Size(159, 24);
             this.comboBox2.TabIndex = 19;
             this.comboBox2.Text = "FC3";
             // 
             // numericUpDown5
             // 
-            this.numericUpDown5.Location = new System.Drawing.Point(133, 150);
+            this.numericUpDown5.Location = new System.Drawing.Point(177, 185);
+            this.numericUpDown5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown5.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown5.Size = new System.Drawing.Size(160, 22);
             this.numericUpDown5.TabIndex = 18;
             // 
             // numericUpDown4
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(133, 124);
+            this.numericUpDown4.Location = new System.Drawing.Point(177, 153);
+            this.numericUpDown4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown4.Maximum = new decimal(new int[] {
             12,
             0,
@@ -426,7 +442,7 @@ namespace CremeWorks
             0,
             -2147483648});
             this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown4.Size = new System.Drawing.Size(160, 22);
             this.numericUpDown4.TabIndex = 17;
             // 
             // comboBox1
@@ -435,34 +451,37 @@ namespace CremeWorks
             this.comboBox1.Items.AddRange(new object[] {
             "Off",
             "On"});
-            this.comboBox1.Location = new System.Drawing.Point(133, 97);
+            this.comboBox1.Location = new System.Drawing.Point(177, 119);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(120, 21);
+            this.comboBox1.Size = new System.Drawing.Size(159, 24);
             this.comboBox1.TabIndex = 16;
             this.comboBox1.Text = "Off";
             // 
             // numericUpDown3
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(133, 71);
+            this.numericUpDown3.Location = new System.Drawing.Point(177, 87);
+            this.numericUpDown3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown3.Maximum = new decimal(new int[] {
             -1,
             0,
             0,
             0});
             this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown3.Size = new System.Drawing.Size(160, 22);
             this.numericUpDown3.TabIndex = 15;
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(133, 45);
+            this.numericUpDown2.Location = new System.Drawing.Point(177, 55);
+            this.numericUpDown2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown2.Maximum = new decimal(new int[] {
             16,
             0,
             0,
             0});
             this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown2.Size = new System.Drawing.Size(160, 22);
             this.numericUpDown2.TabIndex = 14;
             this.numericUpDown2.Value = new decimal(new int[] {
             1,
@@ -472,14 +491,15 @@ namespace CremeWorks
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(133, 19);
+            this.numericUpDown1.Location = new System.Drawing.Point(177, 23);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             16,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(160, 22);
             this.numericUpDown1.TabIndex = 13;
             this.numericUpDown1.Value = new decimal(new int[] {
             1,
@@ -490,117 +510,130 @@ namespace CremeWorks
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(12, 178);
+            this.label14.Location = new System.Drawing.Point(16, 219);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(70, 13);
+            this.label14.Size = new System.Drawing.Size(85, 16);
             this.label14.TabIndex = 12;
             this.label14.Text = "LCD Contrast";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(12, 339);
+            this.label13.Location = new System.Drawing.Point(16, 417);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(93, 13);
+            this.label13.Size = new System.Drawing.Size(113, 16);
             this.label13.TabIndex = 11;
             this.label13.Text = "Foot Switch Mode";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(12, 312);
+            this.label12.Location = new System.Drawing.Point(16, 384);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(94, 13);
+            this.label12.Size = new System.Drawing.Size(115, 16);
             this.label12.TabIndex = 10;
             this.label12.Text = "Pitch Bend Range";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 286);
+            this.label11.Location = new System.Drawing.Point(16, 352);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(66, 13);
+            this.label11.Size = new System.Drawing.Size(79, 16);
             this.label11.TabIndex = 9;
             this.label11.Text = "MIDI Control";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 259);
+            this.label10.Location = new System.Drawing.Point(16, 319);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(82, 13);
+            this.label10.Size = new System.Drawing.Size(100, 16);
             this.label10.TabIndex = 8;
             this.label10.Text = "Speaker Output";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 232);
+            this.label9.Location = new System.Drawing.Point(16, 286);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(79, 13);
+            this.label9.Size = new System.Drawing.Size(95, 16);
             this.label9.TabIndex = 7;
             this.label9.Text = "Auto Power-Off";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 205);
+            this.label8.Location = new System.Drawing.Point(16, 252);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(69, 13);
+            this.label8.Size = new System.Drawing.Size(86, 16);
             this.label8.TabIndex = 6;
             this.label8.Text = "Sustain Type";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 152);
+            this.label7.Location = new System.Drawing.Point(16, 187);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(40, 13);
+            this.label7.Size = new System.Drawing.Size(51, 16);
             this.label7.TabIndex = 5;
             this.label7.Text = "Tempo";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 126);
+            this.label6.Location = new System.Drawing.Point(16, 155);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(92, 13);
+            this.label6.Size = new System.Drawing.Size(117, 16);
             this.label6.TabIndex = 4;
             this.label6.Text = "Master Transpose";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 100);
+            this.label5.Location = new System.Drawing.Point(16, 123);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(69, 13);
+            this.label5.Size = new System.Drawing.Size(85, 16);
             this.label5.TabIndex = 3;
             this.label5.Text = "Local Control";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 73);
+            this.label4.Location = new System.Drawing.Point(16, 90);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 13);
+            this.label4.Size = new System.Drawing.Size(82, 16);
             this.label4.TabIndex = 2;
             this.label4.Text = "Master Tune";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 47);
+            this.label3.Location = new System.Drawing.Point(16, 58);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(115, 13);
+            this.label3.Size = new System.Drawing.Size(140, 16);
             this.label3.TabIndex = 1;
             this.label3.Text = "MIDI Receive Channel";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 21);
+            this.label2.Location = new System.Drawing.Point(16, 26);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(115, 13);
+            this.label2.Size = new System.Drawing.Size(141, 16);
             this.label2.TabIndex = 0;
             this.label2.Text = "MIDI Transmit Channel";
             // 
@@ -632,9 +665,11 @@ namespace CremeWorks
             this.voiceBoxCP.Controls.Add(this.numericUpDown9);
             this.voiceBoxCP.Controls.Add(this.comboBox7);
             this.voiceBoxCP.Controls.Add(this.numericUpDown8);
-            this.voiceBoxCP.Location = new System.Drawing.Point(284, 33);
+            this.voiceBoxCP.Location = new System.Drawing.Point(379, 41);
+            this.voiceBoxCP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.voiceBoxCP.Name = "voiceBoxCP";
-            this.voiceBoxCP.Size = new System.Drawing.Size(233, 364);
+            this.voiceBoxCP.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.voiceBoxCP.Size = new System.Drawing.Size(311, 448);
             this.voiceBoxCP.TabIndex = 0;
             this.voiceBoxCP.TabStop = false;
             this.voiceBoxCP.Text = "Voice Settings";
@@ -643,154 +678,170 @@ namespace CremeWorks
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(6, 178);
+            this.label15.Location = new System.Drawing.Point(8, 219);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(72, 13);
+            this.label15.Size = new System.Drawing.Size(87, 16);
             this.label15.TabIndex = 25;
             this.label15.Text = "Effect B Type";
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(6, 339);
+            this.label16.Location = new System.Drawing.Point(8, 417);
+            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(74, 13);
+            this.label16.Size = new System.Drawing.Size(91, 16);
             this.label16.TabIndex = 24;
             this.label16.Text = "Reverb Depth";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(6, 312);
+            this.label17.Location = new System.Drawing.Point(8, 384);
+            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(71, 13);
+            this.label17.Size = new System.Drawing.Size(86, 16);
             this.label17.TabIndex = 23;
             this.label17.Text = "Effect C Time";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(6, 286);
+            this.label18.Location = new System.Drawing.Point(8, 352);
+            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(77, 13);
+            this.label18.Size = new System.Drawing.Size(91, 16);
             this.label18.TabIndex = 22;
             this.label18.Text = "Effect C Depth";
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(6, 259);
+            this.label19.Location = new System.Drawing.Point(8, 319);
+            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(72, 13);
+            this.label19.Size = new System.Drawing.Size(87, 16);
             this.label19.TabIndex = 21;
             this.label19.Text = "Effect C Type";
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(6, 232);
+            this.label20.Location = new System.Drawing.Point(8, 286);
+            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(79, 13);
+            this.label20.Size = new System.Drawing.Size(96, 16);
             this.label20.TabIndex = 20;
             this.label20.Text = "Effect B Speed";
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(6, 205);
+            this.label21.Location = new System.Drawing.Point(8, 252);
+            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(77, 13);
+            this.label21.Size = new System.Drawing.Size(91, 16);
             this.label21.TabIndex = 19;
             this.label21.Text = "Effect B Depth";
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(6, 152);
+            this.label22.Location = new System.Drawing.Point(8, 187);
+            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(71, 13);
+            this.label22.Size = new System.Drawing.Size(84, 16);
             this.label22.TabIndex = 18;
             this.label22.Text = "Effect A Rate";
             // 
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(6, 126);
+            this.label23.Location = new System.Drawing.Point(8, 155);
+            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(77, 13);
+            this.label23.Size = new System.Drawing.Size(91, 16);
             this.label23.TabIndex = 17;
             this.label23.Text = "Effect A Depth";
             // 
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(6, 100);
+            this.label24.Location = new System.Drawing.Point(8, 123);
+            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(72, 13);
+            this.label24.Size = new System.Drawing.Size(87, 16);
             this.label24.TabIndex = 16;
             this.label24.Text = "Effect A Type";
             // 
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(6, 73);
+            this.label25.Location = new System.Drawing.Point(8, 90);
+            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(32, 13);
+            this.label25.Size = new System.Drawing.Size(39, 16);
             this.label25.TabIndex = 15;
             this.label25.Text = "Drive";
             // 
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(6, 47);
+            this.label26.Location = new System.Drawing.Point(8, 58);
+            this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(63, 13);
+            this.label26.Size = new System.Drawing.Size(78, 16);
             this.label26.TabIndex = 14;
             this.label26.Text = "Wave Type";
             // 
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(6, 21);
+            this.label27.Location = new System.Drawing.Point(8, 26);
+            this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(42, 13);
+            this.label27.Size = new System.Drawing.Size(53, 16);
             this.label27.TabIndex = 13;
             this.label27.Text = "Volume";
             // 
             // numericUpDown16
             // 
-            this.numericUpDown16.Location = new System.Drawing.Point(100, 337);
+            this.numericUpDown16.Location = new System.Drawing.Point(133, 415);
+            this.numericUpDown16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown16.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown16.Name = "numericUpDown16";
-            this.numericUpDown16.Size = new System.Drawing.Size(122, 20);
+            this.numericUpDown16.Size = new System.Drawing.Size(163, 22);
             this.numericUpDown16.TabIndex = 12;
             // 
             // numericUpDown14
             // 
-            this.numericUpDown14.Location = new System.Drawing.Point(100, 284);
+            this.numericUpDown14.Location = new System.Drawing.Point(133, 350);
+            this.numericUpDown14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown14.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown14.Name = "numericUpDown14";
-            this.numericUpDown14.Size = new System.Drawing.Size(122, 20);
+            this.numericUpDown14.Size = new System.Drawing.Size(163, 22);
             this.numericUpDown14.TabIndex = 11;
             // 
             // numericUpDown15
             // 
-            this.numericUpDown15.Location = new System.Drawing.Point(100, 310);
+            this.numericUpDown15.Location = new System.Drawing.Point(133, 382);
+            this.numericUpDown15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown15.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown15.Name = "numericUpDown15";
-            this.numericUpDown15.Size = new System.Drawing.Size(122, 20);
+            this.numericUpDown15.Size = new System.Drawing.Size(163, 22);
             this.numericUpDown15.TabIndex = 10;
             // 
             // comboBox10
@@ -800,33 +851,36 @@ namespace CremeWorks
             "Thru",
             "Digital Delay",
             "Analog Delay"});
-            this.comboBox10.Location = new System.Drawing.Point(100, 256);
+            this.comboBox10.Location = new System.Drawing.Point(133, 315);
+            this.comboBox10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox10.Name = "comboBox10";
-            this.comboBox10.Size = new System.Drawing.Size(122, 21);
+            this.comboBox10.Size = new System.Drawing.Size(161, 24);
             this.comboBox10.TabIndex = 9;
             // 
             // numericUpDown13
             // 
-            this.numericUpDown13.Location = new System.Drawing.Point(100, 230);
+            this.numericUpDown13.Location = new System.Drawing.Point(133, 283);
+            this.numericUpDown13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown13.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown13.Name = "numericUpDown13";
-            this.numericUpDown13.Size = new System.Drawing.Size(122, 20);
+            this.numericUpDown13.Size = new System.Drawing.Size(163, 22);
             this.numericUpDown13.TabIndex = 8;
             // 
             // numericUpDown12
             // 
-            this.numericUpDown12.Location = new System.Drawing.Point(100, 203);
+            this.numericUpDown12.Location = new System.Drawing.Point(133, 250);
+            this.numericUpDown12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown12.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown12.Name = "numericUpDown12";
-            this.numericUpDown12.Size = new System.Drawing.Size(122, 20);
+            this.numericUpDown12.Size = new System.Drawing.Size(163, 22);
             this.numericUpDown12.TabIndex = 7;
             // 
             // comboBox9
@@ -836,33 +890,36 @@ namespace CremeWorks
             "Thru",
             "Chorus",
             "Phaser"});
-            this.comboBox9.Location = new System.Drawing.Point(100, 175);
+            this.comboBox9.Location = new System.Drawing.Point(133, 215);
+            this.comboBox9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox9.Name = "comboBox9";
-            this.comboBox9.Size = new System.Drawing.Size(122, 21);
+            this.comboBox9.Size = new System.Drawing.Size(161, 24);
             this.comboBox9.TabIndex = 6;
             // 
             // numericUpDown11
             // 
-            this.numericUpDown11.Location = new System.Drawing.Point(100, 150);
+            this.numericUpDown11.Location = new System.Drawing.Point(133, 185);
+            this.numericUpDown11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown11.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown11.Name = "numericUpDown11";
-            this.numericUpDown11.Size = new System.Drawing.Size(122, 20);
+            this.numericUpDown11.Size = new System.Drawing.Size(163, 22);
             this.numericUpDown11.TabIndex = 5;
             // 
             // numericUpDown10
             // 
-            this.numericUpDown10.Location = new System.Drawing.Point(100, 124);
+            this.numericUpDown10.Location = new System.Drawing.Point(133, 153);
+            this.numericUpDown10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown10.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown10.Name = "numericUpDown10";
-            this.numericUpDown10.Size = new System.Drawing.Size(122, 20);
+            this.numericUpDown10.Size = new System.Drawing.Size(163, 22);
             this.numericUpDown10.TabIndex = 4;
             // 
             // comboBox8
@@ -872,21 +929,23 @@ namespace CremeWorks
             "Thru",
             "Tremolo",
             "Wah"});
-            this.comboBox8.Location = new System.Drawing.Point(100, 97);
+            this.comboBox8.Location = new System.Drawing.Point(133, 119);
+            this.comboBox8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(122, 21);
+            this.comboBox8.Size = new System.Drawing.Size(161, 24);
             this.comboBox8.TabIndex = 3;
             // 
             // numericUpDown9
             // 
-            this.numericUpDown9.Location = new System.Drawing.Point(100, 71);
+            this.numericUpDown9.Location = new System.Drawing.Point(133, 87);
+            this.numericUpDown9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown9.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown9.Name = "numericUpDown9";
-            this.numericUpDown9.Size = new System.Drawing.Size(122, 20);
+            this.numericUpDown9.Size = new System.Drawing.Size(163, 22);
             this.numericUpDown9.TabIndex = 2;
             // 
             // comboBox7
@@ -899,21 +958,23 @@ namespace CremeWorks
             "Clavinet",
             "Toy Piano",
             "CP"});
-            this.comboBox7.Location = new System.Drawing.Point(100, 45);
+            this.comboBox7.Location = new System.Drawing.Point(133, 55);
+            this.comboBox7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(122, 21);
+            this.comboBox7.Size = new System.Drawing.Size(161, 24);
             this.comboBox7.TabIndex = 1;
             // 
             // numericUpDown8
             // 
-            this.numericUpDown8.Location = new System.Drawing.Point(100, 19);
+            this.numericUpDown8.Location = new System.Drawing.Point(133, 23);
+            this.numericUpDown8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown8.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown8.Name = "numericUpDown8";
-            this.numericUpDown8.Size = new System.Drawing.Size(122, 20);
+            this.numericUpDown8.Size = new System.Drawing.Size(163, 22);
             this.numericUpDown8.TabIndex = 0;
             // 
             // voiceBoxCS
@@ -954,9 +1015,11 @@ namespace CremeWorks
             this.voiceBoxCS.Controls.Add(this.numericUpDown18);
             this.voiceBoxCS.Controls.Add(this.comboBox11);
             this.voiceBoxCS.Controls.Add(this.numericUpDown17);
-            this.voiceBoxCS.Location = new System.Drawing.Point(284, 33);
+            this.voiceBoxCS.Location = new System.Drawing.Point(379, 41);
+            this.voiceBoxCS.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.voiceBoxCS.Name = "voiceBoxCS";
-            this.voiceBoxCS.Size = new System.Drawing.Size(435, 364);
+            this.voiceBoxCS.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.voiceBoxCS.Size = new System.Drawing.Size(580, 448);
             this.voiceBoxCS.TabIndex = 9;
             this.voiceBoxCS.TabStop = false;
             this.voiceBoxCS.Text = "Voice Settings";
@@ -965,187 +1028,207 @@ namespace CremeWorks
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(230, 126);
+            this.label41.Location = new System.Drawing.Point(307, 155);
+            this.label41.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(46, 13);
+            this.label41.Size = new System.Drawing.Size(55, 16);
             this.label41.TabIndex = 35;
             this.label41.Text = "FX Rate";
             // 
             // label42
             // 
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(230, 100);
+            this.label42.Location = new System.Drawing.Point(307, 123);
+            this.label42.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(52, 13);
+            this.label42.Size = new System.Drawing.Size(62, 16);
             this.label42.TabIndex = 34;
             this.label42.Text = "FX Depth";
             // 
             // label43
             // 
             this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(230, 73);
+            this.label43.Location = new System.Drawing.Point(307, 90);
+            this.label43.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(47, 13);
+            this.label43.Size = new System.Drawing.Size(58, 16);
             this.label43.TabIndex = 33;
             this.label43.Text = "FX Type";
             // 
             // label44
             // 
             this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(230, 47);
+            this.label44.Location = new System.Drawing.Point(307, 58);
+            this.label44.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(64, 13);
+            this.label44.Size = new System.Drawing.Size(81, 16);
             this.label44.TabIndex = 32;
             this.label44.Text = "EG Release";
             // 
             // label45
             // 
             this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(230, 21);
+            this.label45.Location = new System.Drawing.Point(307, 26);
+            this.label45.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(60, 13);
+            this.label45.Size = new System.Drawing.Size(73, 16);
             this.label45.TabIndex = 31;
             this.label45.Text = "EG Sustain";
             // 
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(11, 178);
+            this.label28.Location = new System.Drawing.Point(15, 219);
+            this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(68, 13);
+            this.label28.Size = new System.Drawing.Size(83, 16);
             this.label28.TabIndex = 30;
             this.label28.Text = "OSC Texture";
             // 
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(11, 339);
+            this.label29.Location = new System.Drawing.Point(15, 417);
+            this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(56, 13);
+            this.label29.Size = new System.Drawing.Size(69, 16);
             this.label29.TabIndex = 29;
             this.label29.Text = "EG Decay";
             // 
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(11, 312);
+            this.label30.Location = new System.Drawing.Point(15, 384);
+            this.label30.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(56, 13);
+            this.label30.Size = new System.Drawing.Size(66, 16);
             this.label30.TabIndex = 28;
             this.label30.Text = "EG Attack";
             // 
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(11, 286);
+            this.label31.Location = new System.Drawing.Point(15, 352);
+            this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(64, 13);
+            this.label31.Size = new System.Drawing.Size(79, 16);
             this.label31.TabIndex = 27;
             this.label31.Text = "EG Balance";
             // 
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(11, 259);
+            this.label32.Location = new System.Drawing.Point(15, 319);
+            this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(87, 13);
+            this.label32.Size = new System.Drawing.Size(109, 16);
             this.label32.TabIndex = 26;
             this.label32.Text = "Filter Resonance";
             // 
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(11, 232);
+            this.label33.Location = new System.Drawing.Point(15, 286);
+            this.label33.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(60, 13);
+            this.label33.Size = new System.Drawing.Size(72, 16);
             this.label33.TabIndex = 25;
             this.label33.Text = "Filter Cutoff";
             // 
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(11, 205);
+            this.label34.Location = new System.Drawing.Point(15, 252);
+            this.label34.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(53, 13);
+            this.label34.Size = new System.Drawing.Size(65, 16);
             this.label34.TabIndex = 24;
             this.label34.Text = "OSC Mod";
             // 
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(11, 152);
+            this.label35.Location = new System.Drawing.Point(15, 187);
+            this.label35.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(56, 13);
+            this.label35.Size = new System.Drawing.Size(70, 16);
             this.label35.TabIndex = 23;
             this.label35.Text = "OSC Type";
             // 
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(11, 126);
+            this.label36.Location = new System.Drawing.Point(15, 155);
+            this.label36.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(61, 13);
+            this.label36.Size = new System.Drawing.Size(76, 16);
             this.label36.TabIndex = 22;
             this.label36.Text = "Portamento";
             // 
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(11, 100);
+            this.label37.Location = new System.Drawing.Point(15, 123);
+            this.label37.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(61, 13);
+            this.label37.Size = new System.Drawing.Size(76, 16);
             this.label37.TabIndex = 21;
             this.label37.Text = "LFO Speed";
             // 
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(11, 73);
+            this.label38.Location = new System.Drawing.Point(15, 90);
+            this.label38.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(59, 13);
+            this.label38.Size = new System.Drawing.Size(71, 16);
             this.label38.TabIndex = 20;
             this.label38.Text = "LFO Depth";
             // 
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(11, 47);
+            this.label39.Location = new System.Drawing.Point(15, 58);
+            this.label39.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(61, 13);
+            this.label39.Size = new System.Drawing.Size(76, 16);
             this.label39.TabIndex = 19;
             this.label39.Text = "LFO Assign";
             // 
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(11, 21);
+            this.label40.Location = new System.Drawing.Point(15, 26);
+            this.label40.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(42, 13);
+            this.label40.Size = new System.Drawing.Size(53, 16);
             this.label40.TabIndex = 18;
             this.label40.Text = "Volume";
             // 
             // numericUpDown31
             // 
-            this.numericUpDown31.Location = new System.Drawing.Point(300, 123);
+            this.numericUpDown31.Location = new System.Drawing.Point(400, 151);
+            this.numericUpDown31.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown31.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown31.Name = "numericUpDown31";
-            this.numericUpDown31.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown31.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown31.TabIndex = 17;
             // 
             // numericUpDown30
             // 
-            this.numericUpDown30.Location = new System.Drawing.Point(300, 97);
+            this.numericUpDown30.Location = new System.Drawing.Point(400, 119);
+            this.numericUpDown30.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown30.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown30.Name = "numericUpDown30";
-            this.numericUpDown30.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown30.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown30.TabIndex = 16;
             // 
             // comboBox13
@@ -1157,117 +1240,127 @@ namespace CremeWorks
             "Phaser",
             "Delay",
             "Thru"});
-            this.comboBox13.Location = new System.Drawing.Point(300, 69);
+            this.comboBox13.Location = new System.Drawing.Point(400, 85);
+            this.comboBox13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox13.Name = "comboBox13";
-            this.comboBox13.Size = new System.Drawing.Size(121, 21);
+            this.comboBox13.Size = new System.Drawing.Size(160, 24);
             this.comboBox13.TabIndex = 15;
             // 
             // numericUpDown29
             // 
-            this.numericUpDown29.Location = new System.Drawing.Point(300, 45);
+            this.numericUpDown29.Location = new System.Drawing.Point(400, 55);
+            this.numericUpDown29.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown29.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown29.Name = "numericUpDown29";
-            this.numericUpDown29.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown29.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown29.TabIndex = 14;
             // 
             // numericUpDown28
             // 
-            this.numericUpDown28.Location = new System.Drawing.Point(300, 18);
+            this.numericUpDown28.Location = new System.Drawing.Point(400, 22);
+            this.numericUpDown28.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown28.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown28.Name = "numericUpDown28";
-            this.numericUpDown28.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown28.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown28.TabIndex = 13;
             // 
             // numericUpDown27
             // 
-            this.numericUpDown27.Location = new System.Drawing.Point(104, 337);
+            this.numericUpDown27.Location = new System.Drawing.Point(139, 415);
+            this.numericUpDown27.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown27.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown27.Name = "numericUpDown27";
-            this.numericUpDown27.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown27.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown27.TabIndex = 12;
             // 
             // numericUpDown26
             // 
-            this.numericUpDown26.Location = new System.Drawing.Point(104, 310);
+            this.numericUpDown26.Location = new System.Drawing.Point(139, 382);
+            this.numericUpDown26.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown26.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown26.Name = "numericUpDown26";
-            this.numericUpDown26.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown26.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown26.TabIndex = 11;
             // 
             // numericUpDown25
             // 
-            this.numericUpDown25.Location = new System.Drawing.Point(104, 284);
+            this.numericUpDown25.Location = new System.Drawing.Point(139, 350);
+            this.numericUpDown25.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown25.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown25.Name = "numericUpDown25";
-            this.numericUpDown25.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown25.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown25.TabIndex = 10;
             // 
             // numericUpDown24
             // 
-            this.numericUpDown24.Location = new System.Drawing.Point(104, 257);
+            this.numericUpDown24.Location = new System.Drawing.Point(139, 316);
+            this.numericUpDown24.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown24.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown24.Name = "numericUpDown24";
-            this.numericUpDown24.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown24.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown24.TabIndex = 9;
             // 
             // numericUpDown23
             // 
-            this.numericUpDown23.Location = new System.Drawing.Point(104, 230);
+            this.numericUpDown23.Location = new System.Drawing.Point(139, 283);
+            this.numericUpDown23.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown23.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown23.Name = "numericUpDown23";
-            this.numericUpDown23.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown23.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown23.TabIndex = 8;
             // 
             // numericUpDown22
             // 
-            this.numericUpDown22.Location = new System.Drawing.Point(104, 203);
+            this.numericUpDown22.Location = new System.Drawing.Point(139, 250);
+            this.numericUpDown22.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown22.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown22.Name = "numericUpDown22";
-            this.numericUpDown22.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown22.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown22.TabIndex = 7;
             // 
             // numericUpDown21
             // 
-            this.numericUpDown21.Location = new System.Drawing.Point(104, 176);
+            this.numericUpDown21.Location = new System.Drawing.Point(139, 217);
+            this.numericUpDown21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown21.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown21.Name = "numericUpDown21";
-            this.numericUpDown21.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown21.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown21.TabIndex = 6;
             // 
             // comboBox12
@@ -1279,45 +1372,49 @@ namespace CremeWorks
             "Osc Sync",
             "Ring Modulation",
             "FM"});
-            this.comboBox12.Location = new System.Drawing.Point(104, 149);
+            this.comboBox12.Location = new System.Drawing.Point(139, 183);
+            this.comboBox12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox12.Name = "comboBox12";
-            this.comboBox12.Size = new System.Drawing.Size(121, 21);
+            this.comboBox12.Size = new System.Drawing.Size(160, 24);
             this.comboBox12.TabIndex = 5;
             // 
             // numericUpDown20
             // 
-            this.numericUpDown20.Location = new System.Drawing.Point(104, 124);
+            this.numericUpDown20.Location = new System.Drawing.Point(139, 153);
+            this.numericUpDown20.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown20.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown20.Name = "numericUpDown20";
-            this.numericUpDown20.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown20.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown20.TabIndex = 4;
             // 
             // numericUpDown19
             // 
-            this.numericUpDown19.Location = new System.Drawing.Point(104, 98);
+            this.numericUpDown19.Location = new System.Drawing.Point(139, 121);
+            this.numericUpDown19.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown19.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown19.Name = "numericUpDown19";
-            this.numericUpDown19.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown19.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown19.TabIndex = 3;
             // 
             // numericUpDown18
             // 
-            this.numericUpDown18.Location = new System.Drawing.Point(104, 71);
+            this.numericUpDown18.Location = new System.Drawing.Point(139, 87);
+            this.numericUpDown18.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown18.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown18.Name = "numericUpDown18";
-            this.numericUpDown18.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown18.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown18.TabIndex = 2;
             // 
             // comboBox11
@@ -1329,30 +1426,34 @@ namespace CremeWorks
             "Filter",
             "Pitch",
             "Oscillator"});
-            this.comboBox11.Location = new System.Drawing.Point(104, 45);
+            this.comboBox11.Location = new System.Drawing.Point(139, 55);
+            this.comboBox11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox11.Name = "comboBox11";
-            this.comboBox11.Size = new System.Drawing.Size(121, 21);
+            this.comboBox11.Size = new System.Drawing.Size(160, 24);
             this.comboBox11.TabIndex = 1;
             // 
             // numericUpDown17
             // 
-            this.numericUpDown17.Location = new System.Drawing.Point(104, 19);
+            this.numericUpDown17.Location = new System.Drawing.Point(139, 23);
+            this.numericUpDown17.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown17.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown17.Name = "numericUpDown17";
-            this.numericUpDown17.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown17.Size = new System.Drawing.Size(160, 22);
             this.numericUpDown17.TabIndex = 0;
             // 
             // voiceBoxDX
             // 
             this.voiceBoxDX.Controls.Add(this.label46);
             this.voiceBoxDX.Controls.Add(this.numericUpDown32);
-            this.voiceBoxDX.Location = new System.Drawing.Point(284, 33);
+            this.voiceBoxDX.Location = new System.Drawing.Point(379, 41);
+            this.voiceBoxDX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.voiceBoxDX.Name = "voiceBoxDX";
-            this.voiceBoxDX.Size = new System.Drawing.Size(233, 364);
+            this.voiceBoxDX.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.voiceBoxDX.Size = new System.Drawing.Size(311, 448);
             this.voiceBoxDX.TabIndex = 10;
             this.voiceBoxDX.TabStop = false;
             this.voiceBoxDX.Text = "Voice Settings";
@@ -1361,15 +1462,17 @@ namespace CremeWorks
             // label46
             // 
             this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(5, 20);
+            this.label46.Location = new System.Drawing.Point(7, 25);
+            this.label46.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(86, 13);
+            this.label46.Size = new System.Drawing.Size(109, 16);
             this.label46.TabIndex = 15;
             this.label46.Text = "Program Change";
             // 
             // numericUpDown32
             // 
-            this.numericUpDown32.Location = new System.Drawing.Point(99, 18);
+            this.numericUpDown32.Location = new System.Drawing.Point(132, 22);
+            this.numericUpDown32.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown32.Maximum = new decimal(new int[] {
             32,
             0,
@@ -1381,7 +1484,7 @@ namespace CremeWorks
             0,
             0});
             this.numericUpDown32.Name = "numericUpDown32";
-            this.numericUpDown32.Size = new System.Drawing.Size(122, 20);
+            this.numericUpDown32.Size = new System.Drawing.Size(163, 22);
             this.numericUpDown32.TabIndex = 14;
             this.numericUpDown32.Value = new decimal(new int[] {
             1,
@@ -1391,9 +1494,10 @@ namespace CremeWorks
             // 
             // fetchVoiceData
             // 
-            this.fetchVoiceData.Location = new System.Drawing.Point(525, 403);
+            this.fetchVoiceData.Location = new System.Drawing.Point(700, 496);
+            this.fetchVoiceData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.fetchVoiceData.Name = "fetchVoiceData";
-            this.fetchVoiceData.Size = new System.Drawing.Size(94, 35);
+            this.fetchVoiceData.Size = new System.Drawing.Size(125, 43);
             this.fetchVoiceData.TabIndex = 11;
             this.fetchVoiceData.Text = "Fetch Voice Settings";
             this.fetchVoiceData.UseVisualStyleBackColor = true;
@@ -1438,9 +1542,11 @@ namespace CremeWorks
             this.voiceBoxYC.Controls.Add(this.comboBox15);
             this.voiceBoxYC.Controls.Add(this.comboBox16);
             this.voiceBoxYC.Controls.Add(this.numericUpDown47);
-            this.voiceBoxYC.Location = new System.Drawing.Point(284, 33);
+            this.voiceBoxYC.Location = new System.Drawing.Point(379, 41);
+            this.voiceBoxYC.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.voiceBoxYC.Name = "voiceBoxYC";
-            this.voiceBoxYC.Size = new System.Drawing.Size(435, 364);
+            this.voiceBoxYC.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.voiceBoxYC.Size = new System.Drawing.Size(580, 448);
             this.voiceBoxYC.TabIndex = 36;
             this.voiceBoxYC.TabStop = false;
             this.voiceBoxYC.Text = "Voice Settings";
@@ -1448,81 +1554,90 @@ namespace CremeWorks
             // 
             // label65
             // 
-            this.label65.Location = new System.Drawing.Point(399, 256);
+            this.label65.Location = new System.Drawing.Point(532, 315);
+            this.label65.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(32, 27);
+            this.label65.Size = new System.Drawing.Size(43, 33);
             this.label65.TabIndex = 55;
             this.label65.Text = "1\"";
             this.label65.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label58
             // 
-            this.label58.Location = new System.Drawing.Point(361, 256);
+            this.label58.Location = new System.Drawing.Point(481, 315);
+            this.label58.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(32, 27);
+            this.label58.Size = new System.Drawing.Size(43, 33);
             this.label58.TabIndex = 54;
             this.label58.Text = "1 1/3\"";
             this.label58.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label60
             // 
-            this.label60.Location = new System.Drawing.Point(323, 256);
+            this.label60.Location = new System.Drawing.Point(431, 315);
+            this.label60.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(32, 27);
+            this.label60.Size = new System.Drawing.Size(43, 33);
             this.label60.TabIndex = 53;
             this.label60.Text = "1 3/5\"";
             this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label61
             // 
-            this.label61.Location = new System.Drawing.Point(285, 256);
+            this.label61.Location = new System.Drawing.Point(380, 315);
+            this.label61.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(32, 27);
+            this.label61.Size = new System.Drawing.Size(43, 33);
             this.label61.TabIndex = 52;
             this.label61.Text = "2\"";
             this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label62
             // 
-            this.label62.Location = new System.Drawing.Point(247, 256);
+            this.label62.Location = new System.Drawing.Point(329, 315);
+            this.label62.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(32, 27);
+            this.label62.Size = new System.Drawing.Size(43, 33);
             this.label62.TabIndex = 51;
             this.label62.Text = "2 2/3\"";
             this.label62.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label56
             // 
-            this.label56.Location = new System.Drawing.Point(209, 256);
+            this.label56.Location = new System.Drawing.Point(279, 315);
+            this.label56.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(32, 27);
+            this.label56.Size = new System.Drawing.Size(43, 33);
             this.label56.TabIndex = 50;
             this.label56.Text = "4\"";
             this.label56.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label57
             // 
-            this.label57.Location = new System.Drawing.Point(171, 256);
+            this.label57.Location = new System.Drawing.Point(228, 315);
+            this.label57.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(32, 27);
+            this.label57.Size = new System.Drawing.Size(43, 33);
             this.label57.TabIndex = 49;
             this.label57.Text = "8\"";
             this.label57.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label53
             // 
-            this.label53.Location = new System.Drawing.Point(133, 256);
+            this.label53.Location = new System.Drawing.Point(177, 315);
+            this.label53.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(32, 27);
+            this.label53.Size = new System.Drawing.Size(43, 33);
             this.label53.TabIndex = 48;
             this.label53.Text = "5 1/3\"";
             this.label53.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label51
             // 
-            this.label51.Location = new System.Drawing.Point(95, 256);
+            this.label51.Location = new System.Drawing.Point(127, 315);
+            this.label51.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(32, 27);
+            this.label51.Size = new System.Drawing.Size(43, 33);
             this.label51.TabIndex = 47;
             this.label51.Text = "16\"";
             this.label51.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1530,9 +1645,10 @@ namespace CremeWorks
             // label50
             // 
             this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(12, 295);
+            this.label50.Location = new System.Drawing.Point(16, 363);
+            this.label50.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(51, 13);
+            this.label50.Size = new System.Drawing.Size(65, 16);
             this.label50.TabIndex = 46;
             this.label50.Text = "Registers";
             // 
@@ -1540,99 +1656,108 @@ namespace CremeWorks
             // 
             this.trackBarI.AutoSize = false;
             this.trackBarI.LargeChange = 1;
-            this.trackBarI.Location = new System.Drawing.Point(402, 286);
+            this.trackBarI.Location = new System.Drawing.Point(536, 352);
+            this.trackBarI.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBarI.Maximum = 6;
             this.trackBarI.Name = "trackBarI";
             this.trackBarI.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarI.Size = new System.Drawing.Size(32, 78);
+            this.trackBarI.Size = new System.Drawing.Size(43, 96);
             this.trackBarI.TabIndex = 45;
             // 
             // trackBarH
             // 
             this.trackBarH.AutoSize = false;
             this.trackBarH.LargeChange = 1;
-            this.trackBarH.Location = new System.Drawing.Point(364, 286);
+            this.trackBarH.Location = new System.Drawing.Point(485, 352);
+            this.trackBarH.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBarH.Maximum = 6;
             this.trackBarH.Name = "trackBarH";
             this.trackBarH.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarH.Size = new System.Drawing.Size(32, 78);
+            this.trackBarH.Size = new System.Drawing.Size(43, 96);
             this.trackBarH.TabIndex = 44;
             // 
             // trackBarG
             // 
             this.trackBarG.AutoSize = false;
             this.trackBarG.LargeChange = 1;
-            this.trackBarG.Location = new System.Drawing.Point(326, 286);
+            this.trackBarG.Location = new System.Drawing.Point(435, 352);
+            this.trackBarG.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBarG.Maximum = 6;
             this.trackBarG.Name = "trackBarG";
             this.trackBarG.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarG.Size = new System.Drawing.Size(32, 78);
+            this.trackBarG.Size = new System.Drawing.Size(43, 96);
             this.trackBarG.TabIndex = 43;
             // 
             // trackBarF
             // 
             this.trackBarF.AutoSize = false;
             this.trackBarF.LargeChange = 1;
-            this.trackBarF.Location = new System.Drawing.Point(288, 286);
+            this.trackBarF.Location = new System.Drawing.Point(384, 352);
+            this.trackBarF.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBarF.Maximum = 6;
             this.trackBarF.Name = "trackBarF";
             this.trackBarF.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarF.Size = new System.Drawing.Size(32, 78);
+            this.trackBarF.Size = new System.Drawing.Size(43, 96);
             this.trackBarF.TabIndex = 42;
             // 
             // trackBarE
             // 
             this.trackBarE.AutoSize = false;
             this.trackBarE.LargeChange = 1;
-            this.trackBarE.Location = new System.Drawing.Point(250, 286);
+            this.trackBarE.Location = new System.Drawing.Point(333, 352);
+            this.trackBarE.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBarE.Maximum = 6;
             this.trackBarE.Name = "trackBarE";
             this.trackBarE.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarE.Size = new System.Drawing.Size(32, 78);
+            this.trackBarE.Size = new System.Drawing.Size(43, 96);
             this.trackBarE.TabIndex = 41;
             // 
             // trackBarD
             // 
             this.trackBarD.AutoSize = false;
             this.trackBarD.LargeChange = 1;
-            this.trackBarD.Location = new System.Drawing.Point(212, 286);
+            this.trackBarD.Location = new System.Drawing.Point(283, 352);
+            this.trackBarD.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBarD.Maximum = 6;
             this.trackBarD.Name = "trackBarD";
             this.trackBarD.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarD.Size = new System.Drawing.Size(32, 78);
+            this.trackBarD.Size = new System.Drawing.Size(43, 96);
             this.trackBarD.TabIndex = 40;
             // 
             // trackBarC
             // 
             this.trackBarC.AutoSize = false;
             this.trackBarC.LargeChange = 1;
-            this.trackBarC.Location = new System.Drawing.Point(174, 286);
+            this.trackBarC.Location = new System.Drawing.Point(232, 352);
+            this.trackBarC.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBarC.Maximum = 6;
             this.trackBarC.Name = "trackBarC";
             this.trackBarC.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarC.Size = new System.Drawing.Size(32, 78);
+            this.trackBarC.Size = new System.Drawing.Size(43, 96);
             this.trackBarC.TabIndex = 39;
             // 
             // trackBarB
             // 
             this.trackBarB.AutoSize = false;
             this.trackBarB.LargeChange = 1;
-            this.trackBarB.Location = new System.Drawing.Point(136, 286);
+            this.trackBarB.Location = new System.Drawing.Point(181, 352);
+            this.trackBarB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBarB.Maximum = 6;
             this.trackBarB.Name = "trackBarB";
             this.trackBarB.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarB.Size = new System.Drawing.Size(32, 78);
+            this.trackBarB.Size = new System.Drawing.Size(43, 96);
             this.trackBarB.TabIndex = 38;
             // 
             // trackBarA
             // 
             this.trackBarA.AutoSize = false;
             this.trackBarA.LargeChange = 1;
-            this.trackBarA.Location = new System.Drawing.Point(98, 286);
+            this.trackBarA.Location = new System.Drawing.Point(131, 352);
+            this.trackBarA.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBarA.Maximum = 6;
             this.trackBarA.Name = "trackBarA";
             this.trackBarA.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarA.Size = new System.Drawing.Size(32, 78);
+            this.trackBarA.Size = new System.Drawing.Size(43, 96);
             this.trackBarA.TabIndex = 37;
             // 
             // comboBox17
@@ -1643,102 +1768,113 @@ namespace CremeWorks
             "Stop",
             "Slow",
             "Fast"});
-            this.comboBox17.Location = new System.Drawing.Point(104, 180);
+            this.comboBox17.Location = new System.Drawing.Point(139, 222);
+            this.comboBox17.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox17.Name = "comboBox17";
-            this.comboBox17.Size = new System.Drawing.Size(121, 21);
+            this.comboBox17.Size = new System.Drawing.Size(160, 24);
             this.comboBox17.TabIndex = 36;
             // 
             // label47
             // 
             this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(12, 183);
+            this.label47.Location = new System.Drawing.Point(16, 225);
+            this.label47.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(81, 13);
+            this.label47.Size = new System.Drawing.Size(102, 16);
             this.label47.TabIndex = 35;
             this.label47.Text = "Rotary Speaker";
             // 
             // label48
             // 
             this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(12, 157);
+            this.label48.Location = new System.Drawing.Point(16, 193);
+            this.label48.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(84, 13);
+            this.label48.Size = new System.Drawing.Size(102, 16);
             this.label48.TabIndex = 34;
             this.label48.Text = "Percuss. Length";
             // 
             // label49
             // 
             this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(12, 130);
+            this.label49.Location = new System.Drawing.Point(16, 160);
+            this.label49.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(75, 13);
+            this.label49.Size = new System.Drawing.Size(94, 16);
             this.label49.TabIndex = 33;
             this.label49.Text = "Percuss. Type";
             // 
             // label52
             // 
             this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(11, 103);
+            this.label52.Location = new System.Drawing.Point(15, 127);
+            this.label52.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(52, 13);
+            this.label52.Size = new System.Drawing.Size(62, 16);
             this.label52.TabIndex = 30;
             this.label52.Text = "FX Depth";
             // 
             // label54
             // 
             this.label54.AutoSize = true;
-            this.label54.Location = new System.Drawing.Point(11, 235);
+            this.label54.Location = new System.Drawing.Point(15, 289);
+            this.label54.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(74, 13);
+            this.label54.Size = new System.Drawing.Size(91, 16);
             this.label54.TabIndex = 28;
             this.label54.Text = "Reverb Depth";
             // 
             // label55
             // 
             this.label55.AutoSize = true;
-            this.label55.Location = new System.Drawing.Point(11, 209);
+            this.label55.Location = new System.Drawing.Point(15, 257);
+            this.label55.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(79, 13);
+            this.label55.Size = new System.Drawing.Size(98, 16);
             this.label55.TabIndex = 27;
             this.label55.Text = "Distortion Drive";
             // 
             // label59
             // 
             this.label59.AutoSize = true;
-            this.label59.Location = new System.Drawing.Point(11, 77);
+            this.label59.Location = new System.Drawing.Point(15, 95);
+            this.label59.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(47, 13);
+            this.label59.Size = new System.Drawing.Size(58, 16);
             this.label59.TabIndex = 23;
             this.label59.Text = "FX Type";
             // 
             // label63
             // 
             this.label63.AutoSize = true;
-            this.label63.Location = new System.Drawing.Point(11, 49);
+            this.label63.Location = new System.Drawing.Point(15, 60);
+            this.label63.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(61, 13);
+            this.label63.Size = new System.Drawing.Size(77, 16);
             this.label63.TabIndex = 19;
             this.label63.Text = "Voice Type";
             // 
             // label64
             // 
             this.label64.AutoSize = true;
-            this.label64.Location = new System.Drawing.Point(11, 22);
+            this.label64.Location = new System.Drawing.Point(15, 27);
+            this.label64.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(42, 13);
+            this.label64.Size = new System.Drawing.Size(53, 16);
             this.label64.TabIndex = 18;
             this.label64.Text = "Volume";
             // 
             // numericUpDown34
             // 
-            this.numericUpDown34.Location = new System.Drawing.Point(104, 154);
+            this.numericUpDown34.Location = new System.Drawing.Point(139, 190);
+            this.numericUpDown34.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown34.Maximum = new decimal(new int[] {
             4,
             0,
             0,
             0});
             this.numericUpDown34.Name = "numericUpDown34";
-            this.numericUpDown34.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown34.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown34.TabIndex = 16;
             // 
             // comboBox14
@@ -1748,45 +1884,49 @@ namespace CremeWorks
             "Off",
             "A",
             "B"});
-            this.comboBox14.Location = new System.Drawing.Point(104, 126);
+            this.comboBox14.Location = new System.Drawing.Point(139, 155);
+            this.comboBox14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox14.Name = "comboBox14";
-            this.comboBox14.Size = new System.Drawing.Size(121, 21);
+            this.comboBox14.Size = new System.Drawing.Size(160, 24);
             this.comboBox14.TabIndex = 15;
             // 
             // numericUpDown38
             // 
-            this.numericUpDown38.Location = new System.Drawing.Point(104, 233);
+            this.numericUpDown38.Location = new System.Drawing.Point(139, 287);
+            this.numericUpDown38.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown38.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown38.Name = "numericUpDown38";
-            this.numericUpDown38.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown38.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown38.TabIndex = 11;
             // 
             // numericUpDown39
             // 
-            this.numericUpDown39.Location = new System.Drawing.Point(104, 207);
+            this.numericUpDown39.Location = new System.Drawing.Point(139, 255);
+            this.numericUpDown39.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown39.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown39.Name = "numericUpDown39";
-            this.numericUpDown39.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown39.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown39.TabIndex = 10;
             // 
             // numericUpDown43
             // 
-            this.numericUpDown43.Location = new System.Drawing.Point(104, 99);
+            this.numericUpDown43.Location = new System.Drawing.Point(139, 122);
+            this.numericUpDown43.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown43.Maximum = new decimal(new int[] {
             4,
             0,
             0,
             0});
             this.numericUpDown43.Name = "numericUpDown43";
-            this.numericUpDown43.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDown43.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown43.TabIndex = 6;
             // 
             // comboBox15
@@ -1795,9 +1935,10 @@ namespace CremeWorks
             this.comboBox15.Items.AddRange(new object[] {
             "Vibrato",
             "Chorus"});
-            this.comboBox15.Location = new System.Drawing.Point(104, 72);
+            this.comboBox15.Location = new System.Drawing.Point(139, 89);
+            this.comboBox15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox15.Name = "comboBox15";
-            this.comboBox15.Size = new System.Drawing.Size(121, 21);
+            this.comboBox15.Size = new System.Drawing.Size(160, 24);
             this.comboBox15.TabIndex = 5;
             // 
             // comboBox16
@@ -1809,28 +1950,30 @@ namespace CremeWorks
             "F",
             "A",
             "Y"});
-            this.comboBox16.Location = new System.Drawing.Point(104, 45);
+            this.comboBox16.Location = new System.Drawing.Point(139, 55);
+            this.comboBox16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox16.Name = "comboBox16";
-            this.comboBox16.Size = new System.Drawing.Size(121, 21);
+            this.comboBox16.Size = new System.Drawing.Size(160, 24);
             this.comboBox16.TabIndex = 1;
             // 
             // numericUpDown47
             // 
-            this.numericUpDown47.Location = new System.Drawing.Point(104, 19);
+            this.numericUpDown47.Location = new System.Drawing.Point(139, 23);
+            this.numericUpDown47.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown47.Maximum = new decimal(new int[] {
             127,
             0,
             0,
             0});
             this.numericUpDown47.Name = "numericUpDown47";
-            this.numericUpDown47.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown47.Size = new System.Drawing.Size(160, 22);
             this.numericUpDown47.TabIndex = 0;
             // 
             // APEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(731, 450);
+            this.ClientSize = new System.Drawing.Size(975, 554);
             this.Controls.Add(this.voiceBoxYC);
             this.Controls.Add(this.fetchVoiceData);
             this.Controls.Add(this.voiceBoxCS);
@@ -1843,9 +1986,13 @@ namespace CremeWorks
             this.Controls.Add(this.typeSelector);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "APEditor";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Auto Patch Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SaveStuffWhenClosing);
             this.deviceBox.ResumeLayout(false);

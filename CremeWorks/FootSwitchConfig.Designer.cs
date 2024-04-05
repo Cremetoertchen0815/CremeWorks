@@ -560,7 +560,7 @@ namespace CremeWorks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(601, 245);
+            this.ClientSize = new System.Drawing.Size(601, 252);
             this.Controls.Add(this.det13);
             this.Controls.Add(this.det12);
             this.Controls.Add(this.valB13);
@@ -599,6 +599,9 @@ namespace CremeWorks
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FootSwitchConfig";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Foot Controller";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FootSwitchConfig_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.valA1)).EndInit();
