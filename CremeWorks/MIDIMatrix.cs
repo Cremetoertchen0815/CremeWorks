@@ -16,17 +16,19 @@ namespace CremeWorks
 
         public Action<int, bool?> ActionExecute = (a, b) => { return; };
         public Song ActiveSong;
+
+        public const int INSTR_DEVICE_OFFSET = 1;
+
         public void Register()
         {
             if (_reg) return;
             if (_c?.Devices[0]?.Input != null) _c.Devices[0].Input.EventReceived += ListenFootPedal;
-            if (_c?.Devices[1]?.Input != null) _c.Devices[1].Input.EventReceived += ListenLightController;
-            if (_c?.Devices[2]?.Input != null) _c.Devices[2].Input.EventReceived += ListenMaster;
-            if (_c?.Devices[3]?.Input != null) _c.Devices[3].Input.EventReceived += ListenAux1;
-            if (_c?.Devices[4]?.Input != null) _c.Devices[4].Input.EventReceived += ListenAux2;
-            if (_c?.Devices[5]?.Input != null) _c.Devices[5].Input.EventReceived += ListenAux3;
-            if (_c?.Devices[6]?.Input != null) _c.Devices[6].Input.EventReceived += ListenAux4;
-            if (_c?.Devices[7]?.Input != null) _c.Devices[7].Input.EventReceived += ListenAux5;
+            if (_c?.Devices[1]?.Input != null) _c.Devices[2].Input.EventReceived += ListenMaster;
+            if (_c?.Devices[2]?.Input != null) _c.Devices[3].Input.EventReceived += ListenAux1;
+            if (_c?.Devices[3]?.Input != null) _c.Devices[4].Input.EventReceived += ListenAux2;
+            if (_c?.Devices[4]?.Input != null) _c.Devices[5].Input.EventReceived += ListenAux3;
+            if (_c?.Devices[5]?.Input != null) _c.Devices[6].Input.EventReceived += ListenAux4;
+            if (_c?.Devices[6]?.Input != null) _c.Devices[7].Input.EventReceived += ListenAux5;
             foreach (var element in _c.Devices) element.Input?.StartEventsListening();
             _reg = true;
         }
@@ -35,13 +37,12 @@ namespace CremeWorks
         {
             if (!_reg) return;
             if (_c?.Devices[0]?.Input != null) _c.Devices[0].Input.EventReceived -= ListenFootPedal;
-            if (_c?.Devices[1]?.Input != null) _c.Devices[1].Input.EventReceived -= ListenLightController;
-            if (_c?.Devices[2]?.Input != null) _c.Devices[2].Input.EventReceived -= ListenMaster;
-            if (_c?.Devices[3]?.Input != null) _c.Devices[3].Input.EventReceived -= ListenAux1;
-            if (_c?.Devices[4]?.Input != null) _c.Devices[4].Input.EventReceived -= ListenAux2;
-            if (_c?.Devices[5]?.Input != null) _c.Devices[5].Input.EventReceived -= ListenAux3;
-            if (_c?.Devices[6]?.Input != null) _c.Devices[6].Input.EventReceived -= ListenAux4;
-            if (_c?.Devices[7]?.Input != null) _c.Devices[7].Input.EventReceived -= ListenAux5;
+            if (_c?.Devices[1]?.Input != null) _c.Devices[2].Input.EventReceived -= ListenMaster;
+            if (_c?.Devices[2]?.Input != null) _c.Devices[3].Input.EventReceived -= ListenAux1;
+            if (_c?.Devices[3]?.Input != null) _c.Devices[4].Input.EventReceived -= ListenAux2;
+            if (_c?.Devices[4]?.Input != null) _c.Devices[5].Input.EventReceived -= ListenAux3;
+            if (_c?.Devices[5]?.Input != null) _c.Devices[6].Input.EventReceived -= ListenAux4;
+            if (_c?.Devices[6]?.Input != null) _c.Devices[7].Input.EventReceived -= ListenAux5;
             foreach (var element in _c.Devices) element.Input?.StopEventsListening();
             _reg = false;
         }
@@ -77,13 +78,6 @@ namespace CremeWorks
             }
         }
 
-        private void ListenLightController(object sender, MidiEventReceivedEventArgs e)
-        {
-            if (e.Event.EventType == MidiEventType.ActiveSensing) return;
-            System.Diagnostics.Debug.WriteLine(e.Event.EventType);
-            var lel = (NormalSysExEvent)e.Event;
-        }
-
         private void ListenMaster(object sender, MidiEventReceivedEventArgs e) => SendInstrData(0, e.Event);
         private void ListenAux1(object sender, MidiEventReceivedEventArgs e) => SendInstrData(1, e.Event);
         private void ListenAux2(object sender, MidiEventReceivedEventArgs e) => SendInstrData(2, e.Event);
@@ -102,7 +96,7 @@ namespace CremeWorks
                     {
                         var macro = ActiveSong.ChordMacros[i];
                         if (macro.TriggerNote != note.NoteNumber || ActiveSong.ChordMacroDst < 0) continue;
-                        var dstDev = _c.Devices[ActiveSong.ChordMacroDst + 2].Output;
+                        var dstDev = _c.Devices[ActiveSong.ChordMacroDst + INSTR_DEVICE_OFFSET].Output;
                         if (dstDev == null) continue;
 
                         if (note.Velocity > 0) note.Velocity = new SevenBitNumber((byte)macro.Velocity);
@@ -116,11 +110,11 @@ namespace CremeWorks
                 }
 
                 //If no chord macro, simply forward
-                for (int i = 0; i < 6; i++) if (ActiveSong.NotePatchMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+                for (int i = 0; i < 6; i++) if (ActiveSong.NotePatchMap[sender][i]) _c.Devices[INSTR_DEVICE_OFFSET + i].Output?.SendEvent(e);
             }
             else if (e.EventType == MidiEventType.ControlChange)
             {
-                for (int i = 0; i < 6; i++) if (ActiveSong.CCPatchMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+                for (int i = 0; i < 6; i++) if (ActiveSong.CCPatchMap[sender][i]) _c.Devices[INSTR_DEVICE_OFFSET + i].Output?.SendEvent(e);
             }
         }
     }

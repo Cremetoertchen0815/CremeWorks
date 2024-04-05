@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CremeWorks
@@ -30,6 +33,10 @@ namespace CremeWorks
             txtTitle.Text = s.Title;
             txtArtist.Text = s.Artist;
             txtKey.Text = s.Key;
+            txtLyrics.Text = s.Lyrics;
+            txtInstructions.Text = s.Instructions;
+            chkClick.Checked = s.Click;
+            txtBpm.Value = s.Tempo;
             txtLyrics.Text = s.Lyrics;
             apM.Checked = apbM.Enabled = s.AutoPatchSlots[0].Enabled;
             ap1.Checked = apb1.Enabled = s.AutoPatchSlots[1].Enabled;
@@ -65,6 +72,9 @@ namespace CremeWorks
             _s.Artist = txtArtist.Text;
             _s.Key = txtKey.Text;
             _s.Lyrics = txtLyrics.Text;
+            _s.Instructions = txtInstructions.Text;
+            _s.Click = chkClick.Checked;
+            _s.Tempo = (byte)txtBpm.Value;
             for (int x = 0; x < Concert.PATCH_DEVICE_COUNT; x++)
             {
                 for (int y = 0; y < Concert.PATCH_DEVICE_COUNT; y++)
@@ -118,9 +128,13 @@ namespace CremeWorks
             edit.ShowDialog();
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e) => blinkTimer.Interval = 60000 / (int)txtBpm.Value;
 
+        private async void blinkTimer_Tick(object sender, EventArgs e)
+        {
+            blinkBox.BackColor = Color.DarkBlue;
+            await Task.Delay(25);
+            blinkBox.BackColor = Color.White;
         }
     }
 }

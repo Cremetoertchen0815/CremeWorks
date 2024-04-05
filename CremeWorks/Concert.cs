@@ -11,7 +11,7 @@ namespace CremeWorks
 {
     public class Concert
     {
-        public const int MIN_DEVICE_COUNT = 8;
+        public const int ALL_DEVICES_COUNT = 7;
         public const int PATCH_DEVICE_COUNT = 6;
         public string FilePath;
         public MIDIDevice[] Devices;
@@ -62,13 +62,13 @@ namespace CremeWorks
 
         public static Concert Empty() => new Concert
         {
-            Devices = new MIDIDevice[] { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() },
+            Devices = Enumerable.Range(0, ALL_DEVICES_COUNT).Select(_ => new MIDIDevice()).ToArray(),
             FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1)},
             Playlist = new List<Song>(),
             LightingCues = new List<(string name, byte noteOnNr)>()
         };
 
-        private const int cVersion = 4;
+        private const int cVersion = 5;
         private const string cHeader = "CW";
         public static Concert LoadFromFile(string filename)
         {
@@ -88,9 +88,8 @@ namespace CremeWorks
                 return nu;
             }
 
-            var devCount = br.ReadInt32();
-            nu.Devices = new MIDIDevice[Math.Max(devCount, MIN_DEVICE_COUNT)];
-            for (int i = 0; i < MIN_DEVICE_COUNT; i++) nu.Devices[i] = new MIDIDevice() { Name = (i < devCount ? br.ReadString() : null) };
+            nu.Devices = new MIDIDevice[ALL_DEVICES_COUNT];
+            for (int i = 0; i < ALL_DEVICES_COUNT; i++) nu.Devices[i] = new MIDIDevice() { Name = br.ReadString() };
             
             //Foot switch config
             int cnt = br.ReadInt32();
@@ -236,8 +235,7 @@ namespace CremeWorks
             FilePath = filename;
             //Misc
             bw.Write(cHeader + cVersion);
-            bw.Write(Devices.Length);
-            for (int i = 0; i < Devices.Length; i++) bw.Write(Devices[i]?.Name ?? string.Empty);
+            for (int i = 0; i < ALL_DEVICES_COUNT; i++) bw.Write(Devices[i]?.Name ?? string.Empty);
             //Foot switch config
             bw.Write(FootSwitchConfig.Length);
             for (int i = 0; i < FootSwitchConfig.Length; i++)

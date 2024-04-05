@@ -158,7 +158,7 @@ namespace CremeWorks
             this.label34 = new System.Windows.Forms.Label();
             this.blinkBox = new System.Windows.Forms.Panel();
             this.chkClick = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtInstructions = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
             this.blinkTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.txtBpm)).BeginInit();
@@ -1444,7 +1444,7 @@ namespace CremeWorks
             this.txtBpm.Location = new System.Drawing.Point(235, 103);
             this.txtBpm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtBpm.Maximum = new decimal(new int[] {
-            280,
+            255,
             0,
             0,
             0});
@@ -1494,15 +1494,15 @@ namespace CremeWorks
             this.chkClick.Text = "Aktivieren";
             this.chkClick.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // txtInstructions
             // 
-            this.textBox1.Location = new System.Drawing.Point(104, 135);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(571, 85);
-            this.textBox1.TabIndex = 137;
+            this.txtInstructions.Location = new System.Drawing.Point(104, 135);
+            this.txtInstructions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtInstructions.Multiline = true;
+            this.txtInstructions.Name = "txtInstructions";
+            this.txtInstructions.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtInstructions.Size = new System.Drawing.Size(571, 85);
+            this.txtInstructions.TabIndex = 137;
             // 
             // label35
             // 
@@ -1514,13 +1514,19 @@ namespace CremeWorks
             this.label35.TabIndex = 136;
             this.label35.Text = "Instructions";
             // 
+            // blinkTimer
+            // 
+            this.blinkTimer.Enabled = true;
+            this.blinkTimer.Interval = 500;
+            this.blinkTimer.Tick += new System.EventHandler(this.blinkTimer_Tick);
+            // 
             // SongEditor
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(829, 798);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtInstructions);
             this.Controls.Add(this.label35);
             this.Controls.Add(this.chkClick);
             this.Controls.Add(this.blinkBox);
@@ -1793,7 +1799,7 @@ namespace CremeWorks
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Panel blinkBox;
         private System.Windows.Forms.CheckBox chkClick;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtInstructions;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Timer blinkTimer;
     }

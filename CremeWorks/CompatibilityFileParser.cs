@@ -11,15 +11,27 @@ namespace CremeWorks
 {
     public static class CompatibilityFileParser
     {
-
+        public const int ALL_DEVICES_COUNT_PRE5 = 8;
         public const int PATCH_DEVICE_COUNT_PRE3 = 4;
 
         public static void LoadFilePreVer5(Concert nu, BinaryReader br, int version)
         {
-
+            var lightDevice = true;
             var devCount = br.ReadInt32();
-            nu.Devices = new MIDIDevice[Math.Max(devCount, Concert.MIN_DEVICE_COUNT)];
-            for (int i = 0; i < Concert.MIN_DEVICE_COUNT; i++) nu.Devices[i] = new MIDIDevice() { Name = (i < devCount ? br.ReadString() : null) };
+            nu.Devices = new MIDIDevice[Math.Max(devCount, ALL_DEVICES_COUNT_PRE5) - 1];
+            for (int i = 0; i < nu.Devices.Length; i++)
+            {
+                //Don't read lighting device as it was removed in version 5
+                if (i == 1 && lightDevice)
+                {
+                    _ = br.ReadString();
+                    lightDevice = false;
+                    i--;
+                    continue;
+                }
+                nu.Devices[i] = new MIDIDevice() { Name = (i < devCount ? br.ReadString() : null) };
+            }
+
             //Foot switch config
             int cnt = br.ReadInt32();
             nu.FootSwitchConfig = new (MidiEventType, short, byte)[13];

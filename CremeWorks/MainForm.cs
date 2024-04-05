@@ -227,7 +227,7 @@ namespace CremeWorks
             UpdateConcert();
         }
 
-        private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) { } //=> new LightingConfig(_c).ShowDialog();
+        private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightCueManager(_c).ShowDialog();
 
         private void button15_Click(object sender, EventArgs e)
         {
@@ -291,6 +291,11 @@ namespace CremeWorks
                 nIndexB = sIndex;
 
             }
+        }
+
+        private void btnChatSend_Click(object sender, EventArgs e)
+        {
+            lblBpm.Text = "120♫";
         }
     }
 }

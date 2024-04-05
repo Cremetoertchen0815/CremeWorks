@@ -85,6 +85,12 @@
     <Compile Include="LightCueEditor.Designer.cs">
       <DependentUpon>LightCueEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="LightCueManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LightCueManager.Designer.cs">
+      <DependentUpon>LightCueManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LightCueEditor.resx">
       <DependentUpon>LightCueEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LightCueManager.resx">
+      <DependentUpon>LightCueManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
