@@ -106,16 +106,15 @@ namespace CremeWorks
             nu.Playlist = new List<Song>();
             for (int i = 0; i < count; i++)
             {
-                var nuTitle = br.ReadString();
-                var nuArtist = br.ReadString();
-                var nuKey = br.ReadString();
-                var nuLyrics = br.ReadString();
                 var s = new Song
                 {
-                    Title = nuTitle,
-                    Artist = nuArtist,
-                    Key = nuKey,
-                    Lyrics = nuLyrics,
+                    Title = br.ReadString(),
+                    Artist = br.ReadString(),
+                    Key = br.ReadString(),
+                    Lyrics = br.ReadString(),
+                    Instructions = br.ReadString(),
+                    Tempo = br.ReadByte(),
+                    Click = br.ReadBoolean(),
                     NotePatchMap = new bool[PATCH_DEVICE_COUNT][],
                     CCPatchMap = new bool[PATCH_DEVICE_COUNT][]
                 };
@@ -265,6 +264,9 @@ namespace CremeWorks
                 bw.Write(song.Artist);
                 bw.Write(song.Key);
                 bw.Write(song.Lyrics);
+                bw.Write(song.Instructions);
+                bw.Write(song.Tempo);
+                bw.Write(song.Click);
                 for (int j = 0; j < PATCH_DEVICE_COUNT; j++)
                 {
                     for (int k = 0; k < PATCH_DEVICE_COUNT; k++) bw.Write(song.NotePatchMap?[j]?[k] ?? false);

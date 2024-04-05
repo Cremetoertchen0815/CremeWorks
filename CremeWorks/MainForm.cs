@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -65,18 +66,21 @@ namespace CremeWorks
 
             if (_s == null) return;
 
-            for (int i = 0; i < _s.CueList.Count; i++) lightCue.Items.Add((i + 1).ToString() + ". " + _s.CueList[i].comment);
-
+            for (int i = 0; i < _s.CueList.Count; i++)
+            {
+                var cueType = _c.LightingCues.FirstOrDefault(x => x.noteOnNr == _s.CueList[i].cueNr).name;
+                lightCue.Items.Add($"{i + 1}. {_s.CueList[i].comment}({cueType})");
+            }
             //Configure shit
             songTitle.Text = _s.Title;
             songLyrics.Text = _s.Lyrics;
             songKey.Text = "Key: " + _s.Key;
             ConfigSongMIDI();
 
-            //Load default QA patch
+            //Load default cue patch
             if (lightCue.Items.Count > 0) lightCue.SelectedIndex = 0;
         }
-        
+
         private void ConfigSongMIDI()
         {
             _c.MidiMatrix.ActiveSong = _s;
@@ -261,7 +265,7 @@ namespace CremeWorks
         private void button10_Click(object sender, EventArgs e)
         {
             if (_s == null || lightCue.SelectedIndex < 0) return;
-             _s.CueList.Add(_s.CueList[lightCue.SelectedIndex]);
+            _s.CueList.Add(_s.CueList[lightCue.SelectedIndex]);
             UpdateSong();
         }
 
@@ -273,7 +277,7 @@ namespace CremeWorks
         private void lightCue_MouseMove(object sender, MouseEventArgs e)
         {
             int sIndex = lightCue.SelectedIndex;
-            if(e.Button == MouseButtons.Left && nIndexB > -1 && nIndexB != sIndex)
+            if (e.Button == MouseButtons.Left && nIndexB > -1 && nIndexB != sIndex)
             {
                 object aObj = lightCue.Items[nIndexB];
                 var bObj = _s.CueList[nIndexB];

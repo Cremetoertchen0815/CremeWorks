@@ -117,5 +117,10 @@ namespace CremeWorks
             var edit = new ChordMacroEditor(_s, _c);
             edit.ShowDialog();
         }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
