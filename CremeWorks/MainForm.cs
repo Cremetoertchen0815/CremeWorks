@@ -61,7 +61,8 @@ namespace CremeWorks
         {
             songTitle.Text = string.Empty;
             songLyrics.Text = string.Empty;
-            songKey.Text = "Key: -";
+            songKey.Text = "";
+            songTempo.Text = "";
             lightCue.Items.Clear();
 
             if (_s == null) return;
@@ -74,7 +75,8 @@ namespace CremeWorks
             //Configure shit
             songTitle.Text = _s.Title;
             songLyrics.Text = _s.Lyrics;
-            songKey.Text = "Key: " + _s.Key;
+            songKey.Text = _s.Key;
+            songTempo.Text = _s.Tempo.ToString() + " BPM";
             ConfigSongMIDI();
 
             //Load default cue patch
@@ -295,7 +297,8 @@ namespace CremeWorks
 
         private void btnChatSend_Click(object sender, EventArgs e)
         {
-            lblBpm.Text = "120♫";
+            chatBox.Items.Add("Server: " + chatInput.Text);
+            chatInput.Text = string.Empty;
         }
     }
 }
