@@ -30,6 +30,7 @@ partial class SplashScreen
     {
         label1 = new Label();
         pictureBox1 = new PictureBox();
+        lblStatus = new Label();
         ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
         SuspendLayout();
         // 
@@ -56,6 +57,17 @@ partial class SplashScreen
         pictureBox1.TabIndex = 1;
         pictureBox1.TabStop = false;
         // 
+        // lblStatus
+        // 
+        lblStatus.BackColor = Color.Transparent;
+        lblStatus.Font = new Font("Comic Sans MS", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        lblStatus.ForeColor = Color.Red;
+        lblStatus.Location = new Point(281, 357);
+        lblStatus.Name = "lblStatus";
+        lblStatus.Size = new Size(412, 31);
+        lblStatus.TabIndex = 2;
+        lblStatus.TextAlign = ContentAlignment.TopRight;
+        // 
         // SplashScreen
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -63,6 +75,7 @@ partial class SplashScreen
         BackgroundImage = Properties.Resources.Momentaufnahme___17;
         BackgroundImageLayout = ImageLayout.Stretch;
         ClientSize = new Size(705, 397);
+        Controls.Add(lblStatus);
         Controls.Add(pictureBox1);
         Controls.Add(label1);
         DoubleBuffered = true;
@@ -82,4 +95,5 @@ partial class SplashScreen
 
     private Label label1;
     private PictureBox pictureBox1;
+    private Label lblStatus;
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CremeWorks.Networking;
+using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -9,6 +10,7 @@ namespace CremeWorks
     {
         private Concert _c = Concert.Empty();
         private Song _s = null;
+        private NetworkingServer _server = new NetworkingServer();
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -300,5 +302,22 @@ namespace CremeWorks
             chatBox.Items.Add("Server: " + chatInput.Text);
             chatInput.Text = string.Empty;
         }
+
+        private void startToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (startToolStripMenuItem.Checked)
+            {
+                _server.Stop();
+                startToolStripMenuItem.Text = "Start";
+                startToolStripMenuItem.Checked = false;
+            } else
+            {
+                _server.Start();
+                startToolStripMenuItem.Text = "Stop";
+                startToolStripMenuItem.Checked = true;
+            }
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e) => _server.Stop();
     }
 }

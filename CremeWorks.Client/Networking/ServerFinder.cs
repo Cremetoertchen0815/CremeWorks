@@ -7,8 +7,6 @@ public class ServerFinder
 {
     private UdpClient _listenClient;
 
-    public event Action<IPAddress>? ServerFound;
-
     private const int LISTENING_PORT = 25565;
     private const string LISTENING_IDENTIFIER = "CremeWorks Listener v1.0";
 
@@ -18,14 +16,25 @@ public class ServerFinder
         _listenClient.Client.Bind(new IPEndPoint(IPAddress.Any, LISTENING_PORT));
     }
 
-    public async Task ListenAsync(CancellationToken cancelSource)
+    public async Task<IPAddress?> ListenAsync(CancellationToken cancelSource)
     {
+
         while (!cancelSource.IsCancellationRequested)
         {
             var recvBuffer = await _listenClient.ReceiveAsync(cancelSource);
             var str = Encoding.ASCII.GetString(recvBuffer.Buffer);
             if (str != LISTENING_IDENTIFIER) continue;
-            ServerFound?.Invoke(recvBuffer.RemoteEndPoint.Address);
+            return recvBuffer.RemoteEndPoint.Address;
         }
+
+        return null;
+    }
+
+    public void Close()
+    {
+        _listenClient.Close();
+        _listenClient.Client.Close();
+        _listenClient.Dispose();
+
     }
 }

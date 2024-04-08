@@ -182,19 +182,20 @@ namespace CremeWorks
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.startToolStripMenuItem.Text = "Start";
+            this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
             // 
             // changeClientNameToolStripMenuItem
             // 
             this.changeClientNameToolStripMenuItem.Name = "changeClientNameToolStripMenuItem";
-            this.changeClientNameToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.changeClientNameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.changeClientNameToolStripMenuItem.Text = "Change Name";
             // 
             // connectedClientsToolStripMenuItem
             // 
             this.connectedClientsToolStripMenuItem.Name = "connectedClientsToolStripMenuItem";
-            this.connectedClientsToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.connectedClientsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.connectedClientsToolStripMenuItem.Text = "Connected Clients";
             // 
             // configureToolStripMenuItem1
@@ -212,32 +213,32 @@ namespace CremeWorks
             // footSwitchToolStripMenuItem
             // 
             this.footSwitchToolStripMenuItem.Name = "footSwitchToolStripMenuItem";
-            this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.footSwitchToolStripMenuItem.Text = "Foot Switch";
             this.footSwitchToolStripMenuItem.Click += new System.EventHandler(this.footSwitchToolStripMenuItem_Click);
             // 
             // lightControllerToolStripMenuItem
             // 
             this.lightControllerToolStripMenuItem.Name = "lightControllerToolStripMenuItem";
-            this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.lightControllerToolStripMenuItem.Text = "Cues";
             this.lightControllerToolStripMenuItem.Click += new System.EventHandler(this.lightControllerToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(156, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(177, 6);
             // 
             // clickOutputToolStripMenuItem
             // 
             this.clickOutputToolStripMenuItem.Name = "clickOutputToolStripMenuItem";
-            this.clickOutputToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.clickOutputToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clickOutputToolStripMenuItem.Text = "Click Output";
             // 
             // lightingOutputToolStripMenuItem
             // 
             this.lightingOutputToolStripMenuItem.Name = "lightingOutputToolStripMenuItem";
-            this.lightingOutputToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.lightingOutputToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.lightingOutputToolStripMenuItem.Text = "Lighting Output";
             // 
             // label1
@@ -449,7 +450,7 @@ namespace CremeWorks
             // 
             this.chatInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chatInput.Location = new System.Drawing.Point(787, 290);
-            this.chatInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chatInput.Margin = new System.Windows.Forms.Padding(2);
             this.chatInput.Name = "chatInput";
             this.chatInput.Size = new System.Drawing.Size(156, 20);
             this.chatInput.TabIndex = 30;
@@ -481,7 +482,7 @@ namespace CremeWorks
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Location = new System.Drawing.Point(684, 575);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(18, 20);
             this.panel1.TabIndex = 33;
@@ -518,6 +519,7 @@ namespace CremeWorks
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "CremeWorks Stage Controller";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

@@ -18,15 +18,18 @@ public partial class SplashScreen : Form
 
     public SplashScreen() => InitializeComponent();
 
+    private ServerFinder _finder = new();
+
     private async void SplashScreen_Shown(object sender, EventArgs e)
     {
-        IPAddress[] clients = [];
+        IPAddress? client = null;
         while (true)
         {
+            lblStatus.Text = "Searching for server...";
             var timeout = false;
             try
             {
-                clients = await FindServer();
+                client = await FindServer();
             }
             catch (OperationCanceledException)
             {
@@ -40,7 +43,7 @@ public partial class SplashScreen : Form
             }
 
             //Check if servers can be found
-            if (timeout || clients.Length == 0)
+            if (timeout || client == null)
             {
                 var userAction = MessageBox.Show("No servers have been found! Do you want to retry?", "Server Scan Timeout", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Error);
                 switch (userAction)
@@ -55,19 +58,32 @@ public partial class SplashScreen : Form
                 continue;
             }
 
-            var serverIp = clients.Length == 1 ? clients[0] : ServerSelection.Show(clients);
-            if (serverIp is null) break;
+            lblStatus.Text = "Connecting to client...";
+            await Task.Delay(1000);
+
+            var hub = new CommunicationHub(client);
+            if (!await hub.Connect())
+            {
+                if (MessageBox.Show("Communication failed! Retry?", "Server Connection failed", MessageBoxButtons.YesNo, MessageBoxIcon.Error) != DialogResult.Yes)
+                {
+                    Application.Exit();
+                    return;
+                }
+                continue;
+            }
+
+            //Start main form
+            var main = new Form1(client);
+            main.Show();
+            Close();
+            break;
         }
     }
 
-    private async Task<IPAddress[]> FindServer()
+    private async Task<IPAddress?> FindServer()
     {
-        var serverList = new ConcurrentBag<IPAddress>();
-        var finder = new ServerFinder();
-        finder.ServerFound += serverList.Add;
-
         var cSource = new CancellationTokenSource(TimeSpan.FromSeconds(FIND_TIMEOUT_SEC));
-        await finder.ListenAsync(cSource.Token);
-        return serverList.ToArray();
+        var result = await _finder.ListenAsync(cSource.Token);
+        return result;
     }
 }
