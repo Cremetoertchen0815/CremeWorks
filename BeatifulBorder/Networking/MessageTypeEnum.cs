@@ -1,4 +1,10 @@
-﻿namespace CremeWorks.Common.Networking;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CremeWorks.Client.Networking;
 public enum MessageTypeEnum : byte
 {
     PLAYLIST_DATA = 0x00,
