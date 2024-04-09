@@ -31,8 +31,8 @@ partial class Form1
     private void InitializeComponent()
     {
         var resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-        listBox1 = new ListBox();
-        listBox2 = new ListBox();
+        lstSet = new ListBox();
+        lstChat = new ListBox();
         label2 = new Label();
         textBox1 = new TextBox();
         button1 = new Button();
@@ -50,40 +50,41 @@ partial class Form1
         setBox = new BorderedGroupBox();
         label4 = new Label();
         tableLayoutPanel1 = new TableLayoutPanel();
+        lblSetName = new Label();
         groupBox1.SuspendLayout();
         groupBox2.SuspendLayout();
         setBox.SuspendLayout();
         tableLayoutPanel1.SuspendLayout();
         SuspendLayout();
         // 
-        // listBox1
+        // lstSet
         // 
-        listBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-        listBox1.BackColor = Color.FromArgb(64, 64, 64);
-        listBox1.Font = new Font("Microsoft Sans Serif", 12F);
-        listBox1.ForeColor = Color.White;
-        listBox1.FormattingEnabled = true;
-        listBox1.IntegralHeight = false;
-        listBox1.ItemHeight = 25;
-        listBox1.Location = new Point(13, 61);
-        listBox1.Name = "listBox1";
-        listBox1.Size = new Size(257, 582);
-        listBox1.TabIndex = 0;
+        lstSet.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        lstSet.BackColor = Color.FromArgb(64, 64, 64);
+        lstSet.Font = new Font("Microsoft Sans Serif", 12F);
+        lstSet.ForeColor = Color.White;
+        lstSet.FormattingEnabled = true;
+        lstSet.IntegralHeight = false;
+        lstSet.ItemHeight = 25;
+        lstSet.Location = new Point(13, 61);
+        lstSet.Name = "lstSet";
+        lstSet.Size = new Size(257, 582);
+        lstSet.TabIndex = 0;
         // 
-        // listBox2
+        // lstChat
         // 
-        listBox2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-        listBox2.BackColor = Color.FromArgb(64, 64, 64);
-        listBox2.Font = new Font("Microsoft Sans Serif", 6F);
-        listBox2.ForeColor = Color.White;
-        listBox2.FormattingEnabled = true;
-        listBox2.IntegralHeight = false;
-        listBox2.ItemHeight = 13;
-        listBox2.Items.AddRange(new object[] { "Server: HiHat zu laut!", "Mischa: Ja, ich weiß!" });
-        listBox2.Location = new Point(13, 33);
-        listBox2.Name = "listBox2";
-        listBox2.Size = new Size(684, 204);
-        listBox2.TabIndex = 1;
+        lstChat.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        lstChat.BackColor = Color.FromArgb(64, 64, 64);
+        lstChat.Font = new Font("Microsoft Sans Serif", 12F);
+        lstChat.ForeColor = Color.White;
+        lstChat.FormattingEnabled = true;
+        lstChat.IntegralHeight = false;
+        lstChat.ItemHeight = 25;
+        lstChat.Items.AddRange(new object[] { "Server: HiHat zu laut!", "Mischa: Ja, ich weiß!" });
+        lstChat.Location = new Point(13, 33);
+        lstChat.Name = "lstChat";
+        lstChat.Size = new Size(684, 204);
+        lstChat.TabIndex = 1;
         // 
         // label2
         // 
@@ -124,7 +125,7 @@ partial class Form1
         groupBox1.BorderColor = Color.Navy;
         groupBox1.BorderRadius = 8;
         groupBox1.BorderWidth = 2;
-        groupBox1.Controls.Add(listBox2);
+        groupBox1.Controls.Add(lstChat);
         groupBox1.Controls.Add(button1);
         groupBox1.Controls.Add(textBox1);
         groupBox1.Dock = DockStyle.Fill;
@@ -270,8 +271,9 @@ partial class Form1
         setBox.BorderColor = Color.Navy;
         setBox.BorderRadius = 8;
         setBox.BorderWidth = 2;
+        setBox.Controls.Add(lblSetName);
         setBox.Controls.Add(label4);
-        setBox.Controls.Add(listBox1);
+        setBox.Controls.Add(lstSet);
         setBox.Dock = DockStyle.Fill;
         setBox.ForeColor = Color.FromArgb(128, 128, 255);
         setBox.LabelIndent = 10;
@@ -315,6 +317,16 @@ partial class Form1
         tableLayoutPanel1.Size = new Size(1013, 664);
         tableLayoutPanel1.TabIndex = 8;
         // 
+        // lblSetName
+        // 
+        lblSetName.AutoSize = true;
+        lblSetName.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        lblSetName.ForeColor = Color.White;
+        lblSetName.Location = new Point(94, 25);
+        lblSetName.Name = "lblSetName";
+        lblSetName.Size = new Size(0, 25);
+        lblSetName.TabIndex = 8;
+        // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
@@ -340,8 +352,8 @@ partial class Form1
 
     #endregion
 
-    private ListBox listBox1;
-    private ListBox listBox2;
+    private ListBox lstSet;
+    private ListBox lstChat;
     private Label label2;
     private TextBox textBox1;
     private Button button1;
@@ -359,4 +371,5 @@ partial class Form1
     private BorderedGroupBox groupBox1;
     private BorderedGroupBox groupBox2;
     private BorderedGroupBox setBox;
+    private Label lblSetName;
 }

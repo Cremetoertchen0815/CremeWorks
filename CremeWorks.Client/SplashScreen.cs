@@ -73,7 +73,7 @@ public partial class SplashScreen : Form
             }
 
             //Start main form
-            var main = new Form1(client);
+            var main = new Form1(hub);
             main.Show();
             Close();
             break;

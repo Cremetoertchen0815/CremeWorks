@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CremeWorks.Client.Networking;
-public enum MessageTypeEnum : byte
+namespace CremeWorks.Client.Networking
 {
-    PLAYLIST_DATA = 0x00,
-    CURRENT_SONG = 0x01,
-    CLICK_INFO = 0x02,
-    CHAT_MESSAGE = 0x03,
-    LIGHT_MESSAGE = 0x04
+    public enum MessageTypeEnum : byte
+    {
+        SET_DATA = 0x00,
+        CURRENT_SONG = 0x01,
+        CLICK_INFO = 0x02,
+        CHAT_MESSAGE = 0x03,
+        LIGHT_MESSAGE = 0x04
+    }
 }
