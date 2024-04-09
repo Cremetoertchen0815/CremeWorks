@@ -47,9 +47,11 @@ partial class Form1
         label1 = new Label();
         setBox = new GroupBox();
         label4 = new Label();
+        tableLayoutPanel1 = new TableLayoutPanel();
         groupBox1.SuspendLayout();
         groupBox2.SuspendLayout();
         setBox.SuspendLayout();
+        tableLayoutPanel1.SuspendLayout();
         SuspendLayout();
         // 
         // listBox1
@@ -61,7 +63,7 @@ partial class Form1
         listBox1.ItemHeight = 25;
         listBox1.Location = new Point(7, 63);
         listBox1.Name = "listBox1";
-        listBox1.Size = new Size(310, 554);
+        listBox1.Size = new Size(350, 674);
         listBox1.TabIndex = 0;
         // 
         // listBox2
@@ -74,7 +76,7 @@ partial class Form1
         listBox2.Items.AddRange(new object[] { "Server: HiHat zu laut!", "Mischa: Ja, ich weiß!" });
         listBox2.Location = new Point(10, 30);
         listBox2.Name = "listBox2";
-        listBox2.Size = new Size(598, 163);
+        listBox2.Size = new Size(889, 250);
         listBox2.TabIndex = 1;
         // 
         // label2
@@ -91,15 +93,15 @@ partial class Form1
         // 
         textBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        textBox1.Location = new Point(10, 199);
+        textBox1.Location = new Point(10, 286);
         textBox1.Name = "textBox1";
-        textBox1.Size = new Size(498, 34);
+        textBox1.Size = new Size(789, 34);
         textBox1.TabIndex = 4;
         // 
         // button1
         // 
         button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-        button1.Location = new Point(514, 199);
+        button1.Location = new Point(805, 286);
         button1.Name = "button1";
         button1.Size = new Size(94, 34);
         button1.TabIndex = 5;
@@ -111,12 +113,12 @@ partial class Form1
         groupBox1.Controls.Add(listBox2);
         groupBox1.Controls.Add(button1);
         groupBox1.Controls.Add(textBox1);
-        groupBox1.Dock = DockStyle.Bottom;
-        groupBox1.Location = new Point(324, 384);
-        groupBox1.Margin = new Padding(10);
+        groupBox1.Dock = DockStyle.Fill;
+        groupBox1.Location = new Point(379, 422);
+        groupBox1.Margin = new Padding(5);
         groupBox1.Name = "groupBox1";
         groupBox1.Padding = new Padding(7);
-        groupBox1.Size = new Size(618, 240);
+        groupBox1.Size = new Size(909, 327);
         groupBox1.TabIndex = 6;
         groupBox1.TabStop = false;
         groupBox1.Text = "Chat";
@@ -134,11 +136,11 @@ partial class Form1
         groupBox2.Controls.Add(label2);
         groupBox2.Controls.Add(label1);
         groupBox2.Dock = DockStyle.Fill;
-        groupBox2.Location = new Point(324, 0);
-        groupBox2.Margin = new Padding(10);
+        groupBox2.Location = new Point(379, 5);
+        groupBox2.Margin = new Padding(5);
         groupBox2.Name = "groupBox2";
         groupBox2.Padding = new Padding(7);
-        groupBox2.Size = new Size(618, 384);
+        groupBox2.Size = new Size(909, 407);
         groupBox2.TabIndex = 7;
         groupBox2.TabStop = false;
         groupBox2.Text = "Current Song";
@@ -179,7 +181,7 @@ partial class Form1
         textBox2.Multiline = true;
         textBox2.Name = "textBox2";
         textBox2.ReadOnly = true;
-        textBox2.Size = new Size(456, 163);
+        textBox2.Size = new Size(747, 186);
         textBox2.TabIndex = 9;
         // 
         // label9
@@ -228,7 +230,7 @@ partial class Form1
         label1.Font = new Font("Microsoft Sans Serif", 21.75F);
         label1.Location = new Point(7, 27);
         label1.Name = "label1";
-        label1.Size = new Size(604, 48);
+        label1.Size = new Size(895, 48);
         label1.TabIndex = 2;
         label1.Text = "Song1";
         label1.TextAlign = ContentAlignment.TopCenter;
@@ -237,12 +239,13 @@ partial class Form1
         // 
         setBox.Controls.Add(label4);
         setBox.Controls.Add(listBox1);
-        setBox.Dock = DockStyle.Left;
-        setBox.Location = new Point(0, 0);
-        setBox.Margin = new Padding(10);
+        setBox.Dock = DockStyle.Fill;
+        setBox.Location = new Point(5, 5);
+        setBox.Margin = new Padding(5);
         setBox.Name = "setBox";
         setBox.Padding = new Padding(7);
-        setBox.Size = new Size(324, 624);
+        tableLayoutPanel1.SetRowSpan(setBox, 2);
+        setBox.Size = new Size(364, 744);
         setBox.TabIndex = 5;
         setBox.TabStop = false;
         setBox.Text = "Set";
@@ -257,25 +260,43 @@ partial class Form1
         label4.TabIndex = 5;
         label4.Text = "Name: ";
         // 
+        // tableLayoutPanel1
+        // 
+        tableLayoutPanel1.ColumnCount = 2;
+        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 28.92498F));
+        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 71.07502F));
+        tableLayoutPanel1.Controls.Add(groupBox2, 1, 0);
+        tableLayoutPanel1.Controls.Add(setBox, 0, 0);
+        tableLayoutPanel1.Controls.Add(groupBox1, 1, 1);
+        tableLayoutPanel1.Dock = DockStyle.Fill;
+        tableLayoutPanel1.Location = new Point(0, 0);
+        tableLayoutPanel1.Name = "tableLayoutPanel1";
+        tableLayoutPanel1.RowCount = 2;
+        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 55.30504F));
+        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 44.69496F));
+        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+        tableLayoutPanel1.Size = new Size(1293, 754);
+        tableLayoutPanel1.TabIndex = 8;
+        // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(942, 624);
-        Controls.Add(groupBox2);
-        Controls.Add(groupBox1);
-        Controls.Add(setBox);
+        ClientSize = new Size(1293, 754);
+        Controls.Add(tableLayoutPanel1);
         Icon = (Icon)resources.GetObject("$this.Icon");
         Margin = new Padding(3, 4, 3, 4);
         MinimumSize = new Size(680, 600);
         Name = "Form1";
         Text = "CremeWorks Client v1.0";
+        FormClosed += Form1_FormClosed;
         groupBox1.ResumeLayout(false);
         groupBox1.PerformLayout();
         groupBox2.ResumeLayout(false);
         groupBox2.PerformLayout();
         setBox.ResumeLayout(false);
         setBox.PerformLayout();
+        tableLayoutPanel1.ResumeLayout(false);
         ResumeLayout(false);
     }
 
@@ -299,4 +320,5 @@ partial class Form1
     private Panel panel1;
     private Label label5;
     private Label label7;
+    private TableLayoutPanel tableLayoutPanel1;
 }
