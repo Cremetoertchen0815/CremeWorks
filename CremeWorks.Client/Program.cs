@@ -11,7 +11,7 @@ internal static class Program
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        new SplashScreen().Show();
+        new Form1(null).Show();
         Application.Run();
     }
 }
