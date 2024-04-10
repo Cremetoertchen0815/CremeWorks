@@ -53,8 +53,8 @@ public partial class Form1 : Form
                 break;
             case MessageTypeEnum.CURRENT_SONG:
                 _currentSong = JsonConvert.DeserializeObject<SongInformation>(data) ?? throw new Exception("Invalid data!");
-                lstSet.SetSelected(_currentSong.Index, true);
-                lblTitle.Text = (string?)lstSet.SelectedItem ?? "Error";
+                lstSet.SelectedIndex = _currentSong.Index;
+                lblTitle.Text = _currentSong.SmallName;
                 lblTempo.Text = _currentSong.Tempo.ToString() + " BPM";
                 lblCurrCue.Text = _currentSong.Cues.Length == 0 ? "-" : _currentSong.Cues[0];
                 lblNextCue.Text = _currentSong.Cues.Length < 2 ? "-" : _currentSong.Cues[1];
@@ -63,12 +63,12 @@ public partial class Form1 : Form
             case MessageTypeEnum.CUE_INDEX:
                 var index = int.Parse(data);
                 if (_currentSong?.Cues is null) break;
-                lblCurrCue.Text = _currentSong.Cues.Length <= index ? "-" : _currentSong.Cues[index];
-                lblNextCue.Text = _currentSong.Cues.Length <= index+1 ? "-" : _currentSong.Cues[index+1];
+                lblCurrCue.Text = _currentSong.Cues.Length <= Math.Max(index, 0) ? "-" : _currentSong.Cues[index];
+                lblNextCue.Text = _currentSong.Cues.Length <= Math.Max(index, 0) + 1 ? "-" : _currentSong.Cues[index+1];
                 break;
             case MessageTypeEnum.CHAT_MESSAGE:
                 lstChat.Items.Add(data);
-                lstChat.SetSelected(lstChat.Items.Count, true);
+                lstChat.SelectedIndex = lstChat.Items.Count-1;
                 break;
             case MessageTypeEnum.CLICK_INFO:
                 break;
@@ -82,7 +82,7 @@ public partial class Form1 : Form
     private void btnChat_Click(object sender, EventArgs e)
     {
         if (txtChat.Text == string.Empty) return;
-        txtChat.Text = string.Empty;
         _netHub.SendData(MessageTypeEnum.CHAT_MESSAGE, txtChat.Text);
+        txtChat.Text = string.Empty;
     }
 }

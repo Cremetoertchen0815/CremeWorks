@@ -338,6 +338,7 @@ partial class Form1
         // 
         // Form1
         // 
+        AcceptButton = btnChat;
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(886, 498);

@@ -114,6 +114,7 @@ namespace CremeWorks
                     Instructions = br.ReadString(),
                     Tempo = br.ReadByte(),
                     Click = br.ReadBoolean(),
+                    SpecialEvent = br.ReadBoolean(),
                     NotePatchMap = new bool[PATCH_DEVICE_COUNT][],
                     CCPatchMap = new bool[PATCH_DEVICE_COUNT][]
                 };
@@ -265,6 +266,7 @@ namespace CremeWorks
                 bw.Write(song.Instructions);
                 bw.Write(song.Tempo);
                 bw.Write(song.Click);
+                bw.Write(song.SpecialEvent);
                 for (int j = 0; j < PATCH_DEVICE_COUNT; j++)
                 {
                     for (int k = 0; k < PATCH_DEVICE_COUNT; k++) bw.Write(song.NotePatchMap?[j]?[k] ?? false);

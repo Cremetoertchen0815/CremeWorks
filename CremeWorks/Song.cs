@@ -12,6 +12,7 @@ namespace CremeWorks
         public string Instructions;
         public byte Tempo = 120;
         public bool Click = false;
+        public bool SpecialEvent = false;
         public bool[][] NotePatchMap = { new bool[] { true, false, false, false, false, false }, new bool[] { false, true, false, false, false, false }, new bool[] { false, false, true, false, false, false }, new bool[] { false, false, false, true, false, false }, new bool[] { false, false, false, false, true, false }, new bool[] { false, false, false, false, false, true } };
         public bool[][] CCPatchMap = { new bool[] { true, false, false, false, false, false }, new bool[] { false, true, false, false, false, false }, new bool[] { false, false, true, false, false, false }, new bool[] { false, false, false, true, false, false }, new bool[] { false, false, false, false, true, false }, new bool[] { false, false, false, false, false, true } };
         public (bool Enabled, Reface.IRefacePatch Patch)[] AutoPatchSlots = { (false, null), (false, null), (false, null), (false, null), (false, null), (false, null) };

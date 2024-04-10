@@ -36,6 +36,7 @@ namespace CremeWorks
             txtLyrics.Text = s.Lyrics;
             txtInstructions.Text = s.Instructions;
             chkClick.Checked = s.Click;
+            chkSpecialEvent.Checked = s.SpecialEvent;
             txtBpm.Value = s.Tempo;
             txtLyrics.Text = s.Lyrics;
             apM.Checked = apbM.Enabled = s.AutoPatchSlots[0].Enabled;
@@ -75,6 +76,7 @@ namespace CremeWorks
             _s.Instructions = txtInstructions.Text;
             _s.Click = chkClick.Checked;
             _s.Tempo = (byte)txtBpm.Value;
+            _s.SpecialEvent = chkSpecialEvent.Checked;
             for (int x = 0; x < Concert.PATCH_DEVICE_COUNT; x++)
             {
                 for (int y = 0; y < Concert.PATCH_DEVICE_COUNT; y++)

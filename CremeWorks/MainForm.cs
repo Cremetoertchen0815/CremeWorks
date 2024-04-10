@@ -6,6 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
+using System.Drawing.Text;
 
 namespace CremeWorks
 {
@@ -60,10 +63,14 @@ namespace CremeWorks
         private void UpdatePlaylist()
         {
             playList.Items.Clear();
+            int idx = 1;
             foreach (var element in _c.Playlist)
-                playList.Items.Add(element.Title + " - " + element.Artist);
+            {
+                string text = element.SpecialEvent ? $"---{element.Title}---" : $"{idx++.ToString("D2")}.{element.Title} - {element.Artist}";
+                playList.Items.Add(text);
+            }
 
-            _server.SendToAll(MessageTypeEnum.SET_DATA, _c.Playlist.Select(x => x.Title).ToArray());
+            _server.SendToAll(MessageTypeEnum.SET_DATA, GetClientSet());
         }
 
         private readonly string[] Buchstaben = { "A", "B", "C", "D", "E", "F" };
@@ -75,29 +82,9 @@ namespace CremeWorks
             songKey.Text = "";
             songTempo.Text = "";
             lightCue.Items.Clear();
+            _server.SendToAll(MessageTypeEnum.CURRENT_SONG, GetCurrentSongInformation());
 
-            if (_s == null)
-            {
-                _server.SendToAll(MessageTypeEnum.CURRENT_SONG, new SongInformation()
-                {
-                    Index = -1,
-                    ClickActive = false,
-                    Tempo = 120,
-                    Cues = new string[] { },
-                    Instructions = string.Empty
-                });
-                return;
-            }
-
-
-            _server.SendToAll(MessageTypeEnum.CURRENT_SONG, new SongInformation()
-            {
-                Index = playList.SelectedIndex,
-                ClickActive = _s.Click,
-                Tempo = _s.Tempo,
-                Cues = _s.CueList.Select(x => x.comment).ToArray(),
-                Instructions = _s.Instructions
-            });
+            if (_s == null) return;
 
             for (int i = 0; i < _s.CueList.Count; i++)
             {
@@ -343,7 +330,7 @@ namespace CremeWorks
             chatBox.Items.Add(msg);
             _server.SendToAll(MessageTypeEnum.CHAT_MESSAGE, msg);
             chatInput.Text = string.Empty;
-            chatBox.SetSelected(chatBox.Items.Count, true);
+            chatBox.SelectedIndex = chatBox.Items.Count - 1;
         }
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
@@ -353,7 +340,8 @@ namespace CremeWorks
                 _server.Stop();
                 startToolStripMenuItem.Text = "Start";
                 startToolStripMenuItem.Checked = false;
-            } else
+            }
+            else
             {
                 _server.Start();
                 startToolStripMenuItem.Text = "Stop";
@@ -368,11 +356,41 @@ namespace CremeWorks
         {
             string tit = (_c?.FilePath == string.Empty ? null : Path.GetFileNameWithoutExtension(_c?.FilePath)) ?? "Untitled";
             con.SendMessage(MessageTypeEnum.CONCERT_NAME, tit);
-            con.SendMessage(MessageTypeEnum.SET_DATA, _c.Playlist.Select(x => x.Title).ToArray());
+            con.SendMessage(MessageTypeEnum.SET_DATA, GetClientSet());
+            con.SendMessage(MessageTypeEnum.CURRENT_SONG, GetCurrentSongInformation());
+            con.SendMessage(MessageTypeEnum.CUE_INDEX, lightCue.SelectedIndex.ToString());
+        }
+        private string[] GetClientSet()
+        {
+            int idx = 1;
+            return _c.Playlist.Select(x => x.SpecialEvent ? $"---{x.Title}---" : $"{idx++:D2}.{x.Title} - {x.Artist}").ToArray();
         }
 
+        private SongInformation GetCurrentSongInformation()
+        {
+            if (_s is null) return new SongInformation()
+            {
+                Index = -1,
+                SmallName = "-",
+                ClickActive = false,
+                Tempo = 120,
+                Cues = new string[] { },
+                Instructions = string.Empty
+            };
 
-        private void _server_MessageReceived(MessageTypeEnum type, string data, NetworkConnection con)
+
+            return new SongInformation()
+            {
+                Index = playList.SelectedIndex,
+                SmallName = _s.Title,
+                ClickActive = _s.Click,
+                Tempo = _s.Tempo,
+                Cues = _s.CueList.Select(x => x.comment).ToArray(),
+                Instructions = _s.Instructions
+            };
+        }
+
+        private void _server_MessageReceived(MessageTypeEnum type, string data, NetworkConnection con) => Invoke(new Action(() =>
         {
             switch (type)
             {
@@ -380,12 +398,12 @@ namespace CremeWorks
                     var msg = $"{con.Name}: {data}";
                     chatBox.Items.Add(msg);
                     _server.SendToAll(MessageTypeEnum.CHAT_MESSAGE, msg);
-                    chatBox.SetSelected(chatBox.Items.Count, true);
+                    chatBox.SelectedIndex = chatBox.Items.Count-1;
                     break;
                 default:
                     break;
             }
-        }
+        }));
 
     }
 }
