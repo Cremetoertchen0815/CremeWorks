@@ -1,5 +1,6 @@
 using CremeWorks.Client.Networking;
 using CremeWorks.Common;
+using CremeWorks.Common.Networking;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Net;
@@ -11,6 +12,7 @@ public partial class Form1 : Form
 {
     private readonly CommunicationHub _netHub;
     private readonly Metronome _metronome;
+    private SongInformation? _currentSong = null;
     public Form1(CommunicationHub server)
     {
         InitializeComponent();
@@ -31,7 +33,7 @@ public partial class Form1 : Form
         pnlClick.BackColor = Color.White;
         await Task.Delay(50);
         pnlClick.BackColor = Color.Black;
-        
+
     }
 
     internal void HandleIncomingMessage(MessageTypeEnum type, string? data) => Invoke(() =>
@@ -50,10 +52,25 @@ public partial class Form1 : Form
                 lstSet.Items.AddRange(setData);
                 break;
             case MessageTypeEnum.CURRENT_SONG:
+                _currentSong = JsonConvert.DeserializeObject<SongInformation>(data) ?? throw new Exception("Invalid data!");
+                lstSet.SetSelected(_currentSong.Index, true);
+                lblTitle.Text = (string?)lstSet.SelectedItem ?? "Error";
+                lblTempo.Text = _currentSong.Tempo.ToString() + " BPM";
+                lblCurrCue.Text = _currentSong.Cues.Length == 0 ? "-" : _currentSong.Cues[0];
+                lblNextCue.Text = _currentSong.Cues.Length < 2 ? "-" : _currentSong.Cues[1];
+                lblInstructions.Text = _currentSong.Instructions;
                 break;
-            case MessageTypeEnum.CLICK_INFO:
+            case MessageTypeEnum.CUE_INDEX:
+                var index = int.Parse(data);
+                if (_currentSong?.Cues is null) break;
+                lblCurrCue.Text = _currentSong.Cues.Length <= index ? "-" : _currentSong.Cues[index];
+                lblNextCue.Text = _currentSong.Cues.Length <= index+1 ? "-" : _currentSong.Cues[index+1];
                 break;
             case MessageTypeEnum.CHAT_MESSAGE:
+                lstChat.Items.Add(data);
+                lstChat.SetSelected(lstChat.Items.Count, true);
+                break;
+            case MessageTypeEnum.CLICK_INFO:
                 break;
             case MessageTypeEnum.LIGHT_MESSAGE:
                 break;
@@ -62,4 +79,10 @@ public partial class Form1 : Form
         }
     });
 
+    private void btnChat_Click(object sender, EventArgs e)
+    {
+        if (txtChat.Text == string.Empty) return;
+        txtChat.Text = string.Empty;
+        _netHub.SendData(MessageTypeEnum.CHAT_MESSAGE, txtChat.Text);
+    }
 }

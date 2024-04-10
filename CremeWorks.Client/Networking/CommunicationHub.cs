@@ -1,5 +1,7 @@
-﻿using System.Net;
+﻿using Newtonsoft.Json;
+using System.Net;
 using System.Net.Sockets;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CremeWorks.Client.Networking;
 public class CommunicationHub
@@ -48,8 +50,14 @@ public class CommunicationHub
             var index = (MessageTypeEnum)byte.Parse(data);
             var body = await _reader!.ReadLineAsync();
             DataReceived?.Invoke(index, body);
-            Console.WriteLine();
         }
+    }
+    public void SendData(MessageTypeEnum type, object data)
+    {
+        if (_writer is null) return;
+        _writer.WriteLine(((byte)type).ToString());
+        _writer.WriteLine(data is string s ? s : JsonConvert.SerializeObject(data));
+        _writer.Flush();
     }
 
 

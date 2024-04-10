@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CremeWorks
 {
@@ -14,8 +15,15 @@ namespace CremeWorks
         public const int ALL_DEVICES_COUNT_PRE5 = 8;
         public const int PATCH_DEVICE_COUNT_PRE3 = 4;
 
-        public static void LoadFilePreVer5(Concert nu, BinaryReader br, int version)
+        public static void LoadFilePreVer5(ref Concert nu, BinaryReader br, int version)
         {
+            if (version == 0)
+            {
+                MessageBox.Show("Version 0 files cannot be loaded anymore!", "Error Loading File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                nu = null;
+                return;
+            }
+
             var lightDevice = true;
             var devCount = br.ReadInt32();
             nu.Devices = new MIDIDevice[Math.Max(devCount, ALL_DEVICES_COUNT_PRE5) - 1];

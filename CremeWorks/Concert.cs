@@ -84,7 +84,7 @@ namespace CremeWorks
 
             if (version <= 4)
             {
-                CompatibilityFileParser.LoadFilePreVer5(nu, br, version);
+                CompatibilityFileParser.LoadFilePreVer5(ref nu, br, version);
                 return nu;
             }
 

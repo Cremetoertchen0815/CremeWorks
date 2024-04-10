@@ -1,6 +1,8 @@
 ﻿using CremeWorks.Client.Networking;
+using CremeWorks.Common.Networking;
 using CremeWorks.Networking;
 using System;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -33,6 +35,7 @@ namespace CremeWorks
 
             _server = new NetworkingServer();
             _server.UserJoined += _server_UserJoined;
+            _server.MessageReceived += _server_MessageReceived;
 
             UpdateConcert();
         }
@@ -60,7 +63,7 @@ namespace CremeWorks
             foreach (var element in _c.Playlist)
                 playList.Items.Add(element.Title + " - " + element.Artist);
 
-            _server.SendToAll(Client.Networking.MessageTypeEnum.SET_DATA, _c.Playlist.Select(x => x.Title).ToArray());
+            _server.SendToAll(MessageTypeEnum.SET_DATA, _c.Playlist.Select(x => x.Title).ToArray());
         }
 
         private readonly string[] Buchstaben = { "A", "B", "C", "D", "E", "F" };
@@ -73,7 +76,28 @@ namespace CremeWorks
             songTempo.Text = "";
             lightCue.Items.Clear();
 
-            if (_s == null) return;
+            if (_s == null)
+            {
+                _server.SendToAll(MessageTypeEnum.CURRENT_SONG, new SongInformation()
+                {
+                    Index = -1,
+                    ClickActive = false,
+                    Tempo = 120,
+                    Cues = new string[] { },
+                    Instructions = string.Empty
+                });
+                return;
+            }
+
+
+            _server.SendToAll(MessageTypeEnum.CURRENT_SONG, new SongInformation()
+            {
+                Index = playList.SelectedIndex,
+                ClickActive = _s.Click,
+                Tempo = _s.Tempo,
+                Cues = _s.CueList.Select(x => x.comment).ToArray(),
+                Instructions = _s.Instructions
+            });
 
             for (int i = 0; i < _s.CueList.Count; i++)
             {
@@ -201,10 +225,18 @@ namespace CremeWorks
         private void UpdateConcert()
         {
             string tit = (_c?.FilePath == string.Empty ? null : _c?.FilePath) ?? "Untitled";
+            string titClean = (_c?.FilePath == string.Empty ? null : Path.GetFileNameWithoutExtension(_c?.FilePath)) ?? "Untitled";
             Text = "CremeWorks Stage Controller - " + tit;
+            _server.SendToAll(MessageTypeEnum.CONCERT_NAME, titClean);
+            if (_c is null)
+            {
+                playList.Items.Clear();
+                _server.SendToAll(MessageTypeEnum.SET_DATA, "[]");
+                return;
+            }
+
             _c.MidiMatrix.ActionExecute = ExecuteAction;
             _c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
-            _server.SendToAll(Client.Networking.MessageTypeEnum.CONCERT_NAME, tit);
 
             UpdatePlaylist();
             playList.SelectedIndex = -1;
@@ -268,8 +300,9 @@ namespace CremeWorks
         {
             if (_s != null && lightCue.SelectedIndex >= 0)
             {
-                var dat = _s.CueList[lightCue.SelectedIndex].cueNr;
-                //TODO: Send cue via TCP/IP
+                var dat = _s.CueList[lightCue.SelectedIndex];
+                _server.SendToAll(MessageTypeEnum.CUE_INDEX, lightCue.SelectedIndex.ToString());
+                //TODO: Activate light cue
             }
         }
 
@@ -306,8 +339,11 @@ namespace CremeWorks
 
         private void btnChatSend_Click(object sender, EventArgs e)
         {
-            chatBox.Items.Add("Server: " + chatInput.Text);
+            var msg = "Server: " + chatInput.Text;
+            chatBox.Items.Add(msg);
+            _server.SendToAll(MessageTypeEnum.CHAT_MESSAGE, msg);
             chatInput.Text = string.Empty;
+            chatBox.SetSelected(chatBox.Items.Count, true);
         }
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
@@ -330,9 +366,25 @@ namespace CremeWorks
 
         private void _server_UserJoined(NetworkConnection con)
         {
-            string tit = (_c?.FilePath == string.Empty ? null : _c?.FilePath) ?? "Untitled";
+            string tit = (_c?.FilePath == string.Empty ? null : Path.GetFileNameWithoutExtension(_c?.FilePath)) ?? "Untitled";
             con.SendMessage(MessageTypeEnum.CONCERT_NAME, tit);
             con.SendMessage(MessageTypeEnum.SET_DATA, _c.Playlist.Select(x => x.Title).ToArray());
+        }
+
+
+        private void _server_MessageReceived(MessageTypeEnum type, string data, NetworkConnection con)
+        {
+            switch (type)
+            {
+                case MessageTypeEnum.CHAT_MESSAGE:
+                    var msg = $"{con.Name}: {data}";
+                    chatBox.Items.Add(msg);
+                    _server.SendToAll(MessageTypeEnum.CHAT_MESSAGE, msg);
+                    chatBox.SetSelected(chatBox.Items.Count, true);
+                    break;
+                default:
+                    break;
+            }
         }
 
     }
