@@ -1,4 +1,5 @@
-﻿using CremeWorks.Networking;
+﻿using CremeWorks.Client.Networking;
+using CremeWorks.Networking;
 using System;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -10,7 +11,7 @@ namespace CremeWorks
     {
         private Concert _c = Concert.Empty();
         private Song _s = null;
-        private NetworkingServer _server = new NetworkingServer();
+        private NetworkingServer _server;
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -29,6 +30,10 @@ namespace CremeWorks
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
+
+            _server = new NetworkingServer();
+            _server.UserJoined += _server_UserJoined;
+
             UpdateConcert();
         }
 
@@ -55,6 +60,7 @@ namespace CremeWorks
             foreach (var element in _c.Playlist)
                 playList.Items.Add(element.Title + " - " + element.Artist);
 
+            _server.SendToAll(Client.Networking.MessageTypeEnum.SET_DATA, _c.Playlist.Select(x => x.Title).ToArray());
         }
 
         private readonly string[] Buchstaben = { "A", "B", "C", "D", "E", "F" };
@@ -194,10 +200,11 @@ namespace CremeWorks
 
         private void UpdateConcert()
         {
-            string tit = _c?.FilePath ?? "Untitled";
-            Text = "CremeWorks Stage Controller - " + (tit == string.Empty ? "Untitled" : tit);
+            string tit = (_c?.FilePath == string.Empty ? null : _c?.FilePath) ?? "Untitled";
+            Text = "CremeWorks Stage Controller - " + tit;
             _c.MidiMatrix.ActionExecute = ExecuteAction;
             _c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
+            _server.SendToAll(Client.Networking.MessageTypeEnum.CONCERT_NAME, tit);
 
             UpdatePlaylist();
             playList.SelectedIndex = -1;
@@ -319,5 +326,14 @@ namespace CremeWorks
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e) => _server.Stop();
+
+
+        private void _server_UserJoined(NetworkConnection con)
+        {
+            string tit = (_c?.FilePath == string.Empty ? null : _c?.FilePath) ?? "Untitled";
+            con.SendMessage(MessageTypeEnum.CONCERT_NAME, tit);
+            con.SendMessage(MessageTypeEnum.SET_DATA, _c.Playlist.Select(x => x.Title).ToArray());
+        }
+
     }
 }

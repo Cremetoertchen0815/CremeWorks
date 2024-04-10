@@ -1,4 +1,5 @@
 ﻿using CremeWorks.Client.Networking;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.IO;
@@ -24,10 +25,11 @@ namespace CremeWorks.Networking
         private const int PORT = 187;
         private const string WELCOME_DATA = "Welcome to CremeWorks!";
 
-        public delegate void UserJoinedDelegate(NetworkConnection con);
+        public delegate void UserActionDelegate(NetworkConnection con);
         public delegate void MessageHandleDelegate(MessageTypeEnum type, string data, NetworkConnection con);
 
-        public event UserJoinedDelegate UserJoined;
+        public event UserActionDelegate UserJoined;
+        public event UserActionDelegate UserLeft;
         public event MessageHandleDelegate MessageReceived;
 
         public void Start()
@@ -42,16 +44,17 @@ namespace CremeWorks.Networking
             Task.Run(ListenForClients);
         }
 
-        public void SendToAll(MessageTypeEnum type, string data)
+        public void SendToAll(MessageTypeEnum type, object data)
         {
             foreach (var item in _connections)
             {
                 item.Value.Writer.WriteLine(((byte)type).ToString());
-                item.Value.Writer.WriteLine(data);
+                item.Value.Writer.WriteLine(data is string s ? s : JsonConvert.SerializeObject(data));
+                item.Value.Writer.Flush();
             }
         }
 
-        public void Stop() => _cancelSource.Cancel();
+        public void Stop() => _cancelSource?.Cancel();
 
         private async Task BroadcastingLoop()
         {
@@ -77,6 +80,7 @@ namespace CremeWorks.Networking
                     var guid = Guid.NewGuid();
 
                     await streamw.WriteLineAsync(WELCOME_DATA);
+                    await streamw.FlushAsync();
                     var name = await streamr.ReadLineAsync();
                     var con = new NetworkConnection()
                     {
@@ -87,6 +91,7 @@ namespace CremeWorks.Networking
                         Name = name
                     };
                     _connections.TryAdd(guid, con);
+                    UserJoined?.Invoke(con);
 
                     _ = Task.Run(() => ClientReadLoop(con), _cancelToken);
                 }
@@ -110,10 +115,10 @@ namespace CremeWorks.Networking
                     MessageReceived?.Invoke(index, nextData, con);
                 }
             }
-            catch (Exception)
+            finally
             {
                 _connections.TryRemove(con.Key, out _);
-                throw;
+                UserLeft?.Invoke(con);
             }
         }
     }

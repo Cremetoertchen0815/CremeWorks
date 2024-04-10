@@ -62,6 +62,9 @@ public partial class SplashScreen : Form
             await Task.Delay(1000);
 
             var hub = new CommunicationHub(client);
+            var main = new Form1(hub);
+            hub.DataReceived += main.HandleIncomingMessage;
+
             if (!await hub.Connect())
             {
                 if (MessageBox.Show("Communication failed! Retry?", "Server Connection failed", MessageBoxButtons.YesNo, MessageBoxIcon.Error) != DialogResult.Yes)
@@ -73,7 +76,6 @@ public partial class SplashScreen : Form
             }
 
             //Start main form
-            var main = new Form1(hub);
             main.Show();
             Close();
             break;

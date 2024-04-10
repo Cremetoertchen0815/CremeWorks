@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CremeWorks.Client.Networking;
 public class CommunicationHub
@@ -33,9 +28,10 @@ public class CommunicationHub
             _reader = new StreamReader(_client.GetStream());
             _writer = new StreamWriter(_client.GetStream());
             if (await _reader.ReadLineAsync() != WELCOME_DATA) return false;
-            _writer.WriteLine(System.Environment.MachineName);
+            _writer.WriteLine(Environment.MachineName);
+            _writer.Flush();
             _ = Task.Run(ReadData);
-            return false;
+            return true;
         }
         catch (Exception)
         {
@@ -50,7 +46,9 @@ public class CommunicationHub
             var data = await _reader!.ReadLineAsync();
             if (data is null) break;
             var index = (MessageTypeEnum)byte.Parse(data);
-            DataReceived?.Invoke(index, await _reader!.ReadLineAsync());
+            var body = await _reader!.ReadLineAsync();
+            DataReceived?.Invoke(index, body);
+            Console.WriteLine();
         }
     }
 

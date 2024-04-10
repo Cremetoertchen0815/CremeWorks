@@ -1,6 +1,5 @@
 using CremeWorks.Client.Networking;
 using CremeWorks.Common;
-using CremeWorks.Common.Networking;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Net;
@@ -18,7 +17,6 @@ public partial class Form1 : Form
         _metronome = new Metronome();
         _metronome.Tick += HandleMetronomeTick;
         _netHub = server;
-        _netHub.DataReceived += HandleIncomingMessage;
     }
 
     private void Form1_FormClosed(object sender, FormClosedEventArgs e) => Application.Exit();
@@ -36,17 +34,20 @@ public partial class Form1 : Form
         
     }
 
-    private void HandleIncomingMessage(MessageTypeEnum type, string? data)
+    internal void HandleIncomingMessage(MessageTypeEnum type, string? data) => Invoke(() =>
     {
+
         if (data is null) return;
 
         switch (type)
         {
+            case MessageTypeEnum.CONCERT_NAME:
+                lblSetName.Text = data;
+                break;
             case MessageTypeEnum.SET_DATA:
-                var setData = JsonConvert.DeserializeObject<ConcertData>(data) ?? throw new Exception("Invalid data!");
+                var setData = JsonConvert.DeserializeObject<string[]>(data) ?? throw new Exception("Invalid data!");
                 lstSet.Items.Clear();
-                lstSet.Items.AddRange(setData.setList);
-                lblSetName.Text = setData.name;
+                lstSet.Items.AddRange(setData);
                 break;
             case MessageTypeEnum.CURRENT_SONG:
                 break;
@@ -59,6 +60,6 @@ public partial class Form1 : Form
             default:
                 break;
         }
-    }
+    });
 
 }
