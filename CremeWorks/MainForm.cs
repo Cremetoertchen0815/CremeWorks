@@ -83,6 +83,7 @@ namespace CremeWorks
             songTempo.Text = "";
             lightCue.Items.Clear();
             _server.SendToAll(MessageTypeEnum.CURRENT_SONG, GetCurrentSongInformation());
+            _server.SendToAll(MessageTypeEnum.CLICK_INFO, (_s is null || !_s.Click) ? "off" : _s.Tempo.ToString());
 
             if (_s == null) return;
 

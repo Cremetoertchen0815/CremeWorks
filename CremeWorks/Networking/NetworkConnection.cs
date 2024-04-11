@@ -21,6 +21,7 @@ namespace CremeWorks.Networking
             lock (_lock)
             {
                 Writer.WriteLine(((byte)type).ToString());
+                Writer.Flush();
                 Writer.WriteLine(data is string s ? s : JsonConvert.SerializeObject(data));
                 Writer.Flush();
             }

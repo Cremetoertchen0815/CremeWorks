@@ -1,4 +1,5 @@
 ﻿using CremeWorks.Client.Networking;
+using CremeWorks.Common.Networking;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
