@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Net;
 using System.Net.Sockets;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CremeWorks.Client.Networking;
 public class CommunicationHub
@@ -61,5 +60,5 @@ public class CommunicationHub
     }
 
 
-    
+
 }

@@ -2,9 +2,6 @@ using CremeWorks.Client.Networking;
 using CremeWorks.Common;
 using CremeWorks.Common.Networking;
 using Newtonsoft.Json;
-using System.Diagnostics;
-using System.Net;
-using System.Text.Json.Serialization;
 
 namespace CremeWorks.Client;
 
@@ -64,11 +61,11 @@ public partial class Form1 : Form
                 var index = int.Parse(data);
                 if (_currentSong?.Cues is null) break;
                 lblCurrCue.Text = _currentSong.Cues.Length <= Math.Max(index, 0) ? "-" : _currentSong.Cues[index];
-                lblNextCue.Text = _currentSong.Cues.Length <= Math.Max(index, 0) + 1 ? "-" : _currentSong.Cues[index+1];
+                lblNextCue.Text = _currentSong.Cues.Length <= Math.Max(index, 0) + 1 ? "-" : _currentSong.Cues[index + 1];
                 break;
             case MessageTypeEnum.CHAT_MESSAGE:
                 lstChat.Items.Add(data);
-                lstChat.SelectedIndex = lstChat.Items.Count-1;
+                lstChat.SelectedIndex = lstChat.Items.Count - 1;
                 break;
             case MessageTypeEnum.CLICK_INFO:
                 break;

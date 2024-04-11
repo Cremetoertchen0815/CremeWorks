@@ -6,9 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
-using System.Xml.Linq;
-using System.Drawing.Text;
 
 namespace CremeWorks
 {
@@ -399,7 +396,7 @@ namespace CremeWorks
                     var msg = $"{con.Name}: {data}";
                     chatBox.Items.Add(msg);
                     _server.SendToAll(MessageTypeEnum.CHAT_MESSAGE, msg);
-                    chatBox.SelectedIndex = chatBox.Items.Count-1;
+                    chatBox.SelectedIndex = chatBox.Items.Count - 1;
                     break;
                 default:
                     break;

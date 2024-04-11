@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
 	"net"
@@ -108,6 +109,20 @@ func main() {
 		for range t.C {
 			player.Seek(0, 0)
 			player.Play()
+		}
+	}()
+
+	//Start chat loop
+	go func() {
+		for {
+			reader := bufio.NewReader(os.Stdin)
+			text, _ := reader.ReadString('\n')
+			text = strings.Replace(text, "\n", "", -1)
+			text = strings.Replace(text, "\r", "", -1)
+
+			if text != "" {
+				client.Write([]byte(fmt.Sprintf("6\r\n%s\r\n", text)))
+			}
 		}
 	}()
 

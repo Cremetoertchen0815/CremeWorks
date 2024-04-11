@@ -63,7 +63,7 @@ namespace CremeWorks
         public static Concert Empty() => new Concert
         {
             Devices = Enumerable.Range(0, ALL_DEVICES_COUNT).Select(_ => new MIDIDevice()).ToArray(),
-            FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1)},
+            FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) },
             Playlist = new List<Song>(),
             LightingCues = new List<(string name, byte noteOnNr)>()
         };
@@ -90,7 +90,7 @@ namespace CremeWorks
 
             nu.Devices = new MIDIDevice[ALL_DEVICES_COUNT];
             for (int i = 0; i < ALL_DEVICES_COUNT; i++) nu.Devices[i] = new MIDIDevice() { Name = br.ReadString() };
-            
+
             //Foot switch config
             int cnt = br.ReadInt32();
             nu.FootSwitchConfig = new (MidiEventType, short, byte)[6];

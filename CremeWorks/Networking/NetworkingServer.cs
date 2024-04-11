@@ -97,7 +97,7 @@ namespace CremeWorks.Networking
                 }
                 catch (Exception)
                 {
-                    
+
                 }
             }
         }

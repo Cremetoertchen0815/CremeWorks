@@ -22,7 +22,7 @@ namespace CremeWorks
 
             //Prepare control array
             _cont = new (ComboBox, NumericUpDown, NumericUpDown, Button)[] { (type1, valA1, valB1, det1), (type2, valA2, valB2, det2),
-                                                                             (type4, valA4, valB4, det4), (type5, valA5, valB5, det5), 
+                                                                             (type4, valA4, valB4, det4), (type5, valA5, valB5, det5),
                                                                              (type12, valA12, valB12, det12), (type13, valA13, valB13, det13)};
 
             //Load data into dialogue

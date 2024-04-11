@@ -1,9 +1,7 @@
 ﻿using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
-using Melanchall.DryWetMidi.MusicTheory;
 using System;
-using System.Runtime.InteropServices;
 
 namespace CremeWorks
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -123,7 +122,7 @@ namespace CremeWorks
             _s.AutoPatchSlots[id] = (chk.Checked, patchBuffer);
 
         }
-        
+
         private void btnChordMakro_Click(object sender, EventArgs e)
         {
             var edit = new ChordMacroEditor(_s, _c);
