@@ -8,13 +8,6 @@ public class MIDIServer
 
     public void Create()
     {
-        var path = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + "\\Tobias Erichsen\\loopMIDI\\loopMIDI.exe";
-        Process.Start(new ProcessStartInfo()
-        {
-             FileName = path,
-             WindowStyle = ProcessWindowStyle.Minimized
-        });
-
         Guid manufacturer = new Guid("aa4e075f-3504-4aab-9b06-9a4104a91cf0");
         Guid product = new Guid("bb4e075f-3504-4aab-9b06-9a4104a91cf0");
 
