@@ -1,19 +1,23 @@
 ﻿using CremeWorks.Client.Networking;
 using CremeWorks.Common.Networking;
 using CremeWorks.Networking;
+using Melanchall.DryWetMidi.Common;
+using Melanchall.DryWetMidi.Core;
 using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CremeWorks
 {
     public partial class MainForm : Form
     {
-        private Concert _c = Concert.Empty();
+        private Concert _c;
         private Song _s = null;
         private NetworkingServer _server;
+        private readonly MidiEventToBytesConverter _converter = new MidiEventToBytesConverter();
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -32,6 +36,7 @@ namespace CremeWorks
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
+            _c = Concert.Empty(SendLighingData);
 
             _server = new NetworkingServer();
             _server.UserJoined += _server_UserJoined;
@@ -203,7 +208,7 @@ namespace CremeWorks
 
         private void New(object sender, EventArgs e)
         {
-            _c = Concert.Empty();
+            _c = Concert.Empty(SendLighingData);
             UpdateConcert();
         }
 
@@ -230,7 +235,7 @@ namespace CremeWorks
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
-            _c = Concert.LoadFromFile(openFileDialog1.FileName);
+            _c = Concert.LoadFromFile(openFileDialog1.FileName, SendLighingData);
             UpdateConcert();
         }
 
@@ -386,6 +391,12 @@ namespace CremeWorks
                 Cues = _s.CueList.Select(x => x.comment).ToArray(),
                 Instructions = _s.Instructions
             };
+        }
+
+        private void SendLighingData(MidiEvent e) 
+        {
+            var bytes = _converter.Convert(e);
+            _server.SendToAll(MessageTypeEnum.LIGHT_MESSAGE, Convert.ToBase64String(bytes));
         }
 
         private void _server_MessageReceived(MessageTypeEnum type, string data, NetworkConnection con) => Invoke(new Action(() =>

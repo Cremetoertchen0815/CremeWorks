@@ -22,7 +22,7 @@ namespace CremeWorks
         public MIDIMatrix MidiMatrix;
         public Action<bool> ConnectionChangeHandler = (x) => { return; };
 
-        public Concert() => MidiMatrix = new MIDIMatrix(this);
+        public Concert(Action<MidiEvent> lightingSendDelegate) => MidiMatrix = new MIDIMatrix(this, lightingSendDelegate);
 
         public void Connect()
         {
@@ -60,7 +60,7 @@ namespace CremeWorks
             ConnectionChangeHandler(false);
         }
 
-        public static Concert Empty() => new Concert
+        public static Concert Empty(Action<MidiEvent> lightingSendDelegate) => new Concert(lightingSendDelegate)
         {
             Devices = Enumerable.Range(0, ALL_DEVICES_COUNT).Select(_ => new MIDIDevice()).ToArray(),
             FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) },
@@ -70,10 +70,10 @@ namespace CremeWorks
 
         private const int cVersion = 5;
         private const string cHeader = "CW";
-        public static Concert LoadFromFile(string filename)
+        public static Concert LoadFromFile(string filename, Action<MidiEvent> lightingSendDelegate)
         {
             //Init stuff
-            var nu = new Concert();
+            var nu = new Concert(lightingSendDelegate);
             var br = new BinaryReader(File.OpenRead(filename));
             //Read header
             var version = 0;

@@ -1,3 +1,4 @@
+using CremeWorks.Client.MIDI;
 using CremeWorks.Client.Networking;
 using CremeWorks.Common;
 using CremeWorks.Common.Networking;
@@ -10,15 +11,23 @@ public partial class Form1 : Form
     private readonly CommunicationHub _netHub;
     private readonly Metronome _metronome;
     private SongInformation? _currentSong = null;
+    private MIDIServer _midiServer = new();
+
     public Form1(CommunicationHub server)
     {
         InitializeComponent();
         _metronome = new Metronome();
         _metronome.Tick += HandleMetronomeTick;
         _netHub = server;
+
+        _midiServer.Create();
     }
 
-    private void Form1_FormClosed(object sender, FormClosedEventArgs e) => Application.Exit();
+    private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+    {
+        _midiServer.Close();
+        Application.Exit();
+    }
 
     private void Form1_Load(object sender, EventArgs e)
     {
@@ -67,9 +76,8 @@ public partial class Form1 : Form
                 lstChat.Items.Add(data);
                 lstChat.SelectedIndex = lstChat.Items.Count - 1;
                 break;
-            case MessageTypeEnum.CLICK_INFO:
-                break;
             case MessageTypeEnum.LIGHT_MESSAGE:
+                _midiServer?.SendData(Convert.FromBase64String(data));
                 break;
             default:
                 break;

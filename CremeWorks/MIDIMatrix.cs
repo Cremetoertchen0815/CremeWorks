@@ -2,6 +2,7 @@
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
 using System;
+using System.Threading.Tasks;
 
 namespace CremeWorks
 {
@@ -9,8 +10,10 @@ namespace CremeWorks
     {
 
         private readonly Concert _c;
-        public MIDIMatrix(Concert c) => _c = c;
+        private readonly Action<MidiEvent> _lightingSendDelegate;
         private bool _reg = false;
+
+        public MIDIMatrix(Concert c, Action<MidiEvent> lightingSendDelegate) => (_c, _lightingSendDelegate) = (c, lightingSendDelegate);
 
         public Action<int, bool?> ActionExecute = (a, b) => { return; };
         public Song ActiveSong;
@@ -45,34 +48,59 @@ namespace CremeWorks
             _reg = false;
         }
 
-        private void ListenFootPedal(object sender, MidiEventReceivedEventArgs e)
+        private async void ListenFootPedal(object sender, MidiEventReceivedEventArgs e)
         {
-
+            //Check if foot pedal event is a macro
             for (int i = 0; i < _c.FootSwitchConfig.Length; i++)
             {
                 if (e.Event.EventType == MidiEventType.NoteOn && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
                 {
                     var ev = (NoteOnEvent)e.Event;
                     if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
+                    {
                         ActionExecute(i, ev.Velocity > 0);
+                        return;
+                    }
                 }
                 else if (e.Event.EventType == MidiEventType.NoteOff && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
                 {
                     var ev = (NoteOffEvent)e.Event;
                     if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
+                    {
                         ActionExecute(i, false);
+                        return;
+                    }
                 }
                 else if (e.Event.EventType == MidiEventType.ControlChange && _c.FootSwitchConfig[i].Item1 == MidiEventType.ControlChange)
                 {
                     var ev = (ControlChangeEvent)e.Event;
                     if (ev.ControlNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
+                    {
                         ActionExecute(i, ev.ControlValue >= 64);
+                        return;
+                    }
                 }
                 else if (e.Event.EventType == MidiEventType.ProgramChange && _c.FootSwitchConfig[i].Item1 == MidiEventType.ProgramChange)
                 {
                     var ev = (ProgramChangeEvent)e.Event;
-                    if (ev.ProgramNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3) ActionExecute(i, null);
+                    if (ev.ProgramNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
+                    {
+                        ActionExecute(i, null);
+                        return;
+                    }
                 }
+            }
+
+            //If it isn't, redirect to lighting board
+            if (e.Event.EventType == MidiEventType.NoteOff) return;
+            _lightingSendDelegate(e.Event);
+
+            //Automatically send NoteOff after a while
+            if (e.Event.EventType == MidiEventType.NoteOn)
+            {
+                await Task.Delay(200);
+                var noteOn = (NoteOnEvent)e.Event;
+                _lightingSendDelegate(new NoteOffEvent(noteOn.NoteNumber, noteOn.Velocity) { Channel = noteOn.Channel });
             }
         }
 
