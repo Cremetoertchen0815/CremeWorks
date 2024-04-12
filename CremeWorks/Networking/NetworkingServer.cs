@@ -32,7 +32,7 @@ namespace CremeWorks.Networking
         public event UserActionDelegate UserLeft;
         public event MessageHandleDelegate MessageReceived;
 
-        public void Start()
+        public void Start(string broadcastAddr)
         {
             _cancelSource = new CancellationTokenSource();
             _cancelToken = _cancelSource.Token;
@@ -40,7 +40,7 @@ namespace CremeWorks.Networking
             _dataListener = new TcpListener(new IPEndPoint(IPAddress.Any, PORT));
             _dataListener.Start();
 
-            Task.Run(BroadcastingLoop);
+            Task.Run(() => BroadcastingLoop(broadcastAddr));
             Task.Run(ListenForClients);
         }
 
@@ -56,10 +56,10 @@ namespace CremeWorks.Networking
 
         public void Stop() => _cancelSource?.Cancel();
 
-        private async Task BroadcastingLoop()
+        private async Task BroadcastingLoop(string broadcastAddr)
         {
             var data = Encoding.ASCII.GetBytes(BROADCAST_IDENTIFIER);
-            var ep = new IPEndPoint(IPAddress.Broadcast, BROADCAST_PORT);
+            var ep = new IPEndPoint(IPAddress.Parse(broadcastAddr), BROADCAST_PORT);
             while (!_cancelToken.IsCancellationRequested)
             {
                 _broadcastClient.Send(data, data.Length, ep);

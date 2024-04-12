@@ -48,8 +48,13 @@ namespace CremeWorks
             _reg = false;
         }
 
-        private async void ListenFootPedal(object sender, MidiEventReceivedEventArgs e)
+        private void ListenFootPedal(object sender, MidiEventReceivedEventArgs e)
         {
+
+            //If it isn't, redirect to lighting board
+            if (e.Event.EventType == MidiEventType.NoteOff || e.Event.EventType == MidiEventType.ActiveSensing) return;
+            _lightingSendDelegate(e.Event);
+
             //Check if foot pedal event is a macro
             for (int i = 0; i < _c.FootSwitchConfig.Length; i++)
             {
@@ -89,18 +94,6 @@ namespace CremeWorks
                         return;
                     }
                 }
-            }
-
-            //If it isn't, redirect to lighting board
-            if (e.Event.EventType == MidiEventType.NoteOff) return;
-            _lightingSendDelegate(e.Event);
-
-            //Automatically send NoteOff after a while
-            if (e.Event.EventType == MidiEventType.NoteOn)
-            {
-                await Task.Delay(200);
-                var noteOn = (NoteOnEvent)e.Event;
-                _lightingSendDelegate(new NoteOffEvent(noteOn.NoteNumber, noteOn.Velocity) { Channel = noteOn.Channel });
             }
         }
 

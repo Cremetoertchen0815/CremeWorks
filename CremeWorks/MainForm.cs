@@ -346,7 +346,9 @@ namespace CremeWorks
             }
             else
             {
-                _server.Start();
+                var addr = Prompt.ShowDialog("Please enter the broadcast address of the network you want to use:", "Open Server", "255.255.255.255");
+                if (addr == null) return;
+                _server.Start(addr);
                 startToolStripMenuItem.Text = "Stop";
                 startToolStripMenuItem.Checked = true;
             }
