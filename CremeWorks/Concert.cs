@@ -16,7 +16,7 @@ namespace CremeWorks
         public string FilePath;
         public MIDIDevice[] Devices;
         public (MidiEventType, short, byte)[] FootSwitchConfig;
-        public List<(string name, byte noteOnNr)> LightingCues;
+        public List<LightingCue> LightingCues;
         public List<Song> Playlist;
 
         public MIDIMatrix MidiMatrix;
@@ -65,7 +65,7 @@ namespace CremeWorks
             Devices = Enumerable.Range(0, ALL_DEVICES_COUNT).Select(_ => new MIDIDevice()).ToArray(),
             FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) },
             Playlist = new List<Song>(),
-            LightingCues = new List<(string name, byte noteOnNr)>()
+            LightingCues = new List<LightingCue>()
         };
 
         private const int cVersion = 5;
@@ -98,7 +98,12 @@ namespace CremeWorks
 
             //Lighting cues config
             var cueCount = br.ReadInt32();
-            for (int i = 0; i < cueCount; i++) nu.LightingCues.Add((br.ReadString(), br.ReadByte()));
+            for (int i = 0; i < cueCount; i++) nu.LightingCues.Add(new LightingCue()
+            {
+                ID = br.ReadUInt64(),
+                Name = br.ReadString(),
+                NoteValue = br.ReadByte()
+            });
 
             //Playlist
             int count = br.ReadInt32();
@@ -179,7 +184,7 @@ namespace CremeWorks
 
                 //Read lighting cues
                 int lightcueLen = br.ReadInt32();
-                for (int j = 0; j < lightcueLen; j++) s.CueList.Add((br.ReadString(), br.ReadByte()));
+                for (int j = 0; j < lightcueLen; j++) s.CueQueue.Add((br.ReadUInt64(), br.ReadString()));
 
                 //Read chord macros
                 if (version > 0)
@@ -250,8 +255,9 @@ namespace CremeWorks
             bw.Write(LightingCues.Count);
             for (int i = 0; i < LightingCues.Count; i++)
             {
-                bw.Write(LightingCues[i].name);
-                bw.Write(LightingCues[i].noteOnNr);
+                bw.Write(LightingCues[i].ID);
+                bw.Write(LightingCues[i].Name);
+                bw.Write(LightingCues[i].NoteValue);
             }
 
             //Playlist
@@ -317,11 +323,11 @@ namespace CremeWorks
                 }
 
                 //Lighting cue
-                bw.Write(song.CueList.Count);
-                for (int j = 0; j < song.CueList.Count; j++)
+                bw.Write(song.CueQueue.Count);
+                for (int j = 0; j < song.CueQueue.Count; j++)
                 {
-                    bw.Write(song.CueList[j].comment);
-                    bw.Write(song.CueList[j].cueNr);
+                    bw.Write(song.CueQueue[j].ID);
+                    bw.Write(song.CueQueue[j].comment);
                 }
 
                 //Write chord macros
@@ -349,5 +355,12 @@ namespace CremeWorks
         public InputDevice Input;
         public OutputDevice Output;
         public string Name;
+    }
+
+    public class LightingCue
+    {
+        public ulong ID { get; set; }
+        public byte NoteValue { get; set; }
+        public string Name { get; set; }
     }
 }

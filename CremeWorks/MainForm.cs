@@ -89,10 +89,10 @@ namespace CremeWorks
 
             if (_s == null) return;
 
-            for (int i = 0; i < _s.CueList.Count; i++)
+            for (int i = 0; i < _s.CueQueue.Count; i++)
             {
-                var cueType = _c.LightingCues.FirstOrDefault(x => x.noteOnNr == _s.CueList[i].cueNr).name;
-                lightCue.Items.Add($"{i + 1}. {_s.CueList[i].comment}({cueType})");
+                var cueType = _c.LightingCues.FirstOrDefault(x => x.ID == _s.CueQueue[i].ID).Name;
+                lightCue.Items.Add($"{i + 1}. {_s.CueQueue[i].comment}({cueType})");
             }
             //Configure shit
             songTitle.Text = _s.Title;
@@ -264,17 +264,17 @@ namespace CremeWorks
 
         private void button15_Click(object sender, EventArgs e)
         {
-            if (_s != null && LightCueEditor.AddToCue(_c.LightingCues, _s.CueList)) UpdateSong();
+            if (_s != null && LightCueEditor.AddToCue(_c.LightingCues, _s.CueQueue)) UpdateSong();
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
             if (_s == null || lightCue.SelectedIndex < 0) return;
 
-            var tmp = _s.CueList[lightCue.SelectedIndex];
+            var tmp = _s.CueQueue[lightCue.SelectedIndex];
             if (LightCueEditor.EditCue(_c.LightingCues, ref tmp))
             {
-                _s.CueList[lightCue.SelectedIndex] = tmp;
+                _s.CueQueue[lightCue.SelectedIndex] = tmp;
                 UpdateSong();
             }
         }
@@ -282,24 +282,29 @@ namespace CremeWorks
         private void button13_Click(object sender, EventArgs e)
         {
             if (_s == null || lightCue.SelectedIndex < 0) return;
-            _s.CueList.RemoveAt(lightCue.SelectedIndex);
+            _s.CueQueue.RemoveAt(lightCue.SelectedIndex);
             UpdateSong();
         }
 
-        private void lightCue_SelectedIndexChanged(object sender, EventArgs e)
+        private async void lightCue_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_s != null && lightCue.SelectedIndex >= 0)
             {
-                var dat = _s.CueList[lightCue.SelectedIndex];
                 _server.SendToAll(MessageTypeEnum.CUE_INDEX, lightCue.SelectedIndex.ToString());
-                //TODO: Activate light cue
+
+                //Send light cue
+                var noteOnVal = _c.LightingCues.FirstOrDefault(x => x.ID == _s.CueQueue[lightCue.SelectedIndex].ID)?.NoteValue;
+                if (noteOnVal is null) return;
+                SendLighingData(new NoteOnEvent(new SevenBitNumber(noteOnVal.Value), SevenBitNumber.MaxValue) { Channel = new FourBitNumber(1) });
+                await Task.Delay(50);
+                SendLighingData(new NoteOnEvent(new SevenBitNumber(noteOnVal.Value), SevenBitNumber.MinValue) { Channel = new FourBitNumber(1) });
             }
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
             if (_s == null || lightCue.SelectedIndex < 0) return;
-            _s.CueList.Add(_s.CueList[lightCue.SelectedIndex]);
+            _s.CueQueue.Add(_s.CueQueue[lightCue.SelectedIndex]);
             UpdateSong();
         }
 
@@ -314,13 +319,13 @@ namespace CremeWorks
             if (e.Button == MouseButtons.Left && nIndexB > -1 && nIndexB != sIndex)
             {
                 object aObj = lightCue.Items[nIndexB];
-                var bObj = _s.CueList[nIndexB];
+                var bObj = _s.CueQueue[nIndexB];
 
                 lightCue.Items[nIndexB] = lightCue.Items[sIndex];
-                _s.CueList[nIndexB] = _s.CueList[sIndex];
+                _s.CueQueue[nIndexB] = _s.CueQueue[sIndex];
 
                 lightCue.Items[sIndex] = aObj;
-                _s.CueList[sIndex] = bObj;
+                _s.CueQueue[sIndex] = bObj;
 
                 nIndexB = sIndex;
 
@@ -390,7 +395,7 @@ namespace CremeWorks
                 SmallName = _s.Title,
                 ClickActive = _s.Click,
                 Tempo = _s.Tempo,
-                Cues = _s.CueList.Select(x => x.comment).ToArray(),
+                Cues = _s.CueQueue.Select(x => x.comment).ToArray(),
                 Instructions = _s.Instructions
             };
         }

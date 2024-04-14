@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using TobiasErichsen.teVirtualMIDI;
+﻿using TobiasErichsen.teVirtualMIDI;
 
 namespace CremeWorks.Client.MIDI;
 public class MIDIServer
