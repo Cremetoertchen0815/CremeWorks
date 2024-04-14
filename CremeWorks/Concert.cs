@@ -3,6 +3,7 @@ using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -16,8 +17,8 @@ namespace CremeWorks
         public string FilePath;
         public MIDIDevice[] Devices;
         public (MidiEventType, short, byte)[] FootSwitchConfig;
-        public List<LightingCue> LightingCues;
-        public List<Song> Playlist;
+        public List<LightingCue> LightingCues = new List<LightingCue>();
+        public List<Song> Playlist = new List<Song>();
 
         public MIDIMatrix MidiMatrix;
         public Action<bool> ConnectionChangeHandler = (x) => { return; };
@@ -75,138 +76,151 @@ namespace CremeWorks
             //Init stuff
             var nu = new Concert(lightingSendDelegate);
             var br = new BinaryReader(File.OpenRead(filename));
-            //Read header
-            var version = 0;
-            var headerStr = br.ReadString();
-            if (!headerStr.StartsWith(cHeader)) throw new Exception("Incorrect file!");
-            if (headerStr.Length > 2 && int.TryParse(headerStr.Substring(2), out int v)) version = v;
-            nu.FilePath = filename;
-
-            if (version <= 4)
+            try
             {
-                CompatibilityFileParser.LoadFilePreVer5(ref nu, br, version);
+                //Read header
+                var version = 0;
+                var headerStr = br.ReadString();
+                if (!headerStr.StartsWith(cHeader)) throw new Exception("Incorrect file!");
+                if (headerStr.Length > 2 && int.TryParse(headerStr.Substring(2), out int v)) version = v;
+                nu.FilePath = filename;
+
+                if (version <= 4)
+                {
+                    CompatibilityFileParser.LoadFilePreVer5(ref nu, br, version);
+                    return nu;
+                }
+
+                nu.Devices = new MIDIDevice[ALL_DEVICES_COUNT];
+                for (int i = 0; i < ALL_DEVICES_COUNT; i++) nu.Devices[i] = new MIDIDevice() { Name = br.ReadString() };
+
+                //Foot switch config
+                int cnt = br.ReadInt32();
+                nu.FootSwitchConfig = new (MidiEventType, short, byte)[6];
+                for (int i = 0; i < cnt; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
+
+                //Lighting cues config
+                var cueCount = br.ReadInt32();
+                for (int i = 0; i < cueCount; i++) nu.LightingCues.Add(new LightingCue()
+                {
+                    ID = br.ReadUInt64(),
+                    Name = br.ReadString(),
+                    NoteValue = br.ReadByte()
+                });
+
+                //Playlist
+                int count = br.ReadInt32();
+                for (int i = 0; i < count; i++)
+                {
+                    var s = new Song
+                    {
+                        Title = br.ReadString(),
+                        Artist = br.ReadString(),
+                        Key = br.ReadString(),
+                        Lyrics = br.ReadString(),
+                        Instructions = br.ReadString(),
+                        Tempo = br.ReadByte(),
+                        Click = br.ReadBoolean(),
+                        SpecialEvent = br.ReadBoolean(),
+                        NotePatchMap = new bool[PATCH_DEVICE_COUNT][],
+                        CCPatchMap = new bool[PATCH_DEVICE_COUNT][]
+                    };
+
+                    for (int j = 0; j < PATCH_DEVICE_COUNT; j++)
+                    {
+                        s.NotePatchMap[j] = LoadBoolArray(br, PATCH_DEVICE_COUNT);
+                        s.CCPatchMap[j] = LoadBoolArray(br, PATCH_DEVICE_COUNT);
+                    }
+                    s.NotePatchMap = Convert2DArrayToSize(s.NotePatchMap, PATCH_DEVICE_COUNT);
+                    s.CCPatchMap = Convert2DArrayToSize(s.CCPatchMap, PATCH_DEVICE_COUNT);
+
+                    var autoPatchCount = br.ReadInt32();
+                    s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, PATCH_DEVICE_COUNT)).Select(x => ((bool, IRefacePatch))(false, null)).ToArray();
+                    for (int j = 0; j < autoPatchCount; j++)
+                    {
+                        bool enabled = br.ReadBoolean();
+                        int type = br.ReadInt32();
+
+                        IRefacePatch patch;
+                        switch ((DeviceType)type)
+                        {
+                            case DeviceType.RefaceCS:
+                                var cs = new CSPatch
+                                {
+                                    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                    VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                                };
+                                patch = cs;
+                                break;
+                            case DeviceType.RefaceDX:
+                                var dx = new DXPatch
+                                {
+                                    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                    ProgramChangeNr = br.ReadByte()
+                                };
+                                patch = dx;
+                                break;
+                            case DeviceType.RefaceCP:
+                                var cp = new CPPatch
+                                {
+                                    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                    VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                                };
+                                patch = cp;
+                                break;
+                            case DeviceType.RefaceYC:
+                                var yc = new YCPatch
+                                {
+                                    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                    VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                                };
+                                patch = yc;
+                                break;
+                            default:
+                                patch = null;
+                                break;
+                        }
+
+                        s.AutoPatchSlots[j] = (enabled, patch);
+                    }
+
+                    //Read lighting cues
+                    int lightcueLen = br.ReadInt32();
+                    for (int j = 0; j < lightcueLen; j++) s.CueQueue.Add((br.ReadUInt64(), br.ReadString()));
+
+                    //Read chord macros
+                    if (version > 0)
+                    {
+                        s.ChordMacroSrc = br.ReadInt32();
+                        s.ChordMacroDst = br.ReadInt32();
+                        int macroCount = br.ReadInt32();
+                        for (int j = 0; j < macroCount; j++)
+                        {
+                            string name = br.ReadString();
+                            int triggerNote = br.ReadInt32();
+                            int velocity = br.ReadInt32();
+                            var keys = new int[br.ReadInt32()];
+                            for (int k = 0; k < keys.Length; k++) keys[k] = br.ReadInt32();
+                            s.ChordMacros.Add((name, triggerNote, velocity, keys.ToList()));
+                        }
+                    }
+
+                    nu.Playlist.Add(s);
+
+                }
+
                 return nu;
             }
-
-            nu.Devices = new MIDIDevice[ALL_DEVICES_COUNT];
-            for (int i = 0; i < ALL_DEVICES_COUNT; i++) nu.Devices[i] = new MIDIDevice() { Name = br.ReadString() };
-
-            //Foot switch config
-            int cnt = br.ReadInt32();
-            nu.FootSwitchConfig = new (MidiEventType, short, byte)[6];
-            for (int i = 0; i < cnt; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
-
-            //Lighting cues config
-            var cueCount = br.ReadInt32();
-            for (int i = 0; i < cueCount; i++) nu.LightingCues.Add(new LightingCue()
+            catch (Exception)
             {
-                ID = br.ReadUInt64(),
-                Name = br.ReadString(),
-                NoteValue = br.ReadByte()
-            });
-
-            //Playlist
-            int count = br.ReadInt32();
-            nu.Playlist = new List<Song>();
-            for (int i = 0; i < count; i++)
+                if (!Debugger.IsAttached) throw;
+                return null;
+            } finally
             {
-                var s = new Song
-                {
-                    Title = br.ReadString(),
-                    Artist = br.ReadString(),
-                    Key = br.ReadString(),
-                    Lyrics = br.ReadString(),
-                    Instructions = br.ReadString(),
-                    Tempo = br.ReadByte(),
-                    Click = br.ReadBoolean(),
-                    SpecialEvent = br.ReadBoolean(),
-                    NotePatchMap = new bool[PATCH_DEVICE_COUNT][],
-                    CCPatchMap = new bool[PATCH_DEVICE_COUNT][]
-                };
-
-                for (int j = 0; j < PATCH_DEVICE_COUNT; j++)
-                {
-                    s.NotePatchMap[j] = LoadBoolArray(br, PATCH_DEVICE_COUNT);
-                    s.CCPatchMap[j] = LoadBoolArray(br, PATCH_DEVICE_COUNT);
-                }
-                s.NotePatchMap = Convert2DArrayToSize(s.NotePatchMap, PATCH_DEVICE_COUNT);
-                s.CCPatchMap = Convert2DArrayToSize(s.CCPatchMap, PATCH_DEVICE_COUNT);
-
-                var autoPatchCount = br.ReadInt32();
-                s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, PATCH_DEVICE_COUNT)).Select(x => ((bool, IRefacePatch))(false, null)).ToArray();
-                for (int j = 0; j < autoPatchCount; j++)
-                {
-                    bool enabled = br.ReadBoolean();
-                    int type = br.ReadInt32();
-
-                    IRefacePatch patch;
-                    switch ((DeviceType)type)
-                    {
-                        case DeviceType.RefaceCS:
-                            var cs = new CSPatch
-                            {
-                                SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                                VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                            };
-                            patch = cs;
-                            break;
-                        case DeviceType.RefaceDX:
-                            var dx = new DXPatch
-                            {
-                                SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                                ProgramChangeNr = br.ReadByte()
-                            };
-                            patch = dx;
-                            break;
-                        case DeviceType.RefaceCP:
-                            var cp = new CPPatch
-                            {
-                                SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                                VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                            };
-                            patch = cp;
-                            break;
-                        case DeviceType.RefaceYC:
-                            var yc = new YCPatch
-                            {
-                                SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                                VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                            };
-                            patch = yc;
-                            break;
-                        default:
-                            patch = null;
-                            break;
-                    }
-
-                    s.AutoPatchSlots[j] = (enabled, patch);
-                }
-
-                //Read lighting cues
-                int lightcueLen = br.ReadInt32();
-                for (int j = 0; j < lightcueLen; j++) s.CueQueue.Add((br.ReadUInt64(), br.ReadString()));
-
-                //Read chord macros
-                if (version > 0)
-                {
-                    s.ChordMacroSrc = br.ReadInt32();
-                    s.ChordMacroDst = br.ReadInt32();
-                    int macroCount = br.ReadInt32();
-                    for (int j = 0; j < macroCount; j++)
-                    {
-                        string name = br.ReadString();
-                        int triggerNote = br.ReadInt32();
-                        int velocity = br.ReadInt32();
-                        var keys = new int[br.ReadInt32()];
-                        for (int k = 0; k < keys.Length; k++) keys[k] = br.ReadInt32();
-                        s.ChordMacros.Add((name, triggerNote, velocity, keys.ToList()));
-                    }
-                }
+                br.Close();
+                br.Dispose();
             }
-            br.Close();
-            br.Dispose();
 
-            return nu;
         }
 
         public static bool[] LoadBoolArray(BinaryReader br, int count)

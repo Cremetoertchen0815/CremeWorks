@@ -236,6 +236,8 @@ namespace CremeWorks
         {
             if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
             _c = Concert.LoadFromFile(openFileDialog1.FileName, SendLighingData);
+            if (_c is null) MessageBox.Show("Concert file is corrupted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             UpdateConcert();
         }
 
@@ -400,7 +402,7 @@ namespace CremeWorks
             };
         }
 
-        private void SendLighingData(MidiEvent e) 
+        private void SendLighingData(MidiEvent e)
         {
             var bytes = _converter.Convert(e);
             _server.SendToAll(MessageTypeEnum.LIGHT_MESSAGE, Convert.ToBase64String(bytes));

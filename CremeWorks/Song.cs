@@ -4,11 +4,11 @@ namespace CremeWorks
 {
     public class Song
     {
-        public string Title;
-        public string Artist;
-        public string Key;
-        public string Lyrics;
-        public string Instructions;
+        public string Title = string.Empty;
+        public string Artist = string.Empty;
+        public string Key = string.Empty;
+        public string Lyrics = string.Empty;
+        public string Instructions = string.Empty;
         public byte Tempo = 120;
         public bool Click = false;
         public bool SpecialEvent = false;

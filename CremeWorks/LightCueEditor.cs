@@ -52,7 +52,7 @@ namespace CremeWorks
 
             textBox1.Text = _comment;
             comboBox1.Items.AddRange(_availableCues.Select(x => (object)x.Name).ToArray());
-            comboBox1.SelectedText = _availableCues.FirstOrDefault(x => x.ID == _id).Name ?? "-";
+            comboBox1.SelectedText = _availableCues.FirstOrDefault(x => x.ID == _id)?.Name ?? "-";
         }
     }
 }

@@ -40,8 +40,28 @@ namespace CremeWorks
 
             //Foot switch config
             int cnt = br.ReadInt32();
-            nu.FootSwitchConfig = new (MidiEventType, short, byte)[13];
-            for (int i = 0; i < cnt; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
+            nu.FootSwitchConfig = new (MidiEventType, short, byte)[6];
+            for (int i = 0; i < cnt; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                    case 1:
+                        nu.FootSwitchConfig[i] = ReadFootSwitchItem(br);
+                        break;
+                    case 3:
+                    case 4:
+                        nu.FootSwitchConfig[i - 1] = ReadFootSwitchItem(br);
+                        break;
+                    case 11:
+                    case 12:
+                        nu.FootSwitchConfig[i - 7] = ReadFootSwitchItem(br);
+                        break;
+                    default:
+                        _ = ReadFootSwitchItem(br);
+                        break;
+                }
+            }
             //Light config map(obsolete)
             for (int i = 0; i < 128; i++)
             {
@@ -60,7 +80,6 @@ namespace CremeWorks
 
             //Playlist
             int count = br.ReadInt32();
-            nu.Playlist = new List<Song>();
             for (int i = 0; i < count; i++)
             {
                 var nuTitle = br.ReadString();
@@ -150,7 +169,6 @@ namespace CremeWorks
                     _ = br.ReadString();
                     for (int k = 0; k < 128; k++) _ = br.ReadInt32();
                 }
-                nu.Playlist.Add(s);
 
                 //Read chord macros
                 if (version > 0)
@@ -168,9 +186,13 @@ namespace CremeWorks
                         s.ChordMacros.Add((name, triggerNote, velocity, keys.ToList()));
                     }
                 }
+
+                nu.Playlist.Add(s);
             }
             br.Close();
             br.Dispose();
         }
+
+        private static (MidiEventType, short, byte) ReadFootSwitchItem(BinaryReader br) => ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
     }
 }
