@@ -1,4 +1,5 @@
 ﻿using CremeWorks.Client.Networking;
+using CremeWorks.Common;
 using CremeWorks.Common.Networking;
 using CremeWorks.Networking;
 using Melanchall.DryWetMidi.Common;
@@ -16,8 +17,9 @@ namespace CremeWorks
     {
         private Concert _c;
         private Song _s = null;
-        private NetworkingServer _server;
+        private NetworkingServer _server = new NetworkingServer();
         private readonly MidiEventToBytesConverter _converter = new MidiEventToBytesConverter();
+        private readonly Metronome _metronome = new Metronome();
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -38,9 +40,10 @@ namespace CremeWorks
             CheckForIllegalCrossThreadCalls = false;
             _c = Concert.Empty(SendLighingData);
 
-            _server = new NetworkingServer();
             _server.UserJoined += _server_UserJoined;
             _server.MessageReceived += _server_MessageReceived;
+
+            _metronome.Tick += TickMetronome;
 
             UpdateConcert();
         }
@@ -87,7 +90,11 @@ namespace CremeWorks
             _server.SendToAll(MessageTypeEnum.CURRENT_SONG, GetCurrentSongInformation());
             _server.SendToAll(MessageTypeEnum.CLICK_INFO, (_s is null || !_s.Click) ? "off" : _s.Tempo.ToString());
 
-            if (_s == null) return;
+            if (_s == null)
+            {
+                _metronome.Stop();
+                return;
+            }
 
             for (int i = 0; i < _s.CueQueue.Count; i++)
             {
@@ -99,6 +106,7 @@ namespace CremeWorks
             songLyrics.Text = _s.Lyrics;
             songKey.Text = _s.Key;
             songTempo.Text = _s.Tempo.ToString() + " BPM";
+            _metronome.Start(_s.Tempo);
             ConfigSongMIDI();
 
             //Load default cue patch
@@ -422,6 +430,13 @@ namespace CremeWorks
                     break;
             }
         }));
+
+        private async void TickMetronome()
+        {
+            boxTempo.BackColor = System.Drawing.Color.Navy;
+            await Task.Delay(50);
+            boxTempo.BackColor = System.Drawing.Color.White;
+        }
 
     }
 }

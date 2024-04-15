@@ -53,5 +53,7 @@ namespace CremeWorks.Common
         {
             if (_handle > 0) timeKillEvent(_handle);
         }
+
+        ~WinMMWrapper() => Stop();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CremeWorks.Common;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -11,6 +12,7 @@ namespace CremeWorks
         private readonly Song _s;
         private readonly CheckBox[][] _mapMatrixA;
         private readonly CheckBox[][] _mapMatrixB;
+        private readonly Metronome _metronome = new Metronome();
 
         public SongEditor(Concert c, Song s)
         {
@@ -52,6 +54,9 @@ namespace CremeWorks
                     _mapMatrixB[x][y].Checked = s.CCPatchMap[x][y];
                 }
             }
+
+            _metronome.Tick += blinkTimer_Tick;
+            _metronome.Start((int)txtBpm.Value);
         }
 
         private void CloseOK(object sender, EventArgs e)
@@ -129,12 +134,12 @@ namespace CremeWorks
             edit.ShowDialog();
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e) => blinkTimer.Interval = 60000 / (int)txtBpm.Value;
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e) => _metronome.Start((int)txtBpm.Value);
 
-        private async void blinkTimer_Tick(object sender, EventArgs e)
+        private async void blinkTimer_Tick()
         {
-            blinkBox.BackColor = Color.DarkBlue;
-            await Task.Delay(25);
+            blinkBox.BackColor = Color.Navy;
+            await Task.Delay(50);
             blinkBox.BackColor = Color.White;
         }
     }
