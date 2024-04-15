@@ -21,24 +21,11 @@ namespace CremeWorks.Common.Networking
 
         public async Task<IPAddress> ListenAsync(CancellationToken cancelSource)
         {
-
-            while (!cancelSource.IsCancellationRequested)
-            {
-                var recvBuffer = await _listenClient.ReceiveAsync();
-                var str = Encoding.ASCII.GetString(recvBuffer.Buffer);
-                if (str != LISTENING_IDENTIFIER) continue;
-                return recvBuffer.RemoteEndPoint.Address;
-            }
-
-            return null;
-        }
-
-        public void Close()
-        {
+            var recvBuffer = await _listenClient.ReceiveAsync();
+            var str = Encoding.ASCII.GetString(recvBuffer.Buffer);
             _listenClient.Close();
-            _listenClient.Client.Close();
-            _listenClient.Dispose();
-
+            if (str != LISTENING_IDENTIFIER) return null;
+            return recvBuffer.RemoteEndPoint.Address;
         }
     }
 }

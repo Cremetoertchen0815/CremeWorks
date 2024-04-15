@@ -34,10 +34,11 @@ func main() {
 	}
 
 	//Check if finder header is correct
-	if string(buf[:n]) == "CremeWorks SoundPlayer v1.0" {
-		fmt.Println("YUSS!")
+	if string(buf[:n]) != "CremeWorks Listener v1.0" {
+		panic("Broadcast header is incorrect! Header was " + string(buf[:n]))
 	}
 	fmt.Printf("Server found at: %s\n", addr)
+	pc.Close()
 
 	//Connect to server
 	ip := strings.Split(addr.String(), ":")[0]
