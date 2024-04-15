@@ -6,6 +6,11 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Company>Luminous Friends</Company>
+    <Authors>Luminous Friends</Authors>
+    <Product>CremeWorks</Product>
+    <AssemblyVersion>1.5</AssemblyVersion>
+    <FileVersion>1.5</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
