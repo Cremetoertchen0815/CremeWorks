@@ -2,13 +2,6 @@
 using Melanchall.DryWetMidi.Multimedia;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CremeWorks
@@ -106,7 +99,7 @@ namespace CremeWorks
             _ignoreMacroListSelChange = false;
             lstMacros.SelectedIndex = selIdx;
         }
-        
+
         private void btnItemRemNote_Click(object sender, EventArgs e)
         {
             if (lstItemNotes.SelectedIndex < 0) return;
@@ -182,7 +175,7 @@ namespace CremeWorks
                 var noteVal = (e.Event as NoteOnEvent).NoteNumber;
                 if (_activeSenseKeys.Contains(noteVal)) _activeSenseKeys.Remove(noteVal);
                 return;
-            } 
+            }
             else if (e.Event.EventType != MidiEventType.ControlChange)
                 return;
 

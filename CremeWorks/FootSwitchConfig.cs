@@ -9,6 +9,8 @@ namespace CremeWorks
     {
         private readonly (ComboBox, NumericUpDown, NumericUpDown, Button)[] _cont;
         private readonly Concert _c;
+        private const int PARAM_COUNT = 6;
+
         public FootSwitchConfig(Concert c)
         {
             InitializeComponent();
@@ -19,14 +21,12 @@ namespace CremeWorks
             _c.MidiMatrix.Unregister();
 
             //Prepare control array
-            _cont = new (ComboBox, NumericUpDown, NumericUpDown, Button)[] { (type1, valA1, valB1, det1), (type2, valA2, valB2, det2), (type3, valA3, valB3, det3),
-                                                                             (type4, valA4, valB4, det4), (type5, valA5, valB5, det5), (type6, valA6, valB6, det6),
-                                                                             (type7, valA7, valB7, det7), (type8, valA8, valB8, det8), (type9, valA9, valB9, det9),
-                                                                             (type10, valA10, valB10, det10), (type11, valA11, valB11, det11),
+            _cont = new (ComboBox, NumericUpDown, NumericUpDown, Button)[] { (type1, valA1, valB1, det1), (type2, valA2, valB2, det2),
+                                                                             (type4, valA4, valB4, det4), (type5, valA5, valB5, det5),
                                                                              (type12, valA12, valB12, det12), (type13, valA13, valB13, det13)};
 
             //Load data into dialogue
-            for (int i = 0; i < 13; i++)
+            for (int i = 0; i < PARAM_COUNT; i++)
             {
                 var cfg = _c.FootSwitchConfig[i];
                 var cnt = _cont[i];
@@ -98,7 +98,7 @@ namespace CremeWorks
             if (dev?.IsListeningForEvents == true) dev.StopEventsListening();
 
             //Save data from dialogue
-            for (int i = 0; i < 13; i++)
+            for (int i = 0; i < PARAM_COUNT; i++)
             {
                 var cnt = _cont[i];
                 _c.FootSwitchConfig[i] = (IndexToMidiEventType(cnt.Item1.SelectedIndex), (short)cnt.Item2.Value, (byte)(cnt.Item3.Value - 1));

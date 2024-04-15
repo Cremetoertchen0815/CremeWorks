@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CremeWorks.Common;
+using System;
+using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CremeWorks
@@ -9,6 +12,7 @@ namespace CremeWorks
         private readonly Song _s;
         private readonly CheckBox[][] _mapMatrixA;
         private readonly CheckBox[][] _mapMatrixB;
+        private readonly Metronome _metronome = new Metronome();
 
         public SongEditor(Concert c, Song s)
         {
@@ -31,6 +35,11 @@ namespace CremeWorks
             txtArtist.Text = s.Artist;
             txtKey.Text = s.Key;
             txtLyrics.Text = s.Lyrics;
+            txtInstructions.Text = s.Instructions;
+            chkClick.Checked = s.Click;
+            chkSpecialEvent.Checked = s.SpecialEvent;
+            txtBpm.Value = s.Tempo;
+            txtLyrics.Text = s.Lyrics;
             apM.Checked = apbM.Enabled = s.AutoPatchSlots[0].Enabled;
             ap1.Checked = apb1.Enabled = s.AutoPatchSlots[1].Enabled;
             ap2.Checked = apb2.Enabled = s.AutoPatchSlots[2].Enabled;
@@ -45,6 +54,9 @@ namespace CremeWorks
                     _mapMatrixB[x][y].Checked = s.CCPatchMap[x][y];
                 }
             }
+
+            _metronome.Tick += blinkTimer_Tick;
+            _metronome.Start((int)txtBpm.Value);
         }
 
         private void CloseOK(object sender, EventArgs e)
@@ -65,6 +77,10 @@ namespace CremeWorks
             _s.Artist = txtArtist.Text;
             _s.Key = txtKey.Text;
             _s.Lyrics = txtLyrics.Text;
+            _s.Instructions = txtInstructions.Text;
+            _s.Click = chkClick.Checked;
+            _s.Tempo = (byte)txtBpm.Value;
+            _s.SpecialEvent = chkSpecialEvent.Checked;
             for (int x = 0; x < Concert.PATCH_DEVICE_COUNT; x++)
             {
                 for (int y = 0; y < Concert.PATCH_DEVICE_COUNT; y++)
@@ -111,11 +127,20 @@ namespace CremeWorks
             _s.AutoPatchSlots[id] = (chk.Checked, patchBuffer);
 
         }
-        
+
         private void btnChordMakro_Click(object sender, EventArgs e)
         {
             var edit = new ChordMacroEditor(_s, _c);
             edit.ShowDialog();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e) => _metronome.Start((int)txtBpm.Value);
+
+        private async void blinkTimer_Tick()
+        {
+            blinkBox.BackColor = Color.Navy;
+            await Task.Delay(50);
+            blinkBox.BackColor = Color.White;
         }
     }
 }

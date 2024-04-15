@@ -1,9 +1,8 @@
 ﻿using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
-using Melanchall.DryWetMidi.MusicTheory;
 using System;
-using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace CremeWorks
 {
@@ -11,22 +10,26 @@ namespace CremeWorks
     {
 
         private readonly Concert _c;
-        public MIDIMatrix(Concert c) => _c = c;
+        private readonly Action<MidiEvent> _lightingSendDelegate;
         private bool _reg = false;
+
+        public MIDIMatrix(Concert c, Action<MidiEvent> lightingSendDelegate) => (_c, _lightingSendDelegate) = (c, lightingSendDelegate);
 
         public Action<int, bool?> ActionExecute = (a, b) => { return; };
         public Song ActiveSong;
+
+        public const int INSTR_DEVICE_OFFSET = 1;
+
         public void Register()
         {
             if (_reg) return;
             if (_c?.Devices[0]?.Input != null) _c.Devices[0].Input.EventReceived += ListenFootPedal;
-            if (_c?.Devices[1]?.Input != null) _c.Devices[1].Input.EventReceived += ListenLightController;
-            if (_c?.Devices[2]?.Input != null) _c.Devices[2].Input.EventReceived += ListenMaster;
-            if (_c?.Devices[3]?.Input != null) _c.Devices[3].Input.EventReceived += ListenAux1;
-            if (_c?.Devices[4]?.Input != null) _c.Devices[4].Input.EventReceived += ListenAux2;
-            if (_c?.Devices[5]?.Input != null) _c.Devices[5].Input.EventReceived += ListenAux3;
-            if (_c?.Devices[6]?.Input != null) _c.Devices[6].Input.EventReceived += ListenAux4;
-            if (_c?.Devices[7]?.Input != null) _c.Devices[7].Input.EventReceived += ListenAux5;
+            if (_c?.Devices[1]?.Input != null) _c.Devices[2].Input.EventReceived += ListenMaster;
+            if (_c?.Devices[2]?.Input != null) _c.Devices[3].Input.EventReceived += ListenAux1;
+            if (_c?.Devices[3]?.Input != null) _c.Devices[4].Input.EventReceived += ListenAux2;
+            if (_c?.Devices[4]?.Input != null) _c.Devices[5].Input.EventReceived += ListenAux3;
+            if (_c?.Devices[5]?.Input != null) _c.Devices[6].Input.EventReceived += ListenAux4;
+            if (_c?.Devices[6]?.Input != null) _c.Devices[7].Input.EventReceived += ListenAux5;
             foreach (var element in _c.Devices) element.Input?.StartEventsListening();
             _reg = true;
         }
@@ -35,13 +38,12 @@ namespace CremeWorks
         {
             if (!_reg) return;
             if (_c?.Devices[0]?.Input != null) _c.Devices[0].Input.EventReceived -= ListenFootPedal;
-            if (_c?.Devices[1]?.Input != null) _c.Devices[1].Input.EventReceived -= ListenLightController;
-            if (_c?.Devices[2]?.Input != null) _c.Devices[2].Input.EventReceived -= ListenMaster;
-            if (_c?.Devices[3]?.Input != null) _c.Devices[3].Input.EventReceived -= ListenAux1;
-            if (_c?.Devices[4]?.Input != null) _c.Devices[4].Input.EventReceived -= ListenAux2;
-            if (_c?.Devices[5]?.Input != null) _c.Devices[5].Input.EventReceived -= ListenAux3;
-            if (_c?.Devices[6]?.Input != null) _c.Devices[6].Input.EventReceived -= ListenAux4;
-            if (_c?.Devices[7]?.Input != null) _c.Devices[7].Input.EventReceived -= ListenAux5;
+            if (_c?.Devices[1]?.Input != null) _c.Devices[2].Input.EventReceived -= ListenMaster;
+            if (_c?.Devices[2]?.Input != null) _c.Devices[3].Input.EventReceived -= ListenAux1;
+            if (_c?.Devices[3]?.Input != null) _c.Devices[4].Input.EventReceived -= ListenAux2;
+            if (_c?.Devices[4]?.Input != null) _c.Devices[5].Input.EventReceived -= ListenAux3;
+            if (_c?.Devices[5]?.Input != null) _c.Devices[6].Input.EventReceived -= ListenAux4;
+            if (_c?.Devices[6]?.Input != null) _c.Devices[7].Input.EventReceived -= ListenAux5;
             foreach (var element in _c.Devices) element.Input?.StopEventsListening();
             _reg = false;
         }
@@ -49,39 +51,50 @@ namespace CremeWorks
         private void ListenFootPedal(object sender, MidiEventReceivedEventArgs e)
         {
 
+            //If it isn't, redirect to lighting board
+            if (e.Event.EventType == MidiEventType.NoteOff || e.Event.EventType == MidiEventType.ActiveSensing) return;
+            _lightingSendDelegate(e.Event);
+
+            //Check if foot pedal event is a macro
             for (int i = 0; i < _c.FootSwitchConfig.Length; i++)
             {
                 if (e.Event.EventType == MidiEventType.NoteOn && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
                 {
                     var ev = (NoteOnEvent)e.Event;
                     if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
+                    {
                         ActionExecute(i, ev.Velocity > 0);
+                        return;
+                    }
                 }
                 else if (e.Event.EventType == MidiEventType.NoteOff && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
                 {
                     var ev = (NoteOffEvent)e.Event;
                     if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
+                    {
                         ActionExecute(i, false);
+                        return;
+                    }
                 }
                 else if (e.Event.EventType == MidiEventType.ControlChange && _c.FootSwitchConfig[i].Item1 == MidiEventType.ControlChange)
                 {
                     var ev = (ControlChangeEvent)e.Event;
                     if (ev.ControlNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
+                    {
                         ActionExecute(i, ev.ControlValue >= 64);
+                        return;
+                    }
                 }
                 else if (e.Event.EventType == MidiEventType.ProgramChange && _c.FootSwitchConfig[i].Item1 == MidiEventType.ProgramChange)
                 {
                     var ev = (ProgramChangeEvent)e.Event;
-                    if (ev.ProgramNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3) ActionExecute(i, null);
+                    if (ev.ProgramNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
+                    {
+                        ActionExecute(i, null);
+                        return;
+                    }
                 }
             }
-        }
-
-        private void ListenLightController(object sender, MidiEventReceivedEventArgs e)
-        {
-            if (e.Event.EventType == MidiEventType.ActiveSensing) return;
-            System.Diagnostics.Debug.WriteLine(e.Event.EventType);
-            var lel = (NormalSysExEvent)e.Event;
         }
 
         private void ListenMaster(object sender, MidiEventReceivedEventArgs e) => SendInstrData(0, e.Event);
@@ -102,7 +115,7 @@ namespace CremeWorks
                     {
                         var macro = ActiveSong.ChordMacros[i];
                         if (macro.TriggerNote != note.NoteNumber || ActiveSong.ChordMacroDst < 0) continue;
-                        var dstDev = _c.Devices[ActiveSong.ChordMacroDst + 2].Output;
+                        var dstDev = _c.Devices[ActiveSong.ChordMacroDst + INSTR_DEVICE_OFFSET].Output;
                         if (dstDev == null) continue;
 
                         if (note.Velocity > 0) note.Velocity = new SevenBitNumber((byte)macro.Velocity);
@@ -116,11 +129,11 @@ namespace CremeWorks
                 }
 
                 //If no chord macro, simply forward
-                for (int i = 0; i < 6; i++) if (ActiveSong.NotePatchMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+                for (int i = 0; i < 6; i++) if (ActiveSong.NotePatchMap[sender][i]) _c.Devices[INSTR_DEVICE_OFFSET + i].Output?.SendEvent(e);
             }
             else if (e.EventType == MidiEventType.ControlChange)
             {
-                for (int i = 0; i < 6; i++) if (ActiveSong.CCPatchMap[sender][i]) _c.Devices[2 + i].Output?.SendEvent(e);
+                for (int i = 0; i < 6; i++) if (ActiveSong.CCPatchMap[sender][i]) _c.Devices[INSTR_DEVICE_OFFSET + i].Output?.SendEvent(e);
             }
         }
     }

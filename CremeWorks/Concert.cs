@@ -3,6 +3,7 @@ using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -11,20 +12,18 @@ namespace CremeWorks
 {
     public class Concert
     {
-        public const int MIN_DEVICE_COUNT = 8;
-        public const int PATCH_DEVICE_COUNT_PRE3 = 4;
+        public const int ALL_DEVICES_COUNT = 7;
         public const int PATCH_DEVICE_COUNT = 6;
         public string FilePath;
         public MIDIDevice[] Devices;
         public (MidiEventType, short, byte)[] FootSwitchConfig;
-        public LightController LightConfig;
-        public List<Song> Playlist;
-        public sbyte[] QA = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }; //Quick Access buttons
+        public List<LightingCue> LightingCues = new List<LightingCue>();
+        public List<Song> Playlist = new List<Song>();
 
         public MIDIMatrix MidiMatrix;
         public Action<bool> ConnectionChangeHandler = (x) => { return; };
 
-        public Concert() => MidiMatrix = new MIDIMatrix(this);
+        public Concert(Action<MidiEvent> lightingSendDelegate) => MidiMatrix = new MIDIMatrix(this, lightingSendDelegate);
 
         public void Connect()
         {
@@ -62,186 +61,169 @@ namespace CremeWorks
             ConnectionChangeHandler(false);
         }
 
-        public static Concert Empty()
+        public static Concert Empty(Action<MidiEvent> lightingSendDelegate) => new Concert(lightingSendDelegate)
         {
-            var lol = new Concert
-            {
-                Devices = new MIDIDevice[] { new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice(), new MIDIDevice() },
-                FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) },
-                Playlist = new List<Song>()
-            };
-            lol.LightConfig = new LightController(lol);
-            return lol;
-        }
+            Devices = Enumerable.Range(0, ALL_DEVICES_COUNT).Select(_ => new MIDIDevice()).ToArray(),
+            FootSwitchConfig = new (MidiEventType, short, byte)[] { (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1) },
+            Playlist = new List<Song>(),
+            LightingCues = new List<LightingCue>()
+        };
 
-        private const int cVersion = 4;
+        private const int cVersion = 5;
         private const string cHeader = "CW";
-        public static Concert LoadFromFile(string filename)
+        public static Concert LoadFromFile(string filename, Action<MidiEvent> lightingSendDelegate)
         {
             //Init stuff
-            var nu = new Concert();
+            var nu = new Concert(lightingSendDelegate);
             var br = new BinaryReader(File.OpenRead(filename));
-            //Read header
-            var version = 0;
-            var headerStr = br.ReadString();
-            if (!headerStr.StartsWith(cHeader)) throw new Exception("Incorrect file!");
-            if (headerStr.Length > 2 && int.TryParse(headerStr.Substring(2), out int v)) version = v;
-            nu.FilePath = filename;
+            try
+            {
+                //Read header
+                var version = 0;
+                var headerStr = br.ReadString();
+                if (!headerStr.StartsWith(cHeader)) throw new Exception("Incorrect file!");
+                if (headerStr.Length > 2 && int.TryParse(headerStr.Substring(2), out int v)) version = v;
+                nu.FilePath = filename;
 
-            var devCount = br.ReadInt32();
-            nu.Devices = new MIDIDevice[Math.Max(devCount, MIN_DEVICE_COUNT)];
-            for (int i = 0; i < MIN_DEVICE_COUNT; i++) nu.Devices[i] = new MIDIDevice() { Name = (i < devCount ? br.ReadString() : null) };
-            //Foot switch config
-            int cnt = br.ReadInt32();
-            nu.FootSwitchConfig = new (MidiEventType, short, byte)[13];
-            for (int i = 0; i < cnt; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
-            //QA config
-            nu.LightConfig = new LightController(nu);
-            for (int i = 0; i < 128; i++)
-            {
-                string str = br.ReadString();
-                nu.LightConfig.Names[i] = str == string.Empty ? null : str;
-                nu.LightConfig.ToggleGroups[i] = br.ReadInt32();
-                nu.LightConfig.ResetWhenSongChange[i] = br.ReadBoolean();
-                nu.LightConfig.IsToggleable[i] = br.ReadBoolean();
-            }
-
-            //Quick Access - from Version >= 4
-            if (version > 3)
-            {
-                nu.QA = new sbyte[br.ReadInt32()];
-                byte[] byte_Dat = br.ReadBytes(nu.QA.Length);
-                Buffer.BlockCopy(byte_Dat, 0, nu.QA, 0, byte_Dat.Length);
-            } else
-            {
-                nu.QA = null;
-            }
-
-            //Playlist
-            int count = br.ReadInt32();
-            nu.Playlist = new List<Song>();
-            for (int i = 0; i < count; i++)
-            {
-                var nuTitle = br.ReadString();
-                var nuArtist = br.ReadString();
-                var nuKey = br.ReadString();
-                var nuLyrics = br.ReadString();
-                var s = new Song
+                if (version <= 4)
                 {
-                    Title = nuTitle,
-                    Artist = nuArtist,
-                    Key = nuKey,
-                    Lyrics = nuLyrics,
-                    NotePatchMap = new bool[PATCH_DEVICE_COUNT][],
-                    CCPatchMap = new bool[PATCH_DEVICE_COUNT][]
-                };
+                    CompatibilityFileParser.LoadFilePreVer5(ref nu, br, version);
+                    return nu;
+                }
 
-                //Quick Access - from Version < 4
-                if (version < 4)
+                nu.Devices = new MIDIDevice[ALL_DEVICES_COUNT];
+                for (int i = 0; i < ALL_DEVICES_COUNT; i++) nu.Devices[i] = new MIDIDevice() { Name = br.ReadString() };
+
+                //Foot switch config
+                int cnt = br.ReadInt32();
+                nu.FootSwitchConfig = new (MidiEventType, short, byte)[6];
+                for (int i = 0; i < cnt; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
+
+                //Lighting cues config
+                var cueCount = br.ReadInt32();
+                for (int i = 0; i < cueCount; i++) nu.LightingCues.Add(new LightingCue()
                 {
-                    int len = br.ReadInt32();
-                    byte[] byte_Dat = br.ReadBytes(len);
-                    if (nu.QA is null)
+                    ID = br.ReadUInt64(),
+                    Name = br.ReadString(),
+                    NoteValue = br.ReadByte()
+                });
+
+                //Playlist
+                int count = br.ReadInt32();
+                for (int i = 0; i < count; i++)
+                {
+                    var s = new Song
                     {
-                        nu.QA = new sbyte[len];
-                        Buffer.BlockCopy(byte_Dat, 0, nu.QA, 0, byte_Dat.Length);
+                        Title = br.ReadString(),
+                        Artist = br.ReadString(),
+                        Key = br.ReadString(),
+                        Lyrics = br.ReadString(),
+                        Instructions = br.ReadString(),
+                        Tempo = br.ReadByte(),
+                        Click = br.ReadBoolean(),
+                        SpecialEvent = br.ReadBoolean(),
+                        NotePatchMap = new bool[PATCH_DEVICE_COUNT][],
+                        CCPatchMap = new bool[PATCH_DEVICE_COUNT][]
+                    };
+
+                    for (int j = 0; j < PATCH_DEVICE_COUNT; j++)
+                    {
+                        s.NotePatchMap[j] = LoadBoolArray(br, PATCH_DEVICE_COUNT);
+                        s.CCPatchMap[j] = LoadBoolArray(br, PATCH_DEVICE_COUNT);
                     }
-                }
+                    s.NotePatchMap = Convert2DArrayToSize(s.NotePatchMap, PATCH_DEVICE_COUNT);
+                    s.CCPatchMap = Convert2DArrayToSize(s.CCPatchMap, PATCH_DEVICE_COUNT);
 
-                var patchCount = (version < 3 ? PATCH_DEVICE_COUNT_PRE3 : PATCH_DEVICE_COUNT);
-                for (int j = 0; j < patchCount; j++)
-                {
-                    s.NotePatchMap[j] = LoadBoolArray(br, patchCount);
-                    s.CCPatchMap[j] = LoadBoolArray(br, patchCount);
-                }
-                s.NotePatchMap = Convert2DArrayToSize(s.NotePatchMap, PATCH_DEVICE_COUNT);
-                s.CCPatchMap = Convert2DArrayToSize(s.CCPatchMap, PATCH_DEVICE_COUNT);
-
-                var autoPatchCount = br.ReadInt32();
-                s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, PATCH_DEVICE_COUNT)).Select(x => ((bool, IRefacePatch))(false, null)).ToArray();
-                for (int j = 0; j < autoPatchCount; j++)
-                {
-                    bool enabled = br.ReadBoolean();
-                    int type = br.ReadInt32();
-
-                    IRefacePatch patch;
-                    switch ((DeviceType)type)
+                    var autoPatchCount = br.ReadInt32();
+                    s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, PATCH_DEVICE_COUNT)).Select(x => ((bool, IRefacePatch))(false, null)).ToArray();
+                    for (int j = 0; j < autoPatchCount; j++)
                     {
-                        case DeviceType.RefaceCS:
-                            var cs = new CSPatch
-                            {
-                                SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                                VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                            };
-                            patch = cs;
-                            break;
-                        case DeviceType.RefaceDX:
-                            var dx = new DXPatch
-                            {
-                                SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                                ProgramChangeNr = br.ReadByte()
-                            };
-                            patch = dx;
-                            break;
-                        case DeviceType.RefaceCP:
-                            var cp = new CPPatch
-                            {
-                                SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                                VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                            };
-                            patch = cp;
-                            break;
-                        case DeviceType.RefaceYC:
-                            var yc = new YCPatch
-                            {
-                                SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                                VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                            };
-                            patch = yc;
-                            break;
-                        default:
-                            patch = null;
-                            break;
+                        bool enabled = br.ReadBoolean();
+                        int type = br.ReadInt32();
+
+                        IRefacePatch patch;
+                        switch ((DeviceType)type)
+                        {
+                            case DeviceType.RefaceCS:
+                                var cs = new CSPatch
+                                {
+                                    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                    VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                                };
+                                patch = cs;
+                                break;
+                            case DeviceType.RefaceDX:
+                                var dx = new DXPatch
+                                {
+                                    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                    ProgramChangeNr = br.ReadByte()
+                                };
+                                patch = dx;
+                                break;
+                            case DeviceType.RefaceCP:
+                                var cp = new CPPatch
+                                {
+                                    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                    VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                                };
+                                patch = cp;
+                                break;
+                            case DeviceType.RefaceYC:
+                                var yc = new YCPatch
+                                {
+                                    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                    VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                                };
+                                patch = yc;
+                                break;
+                            default:
+                                patch = null;
+                                break;
+                        }
+
+                        s.AutoPatchSlots[j] = (enabled, patch);
                     }
 
-                    s.AutoPatchSlots[j] = (enabled, patch);
-                }
+                    //Read lighting cues
+                    int lightcueLen = br.ReadInt32();
+                    for (int j = 0; j < lightcueLen; j++) s.CueQueue.Add((br.ReadUInt64(), br.ReadString()));
 
-                //Read lighting cue
-                int lightcueLen = br.ReadInt32();
-                for (int j = 0; j < lightcueLen; j++)
-                {
-                    string comment = br.ReadString();
-                    var data = new LightSwitchType[128];
-                    for (int k = 0; k < 128; k++) data[k] = (LightSwitchType)br.ReadInt32();
-                    s.CueList.Add((comment, data));
-                }
-                nu.Playlist.Add(s);
-
-                //Read chord macros
-                if (version > 0)
-                {
-                    s.ChordMacroSrc = br.ReadInt32();
-                    s.ChordMacroDst = br.ReadInt32();
-                    int macroCount = br.ReadInt32();
-                    for (int j = 0; j < macroCount; j++)
+                    //Read chord macros
+                    if (version > 0)
                     {
-                        string name = br.ReadString();
-                        int triggerNote = br.ReadInt32();
-                        int velocity = br.ReadInt32();
-                        var keys = new int[br.ReadInt32()];
-                        for (int k = 0; k < keys.Length; k++) keys[k] = br.ReadInt32();
-                        s.ChordMacros.Add((name, triggerNote, velocity, keys.ToList()));
+                        s.ChordMacroSrc = br.ReadInt32();
+                        s.ChordMacroDst = br.ReadInt32();
+                        int macroCount = br.ReadInt32();
+                        for (int j = 0; j < macroCount; j++)
+                        {
+                            string name = br.ReadString();
+                            int triggerNote = br.ReadInt32();
+                            int velocity = br.ReadInt32();
+                            var keys = new int[br.ReadInt32()];
+                            for (int k = 0; k < keys.Length; k++) keys[k] = br.ReadInt32();
+                            s.ChordMacros.Add((name, triggerNote, velocity, keys.ToList()));
+                        }
                     }
-                }
-            }
-            br.Close();
-            br.Dispose();
 
-            return nu;
+                    nu.Playlist.Add(s);
+
+                }
+
+                return nu;
+            }
+            catch (Exception)
+            {
+                if (!Debugger.IsAttached) throw;
+                return null;
+            } finally
+            {
+                br.Close();
+                br.Dispose();
+            }
+
         }
 
-        private static bool[] LoadBoolArray(BinaryReader br, int count)
+        public static bool[] LoadBoolArray(BinaryReader br, int count)
         {
             var arr = new bool[PATCH_DEVICE_COUNT];
             for (int i = 0; i < count; i++)
@@ -251,7 +233,7 @@ namespace CremeWorks
             return arr;
         }
 
-        private static T[][] Convert2DArrayToSize<T>(T[][] orig, int size)
+        public static T[][] Convert2DArrayToSize<T>(T[][] orig, int size)
         {
             var res = new T[size][];
             for (int i = 0; i < size; i++)
@@ -273,8 +255,7 @@ namespace CremeWorks
             FilePath = filename;
             //Misc
             bw.Write(cHeader + cVersion);
-            bw.Write(Devices.Length);
-            for (int i = 0; i < Devices.Length; i++) bw.Write(Devices[i]?.Name ?? string.Empty);
+            for (int i = 0; i < ALL_DEVICES_COUNT; i++) bw.Write(Devices[i]?.Name ?? string.Empty);
             //Foot switch config
             bw.Write(FootSwitchConfig.Length);
             for (int i = 0; i < FootSwitchConfig.Length; i++)
@@ -284,20 +265,14 @@ namespace CremeWorks
                 bw.Write(FootSwitchConfig[i].Item3);
             }
 
-            //Lighting
-            for (int i = 0; i < 128; i++)
+            //Lighting cues
+            bw.Write(LightingCues.Count);
+            for (int i = 0; i < LightingCues.Count; i++)
             {
-                bw.Write(LightConfig.Names[i] ?? string.Empty);
-                bw.Write(LightConfig.ToggleGroups[i]);
-                bw.Write(LightConfig.ResetWhenSongChange[i]);
-                bw.Write(LightConfig.IsToggleable[i]);
+                bw.Write(LightingCues[i].ID);
+                bw.Write(LightingCues[i].Name);
+                bw.Write(LightingCues[i].NoteValue);
             }
-
-            //Quick Access
-            bw.Write(QA.Length);
-            byte[] byte_dat = new byte[QA.Length];
-            Buffer.BlockCopy(QA, 0, byte_dat, 0, byte_dat.Length);
-            bw.Write(byte_dat);
 
             //Playlist
             bw.Write(Playlist.Count);
@@ -308,6 +283,10 @@ namespace CremeWorks
                 bw.Write(song.Artist);
                 bw.Write(song.Key);
                 bw.Write(song.Lyrics);
+                bw.Write(song.Instructions);
+                bw.Write(song.Tempo);
+                bw.Write(song.Click);
+                bw.Write(song.SpecialEvent);
                 for (int j = 0; j < PATCH_DEVICE_COUNT; j++)
                 {
                     for (int k = 0; k < PATCH_DEVICE_COUNT; k++) bw.Write(song.NotePatchMap?[j]?[k] ?? false);
@@ -358,11 +337,11 @@ namespace CremeWorks
                 }
 
                 //Lighting cue
-                bw.Write(song.CueList.Count);
-                for (int j = 0; j < song.CueList.Count; j++)
+                bw.Write(song.CueQueue.Count);
+                for (int j = 0; j < song.CueQueue.Count; j++)
                 {
-                    bw.Write(song.CueList[j].comment);
-                    for (int k = 0; k < 128; k++) bw.Write((int)song.CueList[j].data[k]);
+                    bw.Write(song.CueQueue[j].ID);
+                    bw.Write(song.CueQueue[j].comment);
                 }
 
                 //Write chord macros
@@ -390,5 +369,12 @@ namespace CremeWorks
         public InputDevice Input;
         public OutputDevice Output;
         public string Name;
+    }
+
+    public class LightingCue
+    {
+        public ulong ID { get; set; }
+        public byte NoteValue { get; set; }
+        public string Name { get; set; }
     }
 }

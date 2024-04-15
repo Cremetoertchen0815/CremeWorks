@@ -1,13 +1,25 @@
-﻿using System;
+﻿using CremeWorks.Client.Networking;
+using CremeWorks.Common;
+using CremeWorks.Common.Networking;
+using CremeWorks.Networking;
+using Melanchall.DryWetMidi.Common;
+using Melanchall.DryWetMidi.Core;
+using System;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CremeWorks
 {
     public partial class MainForm : Form
     {
-        private Concert _c = Concert.Empty();
+        private Concert _c;
         private Song _s = null;
+        private NetworkingServer _server = new NetworkingServer();
+        private readonly MidiEventToBytesConverter _converter = new MidiEventToBytesConverter();
+        private readonly Metronome _metronome = new Metronome();
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -26,6 +38,13 @@ namespace CremeWorks
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
+            _c = Concert.Empty(SendLighingData);
+
+            _server.UserJoined += _server_UserJoined;
+            _server.MessageReceived += _server_MessageReceived;
+
+            _metronome.Tick += TickMetronome;
+
             UpdateConcert();
         }
 
@@ -49,9 +68,14 @@ namespace CremeWorks
         private void UpdatePlaylist()
         {
             playList.Items.Clear();
+            int idx = 1;
             foreach (var element in _c.Playlist)
-                playList.Items.Add(element.Title + " - " + element.Artist);
+            {
+                string text = element.SpecialEvent ? $"---{element.Title}---" : $"{idx++.ToString("D2")}.{element.Title} - {element.Artist}";
+                playList.Items.Add(text);
+            }
 
+            _server.SendToAll(MessageTypeEnum.SET_DATA, GetClientSet());
         }
 
         private readonly string[] Buchstaben = { "A", "B", "C", "D", "E", "F" };
@@ -60,23 +84,35 @@ namespace CremeWorks
         {
             songTitle.Text = string.Empty;
             songLyrics.Text = string.Empty;
-            songKey.Text = "Key: -";
+            songKey.Text = "";
+            songTempo.Text = "";
             lightCue.Items.Clear();
+            _server.SendToAll(MessageTypeEnum.CURRENT_SONG, GetCurrentSongInformation());
+            _server.SendToAll(MessageTypeEnum.CLICK_INFO, (_s is null || !_s.Click) ? "off" : _s.Tempo.ToString());
 
-            if (_s == null) return;
+            if (_s == null)
+            {
+                _metronome.Stop();
+                return;
+            }
 
-            for (int i = 0; i < _s.CueList.Count; i++) lightCue.Items.Add((i + 1).ToString() + ". " + _s.CueList[i].comment);
-
+            for (int i = 0; i < _s.CueQueue.Count; i++)
+            {
+                var cueType = _c.LightingCues.FirstOrDefault(x => x.ID == _s.CueQueue[i].ID).Name;
+                lightCue.Items.Add($"{i + 1}. {_s.CueQueue[i].comment}({cueType})");
+            }
             //Configure shit
             songTitle.Text = _s.Title;
             songLyrics.Text = _s.Lyrics;
-            songKey.Text = "Key: " + _s.Key;
+            songKey.Text = _s.Key;
+            songTempo.Text = _s.Tempo.ToString() + " BPM";
+            _metronome.Start(_s.Tempo);
             ConfigSongMIDI();
 
-            //Load default QA patch
+            //Load default cue patch
             if (lightCue.Items.Count > 0) lightCue.SelectedIndex = 0;
         }
-        
+
         private void ConfigSongMIDI()
         {
             _c.MidiMatrix.ActiveSong = _s;
@@ -96,26 +132,20 @@ namespace CremeWorks
                     if (chk && playList.SelectedIndex < playList.Items.Count - 1) playList.SelectedIndex++;
                     break;
                 case 2:
-                    if (chk) for (int i = 0; i < 128; i++) _c.LightConfig.SetState(i, false);
-                    break;
-                case 3:
                     if (!chk) break;
                     SetScrollPos(songLyrics.Handle, 1, -10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, -10);
                     break;
-                case 4:
+                case 3:
                     if (!chk) break;
                     SetScrollPos(songLyrics.Handle, 1, 10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, 10);
                     break;
-                case 11:
+                case 4:
                     if (lightCue.SelectedIndex > 0) lightCue.SelectedIndex--;
                     break;
-                case 12:
+                case 5:
                     if (lightCue.SelectedIndex < lightCue.Items.Count - 1) lightCue.SelectedIndex++;
-                    break;
-                default:
-                    _c.LightConfig.SetState(_c.QA[nr - 5], enable);
                     break;
             }
         }
@@ -141,9 +171,6 @@ namespace CremeWorks
             _s = playList.SelectedIndex >= 0 ? _c.Playlist[playList.SelectedIndex] : null;
             UpdateSong();
         }
-
-        private void ShortcutButtonDown(object sender, MouseEventArgs e) => ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, qAButtonToggleToolStripMenuItem.Checked ? null : (bool?)true);
-        private void ShortcutButtonUp(object sender, MouseEventArgs e) { if (!qAButtonToggleToolStripMenuItem.Checked) ExecuteAction(int.Parse((string)((Button)sender).Tag) + 2, false); }
 
         private void RemSong(object sender, EventArgs e)
         {
@@ -189,23 +216,25 @@ namespace CremeWorks
 
         private void New(object sender, EventArgs e)
         {
-            _c = Concert.Empty();
+            _c = Concert.Empty(SendLighingData);
             UpdateConcert();
         }
 
         private void UpdateConcert()
         {
-            string tit = _c?.FilePath ?? "Untitled";
-            Text = "CremeWorks Stage Controller - " + (tit == string.Empty ? "Untitled" : tit);
+            string tit = (_c?.FilePath == string.Empty ? null : _c?.FilePath) ?? "Untitled";
+            string titClean = (_c?.FilePath == string.Empty ? null : Path.GetFileNameWithoutExtension(_c?.FilePath)) ?? "Untitled";
+            Text = "CremeWorks Stage Controller - " + tit;
+            _server.SendToAll(MessageTypeEnum.CONCERT_NAME, titClean);
+            if (_c is null)
+            {
+                playList.Items.Clear();
+                _server.SendToAll(MessageTypeEnum.SET_DATA, "[]");
+                return;
+            }
+
             _c.MidiMatrix.ActionExecute = ExecuteAction;
             _c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
-
-            button5.Text = (_c?.QA[0] ?? -1) < 0 ? "Quick Access " + Buchstaben[0] : _c.LightConfig.Names[_c.QA[0]];
-            button7.Text = (_c?.QA[1] ?? -1) < 0 ? "Quick Access " + Buchstaben[1] : _c.LightConfig.Names[_c.QA[1]];
-            button6.Text = (_c?.QA[2] ?? -1) < 0 ? "Quick Access " + Buchstaben[2] : _c.LightConfig.Names[_c.QA[2]];
-            button9.Text = (_c?.QA[3] ?? -1) < 0 ? "Quick Access " + Buchstaben[3] : _c.LightConfig.Names[_c.QA[3]];
-            button8.Text = (_c?.QA[4] ?? -1) < 0 ? "Quick Access " + Buchstaben[4] : _c.LightConfig.Names[_c.QA[4]];
-            button4.Text = (_c?.QA[5] ?? -1) < 0 ? "Quick Access " + Buchstaben[5] : _c.LightConfig.Names[_c.QA[5]];
 
             UpdatePlaylist();
             playList.SelectedIndex = -1;
@@ -214,7 +243,9 @@ namespace CremeWorks
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
-            _c = Concert.LoadFromFile(openFileDialog1.FileName);
+            _c = Concert.LoadFromFile(openFileDialog1.FileName, SendLighingData);
+            if (_c is null) MessageBox.Show("Concert file is corrupted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             UpdateConcert();
         }
 
@@ -239,23 +270,21 @@ namespace CremeWorks
             UpdateConcert();
         }
 
-        private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightingConfig(_c).ShowDialog();
-
-        private void qAButtonToggleToolStripMenuItem_Click(object sender, EventArgs e) => qAButtonToggleToolStripMenuItem.Checked = !qAButtonToggleToolStripMenuItem.Checked;
+        private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightCueManager(_c).ShowDialog();
 
         private void button15_Click(object sender, EventArgs e)
         {
-            if (_s != null && LightCueEditor.AddToCue(_c.LightConfig, _s.CueList)) UpdateSong();
+            if (_s != null && LightCueEditor.AddToCue(_c.LightingCues, _s.CueQueue)) UpdateSong();
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
             if (_s == null || lightCue.SelectedIndex < 0) return;
 
-            var tmp = _s.CueList[lightCue.SelectedIndex];
-            if (LightCueEditor.EditCue(_c.LightConfig, ref tmp))
+            var tmp = _s.CueQueue[lightCue.SelectedIndex];
+            if (LightCueEditor.EditCue(_c.LightingCues, ref tmp))
             {
-                _s.CueList[lightCue.SelectedIndex] = tmp;
+                _s.CueQueue[lightCue.SelectedIndex] = tmp;
                 UpdateSong();
             }
         }
@@ -263,27 +292,29 @@ namespace CremeWorks
         private void button13_Click(object sender, EventArgs e)
         {
             if (_s == null || lightCue.SelectedIndex < 0) return;
-            _s.CueList.RemoveAt(lightCue.SelectedIndex);
+            _s.CueQueue.RemoveAt(lightCue.SelectedIndex);
             UpdateSong();
         }
 
-        private void lightCue_SelectedIndexChanged(object sender, EventArgs e)
+        private async void lightCue_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_s != null && lightCue.SelectedIndex >= 0)
             {
-                var dat = _s.CueList[lightCue.SelectedIndex].data;
-                for (int i = 0; i < dat.Length; i++)
-                {
-                    if (dat[i] != LightSwitchType.Ignore) _c.LightConfig.SetState(i, dat[i] == LightSwitchType.On ? true : false);
-                }
+                _server.SendToAll(MessageTypeEnum.CUE_INDEX, lightCue.SelectedIndex.ToString());
+
+                //Send light cue
+                var noteOnVal = _c.LightingCues.FirstOrDefault(x => x.ID == _s.CueQueue[lightCue.SelectedIndex].ID)?.NoteValue;
+                if (noteOnVal is null) return;
+                SendLighingData(new NoteOnEvent(new SevenBitNumber(noteOnVal.Value), SevenBitNumber.MaxValue) { Channel = new FourBitNumber(1) });
+                await Task.Delay(50);
+                SendLighingData(new NoteOnEvent(new SevenBitNumber(noteOnVal.Value), SevenBitNumber.MinValue) { Channel = new FourBitNumber(1) });
             }
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
             if (_s == null || lightCue.SelectedIndex < 0) return;
-            var src = _s.CueList[lightCue.SelectedIndex];
-             _s.CueList.Add((src.comment, (LightSwitchType[])src.data.Clone()));
+            _s.CueQueue.Add(_s.CueQueue[lightCue.SelectedIndex]);
             UpdateSong();
         }
 
@@ -295,28 +326,117 @@ namespace CremeWorks
         private void lightCue_MouseMove(object sender, MouseEventArgs e)
         {
             int sIndex = lightCue.SelectedIndex;
-            if(e.Button == MouseButtons.Left && nIndexB > -1 && nIndexB != sIndex)
+            if (e.Button == MouseButtons.Left && nIndexB > -1 && nIndexB != sIndex)
             {
                 object aObj = lightCue.Items[nIndexB];
-                var bObj = _s.CueList[nIndexB];
+                var bObj = _s.CueQueue[nIndexB];
 
                 lightCue.Items[nIndexB] = lightCue.Items[sIndex];
-                _s.CueList[nIndexB] = _s.CueList[sIndex];
+                _s.CueQueue[nIndexB] = _s.CueQueue[sIndex];
 
                 lightCue.Items[sIndex] = aObj;
-                _s.CueList[sIndex] = bObj;
+                _s.CueQueue[sIndex] = bObj;
 
                 nIndexB = sIndex;
 
             }
         }
 
-        private void resetToolStripMenuItem_Click(object sender, EventArgs e) => ExecuteAction(2, true);
-
-        private void editFunctionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnChatSend_Click(object sender, EventArgs e)
         {
-            new QAEditor(_c).ShowDialog();
-            UpdateConcert();
+            var msg = "Server: " + chatInput.Text;
+            chatBox.Items.Add(msg);
+            _server.SendToAll(MessageTypeEnum.CHAT_MESSAGE, msg);
+            chatInput.Text = string.Empty;
+            chatBox.SelectedIndex = chatBox.Items.Count - 1;
         }
+
+        private void startToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (startToolStripMenuItem.Checked)
+            {
+                _server.Stop();
+                startToolStripMenuItem.Text = "Start";
+                startToolStripMenuItem.Checked = false;
+            }
+            else
+            {
+                var addr = Prompt.ShowDialog("Please enter the broadcast address of the network you want to use:", "Open Server", "255.255.255.255");
+                if (addr == null) return;
+                _server.Start(addr);
+                startToolStripMenuItem.Text = "Stop";
+                startToolStripMenuItem.Checked = true;
+            }
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e) => _server.Stop();
+
+
+        private void _server_UserJoined(NetworkConnection con)
+        {
+            string tit = (_c?.FilePath == string.Empty ? null : Path.GetFileNameWithoutExtension(_c?.FilePath)) ?? "Untitled";
+            con.SendMessage(MessageTypeEnum.CONCERT_NAME, tit);
+            con.SendMessage(MessageTypeEnum.SET_DATA, GetClientSet());
+            con.SendMessage(MessageTypeEnum.CURRENT_SONG, GetCurrentSongInformation());
+            con.SendMessage(MessageTypeEnum.CUE_INDEX, lightCue.SelectedIndex.ToString());
+        }
+        private string[] GetClientSet()
+        {
+            int idx = 1;
+            return _c.Playlist.Select(x => x.SpecialEvent ? $"---{x.Title}---" : $"{idx++:D2}.{x.Title} - {x.Artist}").ToArray();
+        }
+
+        private SongInformation GetCurrentSongInformation()
+        {
+            if (_s is null) return new SongInformation()
+            {
+                Index = -1,
+                SmallName = "-",
+                ClickActive = false,
+                Tempo = 120,
+                Cues = new string[] { },
+                Instructions = string.Empty
+            };
+
+
+            return new SongInformation()
+            {
+                Index = playList.SelectedIndex,
+                SmallName = _s.Title,
+                ClickActive = _s.Click,
+                Tempo = _s.Tempo,
+                Cues = _s.CueQueue.Select(x => x.comment).ToArray(),
+                Instructions = _s.Instructions
+            };
+        }
+
+        private void SendLighingData(MidiEvent e)
+        {
+            var bytes = _converter.Convert(e);
+            _server.SendToAll(MessageTypeEnum.LIGHT_MESSAGE, Convert.ToBase64String(bytes));
+        }
+
+        private void _server_MessageReceived(MessageTypeEnum type, string data, NetworkConnection con) => Invoke(new Action(() =>
+        {
+            switch (type)
+            {
+                case MessageTypeEnum.CHAT_MESSAGE:
+                    var msg = $"{con.Name}: {data}";
+                    chatBox.Items.Add(msg);
+                    _server.SendToAll(MessageTypeEnum.CHAT_MESSAGE, msg);
+                    chatBox.SelectedIndex = chatBox.Items.Count - 1;
+                    break;
+                default:
+                    break;
+            }
+        }));
+
+        private async void TickMetronome()
+        {
+            boxTempo.BackColor = System.Drawing.Color.Navy;
+            await Task.Delay(50);
+            boxTempo.BackColor = System.Drawing.Color.White;
+        }
+
     }
 }
