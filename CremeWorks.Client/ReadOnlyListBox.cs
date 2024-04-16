@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace CremeWorks.Common
+namespace CremeWorks.Client
 {
     public class ReadOnlyListBox : ListBox
     {

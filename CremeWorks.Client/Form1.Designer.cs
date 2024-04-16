@@ -1,5 +1,4 @@
-﻿using CremeWorks.Common;
-
+﻿
 namespace CremeWorks.Client;
 
 partial class Form1

@@ -1,7 +1,5 @@
 using CremeWorks.Client.MIDI;
 using CremeWorks.Client.Networking;
-using CremeWorks.Common;
-using CremeWorks.Common.Networking;
 using Newtonsoft.Json;
 
 namespace CremeWorks.Client;
@@ -9,15 +7,12 @@ namespace CremeWorks.Client;
 public partial class Form1 : Form
 {
     private readonly CommunicationHub _netHub;
-    private readonly Metronome _metronome;
     private SongInformation? _currentSong = null;
     private MIDIServer _midiServer = new();
 
     public Form1(CommunicationHub server)
     {
         InitializeComponent();
-        _metronome = new Metronome();
-        _metronome.Tick += HandleMetronomeTick;
         _netHub = server;
 
         _midiServer.Create();
@@ -31,14 +26,6 @@ public partial class Form1 : Form
 
     private void Form1_Load(object sender, EventArgs e)
     {
-
-    }
-
-    private async void HandleMetronomeTick()
-    {
-        pnlClick.BackColor = Color.White;
-        await Task.Delay(50);
-        pnlClick.BackColor = Color.Black;
 
     }
 
@@ -62,7 +49,7 @@ public partial class Form1 : Form
                 lstSet.SelectedIndex = _currentSong.Index;
                 lblTitle.Text = _currentSong.SmallName;
                 lblTempo.Text = _currentSong.Tempo.ToString() + " BPM";
-                lblCurrCue.Text = _currentSong.Cues.Length == 0 ? "-" : _currentSong.Cues[0];
+                lblCurrCue.Text = _currentSong.Cues!.Length == 0 ? "-" : _currentSong.Cues[0];
                 lblNextCue.Text = _currentSong.Cues.Length < 2 ? "-" : _currentSong.Cues[1];
                 lblInstructions.Text = _currentSong.Instructions;
                 break;

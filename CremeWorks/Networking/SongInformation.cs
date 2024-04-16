@@ -1,4 +1,4 @@
-﻿namespace CremeWorks.Common.Networking
+﻿namespace CremeWorks.Networking
 {
     public class SongInformation
     {

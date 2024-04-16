@@ -18,14 +18,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BeatifulBorder\CremeWorks.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Compile Update="BorderedGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="ReadOnlyListBox.cs">
+      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
 

@@ -1,6 +1,4 @@
-﻿using CremeWorks.Client.Networking;
-using CremeWorks.Common;
-using CremeWorks.Common.Networking;
+﻿using CremeWorks.Common;
 using CremeWorks.Networking;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;

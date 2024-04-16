@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CremeWorks.Common.Networking
+namespace CremeWorks.Client.Networking
 {
     public class ServerFinder
     {
@@ -19,7 +19,7 @@ namespace CremeWorks.Common.Networking
             _listenClient.Client.Bind(new IPEndPoint(IPAddress.Any, LISTENING_PORT));
         }
 
-        public async Task<IPAddress> ListenAsync(CancellationToken cancelSource)
+        public async Task<IPAddress?> ListenAsync(CancellationToken cancelSource)
         {
             var recvBuffer = await _listenClient.ReceiveAsync();
             var str = Encoding.ASCII.GetString(recvBuffer.Buffer);

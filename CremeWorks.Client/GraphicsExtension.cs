@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace CremeWorks.Common
+namespace CremeWorks.Client
 {
     public static class GraphicsExtension
     {

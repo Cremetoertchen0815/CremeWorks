@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace CremeWorks.Common
+namespace CremeWorks.Client
 {
     public class BorderedGroupBox : GroupBox
     {
@@ -72,7 +72,7 @@ namespace CremeWorks.Common
             }
         }
 
-        private void BorderedGroupBox_Paint(object sender, PaintEventArgs e) =>
+        private void BorderedGroupBox_Paint(object? sender, PaintEventArgs e) =>
             DrawGroupBox(e.Graphics);
 
         private void DrawGroupBox() =>
@@ -117,7 +117,7 @@ namespace CremeWorks.Common
 
         #region Component Designer generated code
         /// <summary>Required designer variable.</summary>
-        private System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer? components = null;
 
         /// <summary>Clean up any resources being used.</summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>

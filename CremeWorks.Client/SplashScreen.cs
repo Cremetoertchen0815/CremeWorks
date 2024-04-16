@@ -1,5 +1,4 @@
 ﻿using CremeWorks.Client.Networking;
-using CremeWorks.Common.Networking;
 using System.Net;
 
 namespace CremeWorks.Client;

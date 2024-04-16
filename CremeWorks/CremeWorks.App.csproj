@@ -97,6 +97,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Metronome.cs" />
     <Compile Include="MIDIMatrix.cs" />
     <Compile Include="MIDISetUp.cs">
       <SubType>Form</SubType>
@@ -104,8 +105,11 @@
     <Compile Include="MIDISetUp.Designer.cs">
       <DependentUpon>MIDISetUp.cs</DependentUpon>
     </Compile>
+    <Compile Include="MMWrapper.cs" />
+    <Compile Include="Networking\MessageTypeEnum.cs" />
     <Compile Include="Networking\NetworkConnection.cs" />
     <Compile Include="Networking\NetworkingServer.cs" />
+    <Compile Include="Networking\SongInformation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Prompt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -175,12 +179,6 @@
   <ItemGroup>
     <Content Include="symB.ico" />
     <Content Include="ToDo.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BeatifulBorder\CremeWorks.Common.csproj">
-      <Project>{8dd4c501-2155-4282-972f-f3c1255fae75}</Project>
-      <Name>CremeWorks.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Melanchall.DryWetMidi.6.0.1\build\Melanchall.DryWetMidi.targets" Condition="Exists('..\packages\Melanchall.DryWetMidi.6.0.1\build\Melanchall.DryWetMidi.targets')" />

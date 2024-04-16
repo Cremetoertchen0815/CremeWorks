@@ -1,5 +1,4 @@
-﻿using CremeWorks.Client.Networking;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.IO;
