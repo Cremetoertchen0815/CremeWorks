@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"io"
 	"net"
 	"os"
 	"strconv"
@@ -108,8 +109,12 @@ func main() {
 	//Start metronome loop
 	go func() {
 		for range t.C {
-			player.Seek(0, 0)
 			player.Play()
+			for player.IsPlaying() {
+
+			}
+
+			player.Seek(0, io.SeekStart)
 		}
 	}()
 

@@ -48,6 +48,7 @@ namespace CremeWorks.Networking
         {
             foreach (var item in _connections)
             {
+                if (item.Value.Name == "SoundPlayer" && type != MessageTypeEnum.CLICK_INFO) continue;
                 item.Value.Writer.WriteLine(((byte)type).ToString());
                 item.Value.Writer.WriteLine(data is string s ? s : JsonConvert.SerializeObject(data));
                 item.Value.Writer.Flush();

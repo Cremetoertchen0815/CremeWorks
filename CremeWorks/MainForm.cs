@@ -20,6 +20,7 @@ namespace CremeWorks
         private NetworkingServer _server = new NetworkingServer();
         private readonly MidiEventToBytesConverter _converter = new MidiEventToBytesConverter();
         private readonly Metronome _metronome = new Metronome();
+        private bool _sendMetronomeData = false;
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -88,10 +89,10 @@ namespace CremeWorks
             songTempo.Text = "";
             lightCue.Items.Clear();
             _server.SendToAll(MessageTypeEnum.CURRENT_SONG, GetCurrentSongInformation());
-            _server.SendToAll(MessageTypeEnum.CLICK_INFO, (_s is null || !_s.Click) ? "off" : _s.Tempo.ToString());
 
             if (_s == null)
             {
+                _server.SendToAll(MessageTypeEnum.CLICK_INFO, "off");
                 _metronome.Stop();
                 return;
             }
@@ -107,6 +108,7 @@ namespace CremeWorks
             songKey.Text = _s.Key;
             songTempo.Text = _s.Tempo.ToString() + " BPM";
             _metronome.Start(_s.Tempo);
+            _sendMetronomeData = true;
             ConfigSongMIDI();
 
             //Load default cue patch
@@ -433,6 +435,12 @@ namespace CremeWorks
 
         private async void TickMetronome()
         {
+            if (_sendMetronomeData)
+            {
+                _server.SendToAll(MessageTypeEnum.CLICK_INFO, !_s.Click ? "off" : _s.Tempo.ToString());
+                _sendMetronomeData = false;
+            }
+            await Task.Delay(15);
             boxTempo.BackColor = System.Drawing.Color.Navy;
             await Task.Delay(50);
             boxTempo.BackColor = System.Drawing.Color.White;
