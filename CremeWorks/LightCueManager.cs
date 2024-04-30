@@ -6,11 +6,13 @@ namespace CremeWorks
 {
     public partial class LightCueManager : Form
     {
+        private readonly Action<byte> _triggerDelegate;
         private readonly Concert _c;
         private readonly Random _rng = new Random();
 
-        public LightCueManager(Concert c)
+        public LightCueManager(Concert c, Action<byte> triggerDelegate)
         {
+            _triggerDelegate = triggerDelegate;
             _c = c;
             InitializeComponent();
         }
@@ -43,7 +45,8 @@ namespace CremeWorks
         private void btnTrigger_Click(object sender, System.EventArgs e)
         {
             if (lstCues.SelectedIndex < 0) return;
-            var noteVal = _c.LightingCues[lstCues.SelectedIndex];
+            var noteVal = _c.LightingCues[lstCues.SelectedIndex].NoteValue;
+            _triggerDelegate(noteVal);
         }
 
         private void txtNoteOn_ValueChanged(object sender, System.EventArgs e)

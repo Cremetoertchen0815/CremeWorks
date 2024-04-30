@@ -270,7 +270,7 @@ namespace CremeWorks
             UpdateConcert();
         }
 
-        private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightCueManager(_c).ShowDialog();
+        private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightCueManager(_c, SendLightNoteOnOff).ShowDialog();
 
         private void button15_Click(object sender, EventArgs e)
         {
@@ -415,6 +415,13 @@ namespace CremeWorks
             var bytes = _converter.Convert(e);
             _server.SendToAll(MessageTypeEnum.LIGHT_MESSAGE, Convert.ToBase64String(bytes));
         }
+
+        private void SendLightNoteOnOff(byte noteVal) => Task.Run(async () =>
+        {
+            SendLighingData(new NoteOnEvent(new SevenBitNumber(noteVal), SevenBitNumber.MaxValue) { Channel = new FourBitNumber(1) });
+            await Task.Delay(50);
+            SendLighingData(new NoteOnEvent(new SevenBitNumber(noteVal), SevenBitNumber.MinValue) { Channel = new FourBitNumber(1) });
+        });
 
         private void _server_MessageReceived(MessageTypeEnum type, string data, NetworkConnection con) => Invoke(new Action(() =>
         {
