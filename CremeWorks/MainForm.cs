@@ -451,5 +451,10 @@ namespace CremeWorks
             boxTempo.BackColor = System.Drawing.Color.White;
         }
 
+        private void exportSetToCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_c is null || csvExportSaveFile.ShowDialog() != DialogResult.OK) return;
+            File.WriteAllText(csvExportSaveFile.FileName, _c.ToCsv());
+        }
     }
 }

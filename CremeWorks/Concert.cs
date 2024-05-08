@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace CremeWorks
@@ -361,6 +362,26 @@ namespace CremeWorks
 
             bw.Close();
             bw.Dispose();
+        }
+
+        public string ToCsv()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Nr.;Titel;Interpret;Tonart;Tempo;Notizen");
+
+            int nr = 1;
+            foreach (var item in Playlist)
+            {
+                if (item.SpecialEvent)
+                {
+                    sb.AppendLine($"---;{item.Title};;;;{item.Instructions ?? string.Empty}");
+                    continue;
+                }
+
+                sb.AppendLine($"{nr++:00}.;{item.Title};{item.Artist};{item.Key};{item.Tempo} BPM;{item.Instructions ?? string.Empty}");
+            }
+
+            return sb.ToString();
         }
     }
 
