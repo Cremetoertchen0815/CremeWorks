@@ -105,6 +105,8 @@ namespace CremeWorks
         private void ListenAux5(object sender, MidiEventReceivedEventArgs e) => SendInstrData(5, e.Event);
         private void SendInstrData(int sender, MidiEvent e)
         {
+            if (ActiveSong is null) return;
+
             if (e.EventType == MidiEventType.NoteOn || e.EventType == MidiEventType.NoteOff)
             {
                 //Check for chord macros

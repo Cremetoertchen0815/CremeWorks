@@ -48,7 +48,9 @@ namespace CremeWorks
             _deviceList = dev_list.Select((x) => x.Name).ToList();
             foreach (var el in dev_list) el.Dispose();
 
-            string[] nu_lst = _deviceList.ToArray();
+            string[] nu_lst = new string[ _deviceList.Count + 1];
+            nu_lst[0] = "";
+            _deviceList.CopyTo(nu_lst, 1);
             comboBox1.Items.Clear();
             comboBox2.Items.Clear();
             comboBox3.Items.Clear();
