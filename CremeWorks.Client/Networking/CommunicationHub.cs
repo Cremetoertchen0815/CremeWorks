@@ -5,7 +5,7 @@ using System.Net.Sockets;
 namespace CremeWorks.Client.Networking;
 public class CommunicationHub
 {
-    private IPAddress _address;
+    public readonly IPAddress Address;
     private TcpClient? _client = null;
     private StreamReader? _reader = null;
     private StreamWriter? _writer = null;
@@ -15,16 +15,33 @@ public class CommunicationHub
 
     public delegate void RPCDelegate(MessageTypeEnum type, string? data);
     public event RPCDelegate? DataReceived;
+    public event Action? Disconnected;
 
 
-    public CommunicationHub(IPAddress address) => _address = address;
+    public CommunicationHub(IPAddress address) => Address = address;
 
     public async Task<bool> Connect()
     {
         try
         {
             _client = new TcpClient();
-            await _client.ConnectAsync(new IPEndPoint(_address, PORT));
+
+            int triesLeft = 5;
+            while (triesLeft-- > 0) 
+            {
+                try
+                {
+                    await _client.ConnectAsync(new IPEndPoint(Address, PORT));
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+                break;
+            }
+
+            if (triesLeft <= 0) return false;
+
 
             _reader = new StreamReader(_client.GetStream());
             _writer = new StreamWriter(_client.GetStream());
@@ -42,21 +59,34 @@ public class CommunicationHub
 
     private async Task ReadData()
     {
-        while (_client!.Connected)
+        try
         {
-            var data = await _reader!.ReadLineAsync();
-            if (data is null) break;
-            var index = (MessageTypeEnum)byte.Parse(data);
-            var body = await _reader!.ReadLineAsync();
-            DataReceived?.Invoke(index, body);
+            while (_client!.Connected)
+            {
+                var data = await _reader!.ReadLineAsync();
+                if (data is null) break;
+                var index = (MessageTypeEnum)byte.Parse(data);
+                var body = await _reader!.ReadLineAsync();
+                DataReceived?.Invoke(index, body);
+            }
+        }
+        finally
+        {
+            Disconnected?.Invoke();
         }
     }
     public void SendData(MessageTypeEnum type, object data)
     {
-        if (_writer is null) return;
-        _writer.WriteLine(((byte)type).ToString());
-        _writer.WriteLine(data is string s ? s : JsonConvert.SerializeObject(data));
-        _writer.Flush();
+        try
+        {
+            if (_writer is null) return;
+            _writer.WriteLine(((byte)type).ToString());
+            _writer.WriteLine(data is string s ? s : JsonConvert.SerializeObject(data));
+            _writer.Flush();
+        }
+        catch (Exception)
+        {
+        }
     }
 
 

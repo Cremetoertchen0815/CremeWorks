@@ -1,2 +1,1 @@
 -Fix SoundPlayer lag
--Add automatic reconnect to Client

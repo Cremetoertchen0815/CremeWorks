@@ -116,10 +116,10 @@ partial class Form1
         btnChat.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
         btnChat.BackColor = Color.FromArgb(64, 64, 64);
         btnChat.ForeColor = Color.White;
-        btnChat.Location = new Point(529, 182);
+        btnChat.Location = new Point(529, 183);
         btnChat.Margin = new Padding(3, 2, 3, 2);
         btnChat.Name = "btnChat";
-        btnChat.Size = new Size(82, 26);
+        btnChat.Size = new Size(82, 28);
         btnChat.TabIndex = 5;
         btnChat.Text = "Send";
         btnChat.UseVisualStyleBackColor = false;
@@ -147,6 +147,7 @@ partial class Form1
         // 
         // groupBox2
         // 
+        groupBox2.BackColor = Color.Black;
         groupBox2.BorderColor = Color.Navy;
         groupBox2.BorderRadius = 8;
         groupBox2.BorderWidth = 2;
@@ -340,6 +341,7 @@ partial class Form1
         AcceptButton = btnChat;
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
+        BackColor = Color.Black;
         ClientSize = new Size(886, 498);
         Controls.Add(tableLayoutPanel1);
         Icon = (Icon)resources.GetObject("$this.Icon");

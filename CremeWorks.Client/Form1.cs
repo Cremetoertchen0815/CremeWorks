@@ -15,8 +15,11 @@ public partial class Form1 : Form
         InitializeComponent();
         _netHub = server;
 
+        server.Disconnected += Server_Disconnected;
         _midiServer.Create();
     }
+
+    private void Server_Disconnected() => new Disconnected(_netHub).ShowDialog();
 
     private void Form1_FormClosed(object sender, FormClosedEventArgs e)
     {
