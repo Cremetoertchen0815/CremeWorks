@@ -1,3 +1,2 @@
 -Fix SoundPlayer lag
 -Add automatic reconnect to Client
--Fix numbers wrong after reordering

@@ -19,6 +19,8 @@ namespace CremeWorks
         private readonly MidiEventToBytesConverter _converter = new MidiEventToBytesConverter();
         private readonly Metronome _metronome = new Metronome();
         private bool _sendMetronomeData = false;
+        private int _playlistDragIndex = -1;
+        private bool _wasPlaylistOrderChanged = false;
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -184,25 +186,31 @@ namespace CremeWorks
             for (int i = 0; i < Concert.PATCH_DEVICE_COUNT; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplySettings(_c.Devices[i + 2]);
         }
 
-        private int nIndexA = -1;
-        private void playList_MouseDown(object sender, MouseEventArgs e) => nIndexA = playList.SelectedIndex;
-        private void playList_MouseUp(object sender, MouseEventArgs e) => nIndexA = -1;
+        private void playList_MouseDown(object sender, MouseEventArgs e) => _playlistDragIndex = playList.SelectedIndex;
+        private void playList_MouseUp(object sender, MouseEventArgs e)
+        {
+            _playlistDragIndex = -1;
+            if (_wasPlaylistOrderChanged) UpdatePlaylist();
+            _wasPlaylistOrderChanged = false;
+        }
+
         private void playList_MouseMove(object sender, MouseEventArgs e)
         {
             int sIndex = playList.SelectedIndex;
-            if (e.Button == MouseButtons.Left && nIndexA > -1 && nIndexA != sIndex)
+            if (e.Button == MouseButtons.Left && _playlistDragIndex > -1 && _playlistDragIndex != sIndex)
             {
-                object aObj = playList.Items[nIndexA];
-                var bObj = _c.Playlist[nIndexA];
+                object aObj = playList.Items[_playlistDragIndex];
+                var bObj = _c.Playlist[_playlistDragIndex];
 
-                playList.Items[nIndexA] = playList.Items[sIndex];
-                _c.Playlist[nIndexA] = _c.Playlist[sIndex];
+                playList.Items[_playlistDragIndex] = playList.Items[sIndex];
+                _c.Playlist[_playlistDragIndex] = _c.Playlist[sIndex];
 
 
                 playList.Items[sIndex] = aObj;
                 _c.Playlist[sIndex] = bObj;
 
-                nIndexA = sIndex;
+                _playlistDragIndex = sIndex;
+                _wasPlaylistOrderChanged = true;
             }
         }
 
