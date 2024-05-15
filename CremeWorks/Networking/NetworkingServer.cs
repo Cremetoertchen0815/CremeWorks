@@ -57,7 +57,7 @@ namespace CremeWorks.Networking
         public void Stop()
         {
             _cancelSource?.Cancel();
-            _dataListener.Stop();
+            _dataListener?.Stop();
             foreach (var item in _connections)
             {
                 item.Value.Client.Close();
