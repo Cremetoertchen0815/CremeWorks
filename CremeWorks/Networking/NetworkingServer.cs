@@ -54,7 +54,16 @@ namespace CremeWorks.Networking
             }
         }
 
-        public void Stop() => _cancelSource?.Cancel();
+        public void Stop()
+        {
+            _cancelSource?.Cancel();
+            _dataListener.Stop();
+            foreach (var item in _connections)
+            {
+                item.Value.Client.Close();
+            }
+            _connections.Clear();
+        }
 
         private async Task BroadcastingLoop(string broadcastAddr)
         {
@@ -65,6 +74,7 @@ namespace CremeWorks.Networking
                 _broadcastClient.Send(data, data.Length, ep);
                 await Task.Delay(TimeSpan.FromSeconds(BROADCAST_INTERVAL_SEC), _cancelToken);
             }
+
         }
 
         private async Task ListenForClients()

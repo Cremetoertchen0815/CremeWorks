@@ -26,7 +26,7 @@ public class CommunicationHub
         {
             _client = new TcpClient();
 
-            int triesLeft = 5;
+            int triesLeft = 50;
             while (triesLeft-- > 0) 
             {
                 try
