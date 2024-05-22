@@ -1,1 +1,2 @@
--Fix SoundPlayer lag
+-Fix AutoPatch sounds not loading correctly
+-Fix SoundPlayer lag under Linux

@@ -64,12 +64,11 @@ partial class Form1
         lstSet.ForeColor = Color.White;
         lstSet.FormattingEnabled = true;
         lstSet.IntegralHeight = false;
-        lstSet.ItemHeight = 20;
-        lstSet.Location = new Point(11, 46);
-        lstSet.Margin = new Padding(3, 2, 3, 2);
+        lstSet.ItemHeight = 25;
+        lstSet.Location = new Point(13, 61);
         lstSet.Name = "lstSet";
         lstSet.ReadOnly = true;
-        lstSet.Size = new Size(225, 438);
+        lstSet.Size = new Size(257, 584);
         lstSet.TabIndex = 0;
         // 
         // lstChat
@@ -80,12 +79,10 @@ partial class Form1
         lstChat.ForeColor = Color.White;
         lstChat.FormattingEnabled = true;
         lstChat.IntegralHeight = false;
-        lstChat.ItemHeight = 20;
-        lstChat.Items.AddRange(new object[] { "Server: HiHat zu laut!", "Mischa: Ja, ich weiß!" });
-        lstChat.Location = new Point(11, 25);
-        lstChat.Margin = new Padding(3, 2, 3, 2);
+        lstChat.ItemHeight = 25;
+        lstChat.Location = new Point(13, 33);
         lstChat.Name = "lstChat";
-        lstChat.Size = new Size(600, 154);
+        lstChat.Size = new Size(684, 204);
         lstChat.TabIndex = 1;
         // 
         // label2
@@ -93,9 +90,9 @@ partial class Form1
         label2.AutoSize = true;
         label2.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
         label2.ForeColor = Color.White;
-        label2.Location = new Point(11, 64);
+        label2.Location = new Point(13, 85);
         label2.Name = "label2";
-        label2.Size = new Size(62, 20);
+        label2.Size = new Size(80, 25);
         label2.TabIndex = 3;
         label2.Text = "Tempo:";
         // 
@@ -105,10 +102,9 @@ partial class Form1
         txtChat.BackColor = Color.Black;
         txtChat.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
         txtChat.ForeColor = Color.White;
-        txtChat.Location = new Point(11, 182);
-        txtChat.Margin = new Padding(3, 2, 3, 2);
+        txtChat.Location = new Point(13, 243);
         txtChat.Name = "txtChat";
-        txtChat.Size = new Size(513, 29);
+        txtChat.Size = new Size(585, 34);
         txtChat.TabIndex = 4;
         // 
         // btnChat
@@ -116,10 +112,9 @@ partial class Form1
         btnChat.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
         btnChat.BackColor = Color.FromArgb(64, 64, 64);
         btnChat.ForeColor = Color.White;
-        btnChat.Location = new Point(529, 183);
-        btnChat.Margin = new Padding(3, 2, 3, 2);
+        btnChat.Location = new Point(604, 244);
         btnChat.Name = "btnChat";
-        btnChat.Size = new Size(82, 28);
+        btnChat.Size = new Size(94, 37);
         btnChat.TabIndex = 5;
         btnChat.Text = "Send";
         btnChat.UseVisualStyleBackColor = false;
@@ -136,11 +131,11 @@ partial class Form1
         groupBox1.Dock = DockStyle.Fill;
         groupBox1.ForeColor = Color.FromArgb(128, 128, 255);
         groupBox1.LabelIndent = 10;
-        groupBox1.Location = new Point(260, 279);
-        groupBox1.Margin = new Padding(4);
+        groupBox1.Location = new Point(298, 372);
+        groupBox1.Margin = new Padding(5, 5, 5, 5);
         groupBox1.Name = "groupBox1";
-        groupBox1.Padding = new Padding(9, 8, 9, 8);
-        groupBox1.Size = new Size(622, 215);
+        groupBox1.Padding = new Padding(10, 11, 10, 11);
+        groupBox1.Size = new Size(710, 287);
         groupBox1.TabIndex = 6;
         groupBox1.TabStop = false;
         groupBox1.Text = "Chat";
@@ -164,11 +159,11 @@ partial class Form1
         groupBox2.Dock = DockStyle.Fill;
         groupBox2.ForeColor = Color.FromArgb(128, 128, 255);
         groupBox2.LabelIndent = 10;
-        groupBox2.Location = new Point(260, 4);
-        groupBox2.Margin = new Padding(4);
+        groupBox2.Location = new Point(298, 5);
+        groupBox2.Margin = new Padding(5, 5, 5, 5);
         groupBox2.Name = "groupBox2";
-        groupBox2.Padding = new Padding(9, 8, 9, 8);
-        groupBox2.Size = new Size(622, 267);
+        groupBox2.Padding = new Padding(10, 11, 10, 11);
+        groupBox2.Size = new Size(710, 357);
         groupBox2.TabIndex = 7;
         groupBox2.TabStop = false;
         groupBox2.Text = "Current Song";
@@ -178,9 +173,9 @@ partial class Form1
         lblNextCue.AutoSize = true;
         lblNextCue.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
         lblNextCue.ForeColor = Color.White;
-        lblNextCue.Location = new Point(130, 114);
+        lblNextCue.Location = new Point(149, 152);
         lblNextCue.Name = "lblNextCue";
-        lblNextCue.Size = new Size(61, 20);
+        lblNextCue.Size = new Size(73, 25);
         lblNextCue.TabIndex = 12;
         lblNextCue.Text = "Refrain";
         // 
@@ -189,9 +184,9 @@ partial class Form1
         label5.AutoSize = true;
         label5.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
         label5.ForeColor = Color.White;
-        label5.Location = new Point(11, 139);
+        label5.Location = new Point(13, 185);
         label5.Name = "label5";
-        label5.Size = new Size(100, 20);
+        label5.Size = new Size(122, 25);
         label5.TabIndex = 11;
         label5.Text = "Instructions: ";
         // 
@@ -199,10 +194,9 @@ partial class Form1
         // 
         pnlClick.BackColor = Color.White;
         pnlClick.BorderStyle = BorderStyle.FixedSingle;
-        pnlClick.Location = new Point(214, 64);
-        pnlClick.Margin = new Padding(3, 2, 3, 2);
+        pnlClick.Location = new Point(245, 85);
         pnlClick.Name = "pnlClick";
-        pnlClick.Size = new Size(21, 18);
+        pnlClick.Size = new Size(24, 23);
         pnlClick.TabIndex = 10;
         // 
         // lblInstructions
@@ -210,12 +204,11 @@ partial class Form1
         lblInstructions.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         lblInstructions.BackColor = Color.FromArgb(64, 64, 64);
         lblInstructions.ForeColor = Color.White;
-        lblInstructions.Location = new Point(130, 142);
-        lblInstructions.Margin = new Padding(3, 2, 3, 2);
+        lblInstructions.Location = new Point(149, 189);
         lblInstructions.Multiline = true;
         lblInstructions.Name = "lblInstructions";
         lblInstructions.ReadOnly = true;
-        lblInstructions.Size = new Size(481, 97);
+        lblInstructions.Size = new Size(548, 129);
         lblInstructions.TabIndex = 9;
         // 
         // lblTempo
@@ -223,9 +216,9 @@ partial class Form1
         lblTempo.AutoSize = true;
         lblTempo.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
         lblTempo.ForeColor = Color.White;
-        lblTempo.Location = new Point(130, 64);
+        lblTempo.Location = new Point(149, 85);
         lblTempo.Name = "lblTempo";
-        lblTempo.Size = new Size(74, 20);
+        lblTempo.Size = new Size(93, 25);
         lblTempo.TabIndex = 8;
         lblTempo.Text = "120 BPM";
         // 
@@ -234,9 +227,9 @@ partial class Form1
         lblCurrCue.AutoSize = true;
         lblCurrCue.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
         lblCurrCue.ForeColor = Color.White;
-        lblCurrCue.Location = new Point(130, 89);
+        lblCurrCue.Location = new Point(149, 119);
         lblCurrCue.Name = "lblCurrCue";
-        lblCurrCue.Size = new Size(66, 20);
+        lblCurrCue.Size = new Size(81, 25);
         lblCurrCue.TabIndex = 7;
         lblCurrCue.Text = "Strophe";
         // 
@@ -245,9 +238,9 @@ partial class Form1
         label6.AutoSize = true;
         label6.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
         label6.ForeColor = Color.White;
-        label6.Location = new Point(11, 114);
+        label6.Location = new Point(13, 152);
         label6.Name = "label6";
-        label6.Size = new Size(82, 20);
+        label6.Size = new Size(105, 25);
         label6.TabIndex = 5;
         label6.Text = "Next Cue: ";
         // 
@@ -256,9 +249,9 @@ partial class Form1
         label3.AutoSize = true;
         label3.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
         label3.ForeColor = Color.White;
-        label3.Location = new Point(11, 89);
+        label3.Location = new Point(13, 119);
         label3.Name = "label3";
-        label3.Size = new Size(79, 20);
+        label3.Size = new Size(102, 25);
         label3.TabIndex = 4;
         label3.Text = "Cur. Cue: ";
         // 
@@ -267,9 +260,9 @@ partial class Form1
         lblTitle.Dock = DockStyle.Top;
         lblTitle.Font = new Font("Microsoft Sans Serif", 21.75F);
         lblTitle.ForeColor = Color.White;
-        lblTitle.Location = new Point(9, 24);
+        lblTitle.Location = new Point(10, 31);
         lblTitle.Name = "lblTitle";
-        lblTitle.Size = new Size(604, 36);
+        lblTitle.Size = new Size(690, 48);
         lblTitle.TabIndex = 2;
         lblTitle.Text = "Song1";
         lblTitle.TextAlign = ContentAlignment.TopCenter;
@@ -285,12 +278,12 @@ partial class Form1
         setBox.Dock = DockStyle.Fill;
         setBox.ForeColor = Color.FromArgb(128, 128, 255);
         setBox.LabelIndent = 10;
-        setBox.Location = new Point(4, 4);
-        setBox.Margin = new Padding(4);
+        setBox.Location = new Point(5, 5);
+        setBox.Margin = new Padding(5, 5, 5, 5);
         setBox.Name = "setBox";
-        setBox.Padding = new Padding(13, 8, 9, 8);
+        setBox.Padding = new Padding(15, 11, 10, 11);
         tableLayoutPanel1.SetRowSpan(setBox, 2);
-        setBox.Size = new Size(248, 490);
+        setBox.Size = new Size(283, 654);
         setBox.TabIndex = 5;
         setBox.TabStop = false;
         setBox.Text = "Set";
@@ -300,9 +293,9 @@ partial class Form1
         lblSetName.AutoSize = true;
         lblSetName.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
         lblSetName.ForeColor = Color.White;
-        lblSetName.Location = new Point(82, 19);
+        lblSetName.Location = new Point(94, 25);
         lblSetName.Name = "lblSetName";
-        lblSetName.Size = new Size(0, 20);
+        lblSetName.Size = new Size(0, 25);
         lblSetName.TabIndex = 8;
         // 
         // label4
@@ -310,9 +303,9 @@ partial class Form1
         label4.AutoSize = true;
         label4.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
         label4.ForeColor = Color.White;
-        label4.Location = new Point(11, 19);
+        label4.Location = new Point(13, 25);
         label4.Name = "label4";
-        label4.Size = new Size(59, 20);
+        label4.Size = new Size(75, 25);
         label4.TabIndex = 5;
         label4.Text = "Name: ";
         // 
@@ -327,25 +320,25 @@ partial class Form1
         tableLayoutPanel1.Controls.Add(groupBox1, 1, 1);
         tableLayoutPanel1.Dock = DockStyle.Fill;
         tableLayoutPanel1.Location = new Point(0, 0);
-        tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
         tableLayoutPanel1.Name = "tableLayoutPanel1";
         tableLayoutPanel1.RowCount = 2;
         tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 55.30504F));
         tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 44.69496F));
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
-        tableLayoutPanel1.Size = new Size(886, 498);
+        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+        tableLayoutPanel1.Size = new Size(1013, 664);
         tableLayoutPanel1.TabIndex = 8;
         // 
         // Form1
         // 
         AcceptButton = btnChat;
-        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         BackColor = Color.Black;
-        ClientSize = new Size(886, 498);
+        ClientSize = new Size(1013, 664);
         Controls.Add(tableLayoutPanel1);
         Icon = (Icon)resources.GetObject("$this.Icon");
-        MinimumSize = new Size(597, 460);
+        Margin = new Padding(3, 4, 3, 4);
+        MinimumSize = new Size(680, 598);
         Name = "Form1";
         Text = "CremeWorks Client v1.0";
         FormClosed += Form1_FormClosed;
