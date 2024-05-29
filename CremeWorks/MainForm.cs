@@ -119,7 +119,7 @@ namespace CremeWorks
         {
             _c.MidiMatrix.ActiveSong = _s;
 
-            for (int i = 0; i < Concert.PATCH_DEVICE_COUNT; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplyPatch(_c.Devices[MIDIMatrix.INSTR_DEVICE_OFFSET + 1]);
+            for (int i = 0; i < Concert.PATCH_DEVICE_COUNT; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplyPatch(_c.Devices[MIDIMatrix.INSTR_DEVICE_OFFSET + i]);
         }
 
         private void ExecuteAction(int nr, bool? enable)
