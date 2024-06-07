@@ -1,2 +1,3 @@
--Fix AutoPatch sounds not loading correctly
+-Fix editing cues not working
+-Implement backlog system(move to .cwdb file type)
 -Fix SoundPlayer lag under Linux
