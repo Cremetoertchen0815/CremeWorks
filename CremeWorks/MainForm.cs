@@ -19,8 +19,6 @@ namespace CremeWorks
         private readonly MidiEventToBytesConverter _converter = new MidiEventToBytesConverter();
         private readonly Metronome _metronome = new Metronome();
         private bool _sendMetronomeData = false;
-        private int _playlistDragIndex = -1;
-        private bool _wasPlaylistOrderChanged = false;
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;

@@ -77,6 +77,7 @@ namespace CremeWorks
             this.csvExportSaveFile = new System.Windows.Forms.SaveFileDialog();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.importSongsFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -116,42 +117,42 @@ namespace CremeWorks
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.New);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.Save);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAs);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(111, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
             // 
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.songsToolStripMenuItem1});
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.importToolStripMenuItem.Text = "Import";
             // 
             // songsToolStripMenuItem1
@@ -165,7 +166,7 @@ namespace CremeWorks
             this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exportSetToCSVToolStripMenuItem});
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // exportSetToCSVToolStripMenuItem
@@ -178,12 +179,12 @@ namespace CremeWorks
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(111, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(177, 6);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeToolStripMenuItem.Text = "Close";
             // 
             // songsToolStripMenuItem
@@ -272,33 +273,33 @@ namespace CremeWorks
             // footSwitchToolStripMenuItem
             // 
             this.footSwitchToolStripMenuItem.Name = "footSwitchToolStripMenuItem";
-            this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.footSwitchToolStripMenuItem.Text = "Foot Switch";
             this.footSwitchToolStripMenuItem.Click += new System.EventHandler(this.footSwitchToolStripMenuItem_Click);
             // 
             // soloModeToolStripMenuItem
             // 
             this.soloModeToolStripMenuItem.Name = "soloModeToolStripMenuItem";
-            this.soloModeToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.soloModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.soloModeToolStripMenuItem.Text = "Solo Mode";
             // 
             // lightControllerToolStripMenuItem
             // 
             this.lightControllerToolStripMenuItem.Name = "lightControllerToolStripMenuItem";
-            this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.lightControllerToolStripMenuItem.Text = "Cues";
             this.lightControllerToolStripMenuItem.Click += new System.EventHandler(this.lightControllerToolStripMenuItem_Click);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(174, 6);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(177, 6);
             // 
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.startToolStripMenuItem.Text = "CremeWorks Server";
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startToolStripMenuItem.Text = "Server Active";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
             // 
             // label1
@@ -352,12 +353,12 @@ namespace CremeWorks
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.Filter = "CremeWorks Concert(.cwc)|*.cwc";
+            this.openFileDialog1.Filter = "CremeWorks Library|*.cwlib";
             this.openFileDialog1.Title = "Open Concert";
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.Filter = "CremeWorks Concert(.cwc)|*.cwc";
+            this.saveFileDialog1.Filter = "CremeWorks Library|*.cwlib";
             this.saveFileDialog1.Title = "Save Concert";
             // 
             // label2
@@ -480,6 +481,11 @@ namespace CremeWorks
             this.label5.TabIndex = 35;
             this.label5.Text = "Off";
             // 
+            // importSongsFileDialog
+            // 
+            this.importSongsFileDialog.Filter = "CremeWorks Concert|*.cwc";
+            this.importSongsFileDialog.Title = "Open Concert";
+            // 
             // MainForm
             // 
             this.AcceptButton = this.btnChatSend;
@@ -563,6 +569,7 @@ namespace CremeWorks
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.OpenFileDialog importSongsFileDialog;
     }
 }
 
