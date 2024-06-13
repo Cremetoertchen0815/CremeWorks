@@ -86,7 +86,6 @@ partial class Form1
         lstChat.Name = "lstChat";
         lstChat.Size = new Size(567, 258);
         lstChat.TabIndex = 1;
-        lstChat.SelectedIndexChanged += lstChat_SelectedIndexChanged;
         // 
         // label2
         // 

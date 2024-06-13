@@ -65,6 +65,7 @@ public partial class Form1 : Form
             case MessageTypeEnum.CHAT_MESSAGE:
                 lstChat.Items.Add(data);
                 lstChat.SelectedIndex = lstChat.Items.Count - 1;
+                LightUpChatbox();
                 break;
             case MessageTypeEnum.LIGHT_MESSAGE:
                 _midiServer?.SendData(Convert.FromBase64String(data));
@@ -95,15 +96,14 @@ public partial class Form1 : Form
     }
 
     private bool _chatChanging = false;
-    private async void lstChat_SelectedIndexChanged(object sender, EventArgs e)
+    private async void LightUpChatbox()
     {
-        var ctrl = (ListBox)sender;
-        if (ctrl.SelectedIndex == -1 || _chatChanging) return;
+        if (lstChat.SelectedIndex == -1 || _chatChanging) return;
         _chatChanging = true;
-        Color original = ctrl.BackColor;
-        (ctrl.BackColor, ctrl.ForeColor) = (Color.Lime, Color.Black);
+        Color original = lstChat.BackColor;
+        (lstChat.BackColor, lstChat.ForeColor) = (Color.Lime, Color.Black);
         await Task.Delay(500);
-        (ctrl.BackColor, ctrl.ForeColor) = (original, Color.White);
+        (lstChat.BackColor, lstChat.ForeColor) = (original, Color.White);
         _chatChanging = false;
     }
 }
