@@ -59,40 +59,43 @@ partial class Form1
         // lstSet
         // 
         lstSet.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-        lstSet.BackColor = Color.FromArgb(64, 64, 64);
-        lstSet.Font = new Font("Microsoft Sans Serif", 12F);
+        lstSet.BackColor = Color.FromArgb(48, 48, 48);
+        lstSet.Font = new Font("Segoe UI", 18F);
         lstSet.ForeColor = Color.White;
         lstSet.FormattingEnabled = true;
         lstSet.IntegralHeight = false;
-        lstSet.ItemHeight = 25;
-        lstSet.Location = new Point(13, 61);
+        lstSet.ItemHeight = 32;
+        lstSet.Location = new Point(11, 64);
+        lstSet.Margin = new Padding(3, 2, 3, 2);
         lstSet.Name = "lstSet";
         lstSet.ReadOnly = true;
-        lstSet.Size = new Size(257, 584);
+        lstSet.Size = new Size(393, 629);
         lstSet.TabIndex = 0;
         // 
         // lstChat
         // 
         lstChat.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-        lstChat.BackColor = Color.FromArgb(64, 64, 64);
-        lstChat.Font = new Font("Microsoft Sans Serif", 12F);
+        lstChat.BackColor = Color.FromArgb(48, 48, 48);
+        lstChat.Font = new Font("Segoe UI", 18F);
         lstChat.ForeColor = Color.White;
         lstChat.FormattingEnabled = true;
         lstChat.IntegralHeight = false;
-        lstChat.ItemHeight = 25;
-        lstChat.Location = new Point(13, 33);
+        lstChat.ItemHeight = 32;
+        lstChat.Location = new Point(11, 25);
+        lstChat.Margin = new Padding(3, 2, 3, 2);
         lstChat.Name = "lstChat";
-        lstChat.Size = new Size(684, 204);
+        lstChat.Size = new Size(567, 258);
         lstChat.TabIndex = 1;
+        lstChat.SelectedIndexChanged += lstChat_SelectedIndexChanged;
         // 
         // label2
         // 
         label2.AutoSize = true;
-        label2.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        label2.Font = new Font("Segoe UI", 18F);
         label2.ForeColor = Color.White;
-        label2.Location = new Point(13, 85);
+        label2.Location = new Point(11, 64);
         label2.Name = "label2";
-        label2.Size = new Size(80, 25);
+        label2.Size = new Size(92, 32);
         label2.TabIndex = 3;
         label2.Text = "Tempo:";
         // 
@@ -100,21 +103,24 @@ partial class Form1
         // 
         txtChat.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         txtChat.BackColor = Color.Black;
-        txtChat.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        txtChat.Font = new Font("Segoe UI", 18F);
         txtChat.ForeColor = Color.White;
-        txtChat.Location = new Point(13, 243);
+        txtChat.Location = new Point(12, 303);
+        txtChat.Margin = new Padding(3, 2, 3, 2);
         txtChat.Name = "txtChat";
-        txtChat.Size = new Size(585, 34);
+        txtChat.Size = new Size(451, 39);
         txtChat.TabIndex = 4;
         // 
         // btnChat
         // 
         btnChat.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
         btnChat.BackColor = Color.FromArgb(64, 64, 64);
+        btnChat.Font = new Font("Segoe UI", 18F);
         btnChat.ForeColor = Color.White;
-        btnChat.Location = new Point(604, 244);
+        btnChat.Location = new Point(469, 303);
+        btnChat.Margin = new Padding(3, 2, 3, 2);
         btnChat.Name = "btnChat";
-        btnChat.Size = new Size(94, 37);
+        btnChat.Size = new Size(108, 39);
         btnChat.TabIndex = 5;
         btnChat.Text = "Send";
         btnChat.UseVisualStyleBackColor = false;
@@ -131,11 +137,11 @@ partial class Form1
         groupBox1.Dock = DockStyle.Fill;
         groupBox1.ForeColor = Color.FromArgb(128, 128, 255);
         groupBox1.LabelIndent = 10;
-        groupBox1.Location = new Point(298, 372);
-        groupBox1.Margin = new Padding(5, 5, 5, 5);
+        groupBox1.Location = new Point(428, 353);
+        groupBox1.Margin = new Padding(4);
         groupBox1.Name = "groupBox1";
-        groupBox1.Padding = new Padding(10, 11, 10, 11);
-        groupBox1.Size = new Size(710, 287);
+        groupBox1.Padding = new Padding(9, 8, 9, 8);
+        groupBox1.Size = new Size(589, 349);
         groupBox1.TabIndex = 6;
         groupBox1.TabStop = false;
         groupBox1.Text = "Chat";
@@ -159,11 +165,11 @@ partial class Form1
         groupBox2.Dock = DockStyle.Fill;
         groupBox2.ForeColor = Color.FromArgb(128, 128, 255);
         groupBox2.LabelIndent = 10;
-        groupBox2.Location = new Point(298, 5);
-        groupBox2.Margin = new Padding(5, 5, 5, 5);
+        groupBox2.Location = new Point(428, 4);
+        groupBox2.Margin = new Padding(4);
         groupBox2.Name = "groupBox2";
-        groupBox2.Padding = new Padding(10, 11, 10, 11);
-        groupBox2.Size = new Size(710, 357);
+        groupBox2.Padding = new Padding(9, 8, 9, 8);
+        groupBox2.Size = new Size(589, 341);
         groupBox2.TabIndex = 7;
         groupBox2.TabStop = false;
         groupBox2.Text = "Current Song";
@@ -171,22 +177,22 @@ partial class Form1
         // lblNextCue
         // 
         lblNextCue.AutoSize = true;
-        lblNextCue.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        lblNextCue.Font = new Font("Segoe UI", 18F);
         lblNextCue.ForeColor = Color.White;
-        lblNextCue.Location = new Point(149, 152);
+        lblNextCue.Location = new Point(166, 129);
         lblNextCue.Name = "lblNextCue";
-        lblNextCue.Size = new Size(73, 25);
+        lblNextCue.Size = new Size(88, 32);
         lblNextCue.TabIndex = 12;
         lblNextCue.Text = "Refrain";
         // 
         // label5
         // 
         label5.AutoSize = true;
-        label5.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        label5.Font = new Font("Segoe UI", 18F);
         label5.ForeColor = Color.White;
-        label5.Location = new Point(13, 185);
+        label5.Location = new Point(11, 162);
         label5.Name = "label5";
-        label5.Size = new Size(122, 25);
+        label5.Size = new Size(149, 32);
         label5.TabIndex = 11;
         label5.Text = "Instructions: ";
         // 
@@ -194,75 +200,79 @@ partial class Form1
         // 
         pnlClick.BackColor = Color.White;
         pnlClick.BorderStyle = BorderStyle.FixedSingle;
-        pnlClick.Location = new Point(245, 85);
+        pnlClick.Location = new Point(281, 72);
+        pnlClick.Margin = new Padding(3, 2, 3, 2);
         pnlClick.Name = "pnlClick";
-        pnlClick.Size = new Size(24, 23);
+        pnlClick.Size = new Size(18, 18);
         pnlClick.TabIndex = 10;
         // 
         // lblInstructions
         // 
         lblInstructions.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-        lblInstructions.BackColor = Color.FromArgb(64, 64, 64);
+        lblInstructions.BackColor = Color.FromArgb(48, 48, 48);
+        lblInstructions.Font = new Font("Segoe UI", 18F);
         lblInstructions.ForeColor = Color.White;
-        lblInstructions.Location = new Point(149, 189);
+        lblInstructions.Location = new Point(166, 173);
+        lblInstructions.Margin = new Padding(3, 2, 3, 2);
         lblInstructions.Multiline = true;
         lblInstructions.Name = "lblInstructions";
         lblInstructions.ReadOnly = true;
-        lblInstructions.Size = new Size(548, 129);
+        lblInstructions.Size = new Size(412, 158);
         lblInstructions.TabIndex = 9;
+        lblInstructions.TextChanged += lblInstructions_TextChanged;
         // 
         // lblTempo
         // 
         lblTempo.AutoSize = true;
-        lblTempo.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        lblTempo.Font = new Font("Segoe UI", 18F);
         lblTempo.ForeColor = Color.White;
-        lblTempo.Location = new Point(149, 85);
+        lblTempo.Location = new Point(166, 64);
         lblTempo.Name = "lblTempo";
-        lblTempo.Size = new Size(93, 25);
+        lblTempo.Size = new Size(109, 32);
         lblTempo.TabIndex = 8;
         lblTempo.Text = "120 BPM";
         // 
         // lblCurrCue
         // 
         lblCurrCue.AutoSize = true;
-        lblCurrCue.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        lblCurrCue.Font = new Font("Segoe UI", 18F);
         lblCurrCue.ForeColor = Color.White;
-        lblCurrCue.Location = new Point(149, 119);
+        lblCurrCue.Location = new Point(166, 96);
         lblCurrCue.Name = "lblCurrCue";
-        lblCurrCue.Size = new Size(81, 25);
+        lblCurrCue.Size = new Size(97, 32);
         lblCurrCue.TabIndex = 7;
         lblCurrCue.Text = "Strophe";
         // 
         // label6
         // 
         label6.AutoSize = true;
-        label6.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        label6.Font = new Font("Segoe UI", 18F);
         label6.ForeColor = Color.White;
-        label6.Location = new Point(13, 152);
+        label6.Location = new Point(11, 129);
         label6.Name = "label6";
-        label6.Size = new Size(105, 25);
+        label6.Size = new Size(125, 32);
         label6.TabIndex = 5;
         label6.Text = "Next Cue: ";
         // 
         // label3
         // 
         label3.AutoSize = true;
-        label3.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        label3.Font = new Font("Segoe UI", 18F);
         label3.ForeColor = Color.White;
-        label3.Location = new Point(13, 119);
+        label3.Location = new Point(11, 96);
         label3.Name = "label3";
-        label3.Size = new Size(102, 25);
+        label3.Size = new Size(117, 32);
         label3.TabIndex = 4;
         label3.Text = "Cur. Cue: ";
         // 
         // lblTitle
         // 
         lblTitle.Dock = DockStyle.Top;
-        lblTitle.Font = new Font("Microsoft Sans Serif", 21.75F);
+        lblTitle.Font = new Font("Microsoft Sans Serif", 26F);
         lblTitle.ForeColor = Color.White;
-        lblTitle.Location = new Point(10, 31);
+        lblTitle.Location = new Point(9, 24);
         lblTitle.Name = "lblTitle";
-        lblTitle.Size = new Size(690, 48);
+        lblTitle.Size = new Size(571, 36);
         lblTitle.TabIndex = 2;
         lblTitle.Text = "Song1";
         lblTitle.TextAlign = ContentAlignment.TopCenter;
@@ -278,12 +288,12 @@ partial class Form1
         setBox.Dock = DockStyle.Fill;
         setBox.ForeColor = Color.FromArgb(128, 128, 255);
         setBox.LabelIndent = 10;
-        setBox.Location = new Point(5, 5);
-        setBox.Margin = new Padding(5, 5, 5, 5);
+        setBox.Location = new Point(4, 4);
+        setBox.Margin = new Padding(4);
         setBox.Name = "setBox";
-        setBox.Padding = new Padding(15, 11, 10, 11);
+        setBox.Padding = new Padding(13, 8, 9, 8);
         tableLayoutPanel1.SetRowSpan(setBox, 2);
-        setBox.Size = new Size(283, 654);
+        setBox.Size = new Size(416, 698);
         setBox.TabIndex = 5;
         setBox.TabStop = false;
         setBox.Text = "Set";
@@ -291,21 +301,21 @@ partial class Form1
         // lblSetName
         // 
         lblSetName.AutoSize = true;
-        lblSetName.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        lblSetName.Font = new Font("Segoe UI", 18F);
         lblSetName.ForeColor = Color.White;
-        lblSetName.Location = new Point(94, 25);
+        lblSetName.Location = new Point(105, 19);
         lblSetName.Name = "lblSetName";
-        lblSetName.Size = new Size(0, 25);
+        lblSetName.Size = new Size(0, 32);
         lblSetName.TabIndex = 8;
         // 
         // label4
         // 
         label4.AutoSize = true;
-        label4.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        label4.Font = new Font("Segoe UI", 18F);
         label4.ForeColor = Color.White;
-        label4.Location = new Point(13, 25);
+        label4.Location = new Point(11, 19);
         label4.Name = "label4";
-        label4.Size = new Size(75, 25);
+        label4.Size = new Size(90, 32);
         label4.TabIndex = 5;
         label4.Text = "Name: ";
         // 
@@ -313,32 +323,31 @@ partial class Form1
         // 
         tableLayoutPanel1.BackColor = Color.Black;
         tableLayoutPanel1.ColumnCount = 2;
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 28.92498F));
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 71.07502F));
+        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel1.Controls.Add(groupBox2, 1, 0);
         tableLayoutPanel1.Controls.Add(setBox, 0, 0);
         tableLayoutPanel1.Controls.Add(groupBox1, 1, 1);
         tableLayoutPanel1.Dock = DockStyle.Fill;
         tableLayoutPanel1.Location = new Point(0, 0);
+        tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
         tableLayoutPanel1.Name = "tableLayoutPanel1";
         tableLayoutPanel1.RowCount = 2;
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 55.30504F));
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 44.69496F));
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-        tableLayoutPanel1.Size = new Size(1013, 664);
+        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 49.4334259F));
+        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50.5665741F));
+        tableLayoutPanel1.Size = new Size(1021, 706);
         tableLayoutPanel1.TabIndex = 8;
         // 
         // Form1
         // 
         AcceptButton = btnChat;
-        AutoScaleDimensions = new SizeF(8F, 20F);
+        AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         BackColor = Color.Black;
-        ClientSize = new Size(1013, 664);
+        ClientSize = new Size(1021, 706);
         Controls.Add(tableLayoutPanel1);
         Icon = (Icon)resources.GetObject("$this.Icon");
-        Margin = new Padding(3, 4, 3, 4);
-        MinimumSize = new Size(680, 598);
+        MinimumSize = new Size(597, 458);
         Name = "Form1";
         Text = "CremeWorks Client v1.0";
         FormClosed += Form1_FormClosed;

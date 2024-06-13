@@ -80,4 +80,30 @@ public partial class Form1 : Form
         _netHub.SendData(MessageTypeEnum.CHAT_MESSAGE, txtChat.Text);
         txtChat.Text = string.Empty;
     }
+
+    private bool _instructionChanging = false;
+    private async void lblInstructions_TextChanged(object sender, EventArgs e)
+    {
+        if (lblInstructions.Text == string.Empty || _instructionChanging) return;
+        _instructionChanging = true;
+        var ctrl = (TextBox)sender;
+        Color original = ctrl.BackColor;
+        (ctrl.BackColor, ctrl.ForeColor) = (Color.Lime, Color.Black);
+        await Task.Delay(500);
+        (ctrl.BackColor, ctrl.ForeColor) = (original, Color.White);
+        _instructionChanging = false;
+    }
+
+    private bool _chatChanging = false;
+    private async void lstChat_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var ctrl = (ListBox)sender;
+        if (ctrl.SelectedIndex == -1 || _chatChanging) return;
+        _chatChanging = true;
+        Color original = ctrl.BackColor;
+        (ctrl.BackColor, ctrl.ForeColor) = (Color.Lime, Color.Black);
+        await Task.Delay(500);
+        (ctrl.BackColor, ctrl.ForeColor) = (original, Color.White);
+        _chatChanging = false;
+    }
 }
