@@ -9,8 +9,8 @@
     <Company>Luminous Friends</Company>
     <Authors>Luminous Friends</Authors>
     <Product>CremeWorks</Product>
-    <AssemblyVersion>1.5</AssemblyVersion>
-    <FileVersion>1.5</FileVersion>
+    <AssemblyVersion>1.5.2</AssemblyVersion>
+    <FileVersion>1.5.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
