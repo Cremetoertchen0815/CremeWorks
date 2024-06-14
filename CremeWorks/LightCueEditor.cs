@@ -20,7 +20,7 @@ namespace CremeWorks
             if (inst.ShowDialog() == DialogResult.OK && inst._id > 0)
             {
                 item.comment = inst._comment;
-                item.ID = (byte)inst._id;
+                item.ID = inst._id;
                 return true;
             }
             return false;
@@ -49,10 +49,10 @@ namespace CremeWorks
 
         private void LightCueEditor_Load(object sender, EventArgs e)
         {
-
+            var el = _availableCues.FirstOrDefault(x => x.ID == _id);
             textBox1.Text = _comment;
             comboBox1.Items.AddRange(_availableCues.Select(x => (object)x.Name).ToArray());
-            comboBox1.SelectedText = _availableCues.FirstOrDefault(x => x.ID == _id)?.Name ?? "-";
+            comboBox1.SelectedIndex = _availableCues.IndexOf(el) + 1;
         }
     }
 }

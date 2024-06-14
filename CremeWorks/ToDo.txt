@@ -1,4 +1,3 @@
--Fix editing cues not working
 -Implement solo mode function for increasing volume
 -Implement backlog system(move to .cwdb file type)
 -Fix SoundPlayer lag under Linux

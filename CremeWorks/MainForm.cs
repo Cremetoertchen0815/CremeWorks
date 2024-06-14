@@ -440,6 +440,7 @@ namespace CremeWorks
                     chatBox.Items.Add(msg);
                     _server.SendToAll(MessageTypeEnum.CHAT_MESSAGE, msg);
                     chatBox.SelectedIndex = chatBox.Items.Count - 1;
+                    LightUpChatbox();
                     break;
                 default:
                     break;
@@ -463,6 +464,19 @@ namespace CremeWorks
         {
             if (_c is null || csvExportSaveFile.ShowDialog() != DialogResult.OK) return;
             File.WriteAllText(csvExportSaveFile.FileName, _c.ToCsv());
+        }
+
+        private bool _chatboxLit = false;
+        private async void LightUpChatbox()
+        {
+            if (_chatboxLit) return;
+            _chatboxLit = true;
+            var original = chatBox.BackColor;
+            chatBox.BackColor = System.Drawing.Color.Lime;
+            await Task.Delay(500);
+            chatBox.BackColor = original;
+            _chatboxLit = false;
+
         }
     }
 }
