@@ -16,7 +16,11 @@ public partial class Form1 : Form
         _netHub = server;
 
         server.Disconnected += Server_Disconnected;
-        _midiServer.Create();
+        if (!_midiServer.Create() && MessageBox.Show("Virtual MIDI device could not be registered! This probably means the driver is not installed. Continue anyway?", "Registering virtual MIDI device failed", MessageBoxButtons.YesNo, MessageBoxIcon.Error) != DialogResult.Yes)
+        {
+            Application.Exit();
+            return;
+        }
     }
 
     private void Server_Disconnected() => new Disconnected(_netHub).ShowDialog();
