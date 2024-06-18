@@ -36,6 +36,8 @@ namespace CremeWorks
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.exportSetToCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.devicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -69,8 +71,6 @@ namespace CremeWorks
             this.btnChatSend = new System.Windows.Forms.Button();
             this.songTempo = new System.Windows.Forms.Label();
             this.boxTempo = new System.Windows.Forms.Panel();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.exportSetToCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.csvExportSaveFile = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -107,30 +107,42 @@ namespace CremeWorks
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.New);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.Save);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAs);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(205, 6);
+            // 
+            // exportSetToCSVToolStripMenuItem
+            // 
+            this.exportSetToCSVToolStripMenuItem.Name = "exportSetToCSVToolStripMenuItem";
+            this.exportSetToCSVToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
+            this.exportSetToCSVToolStripMenuItem.Text = "Export Set to CSV";
+            this.exportSetToCSVToolStripMenuItem.Click += new System.EventHandler(this.exportSetToCSVToolStripMenuItem_Click);
             // 
             // devicesToolStripMenuItem
             // 
@@ -221,14 +233,14 @@ namespace CremeWorks
             // 
             this.playList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.playList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.playList.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.playList.FormattingEnabled = true;
             this.playList.IntegralHeight = false;
-            this.playList.ItemHeight = 25;
+            this.playList.ItemHeight = 22;
             this.playList.Location = new System.Drawing.Point(16, 71);
-            this.playList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.playList.Margin = new System.Windows.Forms.Padding(4);
             this.playList.Name = "playList";
-            this.playList.Size = new System.Drawing.Size(316, 629);
+            this.playList.Size = new System.Drawing.Size(350, 686);
             this.playList.TabIndex = 2;
             this.playList.SelectedIndexChanged += new System.EventHandler(this.playList_SelectedIndexChanged);
             this.playList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playList_MouseDown);
@@ -238,10 +250,10 @@ namespace CremeWorks
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(13, 708);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Location = new System.Drawing.Point(16, 765);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(67, 28);
+            this.button1.Size = new System.Drawing.Size(70, 28);
             this.button1.TabIndex = 3;
             this.button1.Text = "Add";
             this.button1.UseVisualStyleBackColor = true;
@@ -250,10 +262,10 @@ namespace CremeWorks
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button2.Location = new System.Drawing.Point(89, 708);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Location = new System.Drawing.Point(94, 765);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(67, 28);
+            this.button2.Size = new System.Drawing.Size(70, 28);
             this.button2.TabIndex = 4;
             this.button2.Text = "Edit";
             this.button2.UseVisualStyleBackColor = true;
@@ -262,10 +274,10 @@ namespace CremeWorks
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button3.Location = new System.Drawing.Point(163, 708);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Location = new System.Drawing.Point(172, 765);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(73, 28);
+            this.button3.Size = new System.Drawing.Size(90, 28);
             this.button3.TabIndex = 5;
             this.button3.Text = "Remove";
             this.button3.UseVisualStyleBackColor = true;
@@ -276,10 +288,10 @@ namespace CremeWorks
             this.songTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.songTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.songTitle.Location = new System.Drawing.Point(341, 30);
+            this.songTitle.Location = new System.Drawing.Point(374, 30);
             this.songTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.songTitle.Name = "songTitle";
-            this.songTitle.Size = new System.Drawing.Size(703, 38);
+            this.songTitle.Size = new System.Drawing.Size(623, 38);
             this.songTitle.TabIndex = 6;
             this.songTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
@@ -289,23 +301,23 @@ namespace CremeWorks
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.songLyrics.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.songLyrics.Location = new System.Drawing.Point(341, 71);
-            this.songLyrics.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.songLyrics.Location = new System.Drawing.Point(374, 71);
+            this.songLyrics.Margin = new System.Windows.Forms.Padding(4);
             this.songLyrics.Multiline = true;
             this.songLyrics.Name = "songLyrics";
             this.songLyrics.ReadOnly = true;
             this.songLyrics.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.songLyrics.Size = new System.Drawing.Size(699, 629);
+            this.songLyrics.Size = new System.Drawing.Size(623, 686);
             this.songLyrics.TabIndex = 7;
             this.songLyrics.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // button12
             // 
             this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button12.Location = new System.Drawing.Point(245, 708);
-            this.button12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button12.Location = new System.Drawing.Point(270, 765);
+            this.button12.Margin = new System.Windows.Forms.Padding(4);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(87, 28);
+            this.button12.Size = new System.Drawing.Size(96, 28);
             this.button12.TabIndex = 17;
             this.button12.Text = "Duplicate";
             this.button12.UseVisualStyleBackColor = true;
@@ -325,7 +337,7 @@ namespace CremeWorks
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1045, 402);
+            this.label2.Location = new System.Drawing.Point(1005, 400);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 16);
@@ -335,13 +347,14 @@ namespace CremeWorks
             // lightCue
             // 
             this.lightCue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lightCue.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.lightCue.FormattingEnabled = true;
             this.lightCue.IntegralHeight = false;
-            this.lightCue.ItemHeight = 16;
-            this.lightCue.Location = new System.Drawing.Point(1049, 423);
-            this.lightCue.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lightCue.ItemHeight = 22;
+            this.lightCue.Location = new System.Drawing.Point(1005, 420);
+            this.lightCue.Margin = new System.Windows.Forms.Padding(4);
             this.lightCue.Name = "lightCue";
-            this.lightCue.Size = new System.Drawing.Size(300, 276);
+            this.lightCue.Size = new System.Drawing.Size(350, 335);
             this.lightCue.TabIndex = 22;
             this.lightCue.SelectedIndexChanged += new System.EventHandler(this.lightCue_SelectedIndexChanged);
             this.lightCue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lightCue_MouseDown);
@@ -351,10 +364,10 @@ namespace CremeWorks
             // button13
             // 
             this.button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button13.Location = new System.Drawing.Point(1177, 706);
-            this.button13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button13.Location = new System.Drawing.Point(1161, 763);
+            this.button13.Margin = new System.Windows.Forms.Padding(4);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(73, 28);
+            this.button13.Size = new System.Drawing.Size(90, 28);
             this.button13.TabIndex = 25;
             this.button13.Text = "Remove";
             this.button13.UseVisualStyleBackColor = true;
@@ -363,10 +376,10 @@ namespace CremeWorks
             // button14
             // 
             this.button14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button14.Location = new System.Drawing.Point(1113, 706);
-            this.button14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button14.Location = new System.Drawing.Point(1083, 763);
+            this.button14.Margin = new System.Windows.Forms.Padding(4);
             this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(56, 28);
+            this.button14.Size = new System.Drawing.Size(70, 28);
             this.button14.TabIndex = 24;
             this.button14.Text = "Edit";
             this.button14.UseVisualStyleBackColor = true;
@@ -375,10 +388,10 @@ namespace CremeWorks
             // button15
             // 
             this.button15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button15.Location = new System.Drawing.Point(1051, 706);
-            this.button15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button15.Location = new System.Drawing.Point(1005, 763);
+            this.button15.Margin = new System.Windows.Forms.Padding(4);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(55, 28);
+            this.button15.Size = new System.Drawing.Size(70, 28);
             this.button15.TabIndex = 23;
             this.button15.Text = "Add";
             this.button15.UseVisualStyleBackColor = true;
@@ -387,10 +400,10 @@ namespace CremeWorks
             // button10
             // 
             this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button10.Location = new System.Drawing.Point(1259, 706);
-            this.button10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button10.Location = new System.Drawing.Point(1259, 763);
+            this.button10.Margin = new System.Windows.Forms.Padding(4);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(91, 28);
+            this.button10.Size = new System.Drawing.Size(96, 28);
             this.button10.TabIndex = 26;
             this.button10.Text = "Duplicate";
             this.button10.UseVisualStyleBackColor = true;
@@ -401,7 +414,7 @@ namespace CremeWorks
             this.songKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.songKey.AutoSize = true;
             this.songKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.songKey.Location = new System.Drawing.Point(339, 708);
+            this.songKey.Location = new System.Drawing.Point(376, 765);
             this.songKey.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.songKey.Name = "songKey";
             this.songKey.Size = new System.Drawing.Size(0, 25);
@@ -411,20 +424,21 @@ namespace CremeWorks
             // 
             this.chatBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.chatBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.chatBox.FormattingEnabled = true;
             this.chatBox.IntegralHeight = false;
-            this.chatBox.ItemHeight = 16;
-            this.chatBox.Location = new System.Drawing.Point(1049, 71);
-            this.chatBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chatBox.ItemHeight = 22;
+            this.chatBox.Location = new System.Drawing.Point(1005, 71);
+            this.chatBox.Margin = new System.Windows.Forms.Padding(4);
             this.chatBox.Name = "chatBox";
-            this.chatBox.Size = new System.Drawing.Size(305, 276);
+            this.chatBox.Size = new System.Drawing.Size(349, 278);
             this.chatBox.TabIndex = 29;
             // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(1047, 50);
+            this.label3.Location = new System.Drawing.Point(1007, 50);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(37, 16);
@@ -434,17 +448,18 @@ namespace CremeWorks
             // chatInput
             // 
             this.chatInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.chatInput.Location = new System.Drawing.Point(1049, 357);
+            this.chatInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.chatInput.Location = new System.Drawing.Point(1005, 355);
             this.chatInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chatInput.Name = "chatInput";
-            this.chatInput.Size = new System.Drawing.Size(207, 22);
+            this.chatInput.Size = new System.Drawing.Size(251, 26);
             this.chatInput.TabIndex = 30;
             // 
             // btnChatSend
             // 
             this.btnChatSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChatSend.Location = new System.Drawing.Point(1264, 356);
-            this.btnChatSend.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnChatSend.Location = new System.Drawing.Point(1264, 354);
+            this.btnChatSend.Margin = new System.Windows.Forms.Padding(4);
             this.btnChatSend.Name = "btnChatSend";
             this.btnChatSend.Size = new System.Drawing.Size(91, 28);
             this.btnChatSend.TabIndex = 31;
@@ -458,7 +473,7 @@ namespace CremeWorks
             this.songTempo.AutoSize = true;
             this.songTempo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.songTempo.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            this.songTempo.Location = new System.Drawing.Point(943, 706);
+            this.songTempo.Location = new System.Drawing.Point(885, 765);
             this.songTempo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.songTempo.Name = "songTempo";
             this.songTempo.Size = new System.Drawing.Size(0, 25);
@@ -469,23 +484,11 @@ namespace CremeWorks
             this.boxTempo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.boxTempo.BackColor = System.Drawing.Color.White;
             this.boxTempo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.boxTempo.Location = new System.Drawing.Point(912, 708);
+            this.boxTempo.Location = new System.Drawing.Point(854, 765);
             this.boxTempo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.boxTempo.Name = "boxTempo";
             this.boxTempo.Size = new System.Drawing.Size(23, 24);
             this.boxTempo.TabIndex = 33;
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(221, 6);
-            // 
-            // exportSetToCSVToolStripMenuItem
-            // 
-            this.exportSetToCSVToolStripMenuItem.Name = "exportSetToCSVToolStripMenuItem";
-            this.exportSetToCSVToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.exportSetToCSVToolStripMenuItem.Text = "Export Set to CSV";
-            this.exportSetToCSVToolStripMenuItem.Click += new System.EventHandler(this.exportSetToCSVToolStripMenuItem_Click);
             // 
             // csvExportSaveFile
             // 
@@ -496,7 +499,7 @@ namespace CremeWorks
             this.AcceptButton = this.btnChatSend;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1367, 743);
+            this.ClientSize = new System.Drawing.Size(1367, 800);
             this.Controls.Add(this.boxTempo);
             this.Controls.Add(this.songTempo);
             this.Controls.Add(this.btnChatSend);
@@ -521,7 +524,7 @@ namespace CremeWorks
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "CremeWorks Stage Controller";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
