@@ -1,3 +1,5 @@
+-Move Chat bot to Multiline textbox
+
 -Implement solo mode function for increasing volume
 -Implement backlog system(move to .cwdb file type)
 -Fix SoundPlayer lag under Linux

@@ -37,12 +37,6 @@ namespace CremeWorks
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.exportSetToCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.devicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.configureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.applySongSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +59,19 @@ namespace CremeWorks
             this.boxTempo = new System.Windows.Forms.Panel();
             this.csvExportSaveFile = new System.Windows.Forms.SaveFileDialog();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cWCDateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mIDIDevicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startMIDIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.songsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playlistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,9 +80,9 @@ namespace CremeWorks
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.configToolStripMenuItem,
-            this.devicesToolStripMenuItem,
-            this.serverToolStripMenuItem,
-            this.configureToolStripMenuItem1});
+            this.editToolStripMenuItem,
+            this.configureToolStripMenuItem1,
+            this.serverToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -92,7 +99,10 @@ namespace CremeWorks
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.toolStripMenuItem2,
-            this.exportSetToCSVToolStripMenuItem});
+            this.importToolStripMenuItem,
+            this.exportToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.beendenToolStripMenuItem});
             this.configToolStripMenuItem.Name = "configToolStripMenuItem";
             this.configToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.configToolStripMenuItem.Text = "File";
@@ -130,73 +140,31 @@ namespace CremeWorks
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
             // 
-            // exportSetToCSVToolStripMenuItem
-            // 
-            this.exportSetToCSVToolStripMenuItem.Name = "exportSetToCSVToolStripMenuItem";
-            this.exportSetToCSVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exportSetToCSVToolStripMenuItem.Text = "Export Set to CSV";
-            this.exportSetToCSVToolStripMenuItem.Click += new System.EventHandler(this.exportSetToCSVToolStripMenuItem_Click);
-            // 
-            // devicesToolStripMenuItem
-            // 
-            this.devicesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.configureToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.connectToolStripMenuItem,
-            this.applySongSettingsToolStripMenuItem});
-            this.devicesToolStripMenuItem.Name = "devicesToolStripMenuItem";
-            this.devicesToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.devicesToolStripMenuItem.Text = "MIDI";
-            // 
-            // configureToolStripMenuItem
-            // 
-            this.configureToolStripMenuItem.Name = "configureToolStripMenuItem";
-            this.configureToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.configureToolStripMenuItem.Text = "Set Up";
-            this.configureToolStripMenuItem.Click += new System.EventHandler(this.configureToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(185, 6);
-            // 
-            // connectToolStripMenuItem
-            // 
-            this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-            this.connectToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.connectToolStripMenuItem.Text = "Connect";
-            this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
-            // 
-            // applySongSettingsToolStripMenuItem
-            // 
-            this.applySongSettingsToolStripMenuItem.Name = "applySongSettingsToolStripMenuItem";
-            this.applySongSettingsToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.applySongSettingsToolStripMenuItem.Text = "Apply Device Settings";
-            this.applySongSettingsToolStripMenuItem.Click += new System.EventHandler(this.applySongSettingsToolStripMenuItem_Click);
-            // 
             // serverToolStripMenuItem
             // 
             this.serverToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startMIDIToolStripMenuItem,
             this.startToolStripMenuItem});
             this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
-            this.serverToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
-            this.serverToolStripMenuItem.Text = "Server";
+            this.serverToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.serverToolStripMenuItem.Text = "Connection";
             // 
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
             this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.startToolStripMenuItem.Text = "Start";
+            this.startToolStripMenuItem.Text = "Start Remote Server";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
             // 
             // configureToolStripMenuItem1
             // 
             this.configureToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mIDIDevicesToolStripMenuItem,
             this.footSwitchToolStripMenuItem,
             this.lightControllerToolStripMenuItem});
             this.configureToolStripMenuItem1.Name = "configureToolStripMenuItem1";
-            this.configureToolStripMenuItem1.Size = new System.Drawing.Size(55, 20);
-            this.configureToolStripMenuItem1.Text = "Config";
+            this.configureToolStripMenuItem1.Size = new System.Drawing.Size(61, 20);
+            this.configureToolStripMenuItem1.Text = "Settings";
             // 
             // footSwitchToolStripMenuItem
             // 
@@ -209,7 +177,7 @@ namespace CremeWorks
             // 
             this.lightControllerToolStripMenuItem.Name = "lightControllerToolStripMenuItem";
             this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.lightControllerToolStripMenuItem.Text = "Cues";
+            this.lightControllerToolStripMenuItem.Text = "Light Cues";
             this.lightControllerToolStripMenuItem.Click += new System.EventHandler(this.lightControllerToolStripMenuItem_Click);
             // 
             // label1
@@ -234,9 +202,6 @@ namespace CremeWorks
             this.playList.Size = new System.Drawing.Size(264, 564);
             this.playList.TabIndex = 2;
             this.playList.SelectedIndexChanged += new System.EventHandler(this.playList_SelectedIndexChanged);
-            this.playList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playList_MouseDown);
-            this.playList.MouseMove += new System.Windows.Forms.MouseEventHandler(this.playList_MouseMove);
-            this.playList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.playList_MouseUp);
             // 
             // songTitle
             // 
@@ -296,9 +261,6 @@ namespace CremeWorks
             this.lightCue.Size = new System.Drawing.Size(264, 273);
             this.lightCue.TabIndex = 22;
             this.lightCue.SelectedIndexChanged += new System.EventHandler(this.lightCue_SelectedIndexChanged);
-            this.lightCue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lightCue_MouseDown);
-            this.lightCue.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lightCue_MouseMove);
-            this.lightCue.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lightCue_MouseUp);
             // 
             // songKey
             // 
@@ -318,6 +280,8 @@ namespace CremeWorks
             this.chatBox.FormattingEnabled = true;
             this.chatBox.IntegralHeight = false;
             this.chatBox.ItemHeight = 18;
+            this.chatBox.Items.AddRange(new object[] {
+            "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"});
             this.chatBox.Location = new System.Drawing.Point(872, 58);
             this.chatBox.Name = "chatBox";
             this.chatBox.Size = new System.Drawing.Size(263, 233);
@@ -392,12 +356,108 @@ namespace CremeWorks
             this.comboBox1.TabIndex = 34;
             this.comboBox1.Text = "[BACKLOG]";
             // 
+            // importToolStripMenuItem
+            // 
+            this.importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cWCDateiToolStripMenuItem});
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importToolStripMenuItem.Text = "Import";
+            // 
+            // cWCDateiToolStripMenuItem
+            // 
+            this.cWCDateiToolStripMenuItem.Name = "cWCDateiToolStripMenuItem";
+            this.cWCDateiToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.cWCDateiToolStripMenuItem.Text = "CremeWorks Concert (*.csv)";
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setToolStripMenuItem});
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // setToolStripMenuItem
+            // 
+            this.setToolStripMenuItem.Name = "setToolStripMenuItem";
+            this.setToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setToolStripMenuItem.Text = "Set (*.csv)";
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(177, 6);
+            // 
+            // beendenToolStripMenuItem
+            // 
+            this.beendenToolStripMenuItem.Name = "beendenToolStripMenuItem";
+            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.beendenToolStripMenuItem.Text = "Exit";
+            // 
+            // mIDIDevicesToolStripMenuItem
+            // 
+            this.mIDIDevicesToolStripMenuItem.Name = "mIDIDevicesToolStripMenuItem";
+            this.mIDIDevicesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mIDIDevicesToolStripMenuItem.Text = "MIDI Devices";
+            // 
+            // startMIDIToolStripMenuItem
+            // 
+            this.startMIDIToolStripMenuItem.Name = "startMIDIToolStripMenuItem";
+            this.startMIDIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startMIDIToolStripMenuItem.Text = "Start MIDI";
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.songsToolStripMenuItem,
+            this.playlistsToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // songsToolStripMenuItem
+            // 
+            this.songsToolStripMenuItem.Name = "songsToolStripMenuItem";
+            this.songsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.songsToolStripMenuItem.Text = "Songs";
+            // 
+            // playlistsToolStripMenuItem
+            // 
+            this.playlistsToolStripMenuItem.Name = "playlistsToolStripMenuItem";
+            this.playlistsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.playlistsToolStripMenuItem.Text = "Playlists";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.label4.Location = new System.Drawing.Point(869, 629);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(85, 18);
+            this.label4.TabIndex = 35;
+            this.label4.Text = "Solo Mode:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.SystemColors.Control;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Red;
+            this.label5.Location = new System.Drawing.Point(955, 629);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(31, 18);
+            this.label5.TabIndex = 36;
+            this.label5.Text = "Off";
+            // 
             // MainForm
             // 
             this.AcceptButton = this.btnChatSend;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1143, 656);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.boxTempo);
             this.Controls.Add(this.songTempo);
@@ -433,15 +493,10 @@ namespace CremeWorks
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem devicesToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox playList;
         private System.Windows.Forms.Label songTitle;
         private System.Windows.Forms.TextBox songLyrics;
-        private System.Windows.Forms.ToolStripMenuItem configureToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem applySongSettingsToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem lightControllerToolStripMenuItem;
@@ -459,9 +514,21 @@ namespace CremeWorks
         private System.Windows.Forms.ToolStripMenuItem footSwitchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configureToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem exportSetToCSVToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog csvExportSaveFile;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cWCDateiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem beendenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mIDIDevicesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startMIDIToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem songsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem playlistsToolStripMenuItem;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 
