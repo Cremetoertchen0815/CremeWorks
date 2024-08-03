@@ -180,7 +180,7 @@ namespace CremeWorks
             }
 
             _c.MidiMatrix.ActionExecute = ExecuteAction;
-            _c.ConnectionChangeHandler = x => startMIDIToolStripMenuItem.Enabled = x;
+            _c.ConnectionChangeHandler = x => startMIDIToolStripMenuItem.Checked = x;
 
             UpdatePlaylist();
             playList.SelectedIndex = -1;
@@ -359,5 +359,7 @@ namespace CremeWorks
             _chatboxLit = false;
 
         }
+
+        private void beendenToolStripMenuItem_Click(object sender, EventArgs e) => Close();
     }
 }
