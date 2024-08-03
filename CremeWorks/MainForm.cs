@@ -52,17 +52,19 @@ namespace CremeWorks
         private void configureToolStripMenuItem_Click(object sender, EventArgs e) => new MIDISetUp(_c).ShowDialog();
         private void footSwitchToolStripMenuItem_Click(object sender, EventArgs e) => new FootSwitchConfig(_c).ShowDialog();
 
-        private void connectToolStripMenuItem_Click(object sender, EventArgs e)
+        private void startMIDIToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_c == null) return;
-            if (connectToolStripMenuItem.Text == "Connect")
+            if (!startMIDIToolStripMenuItem.Checked)
             {
                 _c.Connect();
                 _c.MidiMatrix.Register();
+                startMIDIToolStripMenuItem.Checked = true;
             }
             else
             {
                 _c.Disconnect();
+                startMIDIToolStripMenuItem.Checked = false;
             }
         }
 
@@ -152,74 +154,10 @@ namespace CremeWorks
             }
         }
 
-        private void AddNewSong(object sender, EventArgs e)
-        {
-            if (_c == null) return;
-            var ns = new Song();
-            if (new SongEditor(_c, ns).ShowDialog() != DialogResult.OK) return;
-            _c.Playlist.Add(ns);
-            UpdatePlaylist();
-        }
-
-        private void EditSong(object sender, EventArgs e)
-        {
-            if (_c == null || playList.SelectedIndex < 0) return;
-            new SongEditor(_c, _c.Playlist[playList.SelectedIndex]).ShowDialog();
-            UpdatePlaylist();
-        }
-
         private void playList_SelectedIndexChanged(object sender, EventArgs e)
         {
             _s = playList.SelectedIndex >= 0 ? _c.Playlist[playList.SelectedIndex] : null;
             UpdateSong();
-        }
-
-        private void RemSong(object sender, EventArgs e)
-        {
-            if (playList.SelectedIndex >= 0) _c.Playlist.RemoveAt(playList.SelectedIndex);
-            UpdatePlaylist();
-        }
-
-        private void applySongSettingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (_c == null || _s == null) return;
-            for (int i = 0; i < Concert.PATCH_DEVICE_COUNT; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplySettings(_c.Devices[i + 2]);
-        }
-
-        private void playList_MouseDown(object sender, MouseEventArgs e) => _playlistDragIndex = playList.SelectedIndex;
-        private void playList_MouseUp(object sender, MouseEventArgs e)
-        {
-            _playlistDragIndex = -1;
-            if (_wasPlaylistOrderChanged) UpdatePlaylist();
-            _wasPlaylistOrderChanged = false;
-        }
-
-        private void playList_MouseMove(object sender, MouseEventArgs e)
-        {
-            int sIndex = playList.SelectedIndex;
-            if (e.Button == MouseButtons.Left && _playlistDragIndex > -1 && _playlistDragIndex != sIndex)
-            {
-                object aObj = playList.Items[_playlistDragIndex];
-                var bObj = _c.Playlist[_playlistDragIndex];
-
-                playList.Items[_playlistDragIndex] = playList.Items[sIndex];
-                _c.Playlist[_playlistDragIndex] = _c.Playlist[sIndex];
-
-
-                playList.Items[sIndex] = aObj;
-                _c.Playlist[sIndex] = bObj;
-
-                _playlistDragIndex = sIndex;
-                _wasPlaylistOrderChanged = true;
-            }
-        }
-
-        private void DuplicateSong(object sender, EventArgs e)
-        {
-            if (playList.SelectedIndex < 0) return;
-            var cpy = _c.Playlist[playList.SelectedIndex].Clone();
-            _c.Playlist.Add(cpy);
-            UpdatePlaylist();
         }
 
         private void New(object sender, EventArgs e)
@@ -242,7 +180,7 @@ namespace CremeWorks
             }
 
             _c.MidiMatrix.ActionExecute = ExecuteAction;
-            _c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
+            _c.ConnectionChangeHandler = x => startMIDIToolStripMenuItem.Enabled = x;
 
             UpdatePlaylist();
             playList.SelectedIndex = -1;
@@ -280,30 +218,6 @@ namespace CremeWorks
 
         private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightCueManager(_c, SendLightNoteOnOff).ShowDialog();
 
-        private void button15_Click(object sender, EventArgs e)
-        {
-            if (_s != null && LightCueEditor.AddToCue(_c.LightingCues, _s.CueQueue)) UpdateSong();
-        }
-
-        private void button14_Click(object sender, EventArgs e)
-        {
-            if (_s == null || lightCue.SelectedIndex < 0) return;
-
-            var tmp = _s.CueQueue[lightCue.SelectedIndex];
-            if (LightCueEditor.EditCue(_c.LightingCues, ref tmp))
-            {
-                _s.CueQueue[lightCue.SelectedIndex] = tmp;
-                UpdateSong();
-            }
-        }
-
-        private void button13_Click(object sender, EventArgs e)
-        {
-            if (_s == null || lightCue.SelectedIndex < 0) return;
-            _s.CueQueue.RemoveAt(lightCue.SelectedIndex);
-            UpdateSong();
-        }
-
         private async void lightCue_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_s != null && lightCue.SelectedIndex >= 0)
@@ -316,37 +230,6 @@ namespace CremeWorks
                 SendLighingData(new NoteOnEvent(new SevenBitNumber(noteOnVal.Value), SevenBitNumber.MaxValue) { Channel = new FourBitNumber(1) });
                 await Task.Delay(50);
                 SendLighingData(new NoteOnEvent(new SevenBitNumber(noteOnVal.Value), SevenBitNumber.MinValue) { Channel = new FourBitNumber(1) });
-            }
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            if (_s == null || lightCue.SelectedIndex < 0) return;
-            _s.CueQueue.Add(_s.CueQueue[lightCue.SelectedIndex]);
-            UpdateSong();
-        }
-
-
-        private int nIndexB = -1;
-        private void lightCue_MouseDown(object sender, MouseEventArgs e) => nIndexB = lightCue.SelectedIndex;
-        private void lightCue_MouseUp(object sender, MouseEventArgs e) => nIndexB = -1;
-
-        private void lightCue_MouseMove(object sender, MouseEventArgs e)
-        {
-            int sIndex = lightCue.SelectedIndex;
-            if (e.Button == MouseButtons.Left && nIndexB > -1 && nIndexB != sIndex)
-            {
-                object aObj = lightCue.Items[nIndexB];
-                var bObj = _s.CueQueue[nIndexB];
-
-                lightCue.Items[nIndexB] = lightCue.Items[sIndex];
-                _s.CueQueue[nIndexB] = _s.CueQueue[sIndex];
-
-                lightCue.Items[sIndex] = aObj;
-                _s.CueQueue[sIndex] = bObj;
-
-                nIndexB = sIndex;
-
             }
         }
 
@@ -364,7 +247,6 @@ namespace CremeWorks
             if (startToolStripMenuItem.Checked)
             {
                 _server.Stop();
-                startToolStripMenuItem.Text = "Start";
                 startToolStripMenuItem.Checked = false;
             }
             else
@@ -372,7 +254,6 @@ namespace CremeWorks
                 var addr = Prompt.ShowDialog("Please enter the broadcast address of the network you want to use:", "Open Server", "255.255.255.255");
                 if (addr == null) return;
                 _server.Start(addr);
-                startToolStripMenuItem.Text = "Stop";
                 startToolStripMenuItem.Checked = true;
             }
         }
