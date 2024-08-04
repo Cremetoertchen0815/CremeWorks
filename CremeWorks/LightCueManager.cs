@@ -38,7 +38,7 @@ namespace CremeWorks
 
         private void btnAdd_Click(object sender, System.EventArgs e)
         {
-            _c.LightingCues.Add(new LightingCue() { ID = NextUInt64 (), Name = txtName.Text, NoteValue = (byte)txtNoteOn.Value });
+            _c.LightingCues.Add(new LightingCueItem() { ID = NextUInt64 (), Name = txtName.Text, NoteValue = (byte)txtNoteOn.Value });
             UpdateBox();
         }
 

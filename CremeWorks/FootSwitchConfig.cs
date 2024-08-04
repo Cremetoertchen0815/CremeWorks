@@ -45,7 +45,7 @@ namespace CremeWorks
             //Grad data
             var btn = (Button)sender;
             _scanID = int.Parse((string)btn.Tag);
-            var dev = _c.Devices[0].Input;
+            var dev = _c.MIDIDevices[0].Input;
             if (dev == null) return;
             _InTest = true;
             btn.Text = "Sensing...";
@@ -94,7 +94,7 @@ namespace CremeWorks
 
         private void FootSwitchConfig_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var dev = _c.Devices[0].Input;
+            var dev = _c.MIDIDevices[0].Input;
             if (dev?.IsListeningForEvents == true) dev.StopEventsListening();
 
             //Save data from dialogue

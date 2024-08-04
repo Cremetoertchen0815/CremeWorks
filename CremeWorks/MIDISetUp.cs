@@ -25,13 +25,13 @@ namespace CremeWorks
         {
             _c.Disconnect();
             RefreshAll();
-            comboBox1.Text = _c.Devices[0].Name;
-            comboBox2.Text = _c.Devices[1].Name;
-            comboBox3.Text = _c.Devices[2].Name;
-            comboBox4.Text = _c.Devices[3].Name;
-            comboBox5.Text = _c.Devices[4].Name;
-            comboBox6.Text = _c.Devices[5].Name;
-            comboBox7.Text = _c.Devices[6].Name;
+            comboBox1.Text = _c.MIDIDevices[0].Name;
+            comboBox2.Text = _c.MIDIDevices[1].Name;
+            comboBox3.Text = _c.MIDIDevices[2].Name;
+            comboBox4.Text = _c.MIDIDevices[3].Name;
+            comboBox5.Text = _c.MIDIDevices[4].Name;
+            comboBox6.Text = _c.MIDIDevices[5].Name;
+            comboBox7.Text = _c.MIDIDevices[6].Name;
         }
 
         private void RefreshButton_Click(object sender, EventArgs e) => RefreshAll();
@@ -39,7 +39,7 @@ namespace CremeWorks
         {
             var snd = (ComboBox)sender;
             int id = int.Parse(snd.Name.Replace("comboBox", "")) - 1;
-            _c.Devices[id].Name = snd.Text;
+            _c.MIDIDevices[id].Name = snd.Text;
         }
 
         private void RefreshAll()
@@ -71,7 +71,7 @@ namespace CremeWorks
         {
             int id = int.Parse(((Button)sender).Name.Replace("button", "")) - 1;
             _c.Connect();
-            var play_dev = _c.Devices[id].Output;
+            var play_dev = _c.MIDIDevices[id].Output;
             try
             {
                 if (play_dev != null)

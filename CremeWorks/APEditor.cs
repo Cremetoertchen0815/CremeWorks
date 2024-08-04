@@ -26,7 +26,7 @@ namespace CremeWorks
             _c = c;
             _s = s;
             _id = id;
-            _d = _c.Devices[1 + id];
+            _d = _c.MIDIDevices[1 + id];
             CheckForIllegalCrossThreadCalls = false;
             _refaceDat = _s.AutoPatchSlots[id].Patch;
 

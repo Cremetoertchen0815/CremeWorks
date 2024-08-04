@@ -110,7 +110,7 @@ namespace CremeWorks
 
         private void btnItemTriggerCapture_Click(object sender, EventArgs e)
         {
-            var dev = _c.Devices?[_s.ChordMacroSrc + 2].Input;
+            var dev = _c.MIDIDevices?[_s.ChordMacroSrc + 2].Input;
             if (_inTest || dev == null) return;
 
             _inTest = true;
@@ -148,7 +148,7 @@ namespace CremeWorks
 
         private void btnItemNoteCapture_Click(object sender, EventArgs e)
         {
-            var dev = _c.Devices?[_s.ChordMacroDst + 2].Input;
+            var dev = _c.MIDIDevices?[_s.ChordMacroDst + 2].Input;
             if (_inTest || dev == null) return;
 
             _inTest = true;

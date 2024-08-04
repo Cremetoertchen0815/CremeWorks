@@ -1,10 +1,5 @@
 ﻿using CremeWorks.Reface;
 using Melanchall.DryWetMidi.Core;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace CremeWorks
 {
@@ -13,7 +8,7 @@ namespace CremeWorks
         public const int ALL_DEVICES_COUNT_PRE5 = 8;
         public const int PATCH_DEVICE_COUNT_PRE3 = 4;
 
-        public static void LoadFilePreVer5(ref Concert nu, BinaryReader br, int version)
+        public static void LoadFilePreVer5(ref Concert? nu, BinaryReader br, int version)
         {
             if (version == 0)
             {
@@ -24,8 +19,8 @@ namespace CremeWorks
 
             var lightDevice = true;
             var devCount = br.ReadInt32();
-            nu.Devices = new MIDIDevice[Math.Max(devCount, ALL_DEVICES_COUNT_PRE5) - 1];
-            for (int i = 0; i < nu.Devices.Length; i++)
+            nu.MIDIDevices = new string[Math.Max(devCount, ALL_DEVICES_COUNT_PRE5) - 1];
+            for (int i = 0; i < nu.MIDIDevices.Length; i++)
             {
                 //Don't read lighting device as it was removed in version 5
                 if (i == 1 && lightDevice)
@@ -35,7 +30,7 @@ namespace CremeWorks
                     i--;
                     continue;
                 }
-                nu.Devices[i] = new MIDIDevice() { Name = (i < devCount ? br.ReadString() : null) };
+                nu.MIDIDevices[i] = i < devCount ? br.ReadString() : null;
             }
 
             //Foot switch config
@@ -113,13 +108,13 @@ namespace CremeWorks
                 s.CCPatchMap = Concert.Convert2DArrayToSize(s.CCPatchMap, Concert.PATCH_DEVICE_COUNT);
 
                 var autoPatchCount = br.ReadInt32();
-                s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, Concert.PATCH_DEVICE_COUNT)).Select(x => ((bool, IRefacePatch))(false, null)).ToArray();
+                s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, Concert.PATCH_DEVICE_COUNT)).Select(x => ((bool, IRefacePatch?))(false, null)).ToArray();
                 for (int j = 0; j < autoPatchCount; j++)
                 {
                     bool enabled = br.ReadBoolean();
                     int type = br.ReadInt32();
 
-                    IRefacePatch patch;
+                    IRefacePatch? patch;
                     switch ((DeviceType)type)
                     {
                         case DeviceType.RefaceCS:
@@ -183,7 +178,7 @@ namespace CremeWorks
                         int velocity = br.ReadInt32();
                         var keys = new int[br.ReadInt32()];
                         for (int k = 0; k < keys.Length; k++) keys[k] = br.ReadInt32();
-                        s.ChordMacros.Add((name, triggerNote, velocity, keys.ToList()));
+                        s.ChordMacros.Add(new App.Data.ChordMacro(name, triggerNote, velocity, keys.ToList()));
                     }
                 }
 

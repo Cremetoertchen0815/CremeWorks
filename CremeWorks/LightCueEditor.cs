@@ -9,12 +9,12 @@ namespace CremeWorks
     {
         private string _comment = "Empty";
         private ulong _id = 0;
-        private List<LightingCue> _availableCues;
+        private List<LightingCueItem> _availableCues;
 
         private LightCueEditor() => InitializeComponent();
 
 
-        public static bool EditCue(List<LightingCue> availableCues, ref (ulong ID, string comment) item)
+        public static bool EditCue(List<LightingCueItem> availableCues, ref (ulong ID, string comment) item)
         {
             var inst = new LightCueEditor() { _comment = item.comment, _id = item.ID, _availableCues = availableCues };
             if (inst.ShowDialog() == DialogResult.OK && inst._id > 0)
@@ -26,7 +26,7 @@ namespace CremeWorks
             return false;
         }
 
-        public static bool AddToCue(List<LightingCue> availableCues, List<(ulong, string)> songCues)
+        public static bool AddToCue(List<LightingCueItem> availableCues, List<(ulong, string)> songCues)
         {
             var inst = new LightCueEditor() { _availableCues = availableCues };
             if (inst.ShowDialog() == DialogResult.OK && inst._id > 0)
