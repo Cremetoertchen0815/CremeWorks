@@ -71,8 +71,8 @@
     <Compile Include="ChordMacroEditor.Designer.cs">
       <DependentUpon>ChordMacroEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="CompatibilityFileParser.cs" />
-    <Compile Include="Concert.cs" />
+    <Compile Include="Data\Compatibility\CompatibilityFileParser.cs" />
+    <Compile Include="Data\Compatibility\Concert.cs" />
     <Compile Include="FootSwitchConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,7 +119,7 @@
     <Compile Include="Reface\General.cs" />
     <Compile Include="Reface\IRefacePatch.cs" />
     <Compile Include="Reface\YCPatch.cs" />
-    <Compile Include="Song.cs" />
+    <Compile Include="Data\Compatibility\Song.cs" />
     <Compile Include="SongEditor.cs">
       <SubType>Form</SubType>
     </Compile>
