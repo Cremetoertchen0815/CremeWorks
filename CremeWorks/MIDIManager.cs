@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CremeWorks.App.Data;
+namespace CremeWorks.App;
 public class MIDIManager
 {
     public event Action<bool>? ConnectionChanged;

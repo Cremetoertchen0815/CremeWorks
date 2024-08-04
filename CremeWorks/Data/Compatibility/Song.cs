@@ -1,6 +1,4 @@
-﻿using CremeWorks.App.Data;
-
-namespace CremeWorks;
+﻿namespace CremeWorks.App.Data.Compatibility;
 
 public class Song
 {
