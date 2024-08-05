@@ -1,5 +1,6 @@
 ﻿using CremeWorks.App;
 using CremeWorks.App.Data;
+using CremeWorks.App.Dialogs;
 using CremeWorks.Common;
 using CremeWorks.Networking;
 using Melanchall.DryWetMidi.Common;
@@ -367,5 +368,9 @@ namespace CremeWorks
         }
 
         private void beendenToolStripMenuItem_Click(object sender, EventArgs e) => Close();
+
+        private void songsToolStripMenuItem_Click(object sender, EventArgs e) => new SongList(this).ShowDialog();
+
+        private void defaultMIDIRoutingToolStripMenuItem_Click(object sender, EventArgs e) => new SongRoutingEditor(this, null).ShowDialog();
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace CremeWorks.App.Data;
 
-public record struct MidiMatrixNode(uint SourceDeviceId, uint DestinationDeviceId, MidiMatrixNodeType Type);
+public record struct MidiMatrixNode(int SourceDeviceId, int DestinationDeviceId, MidiMatrixNodeType Type);
 
 public enum MidiMatrixNodeType
 {

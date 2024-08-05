@@ -3,7 +3,7 @@ using CremeWorks.App.Data;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
 
-namespace CremeWorks
+namespace CremeWorks.App.Dialogs
 {
     public partial class ChordMacroEditor : Form
     {

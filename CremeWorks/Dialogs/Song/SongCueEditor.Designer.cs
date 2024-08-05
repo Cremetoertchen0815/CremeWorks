@@ -1,5 +1,5 @@
 ﻿
-namespace CremeWorks
+namespace CremeWorks.App.Dialogs
 {
     partial class SongCueEditor
     {
@@ -29,113 +29,107 @@ namespace CremeWorks
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            label2 = new Label();
-            textBox1 = new TextBox();
-            comboBox1 = new ComboBox();
-            listBox1 = new ListBox();
-            button2 = new Button();
-            button3 = new Button();
-            SuspendLayout();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.SuspendLayout();
             // 
-            // label1
+            // button1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(53, 223);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(31, 15);
-            label1.TabIndex = 5;
-            label1.Text = "Cue:";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(14, 255);
-            label2.Margin = new Padding(4, 0, 4, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(70, 15);
-            label2.TabIndex = 6;
-            label2.Text = "Description:";
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(105, 252);
-            textBox1.Margin = new Padding(4);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(252, 23);
-            textBox1.TabIndex = 7;
-            // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "-" });
-            comboBox1.Location = new Point(105, 221);
-            comboBox1.Margin = new Padding(4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(252, 23);
-            comboBox1.TabIndex = 8;
-            // 
-            // listBox1
-            // 
-            listBox1.Dock = DockStyle.Top;
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(0, 0);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(370, 214);
-            listBox1.TabIndex = 9;
+            this.button1.Location = new System.Drawing.Point(311, 12);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(96, 26);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "OK";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            button2.Location = new Point(177, 289);
-            button2.Name = "button2";
-            button2.Size = new Size(87, 39);
-            button2.TabIndex = 11;
-            button2.Text = "Add";
-            button2.UseVisualStyleBackColor = true;
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button2.Location = new System.Drawing.Point(311, 46);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(96, 25);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Cancel";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // label1
             // 
-            button3.Location = new Point(270, 289);
-            button3.Name = "button3";
-            button3.Size = new Size(87, 39);
-            button3.TabIndex = 12;
-            button3.Text = "Remove";
-            button3.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(61, 16);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(34, 16);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Cue:";
             // 
-            // SongCueEditor
+            // label2
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(370, 340);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(listBox1);
-            Controls.Add(comboBox1);
-            Controls.Add(textBox1);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(4);
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "SongCueEditor";
-            ShowIcon = false;
-            ShowInTaskbar = false;
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Edit Cue Instance";
-            ResumeLayout(false);
-            PerformLayout();
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 50);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(78, 16);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Description:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(120, 47);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(164, 22);
+            this.textBox1.TabIndex = 7;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "-"});
+            this.comboBox1.Location = new System.Drawing.Point(120, 14);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(164, 24);
+            this.comboBox1.TabIndex = 8;
+            // 
+            // LightCueEditor
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(423, 78);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Name = "SongCueEditor";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Edit Cue Instance";
+            this.Load += new System.EventHandler(this.LightCueEditor_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ComboBox comboBox1;
-        private ListBox listBox1;
-        private Button button2;
-        private Button button3;
     }
 }

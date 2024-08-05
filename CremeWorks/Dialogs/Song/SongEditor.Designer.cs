@@ -1,5 +1,5 @@
 ﻿
-namespace CremeWorks
+namespace CremeWorks.App.Dialogs
 {
     partial class SongEditor
     {
@@ -48,56 +48,61 @@ namespace CremeWorks
             label35 = new Label();
             btnRouting = new Button();
             lblDevicePatches = new Label();
-            btnCues = new Button();
+            lstCues = new ListBox();
+            label5 = new Label();
+            btnCueAdd = new Button();
+            btnCueEdit = new Button();
+            btnCueRemove = new Button();
+            btnCueDuplicate = new Button();
             ((System.ComponentModel.ISupportInitialize)txtBpm).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(14, 10);
+            label1.Location = new Point(14, 7);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(29, 15);
+            label1.Size = new Size(70, 23);
             label1.TabIndex = 0;
             label1.Text = "Title";
+            label1.TextAlign = ContentAlignment.MiddleRight;
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(14, 40);
+            label2.Location = new Point(14, 37);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(35, 15);
+            label2.Size = new Size(70, 23);
             label2.TabIndex = 1;
             label2.Text = "Artist";
+            label2.TextAlign = ContentAlignment.MiddleRight;
             // 
             // label3
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(14, 70);
+            label3.Location = new Point(14, 67);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(26, 15);
+            label3.Size = new Size(70, 23);
             label3.TabIndex = 2;
             label3.Text = "Key";
+            label3.TextAlign = ContentAlignment.MiddleRight;
             // 
             // label4
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(13, 262);
+            label4.Location = new Point(14, 259);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(36, 15);
+            label4.Size = new Size(70, 23);
             label4.TabIndex = 3;
             label4.Text = "Lyrics";
+            label4.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtTitle
             // 
             txtTitle.Location = new Point(92, 7);
             txtTitle.Margin = new Padding(4);
             txtTitle.Name = "txtTitle";
-            txtTitle.Size = new Size(500, 23);
+            txtTitle.Size = new Size(328, 23);
             txtTitle.TabIndex = 4;
             txtTitle.Text = "Name";
             // 
@@ -106,7 +111,7 @@ namespace CremeWorks
             txtArtist.Location = new Point(92, 37);
             txtArtist.Margin = new Padding(4);
             txtArtist.Name = "txtArtist";
-            txtArtist.Size = new Size(500, 23);
+            txtArtist.Size = new Size(328, 23);
             txtArtist.TabIndex = 5;
             txtArtist.Text = "Unknown";
             // 
@@ -125,12 +130,12 @@ namespace CremeWorks
             txtLyrics.Multiline = true;
             txtLyrics.Name = "txtLyrics";
             txtLyrics.ScrollBars = ScrollBars.Vertical;
-            txtLyrics.Size = new Size(417, 276);
+            txtLyrics.Size = new Size(328, 276);
             txtLyrics.TabIndex = 7;
             // 
             // btnOk
             // 
-            btnOk.Location = new Point(599, 7);
+            btnOk.Location = new Point(686, 551);
             btnOk.Margin = new Padding(4);
             btnOk.Name = "btnOk";
             btnOk.Size = new Size(146, 53);
@@ -141,24 +146,24 @@ namespace CremeWorks
             // 
             // btnChordMakro
             // 
-            btnChordMakro.Location = new Point(599, 171);
+            btnChordMakro.Location = new Point(152, 551);
             btnChordMakro.Margin = new Padding(4);
             btnChordMakro.Name = "btnChordMakro";
-            btnChordMakro.Size = new Size(146, 36);
+            btnChordMakro.Size = new Size(130, 53);
             btnChordMakro.TabIndex = 78;
-            btnChordMakro.Text = "Chord Macro";
+            btnChordMakro.Text = "Chord Macros";
             btnChordMakro.UseVisualStyleBackColor = true;
             btnChordMakro.Click += btnChordMakro_Click;
             // 
             // label33
             // 
-            label33.AutoSize = true;
-            label33.Location = new Point(14, 97);
+            label33.Location = new Point(14, 95);
             label33.Margin = new Padding(4, 0, 4, 0);
             label33.Name = "label33";
-            label33.Size = new Size(43, 15);
+            label33.Size = new Size(70, 23);
             label33.TabIndex = 131;
             label33.Text = "Tempo";
+            label33.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtBpm
             // 
@@ -195,7 +200,7 @@ namespace CremeWorks
             // chkClick
             // 
             chkClick.AutoSize = true;
-            chkClick.Location = new Point(599, 96);
+            chkClick.Location = new Point(330, 97);
             chkClick.Margin = new Padding(4);
             chkClick.Name = "chkClick";
             chkClick.Size = new Size(90, 19);
@@ -210,56 +215,111 @@ namespace CremeWorks
             txtInstructions.Multiline = true;
             txtInstructions.Name = "txtInstructions";
             txtInstructions.ScrollBars = ScrollBars.Vertical;
-            txtInstructions.Size = new Size(499, 124);
+            txtInstructions.Size = new Size(328, 124);
             txtInstructions.TabIndex = 137;
             // 
             // label35
             // 
-            label35.AutoSize = true;
-            label35.Location = new Point(13, 130);
+            label35.Location = new Point(14, 127);
             label35.Margin = new Padding(4, 0, 4, 0);
             label35.Name = "label35";
-            label35.Size = new Size(69, 15);
+            label35.Size = new Size(70, 23);
             label35.TabIndex = 136;
             label35.Text = "Instructions";
+            label35.TextAlign = ContentAlignment.MiddleRight;
             // 
             // btnRouting
             // 
-            btnRouting.Location = new Point(599, 127);
+            btnRouting.Location = new Point(14, 551);
             btnRouting.Margin = new Padding(4);
             btnRouting.Name = "btnRouting";
-            btnRouting.Size = new Size(146, 36);
+            btnRouting.Size = new Size(130, 53);
             btnRouting.TabIndex = 138;
             btnRouting.Text = "MIDI Routing";
             btnRouting.UseVisualStyleBackColor = true;
+            btnRouting.Click += btnRouting_Click;
             // 
             // lblDevicePatches
             // 
-            lblDevicePatches.Location = new Point(516, 489);
+            lblDevicePatches.Location = new Point(428, 259);
             lblDevicePatches.Name = "lblDevicePatches";
-            lblDevicePatches.Size = new Size(77, 23);
+            lblDevicePatches.Size = new Size(70, 37);
             lblDevicePatches.TabIndex = 143;
             lblDevicePatches.Text = "Device Patches";
             lblDevicePatches.TextAlign = ContentAlignment.TopRight;
             lblDevicePatches.Visible = false;
             // 
-            // btnCues
+            // lstCues
             // 
-            btnCues.Location = new Point(599, 215);
-            btnCues.Margin = new Padding(4);
-            btnCues.Name = "btnCues";
-            btnCues.Size = new Size(146, 36);
-            btnCues.TabIndex = 144;
-            btnCues.Text = "Cues";
-            btnCues.UseVisualStyleBackColor = true;
+            lstCues.FormattingEnabled = true;
+            lstCues.ItemHeight = 15;
+            lstCues.Location = new Point(505, 7);
+            lstCues.Name = "lstCues";
+            lstCues.Size = new Size(328, 199);
+            lstCues.TabIndex = 145;
+            // 
+            // label5
+            // 
+            label5.Location = new Point(428, 9);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(70, 23);
+            label5.TabIndex = 146;
+            label5.Text = "Cues";
+            label5.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // btnCueAdd
+            // 
+            btnCueAdd.Location = new Point(505, 212);
+            btnCueAdd.Name = "btnCueAdd";
+            btnCueAdd.Size = new Size(78, 39);
+            btnCueAdd.TabIndex = 147;
+            btnCueAdd.Text = "Add";
+            btnCueAdd.UseVisualStyleBackColor = true;
+            btnCueAdd.Click += btnCueAdd_Click;
+            // 
+            // btnCueEdit
+            // 
+            btnCueEdit.Location = new Point(589, 212);
+            btnCueEdit.Name = "btnCueEdit";
+            btnCueEdit.Size = new Size(77, 39);
+            btnCueEdit.TabIndex = 148;
+            btnCueEdit.Text = "Edit";
+            btnCueEdit.UseVisualStyleBackColor = true;
+            btnCueEdit.Click += btnCueEdit_Click;
+            // 
+            // btnCueRemove
+            // 
+            btnCueRemove.Location = new Point(755, 212);
+            btnCueRemove.Name = "btnCueRemove";
+            btnCueRemove.Size = new Size(77, 39);
+            btnCueRemove.TabIndex = 149;
+            btnCueRemove.Text = "Remove";
+            btnCueRemove.UseVisualStyleBackColor = true;
+            btnCueRemove.Click += btnCueRemove_Click;
+            // 
+            // btnCueDuplicate
+            // 
+            btnCueDuplicate.Location = new Point(672, 212);
+            btnCueDuplicate.Name = "btnCueDuplicate";
+            btnCueDuplicate.Size = new Size(77, 39);
+            btnCueDuplicate.TabIndex = 150;
+            btnCueDuplicate.Text = "Duplicate";
+            btnCueDuplicate.UseVisualStyleBackColor = true;
+            btnCueDuplicate.Click += btnCueDuplicate_Click;
             // 
             // SongEditor
             // 
             AcceptButton = btnOk;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(758, 548);
-            Controls.Add(btnCues);
+            ClientSize = new Size(845, 617);
+            Controls.Add(btnCueDuplicate);
+            Controls.Add(btnCueRemove);
+            Controls.Add(btnCueEdit);
+            Controls.Add(btnCueAdd);
+            Controls.Add(label5);
+            Controls.Add(lstCues);
             Controls.Add(lblDevicePatches);
             Controls.Add(btnRouting);
             Controls.Add(txtInstructions);
@@ -313,6 +373,11 @@ namespace CremeWorks
         private System.Windows.Forms.Label label35;
         private Button btnRouting;
         private Label lblDevicePatches;
-        private Button btnCues;
+        private ListBox lstCues;
+        private Label label5;
+        private Button btnCueAdd;
+        private Button btnCueEdit;
+        private Button btnCueRemove;
+        private Button btnCueDuplicate;
     }
 }

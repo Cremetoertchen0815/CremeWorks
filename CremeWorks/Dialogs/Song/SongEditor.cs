@@ -1,8 +1,7 @@
-﻿using CremeWorks.App;
-using CremeWorks.App.Data;
+﻿using CremeWorks.App.Data;
 using CremeWorks.Common;
 
-namespace CremeWorks
+namespace CremeWorks.App.Dialogs
 {
     public partial class SongEditor : Form
     {
@@ -31,12 +30,13 @@ namespace CremeWorks
             txtBpm.Value = _s.Tempo;
             txtLyrics.Text = _s.Lyrics;
 
-            var patchBaseYPos = 515;
+            //Generate comboboxes for device patches
+            var patchBaseYPos = 260;
             foreach (var item in _parent.Database.Devices.Where(x => x.Value.IsInstrument))
             {
 
                 var lbl = new Label();
-                lbl.Location = new Point(516, patchBaseYPos);
+                lbl.Location = new Point(505, patchBaseYPos);
                 lbl.Name = "lblPatch" + item.Key;
                 lbl.Size = new Size(77, 23);
                 lbl.TabIndex = 139;
@@ -46,7 +46,7 @@ namespace CremeWorks
                 Controls.Add(lbl);
 
                 var cmbBox = new ComboBox();
-                cmbBox.Location = new Point(599, patchBaseYPos);
+                cmbBox.Location = new Point(589, patchBaseYPos);
                 cmbBox.Name = "boxPatch" + item.Key;
                 cmbBox.Size = new Size(146, 23);
                 cmbBox.Items.Add(new ComboBoxPatchItem(-1, "-"));
@@ -54,7 +54,7 @@ namespace CremeWorks
                 Controls.Add(cmbBox);
                 _patchBoxes.Add(item.Key, cmbBox);
 
-                patchBaseYPos -= 29;
+                patchBaseYPos += 29;
             }
 
             if (_patchBoxes.Count > 0)
@@ -120,5 +120,61 @@ namespace CremeWorks
 
             public override string ToString() => Name;
         }
+
+        private void btnCueAdd_Click(object sender, EventArgs e)
+        {
+            if (SongCueEditor.AddToCue(_parent, out var cueInstance))
+            {
+                var cue = _parent.Database.LightingCues[cueInstance.CueId];
+                var cbi = new ComboBoxCueItem(cueInstance, cue);
+                lstCues.Items.Add(cbi);
+            }
+        }
+
+        private void btnCueEdit_Click(object sender, EventArgs e)
+        {
+            if (lstCues.SelectedIndex < 0) return;
+            var cbi = (ComboBoxCueItem)lstCues.SelectedItem!;
+            var cueInstance = cbi.Instance;
+
+            if (SongCueEditor.EditCue(_parent, ref cueInstance))
+            {
+                cbi.Instance = cueInstance;
+
+                lstCues.Refresh();
+            }
+
+        }
+
+        private void btnCueDuplicate_Click(object sender, EventArgs e)
+        {
+            if (lstCues.SelectedIndex < 0) return;
+            var cbi = (ComboBoxCueItem)lstCues.SelectedItem!;
+            var newCbi = new ComboBoxCueItem(cbi.Instance, cbi.LightingCueItem);
+            lstCues.Items.Add(newCbi);
+        }
+
+
+        private class ComboBoxCueItem
+        {
+            public CueInstance Instance { get; set; }
+            public LightingCueItem LightingCueItem { get; set; }
+
+            public ComboBoxCueItem(CueInstance instance, LightingCueItem lightingCueItem)
+            {
+                LightingCueItem = lightingCueItem;
+                Instance = instance;
+            }
+
+            public override string ToString() => $"{Instance.Description} ({LightingCueItem.Name})";
+        }
+
+        private void btnCueRemove_Click(object sender, EventArgs e)
+        {
+            if (lstCues.SelectedIndex < 0) return;
+            lstCues.Items.RemoveAt(lstCues.SelectedIndex);
+        }
+
+        private void btnRouting_Click(object sender, EventArgs e) => new SongRoutingEditor(_parent, _s).ShowDialog();
     }
 }

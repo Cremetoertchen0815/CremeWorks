@@ -115,9 +115,9 @@ public static class CompatibilityFileParser
                 int type = br.ReadInt32();
 
                 IDevicePatch? patch;
-                switch ((DeviceType)type)
+                switch ((OldDeviceType)type)
                 {
-                    case DeviceType.RefaceCS:
+                    case OldDeviceType.RefaceCS:
                         var cs = new CSPatch
                         {
                             SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
@@ -125,7 +125,7 @@ public static class CompatibilityFileParser
                         };
                         patch = cs;
                         break;
-                    case DeviceType.RefaceDX:
+                    case OldDeviceType.RefaceDX:
                         var dx = new DXPatch
                         {
                             SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
@@ -133,7 +133,7 @@ public static class CompatibilityFileParser
                         };
                         patch = dx;
                         break;
-                    case DeviceType.RefaceCP:
+                    case OldDeviceType.RefaceCP:
                         var cp = new CPPatch
                         {
                             SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
@@ -141,7 +141,7 @@ public static class CompatibilityFileParser
                         };
                         patch = cp;
                         break;
-                    case DeviceType.RefaceYC:
+                    case OldDeviceType.RefaceYC:
                         var yc = new YCPatch
                         {
                             SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
@@ -178,7 +178,7 @@ public static class CompatibilityFileParser
                     int velocity = br.ReadInt32();
                     var keys = new int[br.ReadInt32()];
                     for (int k = 0; k < keys.Length; k++) keys[k] = br.ReadInt32();
-                    s.ChordMacros.Add(new App.Data.ChordMacro(name, triggerNote, velocity, keys.ToList()));
+                    s.ChordMacros.Add(new ChordMacro(name, triggerNote, velocity, [.. keys]));
                 }
             }
 

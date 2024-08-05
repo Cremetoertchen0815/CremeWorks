@@ -1,4 +1,4 @@
-﻿namespace CremeWorks
+﻿namespace CremeWorks.App.Dialogs
 {
     partial class ChordMacroEditor
     {

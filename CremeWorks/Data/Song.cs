@@ -9,7 +9,7 @@ public class Song
     public string Instructions { get; set; } = string.Empty;
     public byte Tempo { get; set; } = 120;
     public bool Click { get; set; } = false;
-    public List<MidiMatrixNode> MidiMatrixOverrides { get; } = [];
+    public List<MidiMatrixNode> RoutingOverrides { get; } = [];
     public List<PatchInstance> Patches { get; } = [];
     public List<CueInstance> CueQueue { get; } = []; //Cue list for managing light show
     public List<ChordMacro> ChordMacros { get; } = [];
@@ -31,7 +31,7 @@ public class Song
             ChordMacroDestinationDeviceId = ChordMacroDestinationDeviceId
         };
         foreach (var p in Patches) s.Patches.Add(p);
-        foreach (var m in MidiMatrixOverrides) s.MidiMatrixOverrides.Add(m);
+        foreach (var m in RoutingOverrides) s.RoutingOverrides.Add(m);
         foreach (var c in ChordMacros) s.ChordMacros.Add(c.Clone());
         return s;
     }

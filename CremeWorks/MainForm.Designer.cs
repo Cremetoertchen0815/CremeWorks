@@ -48,6 +48,7 @@ namespace CremeWorks
             playlistsToolStripMenuItem = new ToolStripMenuItem();
             configureToolStripMenuItem1 = new ToolStripMenuItem();
             mIDIDevicesToolStripMenuItem = new ToolStripMenuItem();
+            defaultMIDIRoutingToolStripMenuItem = new ToolStripMenuItem();
             footSwitchToolStripMenuItem = new ToolStripMenuItem();
             lightControllerToolStripMenuItem = new ToolStripMenuItem();
             serverToolStripMenuItem = new ToolStripMenuItem();
@@ -73,7 +74,6 @@ namespace CremeWorks
             label5 = new Label();
             label2 = new Label();
             label6 = new Label();
-            defaultMIDIRoutingToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -180,6 +180,7 @@ namespace CremeWorks
             songsToolStripMenuItem.Name = "songsToolStripMenuItem";
             songsToolStripMenuItem.Size = new Size(180, 22);
             songsToolStripMenuItem.Text = "Songs";
+            songsToolStripMenuItem.Click += songsToolStripMenuItem_Click;
             // 
             // playlistsToolStripMenuItem
             // 
@@ -197,21 +198,28 @@ namespace CremeWorks
             // mIDIDevicesToolStripMenuItem
             // 
             mIDIDevicesToolStripMenuItem.Name = "mIDIDevicesToolStripMenuItem";
-            mIDIDevicesToolStripMenuItem.Size = new Size(170, 22);
+            mIDIDevicesToolStripMenuItem.Size = new Size(180, 22);
             mIDIDevicesToolStripMenuItem.Text = "MIDI Devices";
             mIDIDevicesToolStripMenuItem.Click += configureToolStripMenuItem_Click;
+            // 
+            // defaultMIDIRoutingToolStripMenuItem
+            // 
+            defaultMIDIRoutingToolStripMenuItem.Name = "defaultMIDIRoutingToolStripMenuItem";
+            defaultMIDIRoutingToolStripMenuItem.Size = new Size(180, 22);
+            defaultMIDIRoutingToolStripMenuItem.Text = "MIDI Routing";
+            defaultMIDIRoutingToolStripMenuItem.Click += defaultMIDIRoutingToolStripMenuItem_Click;
             // 
             // footSwitchToolStripMenuItem
             // 
             footSwitchToolStripMenuItem.Name = "footSwitchToolStripMenuItem";
-            footSwitchToolStripMenuItem.Size = new Size(170, 22);
+            footSwitchToolStripMenuItem.Size = new Size(180, 22);
             footSwitchToolStripMenuItem.Text = "Controller Actions";
             footSwitchToolStripMenuItem.Click += footSwitchToolStripMenuItem_Click;
             // 
             // lightControllerToolStripMenuItem
             // 
             lightControllerToolStripMenuItem.Name = "lightControllerToolStripMenuItem";
-            lightControllerToolStripMenuItem.Size = new Size(170, 22);
+            lightControllerToolStripMenuItem.Size = new Size(180, 22);
             lightControllerToolStripMenuItem.Text = "Light Cues";
             lightControllerToolStripMenuItem.Click += lightControllerToolStripMenuItem_Click;
             // 
@@ -225,14 +233,14 @@ namespace CremeWorks
             // startMIDIToolStripMenuItem
             // 
             startMIDIToolStripMenuItem.Name = "startMIDIToolStripMenuItem";
-            startMIDIToolStripMenuItem.Size = new Size(180, 22);
+            startMIDIToolStripMenuItem.Size = new Size(150, 22);
             startMIDIToolStripMenuItem.Text = "MIDI Host";
             startMIDIToolStripMenuItem.Click += startMIDIToolStripMenuItem_Click;
             // 
             // startToolStripMenuItem
             // 
             startToolStripMenuItem.Name = "startToolStripMenuItem";
-            startToolStripMenuItem.Size = new Size(180, 22);
+            startToolStripMenuItem.Size = new Size(150, 22);
             startToolStripMenuItem.Text = "Remote Server";
             startToolStripMenuItem.Click += startToolStripMenuItem_Click;
             // 
@@ -458,12 +466,6 @@ namespace CremeWorks
             label6.TabIndex = 38;
             label6.Text = "Key:";
             label6.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // defaultMIDIRoutingToolStripMenuItem
-            // 
-            defaultMIDIRoutingToolStripMenuItem.Name = "defaultMIDIRoutingToolStripMenuItem";
-            defaultMIDIRoutingToolStripMenuItem.Size = new Size(170, 22);
-            defaultMIDIRoutingToolStripMenuItem.Text = "MIDI Routing";
             // 
             // MainForm
             // 
