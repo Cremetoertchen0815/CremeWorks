@@ -38,7 +38,6 @@ namespace CremeWorks
             txtKey = new TextBox();
             txtLyrics = new TextBox();
             btnOk = new Button();
-            btnCancel = new Button();
             btnChordMakro = new Button();
             label33 = new Label();
             txtBpm = new NumericUpDown();
@@ -47,8 +46,9 @@ namespace CremeWorks
             chkClick = new CheckBox();
             txtInstructions = new TextBox();
             label35 = new Label();
-            button1 = new Button();
+            btnRouting = new Button();
             lblDevicePatches = new Label();
+            btnCues = new Button();
             ((System.ComponentModel.ISupportInitialize)txtBpm).BeginInit();
             SuspendLayout();
             // 
@@ -85,7 +85,7 @@ namespace CremeWorks
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(13, 213);
+            label4.Location = new Point(13, 262);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
             label4.Size = new Size(36, 15);
@@ -120,12 +120,12 @@ namespace CremeWorks
             // 
             // txtLyrics
             // 
-            txtLyrics.Location = new Point(92, 210);
+            txtLyrics.Location = new Point(92, 259);
             txtLyrics.Margin = new Padding(4);
             txtLyrics.Multiline = true;
             txtLyrics.Name = "txtLyrics";
             txtLyrics.ScrollBars = ScrollBars.Vertical;
-            txtLyrics.Size = new Size(417, 328);
+            txtLyrics.Size = new Size(417, 276);
             txtLyrics.TabIndex = 7;
             // 
             // btnOk
@@ -133,29 +133,18 @@ namespace CremeWorks
             btnOk.Location = new Point(599, 7);
             btnOk.Margin = new Padding(4);
             btnOk.Name = "btnOk";
-            btnOk.Size = new Size(146, 44);
+            btnOk.Size = new Size(146, 53);
             btnOk.TabIndex = 8;
             btnOk.Text = "OK";
             btnOk.UseVisualStyleBackColor = true;
             btnOk.Click += CloseOK;
             // 
-            // btnCancel
-            // 
-            btnCancel.Location = new Point(599, 55);
-            btnCancel.Margin = new Padding(4);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(146, 44);
-            btnCancel.TabIndex = 9;
-            btnCancel.Text = "Cancel";
-            btnCancel.UseVisualStyleBackColor = true;
-            btnCancel.Click += CloseCancel;
-            // 
             // btnChordMakro
             // 
-            btnChordMakro.Location = new Point(599, 158);
+            btnChordMakro.Location = new Point(599, 171);
             btnChordMakro.Margin = new Padding(4);
             btnChordMakro.Name = "btnChordMakro";
-            btnChordMakro.Size = new Size(146, 44);
+            btnChordMakro.Size = new Size(146, 36);
             btnChordMakro.TabIndex = 78;
             btnChordMakro.Text = "Chord Macro";
             btnChordMakro.UseVisualStyleBackColor = true;
@@ -206,7 +195,7 @@ namespace CremeWorks
             // chkClick
             // 
             chkClick.AutoSize = true;
-            chkClick.Location = new Point(493, 95);
+            chkClick.Location = new Point(599, 96);
             chkClick.Margin = new Padding(4);
             chkClick.Name = "chkClick";
             chkClick.Size = new Size(90, 19);
@@ -221,7 +210,7 @@ namespace CremeWorks
             txtInstructions.Multiline = true;
             txtInstructions.Name = "txtInstructions";
             txtInstructions.ScrollBars = ScrollBars.Vertical;
-            txtInstructions.Size = new Size(499, 75);
+            txtInstructions.Size = new Size(499, 124);
             txtInstructions.TabIndex = 137;
             // 
             // label35
@@ -234,15 +223,15 @@ namespace CremeWorks
             label35.TabIndex = 136;
             label35.Text = "Instructions";
             // 
-            // button1
+            // btnRouting
             // 
-            button1.Location = new Point(599, 107);
-            button1.Margin = new Padding(4);
-            button1.Name = "button1";
-            button1.Size = new Size(146, 44);
-            button1.TabIndex = 138;
-            button1.Text = "MIDI Routing";
-            button1.UseVisualStyleBackColor = true;
+            btnRouting.Location = new Point(599, 127);
+            btnRouting.Margin = new Padding(4);
+            btnRouting.Name = "btnRouting";
+            btnRouting.Size = new Size(146, 36);
+            btnRouting.TabIndex = 138;
+            btnRouting.Text = "MIDI Routing";
+            btnRouting.UseVisualStyleBackColor = true;
             // 
             // lblDevicePatches
             // 
@@ -254,14 +243,25 @@ namespace CremeWorks
             lblDevicePatches.TextAlign = ContentAlignment.TopRight;
             lblDevicePatches.Visible = false;
             // 
+            // btnCues
+            // 
+            btnCues.Location = new Point(599, 215);
+            btnCues.Margin = new Padding(4);
+            btnCues.Name = "btnCues";
+            btnCues.Size = new Size(146, 36);
+            btnCues.TabIndex = 144;
+            btnCues.Text = "Cues";
+            btnCues.UseVisualStyleBackColor = true;
+            // 
             // SongEditor
             // 
             AcceptButton = btnOk;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(758, 548);
+            Controls.Add(btnCues);
             Controls.Add(lblDevicePatches);
-            Controls.Add(button1);
+            Controls.Add(btnRouting);
             Controls.Add(txtInstructions);
             Controls.Add(label35);
             Controls.Add(chkClick);
@@ -270,7 +270,6 @@ namespace CremeWorks
             Controls.Add(txtBpm);
             Controls.Add(label33);
             Controls.Add(btnChordMakro);
-            Controls.Add(btnCancel);
             Controls.Add(btnOk);
             Controls.Add(txtLyrics);
             Controls.Add(txtKey);
@@ -304,7 +303,6 @@ namespace CremeWorks
         private System.Windows.Forms.TextBox txtKey;
         private System.Windows.Forms.TextBox txtLyrics;
         private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnChordMakro;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.NumericUpDown txtBpm;
@@ -313,7 +311,8 @@ namespace CremeWorks
         private System.Windows.Forms.CheckBox chkClick;
         private System.Windows.Forms.TextBox txtInstructions;
         private System.Windows.Forms.Label label35;
-        private Button button1;
+        private Button btnRouting;
         private Label lblDevicePatches;
+        private Button btnCues;
     }
 }

@@ -28,129 +28,146 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnCreate = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.panel2.SuspendLayout();
-            this.SuspendLayout();
+            lstSongs = new ListView();
+            TitleColumn = new ColumnHeader();
+            IdColumn = new ColumnHeader();
+            ArtistColumn = new ColumnHeader();
+            panel2 = new Panel();
+            btnDuplicate = new Button();
+            btnDelete = new Button();
+            btnOk = new Button();
+            btnEdit = new Button();
+            btnCreate = new Button();
+            panel2.SuspendLayout();
+            SuspendLayout();
             // 
-            // listView1
+            // lstSongs
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(0, 0);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(339, 313);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            lstSongs.Columns.AddRange(new ColumnHeader[] { TitleColumn, IdColumn, ArtistColumn });
+            lstSongs.Dock = DockStyle.Fill;
+            lstSongs.Location = new Point(0, 0);
+            lstSongs.Margin = new Padding(4, 3, 4, 3);
+            lstSongs.Name = "lstSongs";
+            lstSongs.Size = new Size(396, 361);
+            lstSongs.Sorting = SortOrder.Ascending;
+            lstSongs.TabIndex = 0;
+            lstSongs.UseCompatibleStateImageBehavior = false;
+            lstSongs.View = View.Details;
+            // 
+            // TitleColumn
+            // 
+            TitleColumn.Text = "Title";
+            TitleColumn.Width = 100;
+            // 
+            // IdColumn
+            // 
+            IdColumn.Text = "Id";
+            IdColumn.Width = 35;
+            // 
+            // ArtistColumn
+            // 
+            ArtistColumn.Text = "Artist";
+            ArtistColumn.Width = 100;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.btnDelete);
-            this.panel2.Controls.Add(this.btnOk);
-            this.panel2.Controls.Add(this.btnEdit);
-            this.panel2.Controls.Add(this.btnCreate);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(259, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(80, 313);
-            this.panel2.TabIndex = 2;
+            panel2.Controls.Add(btnDuplicate);
+            panel2.Controls.Add(btnDelete);
+            panel2.Controls.Add(btnOk);
+            panel2.Controls.Add(btnEdit);
+            panel2.Controls.Add(btnCreate);
+            panel2.Dock = DockStyle.Right;
+            panel2.Location = new Point(303, 0);
+            panel2.Margin = new Padding(4, 3, 4, 3);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(93, 361);
+            panel2.TabIndex = 2;
             // 
-            // btnCreate
+            // btnDuplicate
             // 
-            this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCreate.Location = new System.Drawing.Point(3, 3);
-            this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(74, 44);
-            this.btnCreate.TabIndex = 0;
-            this.btnCreate.Text = "Create";
-            this.btnCreate.UseVisualStyleBackColor = true;
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEdit.Location = new System.Drawing.Point(3, 53);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(74, 44);
-            this.btnEdit.TabIndex = 1;
-            this.btnEdit.Text = "Edit";
-            this.btnEdit.UseVisualStyleBackColor = true;
+            btnDuplicate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            btnDuplicate.Location = new Point(4, 118);
+            btnDuplicate.Margin = new Padding(4, 3, 4, 3);
+            btnDuplicate.Name = "btnDuplicate";
+            btnDuplicate.Size = new Size(86, 51);
+            btnDuplicate.TabIndex = 4;
+            btnDuplicate.Text = "Duplicate";
+            btnDuplicate.UseVisualStyleBackColor = true;
+            btnDuplicate.Click += btnDuplicate_Click;
             // 
             // btnDelete
             // 
-            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(3, 103);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(74, 44);
-            this.btnDelete.TabIndex = 3;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            btnDelete.Location = new Point(4, 175);
+            btnDelete.Margin = new Padding(4, 3, 4, 3);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(86, 51);
+            btnDelete.TabIndex = 3;
+            btnDelete.Text = "Delete";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnOk
             // 
-            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(3, 266);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(74, 44);
-            this.btnOk.TabIndex = 2;
-            this.btnOk.Text = "OK";
-            this.btnOk.UseVisualStyleBackColor = true;
+            btnOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnOk.Location = new Point(4, 307);
+            btnOk.Margin = new Padding(4, 3, 4, 3);
+            btnOk.Name = "btnOk";
+            btnOk.Size = new Size(86, 51);
+            btnOk.TabIndex = 2;
+            btnOk.Text = "OK";
+            btnOk.UseVisualStyleBackColor = true;
             // 
-            // columnHeader1
+            // btnEdit
             // 
-            this.columnHeader1.Text = "Id";
-            this.columnHeader1.Width = 35;
+            btnEdit.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            btnEdit.Location = new Point(4, 61);
+            btnEdit.Margin = new Padding(4, 3, 4, 3);
+            btnEdit.Name = "btnEdit";
+            btnEdit.Size = new Size(86, 51);
+            btnEdit.TabIndex = 1;
+            btnEdit.Text = "Edit";
+            btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEdit_Click;
             // 
-            // columnHeader2
+            // btnCreate
             // 
-            this.columnHeader2.Text = "Title";
-            this.columnHeader2.Width = 100;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Artist";
-            this.columnHeader3.Width = 100;
+            btnCreate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            btnCreate.Location = new Point(4, 3);
+            btnCreate.Margin = new Padding(4, 3, 4, 3);
+            btnCreate.Name = "btnCreate";
+            btnCreate.Size = new Size(86, 51);
+            btnCreate.TabIndex = 0;
+            btnCreate.Text = "Create";
+            btnCreate.UseVisualStyleBackColor = true;
+            btnCreate.Click += btnCreate_Click;
             // 
             // SongList
             // 
-            this.AcceptButton = this.btnOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(339, 313);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.listView1);
-            this.Name = "SongList";
-            this.Text = "Songs";
-            this.panel2.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            AcceptButton = btnOk;
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(396, 361);
+            Controls.Add(panel2);
+            Controls.Add(lstSongs);
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "SongList";
+            Text = "Songs";
+            panel2.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView lstSongs;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnCreate;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader IdColumn;
+        private System.Windows.Forms.ColumnHeader TitleColumn;
+        private System.Windows.Forms.ColumnHeader ArtistColumn;
+        private Button btnDuplicate;
     }
 }

@@ -9,5 +9,4 @@ namespace CremeWorks.App;
 public interface IDataParent
 {
     public Database Database { get; }
-    public int NumberOfInstruments { get; }
 }

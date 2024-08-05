@@ -15,4 +15,24 @@ public class Song
     public List<ChordMacro> ChordMacros { get; } = [];
     public int ChordMacroSourceDeviceId { get; set; } = 0;
     public int ChordMacroDestinationDeviceId { get; set; } = 0;
+
+    public Song Clone()
+    {
+        var s = new Song
+        {
+            Title = Title,
+            Artist = Artist,
+            Key = Key,
+            Lyrics = Lyrics,
+            Instructions = Instructions,
+            Tempo = Tempo,
+            Click = Click,
+            ChordMacroSourceDeviceId = ChordMacroSourceDeviceId,
+            ChordMacroDestinationDeviceId = ChordMacroDestinationDeviceId
+        };
+        foreach (var p in Patches) s.Patches.Add(p);
+        foreach (var m in MidiMatrixOverrides) s.MidiMatrixOverrides.Add(m);
+        foreach (var c in ChordMacros) s.ChordMacros.Add(c.Clone());
+        return s;
+    }
 }

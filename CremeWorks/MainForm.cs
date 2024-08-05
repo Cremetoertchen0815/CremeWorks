@@ -1,4 +1,6 @@
-﻿using CremeWorks.Common;
+﻿using CremeWorks.App;
+using CremeWorks.App.Data;
+using CremeWorks.Common;
 using CremeWorks.Networking;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
@@ -11,12 +13,12 @@ using System.Windows.Forms;
 
 namespace CremeWorks
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IDataParent
     {
-        private Concert _c;
-        private Song _s = null;
-        private NetworkingServer _server = new NetworkingServer();
-        private readonly MidiEventToBytesConverter _converter = new MidiEventToBytesConverter();
+        private Database _database;
+        private IPlaylistEntry? _activeEntry = null;
+        private NetworkingServer _server;
+        private readonly MidiEventToBytesConverter _converter = new();
         private readonly Metronome _metronome = new Metronome();
         private bool _sendMetronomeData = false;
         private int _playlistDragIndex = -1;
@@ -39,8 +41,9 @@ namespace CremeWorks
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
-            _c = Concert.Empty(SendLighingData);
+            _database = new Database();
 
+            _server = new NetworkingServer();
             _server.UserJoined += _server_UserJoined;
             _server.MessageReceived += _server_MessageReceived;
 
@@ -348,6 +351,9 @@ namespace CremeWorks
         }
 
         private bool _chatboxLit = false;
+
+        public Database Database => throw new NotImplementedException();
+
         private async void LightUpChatbox()
         {
             if (_chatboxLit) return;
