@@ -12,7 +12,7 @@ public class Song
     public bool SpecialEvent = false;
     public bool[][] NotePatchMap = [[true, false, false, false, false, false], [false, true, false, false, false, false], [false, false, true, false, false, false], [false, false, false, true, false, false], [false, false, false, false, true, false], [false, false, false, false, false, true]];
     public bool[][] CCPatchMap = [[true, false, false, false, false, false], [false, true, false, false, false, false], [false, false, true, false, false, false], [false, false, false, true, false, false], [false, false, false, false, true, false], [false, false, false, false, false, true]];
-    public (bool Enabled, Reface.IRefacePatch? Patch)[] AutoPatchSlots = [(false, null), (false, null), (false, null), (false, null), (false, null), (false, null)];
+    public (bool Enabled, IDevicePatch? Patch)[] AutoPatchSlots = [(false, null), (false, null), (false, null), (false, null), (false, null), (false, null)];
     public List<(ulong ID, string comment)> CueQueue = []; //Cue list for managing light show
     public int ChordMacroSrc = 0;
     public int ChordMacroDst = 0;

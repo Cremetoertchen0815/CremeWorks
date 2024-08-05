@@ -1,16 +1,15 @@
-﻿using CremeWorks.App.Data;
-using CremeWorks.Reface;
+﻿using CremeWorks.Reface;
 using Melanchall.DryWetMidi.Core;
 using System.Diagnostics;
 
-namespace CremeWorks
+namespace CremeWorks.App.Data.Compatibility
 {
     public class Concert
     {
         public const int ALL_DEVICES_COUNT = 7;
         public const int PATCH_DEVICE_COUNT = 6;
         public string?[] MIDIDevices = new string[ALL_DEVICES_COUNT];
-        public (MidiEventType, short, byte)[] FootSwitchConfig;
+        public (MidiEventType, short, byte)[] FootSwitchConfig = new (MidiEventType, short, byte)[6];
         public List<LightingCueItem> LightingCues = [];
         public List<Song> Playlist = [];
 
@@ -43,7 +42,6 @@ namespace CremeWorks
 
                 //Foot switch config
                 int cnt = br.ReadInt32();
-                nu.FootSwitchConfig = new (MidiEventType, short, byte)[6];
                 for (int i = 0; i < cnt; i++) nu.FootSwitchConfig[i] = ((MidiEventType)br.ReadInt32(), br.ReadInt16(), br.ReadByte());
 
                 //Lighting cues config
@@ -77,13 +75,13 @@ namespace CremeWorks
                     s.CCPatchMap = Convert2DArrayToSize(s.CCPatchMap, PATCH_DEVICE_COUNT);
 
                     var autoPatchCount = br.ReadInt32();
-                    s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, PATCH_DEVICE_COUNT)).Select(x => ((bool, IRefacePatch?))(false, null)).ToArray();
+                    s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, PATCH_DEVICE_COUNT)).Select(x => ((bool, IDevicePatch?))(false, null)).ToArray();
                     for (int j = 0; j < autoPatchCount; j++)
                     {
                         bool enabled = br.ReadBoolean();
                         int type = br.ReadInt32();
 
-                        IRefacePatch? patch;
+                        IDevicePatch? patch;
                         switch ((DeviceType)type)
                         {
                             case DeviceType.RefaceCS:

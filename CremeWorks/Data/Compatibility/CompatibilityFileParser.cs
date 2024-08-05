@@ -108,13 +108,13 @@ public static class CompatibilityFileParser
             s.CCPatchMap = Concert.Convert2DArrayToSize(s.CCPatchMap, Concert.PATCH_DEVICE_COUNT);
 
             var autoPatchCount = br.ReadInt32();
-            s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, Concert.PATCH_DEVICE_COUNT)).Select(x => ((bool, IRefacePatch?))(false, null)).ToArray();
+            s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, Concert.PATCH_DEVICE_COUNT)).Select(x => ((bool, IDevicePatch?))(false, null)).ToArray();
             for (int j = 0; j < autoPatchCount; j++)
             {
                 bool enabled = br.ReadBoolean();
                 int type = br.ReadInt32();
 
-                IRefacePatch? patch;
+                IDevicePatch? patch;
                 switch ((DeviceType)type)
                 {
                     case DeviceType.RefaceCS:

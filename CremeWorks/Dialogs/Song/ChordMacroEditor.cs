@@ -1,30 +1,29 @@
-﻿using Melanchall.DryWetMidi.Core;
+﻿using CremeWorks.App;
+using CremeWorks.App.Data;
+using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace CremeWorks
 {
     public partial class ChordMacroEditor : Form
     {
-        private Concert _c;
+        private IDataParent _parent;
         private Song _s;
         private bool _inTest = false;
         private bool _disconnectAfterTest = false;
         private bool _ignoreMacroListSelChange = true;
         private bool _ignoreMacroListValChange = false;
-        public ChordMacroEditor(Song s, Concert c)
+        public ChordMacroEditor(IDataParent parent, Song s)
         {
+            _parent = parent;
             _s = s;
-            _c = c;
             InitializeComponent();
         }
 
         private void ChordMacroEditor_Load(object sender, EventArgs e)
         {
-            valSrcDev.SelectedIndex = Math.Max(_s.ChordMacroSrc - 2, 0);
-            valDstDev.SelectedIndex = Math.Max(_s.ChordMacroDst - 2, 0);
+            valSrcDev.SelectedIndex = Math.Max(_s.ChordMacroSourceDeviceId - 2, 0);
+            valDstDev.SelectedIndex = Math.Max(_s.ChordMacroDestinationDeviceId - 2, 0);
             for (int i = 0; i < _s.ChordMacros.Count; i++) lstMacros.Items.Add(_s.ChordMacros[i].Name);
             if (_s.ChordMacros.Count > 0) lstMacros.SelectedIndex = 0;
             _ignoreMacroListSelChange = false;
@@ -32,14 +31,14 @@ namespace CremeWorks
 
         private void Dev_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _s.ChordMacroSrc = valSrcDev.SelectedIndex + 2;
-            _s.ChordMacroDst = valDstDev.SelectedIndex + 2;
+            _s.ChordMacroSourceDeviceId = valSrcDev.SelectedIndex + 2;
+            _s.ChordMacroDestinationDeviceId = valDstDev.SelectedIndex + 2;
         }
 
         private void btnMacrosAdd_Click(object sender, EventArgs e)
         {
             _ignoreMacroListSelChange = true;
-            var nuElement = (Name: "New Macro", TriggerNote: 0, Velocity: 0, PlayNotes: new List<int>());
+            var nuElement = new ChordMacro();
             _s.ChordMacros.Add(nuElement);
             lstMacros.Items.Add(nuElement.Name);
             _ignoreMacroListSelChange = false;
@@ -110,16 +109,16 @@ namespace CremeWorks
 
         private void btnItemTriggerCapture_Click(object sender, EventArgs e)
         {
-            var dev = _c.MIDIDevices?[_s.ChordMacroSrc + 2].Input;
-            if (_inTest || dev == null) return;
+            //var dev = _c.MIDIDevices?[_s.ChordMacroSrc + 2].Input;
+            //if (_inTest || dev == null) return;
 
-            _inTest = true;
-            btnItemTriggerCapture.Text = "Sensing...";
-            valSrcDev.Enabled = false;
+            //_inTest = true;
+            //btnItemTriggerCapture.Text = "Sensing...";
+            //valSrcDev.Enabled = false;
 
-            _disconnectAfterTest = !dev.IsListeningForEvents;
-            if (_disconnectAfterTest) dev.StartEventsListening();
-            dev.EventReceived += TriggerCapture;
+            //_disconnectAfterTest = !dev.IsListeningForEvents;
+            //if (_disconnectAfterTest) dev.StartEventsListening();
+            //dev.EventReceived += TriggerCapture;
         }
 
 
@@ -148,17 +147,17 @@ namespace CremeWorks
 
         private void btnItemNoteCapture_Click(object sender, EventArgs e)
         {
-            var dev = _c.MIDIDevices?[_s.ChordMacroDst + 2].Input;
-            if (_inTest || dev == null) return;
+            //var dev = _c.MIDIDevices?[_s.ChordMacroDestinationDeviceId].Input;
+            //if (_inTest || dev == null) return;
 
-            _inTest = true;
-            btnItemNoteCapture.Text = "Press Sustain to capture";
-            valDstDev.Enabled = false;
-            _activeSenseKeys.Clear();
+            //_inTest = true;
+            //btnItemNoteCapture.Text = "Press Sustain to capture";
+            //valDstDev.Enabled = false;
+            //_activeSenseKeys.Clear();
 
-            _disconnectAfterTest = !dev.IsListeningForEvents;
-            if (_disconnectAfterTest) dev.StartEventsListening();
-            dev.EventReceived += NoteCapture;
+            //_disconnectAfterTest = !dev.IsListeningForEvents;
+            //if (_disconnectAfterTest) dev.StartEventsListening();
+            //dev.EventReceived += NoteCapture;
         }
 
         private List<int> _activeSenseKeys = new List<int>();

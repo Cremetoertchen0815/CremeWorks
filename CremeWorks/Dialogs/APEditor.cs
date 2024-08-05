@@ -1,9 +1,10 @@
-﻿using CremeWorks.Reface;
+﻿using CremeWorks.App.Data;
+using CremeWorks.Reface;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
 using System;
 using System.Windows.Forms;
-using static CremeWorks.SysExMan;
+using static CremeWorks.App.Reface.CommonHelpers;
 
 namespace CremeWorks
 {
@@ -16,7 +17,7 @@ namespace CremeWorks
         public int _id;
         private readonly bool _wasListening;
 
-        private IRefacePatch _refaceDat;
+        private IDevicePatch _refaceDat;
 
         public APEditor(Concert c, Song s, int id)
         {
@@ -31,7 +32,7 @@ namespace CremeWorks
             _refaceDat = _s.AutoPatchSlots[id].Patch;
 
             //Adapt controls
-            typeSelector.SelectedIndex = (int?)_refaceDat?.Type ?? 0;
+            typeSelector.SelectedIndex = (int?)_refaceDat?.DeviceType ?? 0;
             UpdateControls();
 
             //Set up MIDI shit
@@ -51,7 +52,7 @@ namespace CremeWorks
 
         private void UpdateControls()
         {
-            if ((_refaceDat?.Type ?? 0) != DeviceType.Undefined)
+            if ((_refaceDat?.DeviceType ?? 0) != RefaceType.Undefined)
             {
                 deviceBox.Visible = true;
                 numericUpDown1.Value = _refaceDat.SystemSettings.MIDIChannelTransmit == 0x7F ? 0 : _refaceDat.SystemSettings.MIDIChannelTransmit + 1;
@@ -83,9 +84,9 @@ namespace CremeWorks
 
             if (_refaceDat == null) return;
 
-            switch (_refaceDat.Type)
+            switch (_refaceDat.DeviceType)
             {
-                case DeviceType.RefaceCS:
+                case RefaceType.RefaceCS:
                     var cs = ((CSPatch)_refaceDat).VoiceSettings;
                     numericUpDown17.Value = cs.Volume;
                     comboBox11.SelectedIndex = (int)cs.LFOAssign;
@@ -107,12 +108,12 @@ namespace CremeWorks
                     numericUpDown31.Value = cs.FXRate;
                     voiceBoxCS.Visible = true;
                     break;
-                case DeviceType.RefaceDX:
+                case RefaceType.RefaceDX:
                     numericUpDown32.Value = ((DXPatch)_refaceDat).ProgramChangeNr + 1;
                     voiceBoxDX.Visible = true;
                     fetchVoiceData.Enabled = false;
                     break;
-                case DeviceType.RefaceCP:
+                case RefaceType.RefaceCP:
                     var cp = ((CPPatch)_refaceDat).VoiceSettings;
                     numericUpDown8.Value = cp.Volume;
                     comboBox7.SelectedIndex = (int)cp.WaveType;
@@ -129,7 +130,7 @@ namespace CremeWorks
                     numericUpDown16.Value = cp.ReverbDepth;
                     voiceBoxCP.Visible = true;
                     break;
-                case DeviceType.RefaceYC:
+                case RefaceType.RefaceYC:
                     var yc = ((YCPatch)_refaceDat).VoiceSettings;
                     numericUpDown47.Value = yc.Volume;
                     comboBox16.SelectedIndex = (int)yc.VoiceType;
@@ -305,24 +306,24 @@ namespace CremeWorks
             return res;
         }
 
-        private void button4_Click(object sender, EventArgs e) => SendSystemBulkdumpRequest(_d.Output, _refaceDat?.Type ?? DeviceType.Undefined);
+        private void button4_Click(object sender, EventArgs e) => SendSystemBulkdumpRequest(_d.Output, _refaceDat?.DeviceType ?? RefaceType.Undefined);
         private void typeSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var nuType = (DeviceType)typeSelector.SelectedIndex;
-            if (_refaceDat == null || _refaceDat.Type != nuType)
+            var nuType = (RefaceType)typeSelector.SelectedIndex;
+            if (_refaceDat == null || _refaceDat.DeviceType != nuType)
             {
                 switch (nuType)
                 {
-                    case DeviceType.RefaceCS:
+                    case RefaceType.RefaceCS:
                         _refaceDat = new CSPatch();
                         break;
-                    case DeviceType.RefaceDX:
+                    case RefaceType.RefaceDX:
                         _refaceDat = new DXPatch();
                         break;
-                    case DeviceType.RefaceCP:
+                    case RefaceType.RefaceCP:
                         _refaceDat = new CPPatch();
                         break;
-                    case DeviceType.RefaceYC:
+                    case RefaceType.RefaceYC:
                         _refaceDat = new YCPatch();
                         break;
                     default:
@@ -334,7 +335,7 @@ namespace CremeWorks
             UpdateControls();
         }
 
-        private void fetchVoiceData_Click(object sender, EventArgs e) => SendVoiceBulkdumpRequest(_d.Output, _refaceDat?.Type ?? DeviceType.Undefined);
+        private void fetchVoiceData_Click(object sender, EventArgs e) => SendVoiceBulkdumpRequest(_d.Output, _refaceDat?.DeviceType ?? RefaceType.Undefined);
 
         private void SaveStuffWhenClosing(object sender, FormClosingEventArgs e)
         {

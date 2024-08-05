@@ -1,16 +1,18 @@
 ﻿using System.Runtime.InteropServices;
+using CremeWorks.App.Data;
+using CremeWorks.App.Reface;
 
 namespace CremeWorks.Reface
 {
-    internal class YCPatch : IRefacePatch
+    internal class YCPatch : IDevicePatch
     {
         public RefaceSystemData SystemSettings { get; set; }
         public RefaceYCVoiceData VoiceSettings { get; set; }
         public DeviceType Type => DeviceType.RefaceYC;
 
-        public void ApplySettings(MIDIDevice d) => SysExMan.SendParameterChange(d?.Output, Type, new byte[] { 0, 0, 0 }, StructMarshal<RefaceSystemData>.getBytes(SystemSettings));
-        public void ApplyPatch(MIDIDevice d) => SysExMan.SendParameterChange(d?.Output, Type, new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceYCVoiceData>.getBytes(VoiceSettings));
-        public IRefacePatch Clone() => (IRefacePatch)MemberwiseClone();
+        public void ApplySettings(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0, 0, 0 }, StructMarshal<RefaceSystemData>.getBytes(SystemSettings));
+        public void ApplyPatch(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceYCVoiceData>.getBytes(VoiceSettings));
+        public IDevicePatch Clone() => (IDevicePatch)MemberwiseClone();
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct RefaceYCVoiceData
