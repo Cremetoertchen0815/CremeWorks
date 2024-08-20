@@ -6,11 +6,12 @@ public record MidiDevice(string Name, string MidiId, bool IsRemoteSource, MidiDe
 
 public enum MidiDeviceType
 {
-    GenericKeyboard,
-    GenericController,
-    RefaceCS,
-    RefaceDX,
-    RefaceCP,
-    RefaceYC,
-    Lighting,
+    Unknown = -1,
+    GenericKeyboard = 0,
+    GenericController = 1,
+    Lighting = 2,
+    RefaceCS = 3,
+    RefaceDX = 4,
+    RefaceCP = 5,
+    RefaceYC = 6,
 }

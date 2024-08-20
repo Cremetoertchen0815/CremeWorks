@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CremeWorks.App.Data;
 
-namespace CremeWorks.App.Data;
 public record SongPlaylistEntry(int SongId) : IPlaylistEntry
 {
-    public string Heading => throw new NotImplementedException();
-    public bool CountsAsSong => true;
-
-    public string Title => throw new NotImplementedException();
-    public string Artist => throw new NotImplementedException();
-    public string Key => throw new NotImplementedException();
-    public string Lyrics => throw new NotImplementedException();
-    public string Instructions => throw new NotImplementedException();
-    public byte Tempo => throw new NotImplementedException();
+    public PlaylistEntryCommonInfo GetCommonInformation(Database db, int? indexInPlaylist = null)
+    {
+        var song = db.Songs[SongId];
+        var header = indexInPlaylist.HasValue ? $"{indexInPlaylist.Value + 1}. {song.Title} - {song.Artist}" : $"{song.Artist} - {song.Title}";
+        return new PlaylistEntryCommonInfo(header, song.Title, song.Artist, song.Key, song.Lyrics, song.Instructions, song.Tempo, song.Cues);
+    }
 }

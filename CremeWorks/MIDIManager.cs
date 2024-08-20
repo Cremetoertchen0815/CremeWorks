@@ -1,4 +1,6 @@
-﻿using Melanchall.DryWetMidi.Common;
+﻿using CremeWorks.App.Data;
+using CremeWorks.App.Data.Compatibility;
+using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
 using System;
@@ -8,9 +10,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CremeWorks.App;
-public class MIDIManager
+public class MidiManager
 {
     public event Action<bool>? ConnectionChanged;
+
+    private int[]? _matrixDeviceIds = null;
+    private bool[,]? _matrixNote = null;
+    private bool[,]? _matrixCC = null;
+    private bool _reg = false;
+    private readonly IDataParent _parent;
+
+    public const int INSTR_DEVICE_OFFSET = 1;
+
+    public MidiManager(IDataParent parent) => _parent = parent;
 
     public void Connect()
     {
@@ -48,14 +60,41 @@ public class MIDIManager
         ConnectionChanged?.Invoke(false);
     }
 
-    private readonly Concert _c;
-    private readonly Action<MidiEvent> _lightingSendDelegate;
-    private bool _reg = false;
+    public async Task PlayTestTone(string deviceId)
+    {
 
-    public Action<int, bool?> ActionExecute = (a, b) => { return; };
-    public Song ActiveSong;
+        var play_dev = _c.MIDIDevices[deviceId].Output;
+        if (play_dev == null) return;
 
-    public const int INSTR_DEVICE_OFFSET = 1;
+        play_dev.SendEvent(new NoteOnEvent(new SevenBitNumber(84), new SevenBitNumber(80)));
+        await Task.Delay(200);
+        play_dev.SendEvent(new NoteOffEvent(new SevenBitNumber(84), new SevenBitNumber(80)));
+    }
+
+    public Task SendNoteToLighting(byte noteValue) => Task.CompletedTask;
+
+    public string[] GetAllDevices()
+    {
+        var outList = OutputDevice.GetAll();
+        var inList = InputDevice.GetAll();
+        var outNames = outList.Select(x => x.Name).ToArray();
+        var inNames = inList.Select(x => x.Name).ToArray();
+        foreach (var el in outList) el.Dispose();
+        foreach (var el in inList) el.Dispose();
+        return [.. outNames, .. inNames];
+    }
+
+    public void RefreshDevices()
+    {
+
+    }
+
+    public void UpdateMatrix(MidiMatrixNode[]? nodes)
+    {
+
+    }
+
+    public bool PlaybackPaused { get; set; } = false;
 
     public void Register()
     {

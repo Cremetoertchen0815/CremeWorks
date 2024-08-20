@@ -11,7 +11,7 @@ public class Song
     public bool Click { get; set; } = false;
     public List<MidiMatrixNode> RoutingOverrides { get; } = [];
     public List<PatchInstance> Patches { get; } = [];
-    public List<CueInstance> CueQueue { get; } = []; //Cue list for managing light show
+    public List<CueInstance> Cues { get; } = []; //Cue list for managing light show
     public List<ChordMacro> ChordMacros { get; } = [];
     public int ChordMacroSourceDeviceId { get; set; } = 0;
     public int ChordMacroDestinationDeviceId { get; set; } = 0;
@@ -32,6 +32,7 @@ public class Song
         };
         foreach (var p in Patches) s.Patches.Add(p);
         foreach (var m in RoutingOverrides) s.RoutingOverrides.Add(m);
+        foreach (var c in Cues) s.Cues.Add(c);
         foreach (var c in ChordMacros) s.ChordMacros.Add(c.Clone());
         return s;
     }

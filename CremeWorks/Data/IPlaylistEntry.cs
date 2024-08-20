@@ -2,13 +2,9 @@
 
 public interface IPlaylistEntry
 {
-    string Heading { get; }
-    bool CountsAsSong { get; }
-
-    string Title { get; }
-    string Artist { get; }
-    string Key { get; }
-    string Lyrics { get; }
-    string Instructions { get; }
-    byte Tempo { get; }
+    /// <summary>
+    /// Retrieves common display information from the entry(white is merely a reference) with the given database.
+    /// </summary>
+    /// <param name="db">The database from where the information should be retrieved.</param>
+    PlaylistEntryCommonInfo GetCommonInformation(Database db, int? indexInPlaylist = null);
 }

@@ -46,6 +46,7 @@ namespace CremeWorks
             editToolStripMenuItem = new ToolStripMenuItem();
             songsToolStripMenuItem = new ToolStripMenuItem();
             playlistsToolStripMenuItem = new ToolStripMenuItem();
+            patchesToolStripMenuItem = new ToolStripMenuItem();
             configureToolStripMenuItem1 = new ToolStripMenuItem();
             mIDIDevicesToolStripMenuItem = new ToolStripMenuItem();
             defaultMIDIRoutingToolStripMenuItem = new ToolStripMenuItem();
@@ -69,7 +70,7 @@ namespace CremeWorks
             songTempo = new Label();
             boxTempo = new Panel();
             csvExportSaveFile = new SaveFileDialog();
-            comboBox1 = new ComboBox();
+            boxSet = new ComboBox();
             label4 = new Label();
             label5 = new Label();
             label2 = new Label();
@@ -170,7 +171,7 @@ namespace CremeWorks
             // 
             // editToolStripMenuItem
             // 
-            editToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { songsToolStripMenuItem, playlistsToolStripMenuItem });
+            editToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { songsToolStripMenuItem, playlistsToolStripMenuItem, patchesToolStripMenuItem });
             editToolStripMenuItem.Name = "editToolStripMenuItem";
             editToolStripMenuItem.Size = new Size(39, 20);
             editToolStripMenuItem.Text = "Edit";
@@ -178,15 +179,21 @@ namespace CremeWorks
             // songsToolStripMenuItem
             // 
             songsToolStripMenuItem.Name = "songsToolStripMenuItem";
-            songsToolStripMenuItem.Size = new Size(180, 22);
+            songsToolStripMenuItem.Size = new Size(116, 22);
             songsToolStripMenuItem.Text = "Songs";
             songsToolStripMenuItem.Click += songsToolStripMenuItem_Click;
             // 
             // playlistsToolStripMenuItem
             // 
             playlistsToolStripMenuItem.Name = "playlistsToolStripMenuItem";
-            playlistsToolStripMenuItem.Size = new Size(180, 22);
+            playlistsToolStripMenuItem.Size = new Size(116, 22);
             playlistsToolStripMenuItem.Text = "Playlists";
+            // 
+            // patchesToolStripMenuItem
+            // 
+            patchesToolStripMenuItem.Name = "patchesToolStripMenuItem";
+            patchesToolStripMenuItem.Size = new Size(116, 22);
+            patchesToolStripMenuItem.Text = "Patches";
             // 
             // configureToolStripMenuItem1
             // 
@@ -198,28 +205,28 @@ namespace CremeWorks
             // mIDIDevicesToolStripMenuItem
             // 
             mIDIDevicesToolStripMenuItem.Name = "mIDIDevicesToolStripMenuItem";
-            mIDIDevicesToolStripMenuItem.Size = new Size(180, 22);
+            mIDIDevicesToolStripMenuItem.Size = new Size(185, 22);
             mIDIDevicesToolStripMenuItem.Text = "MIDI Devices";
             mIDIDevicesToolStripMenuItem.Click += configureToolStripMenuItem_Click;
             // 
             // defaultMIDIRoutingToolStripMenuItem
             // 
             defaultMIDIRoutingToolStripMenuItem.Name = "defaultMIDIRoutingToolStripMenuItem";
-            defaultMIDIRoutingToolStripMenuItem.Size = new Size(180, 22);
-            defaultMIDIRoutingToolStripMenuItem.Text = "MIDI Routing";
+            defaultMIDIRoutingToolStripMenuItem.Size = new Size(185, 22);
+            defaultMIDIRoutingToolStripMenuItem.Text = "MIDI Default Routing";
             defaultMIDIRoutingToolStripMenuItem.Click += defaultMIDIRoutingToolStripMenuItem_Click;
             // 
             // footSwitchToolStripMenuItem
             // 
             footSwitchToolStripMenuItem.Name = "footSwitchToolStripMenuItem";
-            footSwitchToolStripMenuItem.Size = new Size(180, 22);
+            footSwitchToolStripMenuItem.Size = new Size(185, 22);
             footSwitchToolStripMenuItem.Text = "Controller Actions";
             footSwitchToolStripMenuItem.Click += footSwitchToolStripMenuItem_Click;
             // 
             // lightControllerToolStripMenuItem
             // 
             lightControllerToolStripMenuItem.Name = "lightControllerToolStripMenuItem";
-            lightControllerToolStripMenuItem.Size = new Size(180, 22);
+            lightControllerToolStripMenuItem.Size = new Size(185, 22);
             lightControllerToolStripMenuItem.Text = "Light Cues";
             lightControllerToolStripMenuItem.Click += lightControllerToolStripMenuItem_Click;
             // 
@@ -404,18 +411,19 @@ namespace CremeWorks
             // 
             csvExportSaveFile.Filter = "CSV file|*.csv";
             // 
-            // comboBox1
+            // boxSet
             // 
-            comboBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            comboBox1.Font = new Font("Microsoft Sans Serif", 11F);
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "[BACKLOG]" });
-            comboBox1.Location = new Point(15, 722);
-            comboBox1.Margin = new Padding(4, 3, 4, 3);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(307, 26);
-            comboBox1.TabIndex = 34;
-            comboBox1.Text = "[BACKLOG]";
+            boxSet.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            boxSet.Font = new Font("Microsoft Sans Serif", 11F);
+            boxSet.FormattingEnabled = true;
+            boxSet.Items.AddRange(new object[] { "[BACKLOG]" });
+            boxSet.Location = new Point(15, 722);
+            boxSet.Margin = new Padding(4, 3, 4, 3);
+            boxSet.Name = "boxSet";
+            boxSet.Size = new Size(307, 26);
+            boxSet.TabIndex = 34;
+            boxSet.Text = "[BACKLOG]";
+            boxSet.SelectedIndexChanged += boxSet_SelectedIndexChanged;
             // 
             // label4
             // 
@@ -477,7 +485,7 @@ namespace CremeWorks
             Controls.Add(label2);
             Controls.Add(label5);
             Controls.Add(label4);
-            Controls.Add(comboBox1);
+            Controls.Add(boxSet);
             Controls.Add(boxTempo);
             Controls.Add(songTempo);
             Controls.Add(btnChatSend);
@@ -532,7 +540,7 @@ namespace CremeWorks
         private System.Windows.Forms.ToolStripMenuItem configureToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.SaveFileDialog csvExportSaveFile;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox boxSet;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cWCDateiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
@@ -549,6 +557,7 @@ namespace CremeWorks
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label6;
         private ToolStripMenuItem defaultMIDIRoutingToolStripMenuItem;
+        private ToolStripMenuItem patchesToolStripMenuItem;
     }
 }
 

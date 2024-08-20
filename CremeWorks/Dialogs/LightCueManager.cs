@@ -1,19 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Windows.Forms;
+﻿using CremeWorks.App;
 
 namespace CremeWorks
 {
     public partial class LightCueManager : Form
     {
-        private readonly Action<byte> _triggerDelegate;
-        private readonly Concert _c;
+        private readonly IDataParent _parent;
         private readonly Random _rng = new Random();
 
-        public LightCueManager(Concert c, Action<byte> triggerDelegate)
+        public LightCueManager(IDataParent parent)
         {
-            _triggerDelegate = triggerDelegate;
-            _c = c;
+            _parent = parent;
             InitializeComponent();
         }
 
@@ -22,45 +18,41 @@ namespace CremeWorks
         private void UpdateBox()
         {
             lstCues.Items.Clear();
-            lstCues.Items.AddRange(_c.LightingCues.Select(x => (object)$"{x.Name}(#{x.NoteValue})").ToArray());
+            lstCues.Items.AddRange(_parent.Database.LightingCues.Select(x => new LightingCueItem(x.Key, x.Value.Name, x.Value.NoteValue)).ToArray());
 
             //Enable/disable note val box if it contains a value already in the list to prevent doubles
             var curVal = (byte)txtNoteOn.Value;
-            btnAdd.Enabled = !_c.LightingCues.Any(x => x.NoteValue == curVal);
+            btnAdd.Enabled = !_parent.Database.LightingCues.Any(x => x.Value.NoteValue == curVal);
         }
 
         private void btnRemove_Click(object sender, System.EventArgs e)
         {
-            if (lstCues.SelectedIndex < 0) return;
-            _c.LightingCues.RemoveAt(lstCues.SelectedIndex);
+            if (lstCues.SelectedItem is not LightingCueItem lc) return;
+            _parent.Database.LightingCues.Remove(lc.ID);
             UpdateBox();
         }
 
         private void btnAdd_Click(object sender, System.EventArgs e)
         {
-            _c.LightingCues.Add(new LightingCueItem() { ID = NextUInt64 (), Name = txtName.Text, NoteValue = (byte)txtNoteOn.Value });
+            _parent.Database.LightingCues.Add(Random.Shared.Next(), new App.Data.LightingCueItem((byte)txtNoteOn.Value, txtName.Text));
             UpdateBox();
         }
 
-        private void btnTrigger_Click(object sender, System.EventArgs e)
+        private async void btnTrigger_Click(object sender, System.EventArgs e)
         {
-            if (lstCues.SelectedIndex < 0) return;
-            var noteVal = _c.LightingCues[lstCues.SelectedIndex].NoteValue;
-            _triggerDelegate(noteVal);
+            if (lstCues.SelectedItem is not LightingCueItem lc) return;
+            await _parent.MidiManager.SendNoteToLighting(lc.NoteValue);
         }
 
         private void txtNoteOn_ValueChanged(object sender, System.EventArgs e)
         {
             var curVal = (byte)txtNoteOn.Value;
-            btnAdd.Enabled = !_c.LightingCues.Any(x => x.NoteValue == curVal);
+            btnAdd.Enabled = !_parent.Database.LightingCues.Any(x => x.Value.NoteValue == curVal);
         }
 
-        public ulong NextUInt64()
+        private record LightingCueItem(int ID, string Name, byte NoteValue)
         {
-            var buffer = new byte[8];
-            _rng.NextBytes(buffer);
-            return BitConverter.ToUInt64(buffer, 0);
-
+            public override string ToString() => $"{Name}(#{NoteValue})";
         }
     }
 }

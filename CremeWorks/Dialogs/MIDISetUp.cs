@@ -1,90 +1,149 @@
-﻿using Melanchall.DryWetMidi.Common;
-using Melanchall.DryWetMidi.Core;
-using Melanchall.DryWetMidi.Multimedia;
-using System;
-using System.Collections.Generic;
+﻿using CremeWorks.App;
+using CremeWorks.App.Data;
 using System.Data;
-using System.Linq;
-using System.Windows.Forms;
 
-namespace CremeWorks
+namespace CremeWorks;
+
+public partial class MidiSetUp : Form
 {
-    public partial class MIDISetUp : Form
+
+    private readonly IDataParent _parent;
+    private bool _canDataBeUpdated = true;
+
+    public MidiSetUp(IDataParent parent)
     {
+        InitializeComponent();
+        _parent = parent;
+        boxSelector.Items.Add(new ComboBoxDeviceItem("-", -1, string.Empty, MidiDeviceType.Unknown, false));
+        boxSelector.Items.AddRange(_parent.Database.Devices.Select(x => new ComboBoxDeviceItem(x.Value.Name, x.Key, x.Value.MidiId, x.Value.Type, x.Value.IsRemoteSource)).ToArray());
+    }
 
-        private readonly Concert _c;
-        private List<string> _deviceList;
-        public MIDISetUp(Concert c)
+    private void MIDISetUp_Load(object sender, EventArgs e)
+    {
+        _parent.MidiManager.PlaybackPaused = true;
+        RefreshAll();
+    }
+
+    private void RefreshButton_Click(object sender, EventArgs e)
+    {
+        RefreshAll();
+        var objectItem = (ComboBoxDeviceItem)boxSelector.SelectedItem!;
+        boxDevice.Text = objectItem.MidiId;
+    }
+    private void comboBoxValueChange(object sender, EventArgs e)
+    {
+        _canDataBeUpdated = false;
+        var objectItem = (ComboBoxDeviceItem)boxSelector.SelectedItem!;
+        groupBox1.Enabled = objectItem.Id != -1;
+        if (objectItem.Id == -1)
         {
-            InitializeComponent();
-            _c = c;
-            _c.MidiMatrix.Unregister();
+            txtName.Text = string.Empty;
+            boxDevice.SelectedIndex = -1;
+            boxType.SelectedIndex = -1;
         }
-
-        private void MIDISetUp_Load(object sender, EventArgs e)
+        else
         {
-            _c.Disconnect();
-            RefreshAll();
-            comboBox1.Text = _c.MIDIDevices[0].Name;
-            comboBox2.Text = _c.MIDIDevices[1].Name;
-            comboBox3.Text = _c.MIDIDevices[2].Name;
-            comboBox4.Text = _c.MIDIDevices[3].Name;
-            comboBox5.Text = _c.MIDIDevices[4].Name;
-            comboBox6.Text = _c.MIDIDevices[5].Name;
-            comboBox7.Text = _c.MIDIDevices[6].Name;
+            txtName.Text = objectItem.Name;
+            boxDevice.Text = objectItem.MidiId;
+            boxType.SelectedIndex = (int)objectItem.MidiDeviceType;
         }
+        _canDataBeUpdated = true;
+    }
 
-        private void RefreshButton_Click(object sender, EventArgs e) => RefreshAll();
-        private void comboBoxValueChange(object sender, EventArgs e)
+    private void RefreshAll()
+    {
+        boxDevice.Items.Clear();
+        boxDevice.Items.AddRange(_parent.MidiManager.GetAllDevices());
+    }
+
+    private void btnPlus_Click(object sender, EventArgs e)
+    {
+        var nuId = Random.Shared.Next();
+        boxSelector.Items.Add(new ComboBoxDeviceItem("New Device", nuId, string.Empty, MidiDeviceType.GenericKeyboard, false));
+        boxSelector.SelectedIndex = boxSelector.Items.Count - 1;
+    }
+
+    private void btnMinus_Click(object sender, EventArgs e)
+    {
+        var item = (ComboBoxDeviceItem)boxSelector.SelectedItem!;
+        if (item.Id != -1)
         {
-            var snd = (ComboBox)sender;
-            int id = int.Parse(snd.Name.Replace("comboBox", "")) - 1;
-            _c.MIDIDevices[id].Name = snd.Text;
+            boxSelector.Items.Remove(item);
         }
+    }
 
-        private void RefreshAll()
+    private void txtName_TextChanged(object sender, EventArgs e)
+    {
+        if (!_canDataBeUpdated) return;
+        var item = (ComboBoxDeviceItem)boxSelector.SelectedItem!;
+        item.Name = txtName.Text;
+        boxSelector.Refresh();
+    }
+
+    private void boxDevice_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (!_canDataBeUpdated) return;
+        var item = (ComboBoxDeviceItem)boxSelector.SelectedItem!;
+        item.MidiId = boxDevice.Text;
+    }
+
+    private void boxType_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (!_canDataBeUpdated) return;
+        var item = (ComboBoxDeviceItem)boxSelector.SelectedItem!;
+        item.MidiDeviceType = (MidiDeviceType)boxType.SelectedIndex;
+    }
+
+    private async void btnTest_Click(object sender, EventArgs e)
+    {
+        if (boxDevice.Text == string.Empty) return;
+        btnTest.Enabled = false;
+        await _parent.MidiManager.PlayTestTone(boxDevice.Text);
+        btnTest.Enabled = true;
+    }
+
+    private void btnOk_Click(object sender, EventArgs e)
+    {
+        DialogResult = DialogResult.OK;
+        Close();
+    }
+
+    private void btnCancel_Click(object sender, EventArgs e)
+    {
+        DialogResult = DialogResult.Cancel;
+        Close();
+    }
+
+    private void MIDISetUp_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        if (DialogResult != DialogResult.OK) return;
+
+        _parent.Database.Devices.Clear();
+        foreach (var item in boxSelector.Items)
         {
-            var dev_list = OutputDevice.GetAll();
-            _deviceList = dev_list.Select((x) => x.Name).ToList();
-            foreach (var el in dev_list) el.Dispose();
-
-            string[] nu_lst = new string[ _deviceList.Count + 1];
-            nu_lst[0] = "";
-            _deviceList.CopyTo(nu_lst, 1);
-            comboBox1.Items.Clear();
-            comboBox2.Items.Clear();
-            comboBox3.Items.Clear();
-            comboBox4.Items.Clear();
-            comboBox5.Items.Clear();
-            comboBox6.Items.Clear();
-            comboBox7.Items.Clear();
-            comboBox1.Items.AddRange(nu_lst);
-            comboBox2.Items.AddRange(nu_lst);
-            comboBox3.Items.AddRange(nu_lst);
-            comboBox4.Items.AddRange(nu_lst);
-            comboBox5.Items.AddRange(nu_lst);
-            comboBox6.Items.AddRange(nu_lst);
-            comboBox7.Items.AddRange(nu_lst);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            int id = int.Parse(((Button)sender).Name.Replace("button", "")) - 1;
-            _c.Connect();
-            var play_dev = _c.MIDIDevices[id].Output;
-            try
+            var objectItem = (ComboBoxDeviceItem)item;
+            if (objectItem.Id != -1)
             {
-                if (play_dev != null)
-                {
-                    play_dev.SendEvent(new NoteOnEvent(new SevenBitNumber(84), new SevenBitNumber(80)));
-                    System.Threading.Thread.Sleep(200);
-                    play_dev.SendEvent(new NoteOffEvent(new SevenBitNumber(84), new SevenBitNumber(80)));
-                }
-            }
-            finally
-            {
-                _c.Disconnect();
+                _parent.Database.Devices.Add(objectItem.Id, new MidiDevice(objectItem.Name, objectItem.MidiId, objectItem.IsRemote, objectItem.MidiDeviceType));
             }
         }
+    }
+
+    private class ComboBoxDeviceItem
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string MidiId { get; set; }
+        public MidiDeviceType MidiDeviceType { get; set; }
+        public bool IsRemote { get; set; }
+        public ComboBoxDeviceItem(string name, int id, string midiId, MidiDeviceType midiDeviceType, bool isRemote)
+        {
+            Name = name;
+            Id = id;
+            MidiId = midiId;
+            MidiDeviceType = midiDeviceType;
+            IsRemote = isRemote;
+        }
+        public override string ToString() => Name;
     }
 }
