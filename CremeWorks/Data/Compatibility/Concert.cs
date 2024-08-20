@@ -10,7 +10,7 @@ namespace CremeWorks.App.Data.Compatibility
         public const int PATCH_DEVICE_COUNT = 6;
         public string?[] MIDIDevices = new string[ALL_DEVICES_COUNT];
         public (MidiEventType, short, byte)[] FootSwitchConfig = new (MidiEventType, short, byte)[6];
-        public List<LightingCueItem> LightingCues = [];
+        public Dictionary<int, LightingCueItem> LightingCues = [];
         public List<Song> Playlist = [];
 
         public static Concert Empty => new Concert()
@@ -46,7 +46,12 @@ namespace CremeWorks.App.Data.Compatibility
 
                 //Lighting cues config
                 var cueCount = br.ReadInt32();
-                for (int i = 0; i < cueCount; i++) nu.LightingCues.Add(new LightingCueItem(Id: br.ReadUInt64(), Name: br.ReadString(), NoteValue: br.ReadByte()));
+                for (int i = 0; i < cueCount; i++)
+                {
+                    var oldId = br.ReadUInt64();
+                    var newId = (int)(oldId & 0x7FFFFFFF ^ (oldId >> 33));
+                    nu.LightingCues.Add(newId, new LightingCueItem(Name: br.ReadString(), NoteValue: br.ReadByte()));
+                }
 
                 //Playlist
                 int count = br.ReadInt32();
@@ -82,46 +87,53 @@ namespace CremeWorks.App.Data.Compatibility
                         int type = br.ReadInt32();
 
                         IDevicePatch? patch;
-                        switch ((DeviceType)type)
+                        switch ((OldDeviceType)type)
                         {
-                            case DeviceType.RefaceCS:
-                                var cs = new CSPatch
-                                {
-                                    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                                    VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                                };
-                                patch = cs;
+                            case OldDeviceType.RefaceCS:
+                                //var cs = new CSPatch
+                                //{
+                                //    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                //    VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                                //};
+                                //patch = cs;
+                                br.ReadBytes(br.ReadInt32());
+                                br.ReadBytes(br.ReadInt32());
                                 break;
-                            case DeviceType.RefaceDX:
-                                var dx = new DXPatch
-                                {
-                                    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                                    ProgramChangeNr = br.ReadByte()
-                                };
-                                patch = dx;
+                            case OldDeviceType.RefaceDX:
+                                //var dx = new DXPatch
+                                //{
+                                //    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                //    ProgramChangeNr = br.ReadByte()
+                                //};
+                                //patch = dx;
+                                br.ReadBytes(br.ReadInt32());
                                 break;
-                            case DeviceType.RefaceCP:
-                                var cp = new CPPatch
-                                {
-                                    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                                    VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                                };
-                                patch = cp;
+                            case OldDeviceType.RefaceCP:
+                                //var cp = new CPPatch
+                                //{
+                                //    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                //    VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                                //};
+                                //patch = cp;
+                                br.ReadBytes(br.ReadInt32());
+                                br.ReadBytes(br.ReadInt32());
                                 break;
-                            case DeviceType.RefaceYC:
-                                var yc = new YCPatch
-                                {
-                                    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                                    VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                                };
-                                patch = yc;
+                            case OldDeviceType.RefaceYC:
+                                //var yc = new YCPatch
+                                //{
+                                //    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                                //    VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                                //};
+                                //patch = yc;
+                                br.ReadBytes(br.ReadInt32());
+                                br.ReadBytes(br.ReadInt32());
                                 break;
                             default:
                                 patch = null;
                                 break;
                         }
 
-                        s.AutoPatchSlots[j] = (enabled, patch);
+                        //s.AutoPatchSlots[j] = (enabled, patch);
                     }
 
                     //Read lighting cues

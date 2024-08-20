@@ -2,10 +2,11 @@
 
 public record struct MidiMatrixNode(int SourceDeviceId, int DestinationDeviceId, MidiMatrixNodeType Type);
 
+[Flags]
 public enum MidiMatrixNodeType
 {
-    None,
-    Notes,
-    ControlChange,
-    Both
+    None = 0b00,
+    Notes = 0b01,
+    ControlChange = 0b10,
+    Both = 0b11
 }

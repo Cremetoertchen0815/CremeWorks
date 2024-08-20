@@ -1,24 +1,24 @@
 ﻿using CremeWorks.App.Data;
-using CremeWorks.App.Data.Compatibility;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CremeWorks.App;
 public class MidiManager
 {
     public event Action<bool>? ConnectionChanged;
 
-    private int[]? _matrixDeviceIds = null;
+    private bool _isConnected = false;
+    private Dictionary<int, InternalMidiDevice> _midiDevices = [];
+    private int[]? _matrixIds = null;
     private bool[,]? _matrixNote = null;
     private bool[,]? _matrixCC = null;
-    private bool _reg = false;
+    private int _macroDeviceSourceId = -1;
+    private int _macroDeviceDestId = -1;
+    private List<ChordMacro> _activeMacros = [];
     private readonly IDataParent _parent;
+
+    public bool PlaybackPaused { get; set; } = false;
 
     public const int INSTR_DEVICE_OFFSET = 1;
 
@@ -26,44 +26,70 @@ public class MidiManager
 
     public void Connect()
     {
-        for (int i = 0; i < Devices.Length; i++)
-        {
-            var element = Devices[i];
-            if (element.Name == null || element.Name == string.Empty) continue;
-            try
-            {
-                if (element.Input == null && i != 1) element.Input = InputDevice.GetByName(element.Name);
-            }
-            catch { MessageBox.Show("Input Device \"" + element.Name + "\" not found! Check connections and reconnect!", "MIDI Connection error!", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        if (_isConnected) return;
 
+        _midiDevices.Clear();
+        _matrixIds = new int[_parent.Database.Devices.Count(x => x.Value.IsInstrument && x.Value.Name != "")];
+        _matrixNote = new bool[_matrixIds.Length, _matrixIds.Length];
+        _matrixCC = new bool[_matrixIds.Length, _matrixIds.Length];
+
+        int i = 0;
+        foreach (var item in _parent.Database.Devices)
+        {
+            if (item.Value.Name is "" || item.Value.Type == MidiDeviceType.Unknown) continue;
+            if (item.Value.IsInstrument) _matrixIds[i++] = item.Key;
+
+            InputDevice? inputDev = null;
+            OutputDevice? outputDev = null;
             try
             {
-                if (element.Output == null && i != 0) element.Output = OutputDevice.GetByName(element.Name);
+                //Connect to input device and start listening
+                if (item.Value.IsInstrument || item.Value.Type is MidiDeviceType.GenericController)
+                {
+                    inputDev = InputDevice.GetByName(item.Value.Name);
+                    inputDev.EventReceived += item.Value.IsInstrument ? (sender, e) => ListenInstrument(item.Key, e.Event) : ListenFootPedal;
+                    inputDev.StartEventsListening();
+                }
+                //Connect to output device
+                if (item.Value.IsInstrument || item.Value.Type is MidiDeviceType.Lighting)
+                {
+                    outputDev = OutputDevice.GetByName(item.Value.Name);
+                }
             }
-            catch { MessageBox.Show("Output Device \"" + element.Name + "\" not found! Check connections and reconnect!", "MIDI Connection error!", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (Exception)
+            {
+                MessageBox.Show("Cannot connect to \"" + item.Value.Name + "\"! Check connections and reconnect!", "MIDI Connection error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                inputDev?.StopEventsListening();
+                inputDev?.Dispose();
+                inputDev = null;
+                outputDev?.Dispose();
+                outputDev = null;
+            }
+
+            _midiDevices.Add(item.Key, new InternalMidiDevice(item.Value.MidiId, inputDev, outputDev));
         }
 
-
+        _isConnected = true;
         ConnectionChanged?.Invoke(true);
     }
 
     public void Disconnect()
     {
-        Unregister();
-        foreach (var element in Devices)
+        if (!_isConnected) return;
+        foreach (var element in _midiDevices.Values)
         {
-            if (element.Name == null || element.Name == string.Empty) continue;
-            if (element.Input != null) { element.Input.Dispose(); element.Input = null; }
-            if (element.Output != null) { element.Output.Dispose(); element.Output = null; }
+            if (element.Input != null) element.Input.Dispose();
+            if (element.Output != null) element.Output.Dispose();
         }
+        _midiDevices.Clear();
 
+        _isConnected = false;
         ConnectionChanged?.Invoke(false);
     }
 
     public async Task PlayTestTone(string deviceId)
     {
-
-        var play_dev = _c.MIDIDevices[deviceId].Output;
+        var play_dev = _midiDevices.Where(x => x.Value.MidiName == deviceId).Select(x => x.Value.Output).FirstOrDefault();
         if (play_dev == null) return;
 
         play_dev.SendEvent(new NoteOnEvent(new SevenBitNumber(84), new SevenBitNumber(80)));
@@ -75,12 +101,16 @@ public class MidiManager
 
     public string[] GetAllDevices()
     {
+        var wasConnected = _isConnected;
+        Disconnect();
         var outList = OutputDevice.GetAll();
         var inList = InputDevice.GetAll();
         var outNames = outList.Select(x => x.Name).ToArray();
         var inNames = inList.Select(x => x.Name).ToArray();
         foreach (var el in outList) el.Dispose();
         foreach (var el in inList) el.Dispose();
+
+        if (wasConnected) Connect();
         return [.. outNames, .. inNames];
     }
 
@@ -89,129 +119,115 @@ public class MidiManager
 
     }
 
-    public void UpdateMatrix(MidiMatrixNode[]? nodes)
+    public void UpdateMatrix()
     {
+        MidiMatrixNode[]? nodes = _parent.CurrentEntry is SongPlaylistEntry se ? [.. _parent.Database.DefaultRouting, .. _parent.Database.Songs[se.SongId].RoutingOverrides] : null;
+        if (nodes == null || _matrixIds == null)
+        {
+            _matrixNote = null;
+            _matrixCC = null;
+            return;
+        }
 
+        _matrixNote = new bool[_matrixIds.Length, _matrixIds.Length];
+        _matrixCC = new bool[_matrixIds.Length, _matrixIds.Length];
+
+        //Update matrix information
+        foreach (var node in nodes)
+        {
+            var sourceIdx = Array.IndexOf(_matrixIds, node.SourceDeviceId);
+            var destIdx = Array.IndexOf(_matrixIds, node.DestinationDeviceId);
+            if (sourceIdx < 0 || destIdx < 0) continue;
+            if (sourceIdx >= _matrixIds.Length || destIdx >= _matrixIds.Length) continue;
+
+            _matrixNote[sourceIdx, destIdx] = (node.Type & MidiMatrixNodeType.Notes) == MidiMatrixNodeType.Notes;
+            _matrixCC[sourceIdx, destIdx] = (node.Type & MidiMatrixNodeType.ControlChange) == MidiMatrixNodeType.ControlChange;
+        }
+
+        //Update macro information
+        var song = _parent.Database.Songs[((SongPlaylistEntry)_parent.CurrentEntry!).SongId];
+        _macroDeviceSourceId = song.ChordMacroSourceDeviceId;
+        _macroDeviceDestId = song.ChordMacroDestinationDeviceId;
+        _activeMacros = song.ChordMacros;
     }
 
-    public bool PlaybackPaused { get; set; } = false;
-
-    public void Register()
+    private void ListenFootPedal(object? sender, MidiEventReceivedEventArgs e)
     {
-        if (_reg) return;
-        if (_c?.MIDIDevices[0]?.Input != null) _c.MIDIDevices[0].Input.EventReceived += ListenFootPedal;
-        if (_c?.MIDIDevices[1]?.Input != null) _c.MIDIDevices[1].Input.EventReceived += ListenMaster;
-        if (_c?.MIDIDevices[2]?.Input != null) _c.MIDIDevices[2].Input.EventReceived += ListenAux1;
-        if (_c?.MIDIDevices[3]?.Input != null) _c.MIDIDevices[3].Input.EventReceived += ListenAux2;
-        if (_c?.MIDIDevices[4]?.Input != null) _c.MIDIDevices[4].Input.EventReceived += ListenAux3;
-        if (_c?.MIDIDevices[5]?.Input != null) _c.MIDIDevices[5].Input.EventReceived += ListenAux4;
-        if (_c?.MIDIDevices[6]?.Input != null) _c.MIDIDevices[6].Input.EventReceived += ListenAux5;
-        foreach (var element in _c.MIDIDevices) element.Input?.StartEventsListening();
-        _reg = true;
-    }
-
-    public void Unregister()
-    {
-        if (!_reg) return;
-        if (_c?.MIDIDevices[0]?.Input != null) _c.MIDIDevices[0].Input.EventReceived -= ListenFootPedal;
-        if (_c?.MIDIDevices[1]?.Input != null) _c.MIDIDevices[1].Input.EventReceived -= ListenMaster;
-        if (_c?.MIDIDevices[2]?.Input != null) _c.MIDIDevices[2].Input.EventReceived -= ListenAux1;
-        if (_c?.MIDIDevices[3]?.Input != null) _c.MIDIDevices[3].Input.EventReceived -= ListenAux2;
-        if (_c?.MIDIDevices[4]?.Input != null) _c.MIDIDevices[4].Input.EventReceived -= ListenAux3;
-        if (_c?.MIDIDevices[5]?.Input != null) _c.MIDIDevices[5].Input.EventReceived -= ListenAux4;
-        if (_c?.MIDIDevices[6]?.Input != null) _c.MIDIDevices[6].Input.EventReceived -= ListenAux5;
-        foreach (var element in _c.MIDIDevices) element.Input?.StopEventsListening();
-        _reg = false;
-    }
-
-    private void ListenFootPedal(object sender, MidiEventReceivedEventArgs e)
-    {
-
         //If it isn't, redirect to lighting board
-        if (e.Event.EventType == MidiEventType.NoteOff || e.Event.EventType == MidiEventType.ActiveSensing) return;
-        _lightingSendDelegate(e.Event);
+        if (PlaybackPaused || e.Event.EventType == MidiEventType.NoteOff || e.Event.EventType == MidiEventType.ActiveSensing) return;
+        //_lightingSendDelegate(e.Event);
 
         //Check if foot pedal event is a macro
-        for (int i = 0; i < _c.FootSwitchConfig.Length; i++)
+        foreach (var action in _parent.Database.Actions)
         {
-            if (e.Event.EventType == MidiEventType.NoteOn && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
+            if (action.SourceEventType != e.Event.EventType) continue;
+            switch (e.Event.EventType)
             {
-                var ev = (NoteOnEvent)e.Event;
-                if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
-                {
-                    ActionExecute(i, ev.Velocity > 0);
-                    return;
-                }
-            }
-            else if (e.Event.EventType == MidiEventType.NoteOff && _c.FootSwitchConfig[i].Item1 == MidiEventType.NoteOn)
-            {
-                var ev = (NoteOffEvent)e.Event;
-                if (ev.NoteNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
-                {
-                    ActionExecute(i, false);
-                    return;
-                }
-            }
-            else if (e.Event.EventType == MidiEventType.ControlChange && _c.FootSwitchConfig[i].Item1 == MidiEventType.ControlChange)
-            {
-                var ev = (ControlChangeEvent)e.Event;
-                if (ev.ControlNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
-                {
-                    ActionExecute(i, ev.ControlValue >= 64);
-                    return;
-                }
-            }
-            else if (e.Event.EventType == MidiEventType.ProgramChange && _c.FootSwitchConfig[i].Item1 == MidiEventType.ProgramChange)
-            {
-                var ev = (ProgramChangeEvent)e.Event;
-                if (ev.ProgramNumber == _c.FootSwitchConfig[i].Item2 && ev.Channel == _c.FootSwitchConfig[i].Item3)
-                {
-                    ActionExecute(i, null);
-                    return;
-                }
+                case MidiEventType.NoteOn:
+                    var note = (NoteOnEvent)e.Event;
+                    if (note.NoteNumber == action.SourceEventValue && note.Channel == action.SourceEventChannel)
+                    {
+                        _parent.ExecuteAction(action.Action, note.Velocity > 0);
+                        return;
+                    }
+                    break;
+                case MidiEventType.ControlChange:
+                    var cc = (ControlChangeEvent)e.Event;
+                    if (cc.ControlNumber == action.SourceEventValue && cc.Channel == action.SourceEventChannel)
+                    {
+                        _parent.ExecuteAction(action.Action, cc.ControlValue >= 64);
+                        return;
+                    }
+                    break;
+                case MidiEventType.ProgramChange:
+                    var pc = (ProgramChangeEvent)e.Event;
+                    if (pc.ProgramNumber == action.SourceEventValue && pc.Channel == action.SourceEventChannel)
+                    {
+                        _parent.ExecuteAction(action.Action, null);
+                        return;
+                    }
+                    break;
             }
         }
     }
 
-    private void ListenMaster(object sender, MidiEventReceivedEventArgs e) => SendInstrData(0, e.Event);
-    private void ListenAux1(object sender, MidiEventReceivedEventArgs e) => SendInstrData(1, e.Event);
-    private void ListenAux2(object sender, MidiEventReceivedEventArgs e) => SendInstrData(2, e.Event);
-    private void ListenAux3(object sender, MidiEventReceivedEventArgs e) => SendInstrData(3, e.Event);
-    private void ListenAux4(object sender, MidiEventReceivedEventArgs e) => SendInstrData(4, e.Event);
-    private void ListenAux5(object sender, MidiEventReceivedEventArgs e) => SendInstrData(5, e.Event);
-    private void SendInstrData(int sender, MidiEvent e)
+    private void ListenInstrument(int index, MidiEvent e)
     {
-        if (ActiveSong is null) return;
+        if (PlaybackPaused || _matrixIds is null) return;
 
-        if (e.EventType == MidiEventType.NoteOn || e.EventType == MidiEventType.NoteOff)
+        if (e.EventType == MidiEventType.NoteOn || e.EventType == MidiEventType.NoteOff && _matrixIds[index] == _macroDeviceSourceId)
         {
             //Check for chord macros
-            if (sender == ActiveSong.ChordMacroSrc)
+            var note = (NoteEvent)e;
+            for (int i = 0; i < _activeMacros.Count; i++)
             {
-                var note = (NoteEvent)e;
-                for (int i = 0; i < ActiveSong.ChordMacros.Count; i++)
+                var macro = _activeMacros[i];
+                if (macro.TriggerNote != note.NoteNumber || _macroDeviceDestId <= 0) continue;
+                var dstDev = _midiDevices[_macroDeviceDestId].Output;
+                if (dstDev == null) continue;
+
+                if (note.Velocity > 0) note.Velocity = new SevenBitNumber((byte)macro.Velocity);
+                for (int j = 0; j < macro.PlayNotes.Count; j++)
                 {
-                    var macro = ActiveSong.ChordMacros[i];
-                    if (macro.TriggerNote != note.NoteNumber || ActiveSong.ChordMacroDst < 0) continue;
-                    var dstDev = _c.MIDIDevices[ActiveSong.ChordMacroDst + INSTR_DEVICE_OFFSET].Output;
-                    if (dstDev == null) continue;
-
-                    if (note.Velocity > 0) note.Velocity = new SevenBitNumber((byte)macro.Velocity);
-                    for (int j = 0; j < macro.PlayNotes.Count; j++)
-                    {
-                        note.NoteNumber = new SevenBitNumber((byte)macro.PlayNotes[j]);
-                        dstDev.SendEvent(note);
-                    }
-                    return;
+                    note.NoteNumber = new SevenBitNumber((byte)macro.PlayNotes[j]);
+                    dstDev.SendEvent(note);
                 }
+                return;
             }
-
-            //If no chord macro, simply forward
-            for (int i = 0; i < 6; i++) if (ActiveSong.NotePatchMap[sender][i]) _c.MIDIDevices[INSTR_DEVICE_OFFSET + i].Output?.SendEvent(e);
         }
-        else if (e.EventType == MidiEventType.ControlChange)
+
+        //If no chord macro, simply forward
+        for (int i = 0; i < _matrixIds.Length; i++)
         {
-            for (int i = 0; i < 6; i++) if (ActiveSong.CCPatchMap[sender][i]) _c.MIDIDevices[INSTR_DEVICE_OFFSET + i].Output?.SendEvent(e);
+            if (i == index) continue;
+
+            if (_matrixNote![index, i] && e.EventType is MidiEventType.NoteOn or MidiEventType.NoteOff ||
+                _matrixCC![index, i] && e.EventType is MidiEventType.ControlChange)
+            {
+                _midiDevices[_matrixIds[i]].Output?.SendEvent(e);
+            }
         }
     }
+
+    private record InternalMidiDevice(string MidiName, InputDevice? Input, OutputDevice? Output);
 }

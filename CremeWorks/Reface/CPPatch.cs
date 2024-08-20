@@ -9,7 +9,9 @@ namespace CremeWorks.Reface
         public RefaceCPVoiceData VoiceSettings { get; set; }
         public MidiDeviceType DeviceType => MidiDeviceType.RefaceCS;
 
-        public void ApplyPatch(int deviceId) => CommonHelpers.SendParameterChange(d?.Output, CommonHelpers.GetRefaceType(DeviceType), new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceCPVoiceData>.getBytes(VoiceSettings));
+        public string Name => "throw new NotImplementedException()";
+
+        public void ApplyPatch(int deviceId) { return; } // => CommonHelpers.SendParameterChange(d?.Output, CommonHelpers.GetRefaceType(DeviceType), new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceCPVoiceData>.getBytes(VoiceSettings));
         public IDevicePatch Clone() => (IDevicePatch)MemberwiseClone();
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]

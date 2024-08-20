@@ -118,43 +118,50 @@ public static class CompatibilityFileParser
                 switch ((OldDeviceType)type)
                 {
                     case OldDeviceType.RefaceCS:
-                        var cs = new CSPatch
-                        {
-                            SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                            VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                        };
-                        patch = cs;
+                        //var cs = new CSPatch
+                        //{
+                        //    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                        //    VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                        //};
+                        //patch = cs;
+                        br.ReadBytes(br.ReadInt32());
+                        br.ReadBytes(br.ReadInt32());
                         break;
                     case OldDeviceType.RefaceDX:
-                        var dx = new DXPatch
-                        {
-                            SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                            ProgramChangeNr = br.ReadByte()
-                        };
-                        patch = dx;
+                        //var dx = new DXPatch
+                        //{
+                        //    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                        //    ProgramChangeNr = br.ReadByte()
+                        //};
+                        //patch = dx;
+                        br.ReadBytes(br.ReadInt32());
                         break;
                     case OldDeviceType.RefaceCP:
-                        var cp = new CPPatch
-                        {
-                            SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                            VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                        };
-                        patch = cp;
+                        //var cp = new CPPatch
+                        //{
+                        //    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                        //    VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                        //};
+                        //patch = cp;
+                        br.ReadBytes(br.ReadInt32());
+                        br.ReadBytes(br.ReadInt32());
                         break;
                     case OldDeviceType.RefaceYC:
-                        var yc = new YCPatch
-                        {
-                            SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                            VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                        };
-                        patch = yc;
+                        //var yc = new YCPatch
+                        //{
+                        //    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
+                        //    VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                        //};
+                        //patch = yc;
+                        br.ReadBytes(br.ReadInt32());
+                        br.ReadBytes(br.ReadInt32());
                         break;
                     default:
                         patch = null;
                         break;
                 }
 
-                s.AutoPatchSlots[j] = (enabled, patch);
+                //s.AutoPatchSlots[j] = (enabled, patch);
             }
 
             //Read lighting cue

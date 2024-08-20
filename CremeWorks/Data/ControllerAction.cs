@@ -1,6 +1,9 @@
-﻿namespace CremeWorks.App.Data;
+﻿using Melanchall.DryWetMidi.Common;
+using Melanchall.DryWetMidi.Core;
 
-public record ControllerAction(ControllerActionEvent SourceEvent, byte Value, ControllerActionType Action, int Argument);
+namespace CremeWorks.App.Data;
+
+public record ControllerAction(MidiEventType SourceEventType, FourBitNumber SourceEventChannel, byte SourceEventValue, ControllerActionType Action, int Argument);
 
 public enum ControllerActionType
 {
@@ -15,11 +18,4 @@ public enum ControllerActionType
     ReconnectMidi,
     ToggleClick,
     PlayStopSample
-}
-
-public enum ControllerActionEvent
-{
-    NoteOn,
-    ControlChange,
-    ProgramChange,
 }

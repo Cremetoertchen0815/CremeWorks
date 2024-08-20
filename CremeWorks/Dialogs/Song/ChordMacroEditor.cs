@@ -38,7 +38,7 @@ namespace CremeWorks.App.Dialogs
         private void btnMacrosAdd_Click(object sender, EventArgs e)
         {
             _ignoreMacroListSelChange = true;
-            var nuElement = new ChordMacro();
+            var nuElement = new ChordMacro(valItemName.Text, (int)valItemTrigger.Value, (int)valItemVelocity.Value, lstItemNotes.Items.Cast<int>().ToList());
             _s.ChordMacros.Add(nuElement);
             lstMacros.Items.Add(nuElement.Name);
             _ignoreMacroListSelChange = false;

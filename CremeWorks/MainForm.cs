@@ -112,37 +112,37 @@ namespace CremeWorks
 
             //Configure shit
             _sendMetronomeData = true;
-            _midiManager.UpdateMatrix(_activeEntry is SongPlaylistEntry se ? [.. _database.DefaultRouting, .. _database.Songs[se.SongId].RoutingOverrides] : null);
+            _midiManager.UpdateMatrix();
 
             //Load default cue patch
             if (lightCue.Items.Count > 0) lightCue.SelectedIndex = 0;
         }
 
-        public void ExecuteAction(ActionType type, bool? enable)
+        public void ExecuteAction(ControllerActionType type, bool? enable)
         {
             bool chk = enable ?? true;
             switch (type)
             {
-                case ActionType.PreviousSong:
+                case ControllerActionType.PrevSong:
                     if (chk && playList.SelectedIndex > 0) playList.SelectedIndex--;
                     break;
-                case ActionType.NextSong:
+                case ControllerActionType.NextSong:
                     if (chk && playList.SelectedIndex < playList.Items.Count - 1) playList.SelectedIndex++;
                     break;
-                case ActionType.ScrollUp:
+                case ControllerActionType.ScrollUp:
                     if (!chk) break;
                     SetScrollPos(songLyrics.Handle, 1, -10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, -10);
                     break;
-                case ActionType.ScrollDown:
+                case ControllerActionType.ScrollDown:
                     if (!chk) break;
                     SetScrollPos(songLyrics.Handle, 1, 10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, 10);
                     break;
-                case ActionType.CuePrevious:
+                case ControllerActionType.CueBack:
                     if (lightCue.SelectedIndex > 0) lightCue.SelectedIndex--;
                     break;
-                case ActionType.CueNext:
+                case ControllerActionType.CueAdvance:
                     if (lightCue.SelectedIndex < lightCue.Items.Count - 1) lightCue.SelectedIndex++;
                     break;
             }
@@ -318,6 +318,8 @@ namespace CremeWorks
 
         public Database Database => _database;
         public MidiManager MidiManager => _midiManager;
+
+        public IPlaylistEntry? CurrentEntry => _activeEntry;
 
         private async void LightUpChatbox()
         {
