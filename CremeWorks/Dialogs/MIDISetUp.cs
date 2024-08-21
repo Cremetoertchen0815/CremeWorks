@@ -1,6 +1,6 @@
 ﻿using CremeWorks.App;
 using CremeWorks.App.Data;
-using System.Data;
+using System.ComponentModel;
 
 namespace CremeWorks;
 
@@ -9,13 +9,18 @@ public partial class MidiSetUp : Form
 
     private readonly IDataParent _parent;
     private bool _canDataBeUpdated = true;
+    private readonly BindingList<ComboBoxDeviceItem> _comboBoxDeviceItems = [];
 
     public MidiSetUp(IDataParent parent)
     {
         InitializeComponent();
         _parent = parent;
-        boxSelector.Items.Add(new ComboBoxDeviceItem("-", -1, string.Empty, MidiDeviceType.Unknown, false));
-        boxSelector.Items.AddRange(_parent.Database.Devices.Select(x => new ComboBoxDeviceItem(x.Value.Name, x.Key, x.Value.MidiId, x.Value.Type, x.Value.IsRemoteSource)).ToArray());
+
+        foreach (var item in _parent.Database.Devices)
+        {
+            _comboBoxDeviceItems.Add(new ComboBoxDeviceItem(item.Value.Name, item.Key, item.Value.MidiId, item.Value.Type, item.Value.IsRemoteSource));
+        }
+        boxSelector.DataSource = new BindingSource(_comboBoxDeviceItems, null);
     }
 
     private void MIDISetUp_Load(object sender, EventArgs e)
@@ -27,15 +32,15 @@ public partial class MidiSetUp : Form
     private void RefreshButton_Click(object sender, EventArgs e)
     {
         RefreshAll();
-        var objectItem = (ComboBoxDeviceItem)boxSelector.SelectedItem!;
-        boxDevice.Text = objectItem.MidiId;
+        if (boxSelector.SelectedItem is not ComboBoxDeviceItem item) return;
+        boxDevice.Text = item.MidiId;
     }
     private void comboBoxValueChange(object sender, EventArgs e)
     {
         _canDataBeUpdated = false;
-        var objectItem = (ComboBoxDeviceItem)boxSelector.SelectedItem!;
-        groupBox1.Enabled = objectItem.Id != -1;
-        if (objectItem.Id == -1)
+        var objectItem = boxSelector.SelectedItem as ComboBoxDeviceItem;
+        groupBox1.Enabled = objectItem is not null;
+        if (objectItem is null)
         {
             txtName.Text = string.Empty;
             boxDevice.SelectedIndex = -1;
@@ -59,38 +64,42 @@ public partial class MidiSetUp : Form
     private void btnPlus_Click(object sender, EventArgs e)
     {
         var nuId = Random.Shared.Next();
-        boxSelector.Items.Add(new ComboBoxDeviceItem("New Device", nuId, string.Empty, MidiDeviceType.GenericKeyboard, false));
-        boxSelector.SelectedIndex = boxSelector.Items.Count - 1;
+        var item = new ComboBoxDeviceItem("New Device", nuId, string.Empty, MidiDeviceType.GenericKeyboard, false);
+        _comboBoxDeviceItems.Add(item);
+        boxSelector.Text = item.Name;
+        boxSelector.SelectedItem = item;
+        comboBoxValueChange(sender, e);
     }
 
     private void btnMinus_Click(object sender, EventArgs e)
     {
-        var item = (ComboBoxDeviceItem)boxSelector.SelectedItem!;
-        if (item.Id != -1)
+        if (boxSelector.SelectedItem is not ComboBoxDeviceItem item) return;
+        _comboBoxDeviceItems.Remove(item);
+        boxSelector.SelectedIndex = boxSelector.Items.Count - 1;
+        if (boxSelector.SelectedIndex < 0)
         {
-            boxSelector.Items.Remove(item);
+            boxSelector.Text = string.Empty;
+            comboBoxValueChange(sender, e);
         }
     }
 
     private void txtName_TextChanged(object sender, EventArgs e)
     {
-        if (!_canDataBeUpdated) return;
-        var item = (ComboBoxDeviceItem)boxSelector.SelectedItem!;
+        if (!_canDataBeUpdated || boxSelector.SelectedItem is not ComboBoxDeviceItem item) return;
         item.Name = txtName.Text;
-        boxSelector.Refresh();
+        _comboBoxDeviceItems.ResetItem(boxSelector.SelectedIndex);
     }
 
     private void boxDevice_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (!_canDataBeUpdated) return;
-        var item = (ComboBoxDeviceItem)boxSelector.SelectedItem!;
+        if (!_canDataBeUpdated || boxSelector.SelectedItem is not ComboBoxDeviceItem item) return;
         item.MidiId = boxDevice.Text;
     }
 
     private void boxType_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (!_canDataBeUpdated) return;
-        var item = (ComboBoxDeviceItem)boxSelector.SelectedItem!;
+        var item = boxSelector.SelectedItem as ComboBoxDeviceItem;
+        if (!_canDataBeUpdated || item is null) return;
         item.MidiDeviceType = (MidiDeviceType)boxType.SelectedIndex;
     }
 
@@ -122,28 +131,19 @@ public partial class MidiSetUp : Form
         foreach (var item in boxSelector.Items)
         {
             var objectItem = (ComboBoxDeviceItem)item;
-            if (objectItem.Id != -1)
-            {
-                _parent.Database.Devices.Add(objectItem.Id, new MidiDevice(objectItem.Name, objectItem.MidiId, objectItem.IsRemote, objectItem.MidiDeviceType));
-            }
+            if (objectItem.Id == -1) continue;
+            _parent.Database.Devices.Add(objectItem.Id, new MidiDevice(objectItem.Name, objectItem.MidiId, objectItem.IsRemote, objectItem.MidiDeviceType));
         }
     }
 
-    private class ComboBoxDeviceItem
+    private class ComboBoxDeviceItem(string name, int id, string midiId, MidiDeviceType midiDeviceType, bool isRemote)
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string MidiId { get; set; }
-        public MidiDeviceType MidiDeviceType { get; set; }
-        public bool IsRemote { get; set; }
-        public ComboBoxDeviceItem(string name, int id, string midiId, MidiDeviceType midiDeviceType, bool isRemote)
-        {
-            Name = name;
-            Id = id;
-            MidiId = midiId;
-            MidiDeviceType = midiDeviceType;
-            IsRemote = isRemote;
-        }
+        public int Id { get; set; } = id;
+        public string Name { get; set; } = name;
+        public string MidiId { get; set; } = midiId;
+        public MidiDeviceType MidiDeviceType { get; set; } = midiDeviceType;
+        public bool IsRemote { get; set; } = isRemote;
+
         public override string ToString() => Name;
     }
 }

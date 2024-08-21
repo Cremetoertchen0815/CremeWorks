@@ -40,7 +40,6 @@ namespace CremeWorks
             boxDevice = new ComboBox();
             btnMinus = new Button();
             txtName = new TextBox();
-            btnDetect = new Button();
             lblName = new Label();
             groupBox1 = new GroupBox();
             btnOk = new Button();
@@ -125,7 +124,7 @@ namespace CremeWorks
             // 
             // btnTest
             // 
-            btnTest.Location = new Point(292, 22);
+            btnTest.Location = new Point(292, 83);
             btnTest.Margin = new Padding(4);
             btnTest.Name = "btnTest";
             btnTest.Size = new Size(61, 23);
@@ -164,16 +163,6 @@ namespace CremeWorks
             txtName.TabIndex = 25;
             txtName.TextChanged += txtName_TextChanged;
             // 
-            // btnDetect
-            // 
-            btnDetect.Location = new Point(292, 83);
-            btnDetect.Margin = new Padding(4);
-            btnDetect.Name = "btnDetect";
-            btnDetect.Size = new Size(61, 23);
-            btnDetect.TabIndex = 26;
-            btnDetect.Text = "Detect";
-            btnDetect.UseVisualStyleBackColor = true;
-            // 
             // lblName
             // 
             lblName.Location = new Point(13, 22);
@@ -188,7 +177,6 @@ namespace CremeWorks
             groupBox1.Controls.Add(txtName);
             groupBox1.Controls.Add(lblName);
             groupBox1.Controls.Add(lblMidiDevice);
-            groupBox1.Controls.Add(btnDetect);
             groupBox1.Controls.Add(lvlType);
             groupBox1.Controls.Add(boxDevice);
             groupBox1.Controls.Add(boxType);
@@ -222,7 +210,7 @@ namespace CremeWorks
             btnCancel.UseVisualStyleBackColor = true;
             btnCancel.Click += btnCancel_Click;
             // 
-            // MIDISetUp
+            // MidiSetUp
             // 
             AcceptButton = btnOk;
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -239,7 +227,7 @@ namespace CremeWorks
             Margin = new Padding(4);
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "MIDISetUp";
+            Name = "MidiSetUp";
             ShowIcon = false;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
@@ -265,7 +253,6 @@ namespace CremeWorks
         private System.Windows.Forms.ComboBox boxDevice;
         private Button btnMinus;
         private TextBox txtName;
-        private Button btnDetect;
         private Label lblName;
         private GroupBox groupBox1;
         private Button btnOk;
