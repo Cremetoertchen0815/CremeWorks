@@ -179,20 +179,21 @@ namespace CremeWorks
             // songsToolStripMenuItem
             // 
             songsToolStripMenuItem.Name = "songsToolStripMenuItem";
-            songsToolStripMenuItem.Size = new Size(116, 22);
+            songsToolStripMenuItem.Size = new Size(180, 22);
             songsToolStripMenuItem.Text = "Songs";
             songsToolStripMenuItem.Click += songsToolStripMenuItem_Click;
             // 
             // playlistsToolStripMenuItem
             // 
             playlistsToolStripMenuItem.Name = "playlistsToolStripMenuItem";
-            playlistsToolStripMenuItem.Size = new Size(116, 22);
+            playlistsToolStripMenuItem.Size = new Size(180, 22);
             playlistsToolStripMenuItem.Text = "Playlists";
+            playlistsToolStripMenuItem.Click += playlistsToolStripMenuItem_Click;
             // 
             // patchesToolStripMenuItem
             // 
             patchesToolStripMenuItem.Name = "patchesToolStripMenuItem";
-            patchesToolStripMenuItem.Size = new Size(116, 22);
+            patchesToolStripMenuItem.Size = new Size(180, 22);
             patchesToolStripMenuItem.Text = "Patches";
             // 
             // configureToolStripMenuItem1

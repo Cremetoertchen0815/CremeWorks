@@ -209,6 +209,8 @@ namespace CremeWorks
 
         private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightCueManager(this).ShowDialog();
 
+        private void playlistsToolStripMenuItem_Click(object sender, EventArgs e) => new PlaylistEditor(this).ShowDialog();
+
         private void lightCue_SelectedIndexChanged(object sender, EventArgs e)
         {
             //if (_s != null && lightCue.SelectedIndex >= 0)

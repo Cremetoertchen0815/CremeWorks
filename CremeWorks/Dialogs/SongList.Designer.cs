@@ -47,11 +47,11 @@
             lstSongs.Columns.AddRange(new ColumnHeader[] { ArtistColumn, TitleColumn, IdColumn });
             lstSongs.Dock = DockStyle.Fill;
             lstSongs.FullRowSelect = true;
-            lstSongs.Location = new Point(0, 0);
+            lstSongs.Location = new Point(93, 0);
             lstSongs.Margin = new Padding(4, 3, 4, 3);
             lstSongs.MultiSelect = false;
             lstSongs.Name = "lstSongs";
-            lstSongs.Size = new Size(396, 373);
+            lstSongs.Size = new Size(303, 373);
             lstSongs.Sorting = SortOrder.Ascending;
             lstSongs.TabIndex = 0;
             lstSongs.UseCompatibleStateImageBehavior = false;
@@ -72,7 +72,7 @@
             // IdColumn
             // 
             IdColumn.Text = "Id";
-            IdColumn.Width = 100;
+            IdColumn.Width = 99;
             // 
             // panel2
             // 
@@ -80,8 +80,8 @@
             panel2.Controls.Add(btnDelete);
             panel2.Controls.Add(btnEdit);
             panel2.Controls.Add(btnCreate);
-            panel2.Dock = DockStyle.Right;
-            panel2.Location = new Point(303, 0);
+            panel2.Dock = DockStyle.Left;
+            panel2.Location = new Point(0, 0);
             panel2.Margin = new Padding(4, 3, 4, 3);
             panel2.Name = "panel2";
             panel2.Size = new Size(93, 373);
@@ -140,8 +140,8 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(396, 373);
-            Controls.Add(panel2);
             Controls.Add(lstSongs);
+            Controls.Add(panel2);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 3, 4, 3);
             MaximumSize = new Size(412, 4000);
