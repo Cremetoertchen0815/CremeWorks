@@ -48,36 +48,38 @@ public partial class SongRoutingEditor : Form
         }
 
         // Apply song specific routing overrides
-        if (song is null) return;
-        foreach (var item in song.RoutingOverrides)
+        if (song is not null)
         {
-            var fromIndex = GetDeviceIndexByDeviceId(item.SourceDeviceId);
-            var toIndex = GetDeviceIndexByDeviceId(item.DestinationDeviceId);
-            switch (item.Type)
+            foreach (var item in song.RoutingOverrides)
             {
-                case MidiMatrixNodeType.None:
-                    routingNotes[fromIndex, toIndex] = false;
-                    routingControlChange[fromIndex, toIndex] = false;
-                    break;
-                case MidiMatrixNodeType.Notes:
-                    routingNotes[fromIndex, toIndex] = true;
-                    routingControlChange[fromIndex, toIndex] = false;
-                    break;
-                case MidiMatrixNodeType.ControlChange:
-                    routingNotes[fromIndex, toIndex] = false;
-                    routingControlChange[fromIndex, toIndex] = true;
-                    break;
-                case MidiMatrixNodeType.Both:
-                    routingNotes[fromIndex, toIndex] = true;
-                    routingControlChange[fromIndex, toIndex] = true;
-                    break;
-                default:
-                    break;
+                var fromIndex = GetDeviceIndexByDeviceId(item.SourceDeviceId);
+                var toIndex = GetDeviceIndexByDeviceId(item.DestinationDeviceId);
+                switch (item.Type)
+                {
+                    case MidiMatrixNodeType.None:
+                        routingNotes[fromIndex, toIndex] = false;
+                        routingControlChange[fromIndex, toIndex] = false;
+                        break;
+                    case MidiMatrixNodeType.Notes:
+                        routingNotes[fromIndex, toIndex] = true;
+                        routingControlChange[fromIndex, toIndex] = false;
+                        break;
+                    case MidiMatrixNodeType.ControlChange:
+                        routingNotes[fromIndex, toIndex] = false;
+                        routingControlChange[fromIndex, toIndex] = true;
+                        break;
+                    case MidiMatrixNodeType.Both:
+                        routingNotes[fromIndex, toIndex] = true;
+                        routingControlChange[fromIndex, toIndex] = true;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
         // Populate the grid
-        table.Columns.Add(string.Empty, typeof(string));
+        table.Columns.Add("Source", typeof(string));
         foreach (var device in devices)
         {
             table.Columns.Add(device.device.Name, typeof(bool));
@@ -92,7 +94,9 @@ public partial class SongRoutingEditor : Form
             }
             table.Rows.Add(row);
         }
+
         dataGridView1.DataSource = table;
+        foreach (DataGridViewColumn column in dataGridView1.Columns) column.SortMode = DataGridViewColumnSortMode.NotSortable;
     }
 
     private int GetDeviceIndexByDeviceId(int deviceId)
@@ -131,7 +135,6 @@ public partial class SongRoutingEditor : Form
             {
                 row[j + 1] = routingArray[i, j];
             }
-            table.Rows.Add(row);
         }
     }
 

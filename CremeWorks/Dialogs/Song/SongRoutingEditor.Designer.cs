@@ -40,10 +40,13 @@ partial class SongRoutingEditor
         // 
         dataGridView1.AllowUserToAddRows = false;
         dataGridView1.AllowUserToDeleteRows = false;
+        dataGridView1.AllowUserToResizeColumns = false;
+        dataGridView1.AllowUserToResizeRows = false;
         dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
         dataGridView1.Dock = DockStyle.Fill;
         dataGridView1.Location = new Point(0, 0);
         dataGridView1.Name = "dataGridView1";
+        dataGridView1.SelectionMode = DataGridViewSelectionMode.CellSelect;
         dataGridView1.Size = new Size(443, 450);
         dataGridView1.TabIndex = 0;
         // 

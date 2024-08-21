@@ -1,5 +1,11 @@
--Move Chat bot to Multiline textbox
-
+-Implement playlist window
+-Implement patch window
+-Implement new/open/save project system
+-Implement import/export system
+-Implement/test cue system
+-Implement networking features
+-Implement sound macros
 -Implement solo mode function for increasing volume
+
 -Implement backlog system(move to .cwdb file type)
 -Fix SoundPlayer lag under Linux

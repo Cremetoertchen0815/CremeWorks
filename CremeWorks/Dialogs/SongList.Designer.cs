@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            var resources = new System.ComponentModel.ComponentResourceManager(typeof(SongList));
             lstSongs = new ListView();
+            ArtistColumn = new ColumnHeader();
             TitleColumn = new ColumnHeader();
             IdColumn = new ColumnHeader();
-            ArtistColumn = new ColumnHeader();
             panel2 = new Panel();
             btnDuplicate = new Button();
             btnDelete = new Button();
-            btnOk = new Button();
             btnEdit = new Button();
             btnCreate = new Button();
             panel2.SuspendLayout();
@@ -43,44 +43,48 @@
             // 
             // lstSongs
             // 
-            lstSongs.Columns.AddRange(new ColumnHeader[] { TitleColumn, IdColumn, ArtistColumn });
+            lstSongs.AllowColumnReorder = true;
+            lstSongs.Columns.AddRange(new ColumnHeader[] { ArtistColumn, TitleColumn, IdColumn });
             lstSongs.Dock = DockStyle.Fill;
+            lstSongs.FullRowSelect = true;
             lstSongs.Location = new Point(0, 0);
             lstSongs.Margin = new Padding(4, 3, 4, 3);
+            lstSongs.MultiSelect = false;
             lstSongs.Name = "lstSongs";
-            lstSongs.Size = new Size(396, 361);
+            lstSongs.Size = new Size(396, 373);
             lstSongs.Sorting = SortOrder.Ascending;
             lstSongs.TabIndex = 0;
             lstSongs.UseCompatibleStateImageBehavior = false;
             lstSongs.View = View.Details;
             // 
+            // ArtistColumn
+            // 
+            ArtistColumn.DisplayIndex = 1;
+            ArtistColumn.Text = "Artist";
+            ArtistColumn.Width = 100;
+            // 
             // TitleColumn
             // 
+            TitleColumn.DisplayIndex = 0;
             TitleColumn.Text = "Title";
             TitleColumn.Width = 100;
             // 
             // IdColumn
             // 
             IdColumn.Text = "Id";
-            IdColumn.Width = 35;
-            // 
-            // ArtistColumn
-            // 
-            ArtistColumn.Text = "Artist";
-            ArtistColumn.Width = 100;
+            IdColumn.Width = 100;
             // 
             // panel2
             // 
             panel2.Controls.Add(btnDuplicate);
             panel2.Controls.Add(btnDelete);
-            panel2.Controls.Add(btnOk);
             panel2.Controls.Add(btnEdit);
             panel2.Controls.Add(btnCreate);
             panel2.Dock = DockStyle.Right;
             panel2.Location = new Point(303, 0);
             panel2.Margin = new Padding(4, 3, 4, 3);
             panel2.Name = "panel2";
-            panel2.Size = new Size(93, 361);
+            panel2.Size = new Size(93, 373);
             panel2.TabIndex = 2;
             // 
             // btnDuplicate
@@ -106,17 +110,6 @@
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
             btnDelete.Click += btnDelete_Click;
-            // 
-            // btnOk
-            // 
-            btnOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            btnOk.Location = new Point(4, 307);
-            btnOk.Margin = new Padding(4, 3, 4, 3);
-            btnOk.Name = "btnOk";
-            btnOk.Size = new Size(86, 51);
-            btnOk.TabIndex = 2;
-            btnOk.Text = "OK";
-            btnOk.UseVisualStyleBackColor = true;
             // 
             // btnEdit
             // 
@@ -144,13 +137,15 @@
             // 
             // SongList
             // 
-            AcceptButton = btnOk;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(396, 361);
+            ClientSize = new Size(396, 373);
             Controls.Add(panel2);
             Controls.Add(lstSongs);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 3, 4, 3);
+            MaximumSize = new Size(412, 4000);
+            MinimumSize = new Size(412, 269);
             Name = "SongList";
             Text = "Songs";
             panel2.ResumeLayout(false);
@@ -162,7 +157,6 @@
         private System.Windows.Forms.ListView lstSongs;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.ColumnHeader IdColumn;

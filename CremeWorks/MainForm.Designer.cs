@@ -332,9 +332,8 @@ namespace CremeWorks
             songKey.Location = new Point(1174, 618);
             songKey.Margin = new Padding(4, 0, 4, 0);
             songKey.Name = "songKey";
-            songKey.Size = new Size(31, 20);
+            songKey.Size = new Size(0, 20);
             songKey.TabIndex = 27;
-            songKey.Text = "mn";
             // 
             // chatBox
             // 

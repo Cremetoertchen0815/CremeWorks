@@ -335,7 +335,11 @@ namespace CremeWorks
 
         private void beendenToolStripMenuItem_Click(object sender, EventArgs e) => Close();
 
-        private void songsToolStripMenuItem_Click(object sender, EventArgs e) => new SongList(this).ShowDialog();
+        private void songsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new SongList(this).ShowDialog();
+            UpdatePlaylist();
+        }
 
         private void defaultMIDIRoutingToolStripMenuItem_Click(object sender, EventArgs e) => new SongRoutingEditor(this, null).ShowDialog();
 

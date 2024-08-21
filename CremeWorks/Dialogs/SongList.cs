@@ -15,14 +15,13 @@ public partial class SongList : Form
 
         foreach (var s in _parent.Database.Songs)
         {
-            var lvi = new ListViewItem(s.Value.Title);
+            var lvi = new ListViewItem(s.Value.Artist);
+            lvi.SubItems.Add(s.Value.Title);
             lvi.SubItems.Add(s.Key.ToString());
-            lvi.SubItems.Add(s.Value.Artist);
             lvi.Tag = s.Key;
             lstSongs.Items.Add(lvi);
         }
 
-        lstSongs.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         lstSongs.Sort();
     }
 
@@ -31,19 +30,28 @@ public partial class SongList : Form
         var nuSong = new Song();
         var id = Random.Shared.Next();
         _parent.Database.Songs.Add(id, nuSong);
-        var lvi = new ListViewItem(nuSong.Title);
+        var editor = new SongEditor(_parent, id);
+        if (editor.ShowDialog() != DialogResult.OK)
+        {
+            _parent.Database.Songs.Remove(id);
+            return;
+        }
+
+        var lvi = new ListViewItem(nuSong.Artist);
+        lvi.SubItems.Add(nuSong.Title);
         lvi.SubItems.Add(id.ToString());
-        lvi.SubItems.Add(nuSong.Artist);
         lvi.Tag = id;
         lstSongs.Items.Add(lvi);
         lstSongs.Sort();
+        lstSongs.SelectedItems.Clear();
+        lvi.Selected = true;
     }
 
     private void btnEdit_Click(object sender, EventArgs e)
     {
         if (lstSongs.SelectedItems.Count == 0) return;
         var lvi = lstSongs.SelectedItems[0];
-        var id = (int)lstSongs.Tag!;
+        var id = (int)lvi.Tag!;
 
         var song = _parent.Database.Songs[id];
         var editor = new SongEditor(_parent, id);
@@ -51,42 +59,48 @@ public partial class SongList : Form
 
         if (editor.DialogResult == DialogResult.OK)
         {
-            lvi.SubItems[0].Text = song.Title;
-            lvi.SubItems[2].Text = song.Artist;
+            lvi.SubItems[0].Text = song.Artist;
+            lvi.SubItems[1].Text = song.Title;
         }
 
         lstSongs.Sort();
+        lstSongs.SelectedItems.Clear();
+        lvi.Selected = true;
     }
 
     private void btnDuplicate_Click(object sender, EventArgs e)
     {
         if (lstSongs.SelectedItems.Count == 0) return;
         var lvi = lstSongs.SelectedItems[0];
-        var id = (int)lstSongs.Tag!;
+        var id = (int)lvi.Tag!;
 
         var song = _parent.Database.Songs[id];
         var nuSong = song.Clone();
         var nuId = Random.Shared.Next();
 
         _parent.Database.Songs.Add(nuId, nuSong);
-        var lvi2 = new ListViewItem(nuSong.Title);
+        var lvi2 = new ListViewItem(nuSong.Artist);
+        lvi2.SubItems.Add(nuSong.Title);
         lvi2.SubItems.Add(nuId.ToString());
-        lvi2.SubItems.Add(nuSong.Artist);
         lvi2.Tag = nuId;
         lstSongs.Items.Add(lvi2);
+
         lstSongs.Sort();
+        lstSongs.SelectedItems.Clear();
+        lvi2.Selected = true;
     }
 
     private void btnDelete_Click(object sender, EventArgs e)
     {
         if (lstSongs.SelectedItems.Count == 0) return;
         var lvi = lstSongs.SelectedItems[0];
-        var id = (int)lstSongs.Tag!;
+        var id = (int)lvi.Tag!;
 
         if (MessageBox.Show("Are you sure you want to delete this song?", "Delete Song", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes) return;
 
         _parent.Database.Songs.Remove(id);
         lstSongs.Items.Remove(lvi);
         lstSongs.Sort();
+        lstSongs.SelectedItems.Clear();
     }
 }
