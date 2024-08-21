@@ -2,6 +2,7 @@
 -Implement patch window
 -Implement new/open/save project system
 -Implement import/export system
+-Implement action system
 -Implement/test cue system
 -Implement networking features
 -Implement sound macros
