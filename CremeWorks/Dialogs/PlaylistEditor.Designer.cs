@@ -36,23 +36,23 @@ partial class PlaylistEditor
         btnCancel = new Button();
         btnOk = new Button();
         groupBox1 = new GroupBox();
-        lstSongs = new ListView();
-        ArtistColumn = new ColumnHeader();
-        TitleColumn = new ColumnHeader();
-        IdColumn = new ColumnHeader();
+        lstEntries = new ListView();
+        columnNr = new ColumnHeader();
+        columnTitle = new ColumnHeader();
+        columnArtist = new ColumnHeader();
+        columnType = new ColumnHeader();
+        columnDuration = new ColumnHeader();
         panel2 = new Panel();
-        button5 = new Button();
-        button1 = new Button();
-        button2 = new Button();
-        button3 = new Button();
-        button4 = new Button();
+        btnDown = new Button();
+        btnUp = new Button();
+        btnAddMarker = new Button();
         btnDuplicate = new Button();
         btnDelete = new Button();
         btnEdit = new Button();
-        btnCreate = new Button();
+        btnAddSong = new Button();
         panel1 = new Panel();
         txtName = new TextBox();
-        dateTimePicker1 = new DateTimePicker();
+        txtDate = new DateTimePicker();
         lblMidiDevice = new Label();
         lblName = new Label();
         groupBox1.SuspendLayout();
@@ -71,6 +71,7 @@ partial class PlaylistEditor
         btnMinus.TabIndex = 28;
         btnMinus.Text = "-";
         btnMinus.UseVisualStyleBackColor = true;
+        btnMinus.Click += btnMinus_Click;
         // 
         // btnPlus
         // 
@@ -83,6 +84,7 @@ partial class PlaylistEditor
         btnPlus.TabIndex = 27;
         btnPlus.Text = "+";
         btnPlus.UseVisualStyleBackColor = true;
+        btnPlus.Click += btnPlus_Click;
         // 
         // boxSelector
         // 
@@ -93,6 +95,7 @@ partial class PlaylistEditor
         boxSelector.Name = "boxSelector";
         boxSelector.Size = new Size(370, 23);
         boxSelector.TabIndex = 26;
+        boxSelector.SelectedIndexChanged += boxSelector_SelectedIndexChanged;
         // 
         // lblDevice
         // 
@@ -128,7 +131,7 @@ partial class PlaylistEditor
         // groupBox1
         // 
         groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-        groupBox1.Controls.Add(lstSongs);
+        groupBox1.Controls.Add(lstEntries);
         groupBox1.Controls.Add(panel2);
         groupBox1.Controls.Add(panel1);
         groupBox1.Enabled = false;
@@ -139,50 +142,55 @@ partial class PlaylistEditor
         groupBox1.TabStop = false;
         groupBox1.Text = "Properties";
         // 
-        // lstSongs
+        // lstEntries
         // 
-        lstSongs.AllowColumnReorder = true;
-        lstSongs.Columns.AddRange(new ColumnHeader[] { ArtistColumn, TitleColumn, IdColumn });
-        lstSongs.Dock = DockStyle.Fill;
-        lstSongs.FullRowSelect = true;
-        lstSongs.Location = new Point(98, 79);
-        lstSongs.Margin = new Padding(4, 3, 4, 3);
-        lstSongs.MultiSelect = false;
-        lstSongs.Name = "lstSongs";
-        lstSongs.Size = new Size(343, 292);
-        lstSongs.Sorting = SortOrder.Ascending;
-        lstSongs.TabIndex = 36;
-        lstSongs.UseCompatibleStateImageBehavior = false;
-        lstSongs.View = View.Details;
+        lstEntries.AllowColumnReorder = true;
+        lstEntries.Columns.AddRange(new ColumnHeader[] { columnNr, columnTitle, columnArtist, columnType, columnDuration });
+        lstEntries.Dock = DockStyle.Fill;
+        lstEntries.FullRowSelect = true;
+        lstEntries.Location = new Point(98, 79);
+        lstEntries.Margin = new Padding(4, 3, 4, 3);
+        lstEntries.MultiSelect = false;
+        lstEntries.Name = "lstEntries";
+        lstEntries.Size = new Size(343, 292);
+        lstEntries.Sorting = SortOrder.Ascending;
+        lstEntries.TabIndex = 36;
+        lstEntries.UseCompatibleStateImageBehavior = false;
+        lstEntries.View = View.Details;
         // 
-        // ArtistColumn
+        // columnNr
         // 
-        ArtistColumn.DisplayIndex = 1;
-        ArtistColumn.Text = "Artist";
-        ArtistColumn.Width = 100;
+        columnNr.Text = "Nr";
+        columnNr.Width = 25;
         // 
-        // TitleColumn
+        // columnTitle
         // 
-        TitleColumn.DisplayIndex = 0;
-        TitleColumn.Text = "Title";
-        TitleColumn.Width = 100;
+        columnTitle.Text = "Title";
+        columnTitle.Width = 100;
         // 
-        // IdColumn
+        // columnArtist
         // 
-        IdColumn.Text = "Id";
-        IdColumn.Width = 100;
+        columnArtist.Text = "Artist";
+        columnArtist.Width = 80;
+        // 
+        // columnType
+        // 
+        columnType.Text = "Type";
+        // 
+        // columnDuration
+        // 
+        columnDuration.Text = "Duration";
+        columnDuration.Width = 74;
         // 
         // panel2
         // 
-        panel2.Controls.Add(button5);
-        panel2.Controls.Add(button1);
-        panel2.Controls.Add(button2);
-        panel2.Controls.Add(button3);
-        panel2.Controls.Add(button4);
+        panel2.Controls.Add(btnDown);
+        panel2.Controls.Add(btnUp);
+        panel2.Controls.Add(btnAddMarker);
         panel2.Controls.Add(btnDuplicate);
         panel2.Controls.Add(btnDelete);
         panel2.Controls.Add(btnEdit);
-        panel2.Controls.Add(btnCreate);
+        panel2.Controls.Add(btnAddSong);
         panel2.Dock = DockStyle.Left;
         panel2.Location = new Point(3, 79);
         panel2.Margin = new Padding(4, 3, 4, 3);
@@ -190,109 +198,90 @@ partial class PlaylistEditor
         panel2.Size = new Size(95, 292);
         panel2.TabIndex = 37;
         // 
-        // button5
+        // btnDown
         // 
-        button5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        button5.Location = new Point(4, 63);
-        button5.Margin = new Padding(4, 3, 4, 3);
-        button5.Name = "button5";
-        button5.Size = new Size(86, 51);
-        button5.TabIndex = 9;
-        button5.Text = "Add Marker";
-        button5.UseVisualStyleBackColor = true;
+        btnDown.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        btnDown.Font = new Font("Segoe UI", 12F);
+        btnDown.Location = new Point(4, 142);
+        btnDown.Margin = new Padding(4, 3, 4, 3);
+        btnDown.Name = "btnDown";
+        btnDown.Size = new Size(86, 28);
+        btnDown.TabIndex = 11;
+        btnDown.Text = "↓";
+        btnDown.UseVisualStyleBackColor = true;
         // 
-        // button1
+        // btnUp
         // 
-        button1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        button1.Location = new Point(5, 177);
-        button1.Margin = new Padding(4, 3, 4, 3);
-        button1.Name = "button1";
-        button1.Size = new Size(86, 51);
-        button1.TabIndex = 8;
-        button1.Text = "Duplicate";
-        button1.UseVisualStyleBackColor = true;
+        btnUp.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        btnUp.Font = new Font("Segoe UI", 12F);
+        btnUp.Location = new Point(4, 108);
+        btnUp.Margin = new Padding(4, 3, 4, 3);
+        btnUp.Name = "btnUp";
+        btnUp.Size = new Size(86, 28);
+        btnUp.TabIndex = 10;
+        btnUp.Text = "↑";
+        btnUp.UseVisualStyleBackColor = true;
         // 
-        // button2
+        // btnAddMarker
         // 
-        button2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        button2.Location = new Point(5, 234);
-        button2.Margin = new Padding(4, 3, 4, 3);
-        button2.Name = "button2";
-        button2.Size = new Size(86, 51);
-        button2.TabIndex = 7;
-        button2.Text = "Delete";
-        button2.UseVisualStyleBackColor = true;
-        // 
-        // button3
-        // 
-        button3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        button3.Location = new Point(5, 120);
-        button3.Margin = new Padding(4, 3, 4, 3);
-        button3.Name = "button3";
-        button3.Size = new Size(86, 51);
-        button3.TabIndex = 6;
-        button3.Text = "Edit";
-        button3.UseVisualStyleBackColor = true;
-        // 
-        // button4
-        // 
-        button4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        button4.Location = new Point(4, 6);
-        button4.Margin = new Padding(4, 3, 4, 3);
-        button4.Name = "button4";
-        button4.Size = new Size(86, 51);
-        button4.TabIndex = 5;
-        button4.Text = "Add Song";
-        button4.UseVisualStyleBackColor = true;
+        btnAddMarker.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        btnAddMarker.Location = new Point(4, 40);
+        btnAddMarker.Margin = new Padding(4, 3, 4, 3);
+        btnAddMarker.Name = "btnAddMarker";
+        btnAddMarker.Size = new Size(86, 28);
+        btnAddMarker.TabIndex = 9;
+        btnAddMarker.Text = "Add Marker";
+        btnAddMarker.UseVisualStyleBackColor = true;
         // 
         // btnDuplicate
         // 
         btnDuplicate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        btnDuplicate.Location = new Point(4, 118);
+        btnDuplicate.Location = new Point(4, 176);
         btnDuplicate.Margin = new Padding(4, 3, 4, 3);
         btnDuplicate.Name = "btnDuplicate";
-        btnDuplicate.Size = new Size(2, 51);
-        btnDuplicate.TabIndex = 4;
+        btnDuplicate.Size = new Size(86, 28);
+        btnDuplicate.TabIndex = 8;
         btnDuplicate.Text = "Duplicate";
         btnDuplicate.UseVisualStyleBackColor = true;
         // 
         // btnDelete
         // 
         btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        btnDelete.Location = new Point(4, 175);
+        btnDelete.Location = new Point(4, 210);
         btnDelete.Margin = new Padding(4, 3, 4, 3);
         btnDelete.Name = "btnDelete";
-        btnDelete.Size = new Size(2, 51);
-        btnDelete.TabIndex = 3;
+        btnDelete.Size = new Size(86, 28);
+        btnDelete.TabIndex = 7;
         btnDelete.Text = "Delete";
         btnDelete.UseVisualStyleBackColor = true;
         // 
         // btnEdit
         // 
         btnEdit.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        btnEdit.Location = new Point(4, 61);
+        btnEdit.Location = new Point(4, 74);
         btnEdit.Margin = new Padding(4, 3, 4, 3);
         btnEdit.Name = "btnEdit";
-        btnEdit.Size = new Size(2, 51);
-        btnEdit.TabIndex = 1;
+        btnEdit.Size = new Size(86, 28);
+        btnEdit.TabIndex = 6;
         btnEdit.Text = "Edit";
         btnEdit.UseVisualStyleBackColor = true;
         // 
-        // btnCreate
+        // btnAddSong
         // 
-        btnCreate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        btnCreate.Location = new Point(4, 3);
-        btnCreate.Margin = new Padding(4, 3, 4, 3);
-        btnCreate.Name = "btnCreate";
-        btnCreate.Size = new Size(2, 51);
-        btnCreate.TabIndex = 0;
-        btnCreate.Text = "Create";
-        btnCreate.UseVisualStyleBackColor = true;
+        btnAddSong.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        btnAddSong.Location = new Point(4, 6);
+        btnAddSong.Margin = new Padding(4, 3, 4, 3);
+        btnAddSong.Name = "btnAddSong";
+        btnAddSong.Size = new Size(86, 28);
+        btnAddSong.TabIndex = 5;
+        btnAddSong.Text = "Add Song";
+        btnAddSong.UseVisualStyleBackColor = true;
+        btnAddSong.Click += btnAddSong_Click;
         // 
         // panel1
         // 
         panel1.Controls.Add(txtName);
-        panel1.Controls.Add(dateTimePicker1);
+        panel1.Controls.Add(txtDate);
         panel1.Controls.Add(lblMidiDevice);
         panel1.Controls.Add(lblName);
         panel1.Dock = DockStyle.Top;
@@ -306,16 +295,18 @@ partial class PlaylistEditor
         txtName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         txtName.Location = new Point(94, 0);
         txtName.Name = "txtName";
-        txtName.Size = new Size(341, 23);
+        txtName.Size = new Size(344, 23);
         txtName.TabIndex = 25;
+        txtName.TextChanged += txtName_TextChanged;
         // 
-        // dateTimePicker1
+        // txtDate
         // 
-        dateTimePicker1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        dateTimePicker1.Location = new Point(94, 30);
-        dateTimePicker1.Name = "dateTimePicker1";
-        dateTimePicker1.Size = new Size(341, 23);
-        dateTimePicker1.TabIndex = 28;
+        txtDate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+        txtDate.Location = new Point(94, 30);
+        txtDate.Name = "txtDate";
+        txtDate.Size = new Size(344, 23);
+        txtDate.TabIndex = 28;
+        txtDate.ValueChanged += txtDate_ValueChanged;
         // 
         // lblMidiDevice
         // 
@@ -370,7 +361,7 @@ partial class PlaylistEditor
     private Button btnCancel;
     private Button btnOk;
     private GroupBox groupBox1;
-    private DateTimePicker dateTimePicker1;
+    private DateTimePicker txtDate;
     private TextBox txtName;
     private Label lblName;
     private Label lblMidiDevice;
@@ -379,14 +370,15 @@ partial class PlaylistEditor
     private Button btnDelete;
     private Button btnEdit;
     private Button btnCreate;
-    private ListView lstSongs;
-    private ColumnHeader ArtistColumn;
-    private ColumnHeader TitleColumn;
-    private ColumnHeader IdColumn;
+    private ListView lstEntries;
     private Panel panel1;
-    private Button button5;
-    private Button button1;
-    private Button button2;
-    private Button button3;
-    private Button button4;
+    private Button btnAddMarker;
+    private Button btnAddSong;
+    private Button btnUp;
+    private Button btnDown;
+    private ColumnHeader columnNr;
+    private ColumnHeader columnTitle;
+    private ColumnHeader columnArtist;
+    private ColumnHeader columnType;
+    private ColumnHeader columnDuration;
 }

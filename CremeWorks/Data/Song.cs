@@ -7,6 +7,7 @@ public class Song
     public string Key { get; set; } = string.Empty;
     public string Lyrics { get; set; } = string.Empty;
     public string Instructions { get; set; } = string.Empty;
+    public int ExpectedDurationSeconds { get; set; } = 0;
     public byte Tempo { get; set; } = 120;
     public bool Click { get; set; } = false;
     public List<MidiMatrixNode> RoutingOverrides { get; } = [];

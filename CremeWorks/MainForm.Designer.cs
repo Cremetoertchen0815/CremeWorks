@@ -72,9 +72,13 @@ namespace CremeWorks
             csvExportSaveFile = new SaveFileDialog();
             boxSet = new ComboBox();
             label4 = new Label();
-            label5 = new Label();
+            songSolo = new Label();
             label2 = new Label();
             label6 = new Label();
+            label7 = new Label();
+            songTime = new Label();
+            button1 = new Button();
+            button2 = new Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -179,21 +183,21 @@ namespace CremeWorks
             // songsToolStripMenuItem
             // 
             songsToolStripMenuItem.Name = "songsToolStripMenuItem";
-            songsToolStripMenuItem.Size = new Size(180, 22);
+            songsToolStripMenuItem.Size = new Size(116, 22);
             songsToolStripMenuItem.Text = "Songs";
             songsToolStripMenuItem.Click += songsToolStripMenuItem_Click;
             // 
             // playlistsToolStripMenuItem
             // 
             playlistsToolStripMenuItem.Name = "playlistsToolStripMenuItem";
-            playlistsToolStripMenuItem.Size = new Size(180, 22);
+            playlistsToolStripMenuItem.Size = new Size(116, 22);
             playlistsToolStripMenuItem.Text = "Playlists";
             playlistsToolStripMenuItem.Click += playlistsToolStripMenuItem_Click;
             // 
             // patchesToolStripMenuItem
             // 
             patchesToolStripMenuItem.Name = "patchesToolStripMenuItem";
-            patchesToolStripMenuItem.Size = new Size(180, 22);
+            patchesToolStripMenuItem.Size = new Size(116, 22);
             patchesToolStripMenuItem.Text = "Patches";
             // 
             // configureToolStripMenuItem1
@@ -328,13 +332,13 @@ namespace CremeWorks
             // songKey
             // 
             songKey.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            songKey.AutoSize = true;
             songKey.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            songKey.Location = new Point(1174, 618);
+            songKey.Location = new Point(1174, 611);
             songKey.Margin = new Padding(4, 0, 4, 0);
             songKey.Name = "songKey";
-            songKey.Size = new Size(0, 20);
+            songKey.Size = new Size(151, 23);
             songKey.TabIndex = 27;
+            songKey.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // chatBox
             // 
@@ -365,7 +369,7 @@ namespace CremeWorks
             // 
             chatInput.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             chatInput.Font = new Font("Microsoft Sans Serif", 11F);
-            chatInput.Location = new Point(328, 722);
+            chatInput.Location = new Point(328, 723);
             chatInput.Margin = new Padding(2);
             chatInput.Name = "chatInput";
             chatInput.Size = new Size(656, 24);
@@ -377,7 +381,7 @@ namespace CremeWorks
             btnChatSend.Location = new Point(989, 722);
             btnChatSend.Margin = new Padding(4, 3, 4, 3);
             btnChatSend.Name = "btnChatSend";
-            btnChatSend.Size = new Size(79, 27);
+            btnChatSend.Size = new Size(80, 27);
             btnChatSend.TabIndex = 31;
             btnChatSend.Text = "Send";
             btnChatSend.UseVisualStyleBackColor = true;
@@ -386,25 +390,25 @@ namespace CremeWorks
             // songTempo
             // 
             songTempo.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            songTempo.AutoSize = true;
             songTempo.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             songTempo.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            songTempo.Location = new Point(1202, 648);
+            songTempo.Location = new Point(1202, 637);
             songTempo.Margin = new Padding(4, 0, 4, 0);
             songTempo.Name = "songTempo";
-            songTempo.Size = new Size(43, 20);
+            songTempo.Size = new Size(123, 23);
             songTempo.TabIndex = 32;
             songTempo.Text = "BPM";
+            songTempo.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // boxTempo
             // 
             boxTempo.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             boxTempo.BackColor = Color.White;
             boxTempo.BorderStyle = BorderStyle.FixedSingle;
-            boxTempo.Location = new Point(1178, 648);
+            boxTempo.Location = new Point(1177, 637);
             boxTempo.Margin = new Padding(2);
             boxTempo.Name = "boxTempo";
-            boxTempo.Size = new Size(21, 23);
+            boxTempo.Size = new Size(23, 23);
             boxTempo.TabIndex = 33;
             // 
             // csvExportSaveFile
@@ -429,7 +433,7 @@ namespace CremeWorks
             // 
             label4.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             label4.Font = new Font("Microsoft Sans Serif", 11F);
-            label4.Location = new Point(1076, 681);
+            label4.Location = new Point(1076, 663);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
             label4.Size = new Size(96, 23);
@@ -437,25 +441,25 @@ namespace CremeWorks
             label4.Text = "Solo Mode:";
             label4.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // label5
+            // songSolo
             // 
-            label5.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            label5.AutoSize = true;
-            label5.BackColor = SystemColors.Control;
-            label5.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.ForeColor = Color.Red;
-            label5.Location = new Point(1174, 681);
-            label5.Margin = new Padding(4, 0, 4, 0);
-            label5.Name = "label5";
-            label5.Size = new Size(31, 18);
-            label5.TabIndex = 36;
-            label5.Text = "Off";
+            songSolo.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            songSolo.BackColor = SystemColors.Control;
+            songSolo.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            songSolo.ForeColor = Color.Red;
+            songSolo.Location = new Point(1174, 663);
+            songSolo.Margin = new Padding(4, 0, 4, 0);
+            songSolo.Name = "songSolo";
+            songSolo.Size = new Size(151, 23);
+            songSolo.TabIndex = 36;
+            songSolo.Text = "Off";
+            songSolo.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label2
             // 
             label2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             label2.Font = new Font("Microsoft Sans Serif", 11F);
-            label2.Location = new Point(1076, 648);
+            label2.Location = new Point(1076, 637);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(96, 23);
@@ -467,7 +471,7 @@ namespace CremeWorks
             // 
             label6.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             label6.Font = new Font("Microsoft Sans Serif", 11F);
-            label6.Location = new Point(1076, 618);
+            label6.Location = new Point(1076, 611);
             label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
             label6.Size = new Size(96, 23);
@@ -475,15 +479,64 @@ namespace CremeWorks
             label6.Text = "Key:";
             label6.TextAlign = ContentAlignment.MiddleRight;
             // 
+            // label7
+            // 
+            label7.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            label7.Font = new Font("Microsoft Sans Serif", 11F);
+            label7.Location = new Point(1076, 689);
+            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(96, 23);
+            label7.TabIndex = 40;
+            label7.Text = "Time:";
+            label7.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // songTime
+            // 
+            songTime.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            songTime.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            songTime.Location = new Point(1174, 689);
+            songTime.Margin = new Padding(4, 0, 4, 0);
+            songTime.Name = "songTime";
+            songTime.Size = new Size(151, 23);
+            songTime.TabIndex = 39;
+            songTime.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // button1
+            // 
+            button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            button1.Location = new Point(1177, 721);
+            button1.Margin = new Padding(4, 3, 4, 3);
+            button1.Name = "button1";
+            button1.Size = new Size(72, 27);
+            button1.TabIndex = 41;
+            button1.Text = "Reset";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            button2.Location = new Point(1253, 721);
+            button2.Margin = new Padding(4, 3, 4, 3);
+            button2.Name = "button2";
+            button2.Size = new Size(72, 27);
+            button2.TabIndex = 42;
+            button2.Text = "Store";
+            button2.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             AcceptButton = btnChatSend;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1334, 757);
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Controls.Add(label7);
+            Controls.Add(songTime);
             Controls.Add(label6);
             Controls.Add(label2);
-            Controls.Add(label5);
+            Controls.Add(songSolo);
             Controls.Add(label4);
             Controls.Add(boxSet);
             Controls.Add(boxTempo);
@@ -553,11 +606,15 @@ namespace CremeWorks
         private System.Windows.Forms.ToolStripMenuItem songsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem playlistsToolStripMenuItem;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label songSolo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label6;
         private ToolStripMenuItem defaultMIDIRoutingToolStripMenuItem;
         private ToolStripMenuItem patchesToolStripMenuItem;
+        private Label label7;
+        private Label songTime;
+        private Button button1;
+        private Button button2;
     }
 }
 
