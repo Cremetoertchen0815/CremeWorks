@@ -91,7 +91,7 @@ partial class PlaylistAddSongDialog
         MinimizeBox = false;
         Name = "PlaylistAddSongDialog";
         StartPosition = FormStartPosition.CenterScreen;
-        Text = "Select Song";
+        Text = "Add Song";
         ResumeLayout(false);
     }
 

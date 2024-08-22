@@ -2,6 +2,8 @@
 using CremeWorks.App.Dialogs.Playlist;
 using System;
 using System.ComponentModel;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace CremeWorks.App.Dialogs;
 public partial class PlaylistEditor : Form
@@ -9,6 +11,7 @@ public partial class PlaylistEditor : Form
     private readonly IDataParent _parent;
     private readonly BindingList<PlaylistComboboxItem> _comboItems = [];
     private bool _canDataBeUpdated = true;
+    private ListViewItem? draggedItem;
 
     public PlaylistEditor(IDataParent parent)
     {
@@ -27,6 +30,13 @@ public partial class PlaylistEditor : Form
             var pci = new PlaylistComboboxItem(item.Name, item.Date);
             pci.PlaylistEntries.AddRange(item.Elements);
             _comboItems.Add(pci);
+        }
+
+        // Select the first item
+        if (_comboItems.Count > 0)
+        {
+            boxSelector.SelectedIndex = 0;
+            boxSelector_SelectedIndexChanged(this, EventArgs.Empty);
         }
     }
 
@@ -106,21 +116,245 @@ public partial class PlaylistEditor : Form
     private void btnAddSong_Click(object sender, EventArgs e)
     {
         if (boxSelector.SelectedItem is not PlaylistComboboxItem item) return;
-        var dialog = new PlaylistAddSongDialog(_parent);
+        var dialog = new PlaylistAddSongDialog(_parent, null);
         if (dialog.ShowDialog() != DialogResult.OK) return;
         var songId = dialog.SelectedSongId;
         if (!_parent.Database.Songs.TryGetValue(songId, out var song)) return;
 
         var entry = new SongPlaylistEntry(songId);
         item.PlaylistEntries.Add(entry);
-        lstEntries.Items.Add(new ListViewItem(new[] 
+        lstEntries.Items.Add(new ListViewItem(new[]
         {
-            item.PlaylistEntries.Count(x => x is SongPlaylistEntry).ToString(), 
-            song.Title, 
-            song.Artist.ToString(), 
-            "Song", 
-            TimeSpan.FromSeconds(song.ExpectedDurationSeconds).ToString(@"mm\:ss") 
-        }) { Tag = entry });
+            item.PlaylistEntries.Count(x => x is SongPlaylistEntry).ToString(),
+            song.Title,
+            song.Artist.ToString(),
+            "Song",
+            TimeSpan.FromSeconds(song.ExpectedDurationSeconds).ToString(@"mm\:ss")
+        })
+        { Tag = entry });
+    }
+
+    private void btnAddMarker_Click(object sender, EventArgs e)
+    {
+        if (boxSelector.SelectedItem is not PlaylistComboboxItem item) return;
+
+        var nuItem = new MarkerPlaylistEntry() { Text = "New Marker" };
+        var dialog = new PlaylistAddMarkerDialog(_parent, nuItem);
+        if (dialog.ShowDialog() != DialogResult.OK) return;
+
+        item.PlaylistEntries.Add(nuItem);
+        lstEntries.Items.Add(new ListViewItem(new[]
+        {
+            string.Empty,
+            nuItem.Text,
+            "-",
+            "Marker",
+            "-"
+        })
+        { Tag = nuItem });
+    }
+
+    private void btnEdit_Click(object sender, EventArgs e)
+    {
+        if (boxSelector.SelectedItem is not PlaylistComboboxItem item || lstEntries.SelectedItems.Count == 0) return;
+        var entry = lstEntries.SelectedItems[0].Tag as IPlaylistEntry;
+
+        if (entry is SongPlaylistEntry song)
+        {
+            var dialog = new PlaylistAddSongDialog(_parent, song.SongId);
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+            var songId = dialog.SelectedSongId;
+            if (!_parent.Database.Songs.TryGetValue(songId, out var newSong)) return;
+            song.SongId = songId;
+            lstEntries.SelectedItems[0].SubItems[1].Text = newSong.Title;
+            lstEntries.SelectedItems[0].SubItems[2].Text = newSong.Artist.ToString();
+            lstEntries.SelectedItems[0].SubItems[4].Text = TimeSpan.FromSeconds(newSong.ExpectedDurationSeconds).ToString(@"mm\:ss");
+        }
+        else if (entry is MarkerPlaylistEntry marker)
+        {
+            var dialog = new PlaylistAddMarkerDialog(_parent, marker);
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+            lstEntries.SelectedItems[0].SubItems[1].Text = marker.Text;
+        }
+    }
+
+    private void btnUp_Click(object sender, EventArgs e)
+    {
+        if (boxSelector.SelectedItem is not PlaylistComboboxItem item || lstEntries.SelectedItems.Count == 0) return;
+        var index = lstEntries.SelectedIndices[0];
+        if (index == 0) return;
+        var entry = item.PlaylistEntries[index];
+        item.PlaylistEntries.RemoveAt(index);
+        item.PlaylistEntries.Insert(index - 1, entry);
+        //Modify the list view
+        var lvi = lstEntries.Items[index];
+        lstEntries.Items.RemoveAt(index);
+        lstEntries.Items.Insert(index - 1, lvi);
+
+        FixSongNumeration();
+    }
+
+    private void btnDown_Click(object sender, EventArgs e)
+    {
+        if (boxSelector.SelectedItem is not PlaylistComboboxItem item || lstEntries.SelectedItems.Count == 0) return;
+        var index = lstEntries.SelectedIndices[0];
+        if (index == item.PlaylistEntries.Count - 1) return;
+        var entry = item.PlaylistEntries[index];
+        item.PlaylistEntries.RemoveAt(index);
+        item.PlaylistEntries.Insert(index + 1, entry);
+        //Modify the list view
+        var lvi = lstEntries.Items[index];
+        lstEntries.Items.RemoveAt(index);
+        lstEntries.Items.Insert(index + 1, lvi);
+
+        FixSongNumeration();
+    }
+
+    private void btnDuplicate_Click(object sender, EventArgs e)
+    {
+        if (boxSelector.SelectedItem is not PlaylistComboboxItem item || lstEntries.SelectedItems.Count == 0) return;
+        var entry = lstEntries.SelectedItems[0].Tag as IPlaylistEntry;
+        if (entry is SongPlaylistEntry song)
+        {
+            var newEntry = new SongPlaylistEntry(song.SongId);
+            item.PlaylistEntries.Add(newEntry);
+            lstEntries.Items.Add(new ListViewItem(new[]
+            {
+                item.PlaylistEntries.Count(x => x is SongPlaylistEntry).ToString(),
+                lstEntries.SelectedItems[0].SubItems[1].Text,
+                lstEntries.SelectedItems[0].SubItems[2].Text,
+                "Song",
+                lstEntries.SelectedItems[0].SubItems[4].Text
+            })
+            { Tag = newEntry });
+        }
+        else if (entry is MarkerPlaylistEntry marker)
+        {
+            var newEntry = new MarkerPlaylistEntry() { Text = marker.Text };
+            item.PlaylistEntries.Add(newEntry);
+            lstEntries.Items.Add(new ListViewItem(new[]
+            {
+                string.Empty,
+                marker.Text,
+                "-",
+                "Marker",
+                "-"
+            })
+            { Tag = newEntry });
+        }
+        FixSongNumeration();
+    }
+
+    private void btnDelete_Click(object sender, EventArgs e)
+    {
+        if (boxSelector.SelectedItem is not PlaylistComboboxItem item || lstEntries.SelectedItems.Count == 0) return;
+        var entityToRemove = lstEntries.SelectedItems[0].Tag as IPlaylistEntry;
+        if (entityToRemove is not null) item.PlaylistEntries.Remove(entityToRemove);
+        lstEntries.Items.Remove(lstEntries.SelectedItems[0]);
+        FixSongNumeration();
+    }
+
+    private void PlaylistEditor_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        _parent.Database.Playlists.Clear();
+        foreach (var item in _comboItems)
+        {
+            var playlist = new Data.Playlist();
+            playlist.Name = item.Name;
+            playlist.Date = item.Date;
+            playlist.Elements.AddRange(item.PlaylistEntries);
+            _parent.Database.Playlists.Add(playlist);
+        }
+    }
+
+    private void lstEntries_ItemDrag(object sender, ItemDragEventArgs e)
+    {
+        // Start dragging the item
+        draggedItem = (ListViewItem?)e.Item;
+        if (draggedItem is null) return;
+        DoDragDrop(draggedItem, DragDropEffects.Move);
+    }
+
+    private void lstEntries_DragEnter(object sender, DragEventArgs e)
+    {
+        // Allow move operation
+        if (e.Data?.GetDataPresent(typeof(ListViewItem)) == true)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+        else
+        {
+            e.Effect = DragDropEffects.None;
+        }
+    }
+
+    private void lstEntries_DragOver(object sender, DragEventArgs e)
+    {
+        // Ensure the effect is Move while dragging over
+        e.Effect = DragDropEffects.Move;
+
+        // Get the location in the ListView
+        Point point = lstEntries.PointToClient(new Point(e.X, e.Y));
+
+        // Get the target item under the mouse
+        ListViewItem? targetItem = lstEntries.GetItemAt(point.X, point.Y);
+
+        // Highlight the target item for better user experience
+        if (targetItem != null && targetItem != draggedItem)
+        {
+            targetItem.Selected = true;
+            targetItem.Focused = true;
+        }
+    }
+
+    private void lstEntries_DragDrop(object sender, DragEventArgs e)
+    {
+        // Get the drop point
+        Point point = lstEntries.PointToClient(new Point(e.X, e.Y));
+
+        // Get the target item
+        ListViewItem? targetItem = lstEntries.GetItemAt(point.X, point.Y);
+
+        if (targetItem != null && draggedItem != null)
+        {
+            // Find the indices of the dragged item and target item
+            int draggedIndex = draggedItem.Index;
+            int targetIndex = targetItem.Index;
+
+            // Remove the dragged item
+            var playlist = boxSelector.SelectedItem as PlaylistComboboxItem;
+            if (playlist is null) return;
+            var entry = playlist.PlaylistEntries[draggedIndex];
+            playlist.PlaylistEntries.RemoveAt(draggedIndex);
+            lstEntries.Items.RemoveAt(draggedIndex);
+
+            // Insert it at the target location
+            playlist.PlaylistEntries.Insert(targetIndex, entry);
+            lstEntries.Items.Insert(targetIndex, draggedItem);
+
+            FixSongNumeration();
+
+
+            // Clear the selection
+            draggedItem.Selected = false;
+            draggedItem.Focused = false;
+
+            // Re-select and focus the moved item for visibility
+            lstEntries.Items[targetIndex].Selected = true;
+            lstEntries.Items[targetIndex].Focused = true;
+        }
+    }
+
+    private void FixSongNumeration()
+    {
+        int playlistIndex = 1;
+        foreach (ListViewItem item in lstEntries.Items)
+        {
+            if (item.Tag is SongPlaylistEntry)
+            {
+                item.SubItems[0].Text = playlistIndex++.ToString();
+            }
+        }
     }
 }
 

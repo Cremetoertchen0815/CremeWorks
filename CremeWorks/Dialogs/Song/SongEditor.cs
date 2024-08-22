@@ -30,6 +30,12 @@ namespace CremeWorks.App.Dialogs
             txtBpm.Value = _s.Tempo;
             txtLyrics.Text = _s.Lyrics;
 
+            var duration = TimeSpan.FromSeconds(_s.ExpectedDurationSeconds);
+            txtDurationMin.Value = duration.Minutes;
+            txtDurationSec.Value = duration.Seconds;
+
+            lstCues.Items.AddRange(_s.Cues.Select(x => new ComboBoxCueItem(x, _parent.Database.LightingCues[x.CueId])).ToArray());
+
             //Generate comboboxes for device patches
             var patchBaseYPos = 260;
             foreach (var item in _parent.Database.Devices.Where(x => x.Value.IsInstrument))
@@ -88,6 +94,7 @@ namespace CremeWorks.App.Dialogs
             _s.Instructions = txtInstructions.Text;
             _s.Click = chkClick.Checked;
             _s.Tempo = (byte)txtBpm.Value;
+            _s.ExpectedDurationSeconds = (int)(txtDurationMin.Value * 60 + txtDurationSec.Value);
             _s.Patches.Clear();
             _s.Patches.AddRange(_patchBoxes.Select(x => new PatchInstance(x.Key, ((ComboBoxPatchItem)x.Value.SelectedItem!).PatchId)).Where(x => x.PatchId >= 0));
         }
@@ -154,6 +161,12 @@ namespace CremeWorks.App.Dialogs
             lstCues.Items.Add(newCbi);
         }
 
+        private void btnCueRemove_Click(object sender, EventArgs e)
+        {
+            if (lstCues.SelectedIndex < 0) return;
+            lstCues.Items.RemoveAt(lstCues.SelectedIndex);
+        }
+
 
         private class ComboBoxCueItem
         {
@@ -167,12 +180,6 @@ namespace CremeWorks.App.Dialogs
             }
 
             public override string ToString() => $"{Instance.Description} ({LightingCueItem.Name})";
-        }
-
-        private void btnCueRemove_Click(object sender, EventArgs e)
-        {
-            if (lstCues.SelectedIndex < 0) return;
-            lstCues.Items.RemoveAt(lstCues.SelectedIndex);
         }
 
         private void btnRouting_Click(object sender, EventArgs e) => new SongRoutingEditor(_parent, _s).ShowDialog();

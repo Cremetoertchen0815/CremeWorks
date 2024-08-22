@@ -13,12 +13,16 @@ public partial class PlaylistAddSongDialog : Form
 {
     public int SelectedSongId => (boxSelector.SelectedItem as SongComboboxItem)?.Id ?? -1;
 
-    public PlaylistAddSongDialog(IDataParent parent)
+    public PlaylistAddSongDialog(IDataParent parent, int? defaultId = null)
     {
         InitializeComponent();
 
         var songs = parent.Database.Songs.OrderBy(s => s.Value.Artist).ThenBy(s => s.Value.Title).Select(x => new SongComboboxItem(x.Value.Title, x.Value.Artist, x.Key)).ToList();
         boxSelector.DataSource = new BindingSource(songs, null);
+        if (defaultId.HasValue)
+        {
+            boxSelector.SelectedItem = songs.FirstOrDefault(x => x.Id == defaultId);
+        }
     }
 
     private void btnOk_Click(object sender, EventArgs e)

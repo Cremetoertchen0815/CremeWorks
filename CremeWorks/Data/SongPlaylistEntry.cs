@@ -1,7 +1,11 @@
 ﻿namespace CremeWorks.App.Data;
 
-public record SongPlaylistEntry(int SongId) : IPlaylistEntry
+public record SongPlaylistEntry : IPlaylistEntry
 {
+    public int SongId { get; set; }
+
+    public SongPlaylistEntry(int songId) => SongId = songId;
+
     public PlaylistEntryCommonInfo GetCommonInformation(Database db, int? indexInPlaylist = null)
     {
         var song = db.Songs[SongId];

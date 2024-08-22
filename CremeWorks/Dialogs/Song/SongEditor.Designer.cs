@@ -54,7 +54,14 @@ namespace CremeWorks.App.Dialogs
             btnCueEdit = new Button();
             btnCueRemove = new Button();
             btnCueDuplicate = new Button();
+            label6 = new Label();
+            txtDurationMin = new NumericUpDown();
+            label7 = new Label();
+            label8 = new Label();
+            txtDurationSec = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)txtBpm).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtDurationMin).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtDurationSec).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -210,17 +217,17 @@ namespace CremeWorks.App.Dialogs
             // 
             // txtInstructions
             // 
-            txtInstructions.Location = new Point(92, 127);
+            txtInstructions.Location = new Point(92, 157);
             txtInstructions.Margin = new Padding(4);
             txtInstructions.Multiline = true;
             txtInstructions.Name = "txtInstructions";
             txtInstructions.ScrollBars = ScrollBars.Vertical;
-            txtInstructions.Size = new Size(328, 124);
+            txtInstructions.Size = new Size(328, 94);
             txtInstructions.TabIndex = 137;
             // 
             // label35
             // 
-            label35.Location = new Point(14, 127);
+            label35.Location = new Point(14, 157);
             label35.Margin = new Padding(4, 0, 4, 0);
             label35.Name = "label35";
             label35.Size = new Size(70, 23);
@@ -308,12 +315,66 @@ namespace CremeWorks.App.Dialogs
             btnCueDuplicate.UseVisualStyleBackColor = true;
             btnCueDuplicate.Click += btnCueDuplicate_Click;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(144, 130);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(28, 15);
+            label6.TabIndex = 153;
+            label6.Text = "min";
+            // 
+            // txtDurationMin
+            // 
+            txtDurationMin.Location = new Point(92, 126);
+            txtDurationMin.Margin = new Padding(4);
+            txtDurationMin.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
+            txtDurationMin.Name = "txtDurationMin";
+            txtDurationMin.Size = new Size(52, 23);
+            txtDurationMin.TabIndex = 152;
+            // 
+            // label7
+            // 
+            label7.Location = new Point(14, 126);
+            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(70, 23);
+            label7.TabIndex = 151;
+            label7.Text = "Duration";
+            label7.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(230, 130);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(12, 15);
+            label8.TabIndex = 155;
+            label8.Text = "s";
+            // 
+            // txtDurationSec
+            // 
+            txtDurationSec.Location = new Point(178, 126);
+            txtDurationSec.Margin = new Padding(4);
+            txtDurationSec.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
+            txtDurationSec.Name = "txtDurationSec";
+            txtDurationSec.Size = new Size(52, 23);
+            txtDurationSec.TabIndex = 154;
+            txtDurationSec.Value = new decimal(new int[] { 30, 0, 0, 0 });
+            // 
             // SongEditor
             // 
             AcceptButton = btnOk;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(845, 617);
+            Controls.Add(label8);
+            Controls.Add(txtDurationSec);
+            Controls.Add(label6);
+            Controls.Add(txtDurationMin);
+            Controls.Add(label7);
             Controls.Add(btnCueDuplicate);
             Controls.Add(btnCueRemove);
             Controls.Add(btnCueEdit);
@@ -348,6 +409,8 @@ namespace CremeWorks.App.Dialogs
             Text = "Edit Song";
             FormClosing += SongEditor_FormClosing;
             ((System.ComponentModel.ISupportInitialize)txtBpm).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtDurationMin).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtDurationSec).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -379,5 +442,10 @@ namespace CremeWorks.App.Dialogs
         private Button btnCueEdit;
         private Button btnCueRemove;
         private Button btnCueDuplicate;
+        private Label label6;
+        private NumericUpDown txtDurationMin;
+        private Label label7;
+        private Label label8;
+        private NumericUpDown txtDurationSec;
     }
 }

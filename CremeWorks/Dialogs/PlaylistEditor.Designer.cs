@@ -33,8 +33,6 @@ partial class PlaylistEditor
         btnPlus = new Button();
         boxSelector = new ComboBox();
         lblDevice = new Label();
-        btnCancel = new Button();
-        btnOk = new Button();
         groupBox1 = new GroupBox();
         lstEntries = new ListView();
         columnNr = new ColumnHeader();
@@ -108,26 +106,6 @@ partial class PlaylistEditor
         lblDevice.Text = "Playlist";
         lblDevice.TextAlign = ContentAlignment.TopRight;
         // 
-        // btnCancel
-        // 
-        btnCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-        btnCancel.Location = new Point(366, 416);
-        btnCancel.Name = "btnCancel";
-        btnCancel.Size = new Size(66, 40);
-        btnCancel.TabIndex = 34;
-        btnCancel.Text = "Cancel";
-        btnCancel.UseVisualStyleBackColor = true;
-        // 
-        // btnOk
-        // 
-        btnOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-        btnOk.Location = new Point(440, 416);
-        btnOk.Name = "btnOk";
-        btnOk.Size = new Size(66, 40);
-        btnOk.TabIndex = 33;
-        btnOk.Text = "OK";
-        btnOk.UseVisualStyleBackColor = true;
-        // 
         // groupBox1
         // 
         groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -137,14 +115,14 @@ partial class PlaylistEditor
         groupBox1.Enabled = false;
         groupBox1.Location = new Point(65, 36);
         groupBox1.Name = "groupBox1";
-        groupBox1.Size = new Size(444, 374);
+        groupBox1.Size = new Size(444, 426);
         groupBox1.TabIndex = 32;
         groupBox1.TabStop = false;
         groupBox1.Text = "Properties";
         // 
         // lstEntries
         // 
-        lstEntries.AllowColumnReorder = true;
+        lstEntries.AllowDrop = true;
         lstEntries.Columns.AddRange(new ColumnHeader[] { columnNr, columnTitle, columnArtist, columnType, columnDuration });
         lstEntries.Dock = DockStyle.Fill;
         lstEntries.FullRowSelect = true;
@@ -152,11 +130,14 @@ partial class PlaylistEditor
         lstEntries.Margin = new Padding(4, 3, 4, 3);
         lstEntries.MultiSelect = false;
         lstEntries.Name = "lstEntries";
-        lstEntries.Size = new Size(343, 292);
-        lstEntries.Sorting = SortOrder.Ascending;
+        lstEntries.Size = new Size(343, 344);
         lstEntries.TabIndex = 36;
         lstEntries.UseCompatibleStateImageBehavior = false;
         lstEntries.View = View.Details;
+        lstEntries.ItemDrag += lstEntries_ItemDrag;
+        lstEntries.DragDrop += lstEntries_DragDrop;
+        lstEntries.DragEnter += lstEntries_DragEnter;
+        lstEntries.DragOver += lstEntries_DragOver;
         // 
         // columnNr
         // 
@@ -195,7 +176,7 @@ partial class PlaylistEditor
         panel2.Location = new Point(3, 79);
         panel2.Margin = new Padding(4, 3, 4, 3);
         panel2.Name = "panel2";
-        panel2.Size = new Size(95, 292);
+        panel2.Size = new Size(95, 344);
         panel2.TabIndex = 37;
         // 
         // btnDown
@@ -209,6 +190,7 @@ partial class PlaylistEditor
         btnDown.TabIndex = 11;
         btnDown.Text = "↓";
         btnDown.UseVisualStyleBackColor = true;
+        btnDown.Click += btnDown_Click;
         // 
         // btnUp
         // 
@@ -221,6 +203,7 @@ partial class PlaylistEditor
         btnUp.TabIndex = 10;
         btnUp.Text = "↑";
         btnUp.UseVisualStyleBackColor = true;
+        btnUp.Click += btnUp_Click;
         // 
         // btnAddMarker
         // 
@@ -232,6 +215,7 @@ partial class PlaylistEditor
         btnAddMarker.TabIndex = 9;
         btnAddMarker.Text = "Add Marker";
         btnAddMarker.UseVisualStyleBackColor = true;
+        btnAddMarker.Click += btnAddMarker_Click;
         // 
         // btnDuplicate
         // 
@@ -243,6 +227,7 @@ partial class PlaylistEditor
         btnDuplicate.TabIndex = 8;
         btnDuplicate.Text = "Duplicate";
         btnDuplicate.UseVisualStyleBackColor = true;
+        btnDuplicate.Click += btnDuplicate_Click;
         // 
         // btnDelete
         // 
@@ -254,6 +239,7 @@ partial class PlaylistEditor
         btnDelete.TabIndex = 7;
         btnDelete.Text = "Delete";
         btnDelete.UseVisualStyleBackColor = true;
+        btnDelete.Click += btnDelete_Click;
         // 
         // btnEdit
         // 
@@ -265,6 +251,7 @@ partial class PlaylistEditor
         btnEdit.TabIndex = 6;
         btnEdit.Text = "Edit";
         btnEdit.UseVisualStyleBackColor = true;
+        btnEdit.Click += btnEdit_Click;
         // 
         // btnAddSong
         // 
@@ -331,9 +318,7 @@ partial class PlaylistEditor
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(519, 468);
-        Controls.Add(btnCancel);
-        Controls.Add(btnOk);
+        ClientSize = new Size(519, 474);
         Controls.Add(groupBox1);
         Controls.Add(btnMinus);
         Controls.Add(btnPlus);
@@ -341,9 +326,10 @@ partial class PlaylistEditor
         Controls.Add(lblDevice);
         Icon = (Icon)resources.GetObject("$this.Icon");
         MaximumSize = new Size(535, 4000);
-        MinimumSize = new Size(535, 507);
+        MinimumSize = new Size(535, 420);
         Name = "PlaylistEditor";
         Text = "Playlists";
+        FormClosing += PlaylistEditor_FormClosing;
         groupBox1.ResumeLayout(false);
         panel2.ResumeLayout(false);
         panel1.ResumeLayout(false);
@@ -358,8 +344,6 @@ partial class PlaylistEditor
     private Button btnPlus;
     private ComboBox boxSelector;
     private Label lblDevice;
-    private Button btnCancel;
-    private Button btnOk;
     private GroupBox groupBox1;
     private DateTimePicker txtDate;
     private TextBox txtName;
