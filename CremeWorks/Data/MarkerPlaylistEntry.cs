@@ -25,4 +25,17 @@ public class MarkerPlaylistEntry : IPlaylistEntry
         }
         return entry;
     }
+
+    public void Serialize(XmlNode node)
+    {
+        node.Attributes!.Append(node.OwnerDocument!.CreateAttribute("text")).Value = Text;
+        node.Attributes.Append(node.OwnerDocument.CreateAttribute("instructions")).Value = Instructions;
+        foreach (var cue in Cues)
+        {
+            var cueNode = node.OwnerDocument.CreateElement("cue");
+            cueNode.Attributes.Append(node.OwnerDocument.CreateAttribute("id")).Value = cue.CueId.ToString();
+            cueNode.Attributes.Append(node.OwnerDocument.CreateAttribute("description")).Value = cue.Description;
+            node.AppendChild(cueNode);
+        }
+    }
 }

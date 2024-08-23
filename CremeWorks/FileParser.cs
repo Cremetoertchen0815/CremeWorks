@@ -37,7 +37,7 @@ public class FileParser
                     {
                         var id = int.Parse(deviceNode.Attributes?["id"]?.Value ?? throw new Exception("Device id cannot be null!"));
                         var name = deviceNode.Attributes["name"]?.Value ?? throw new Exception("Device name cannot be null!");
-                        var midiId = deviceNode.Attributes["midiid"]?.Value ?? throw new Exception("Device midi id cannot be null!");
+                        var midiId = deviceNode.Attributes["midiname"]?.Value ?? throw new Exception("Device midi id cannot be null!");
                         var isRemoteSrc = bool.Parse(deviceNode.Attributes["isremote"]?.Value ?? "false");
                         var type = Enum.Parse<MidiDeviceType>(deviceNode.Attributes["type"]?.Value ?? throw new Exception("Device type cannot be null!"));
                         var device = new MidiDevice(name, midiId, isRemoteSrc, type);
@@ -192,10 +192,205 @@ public class FileParser
         return db;
     }
 
-    public static void SaveFile(string path, Database db)
+    public static void SaveFile(string path, Database db, bool binary = false)
     {
         var doc = new XmlDocument();
-        var root = doc.CreateElement("database");
+        var root = doc.CreateElement("cwdb");
+        root.SetAttribute("version", VERSION);
+        if (db.CloudId.HasValue) root.SetAttribute("cloudid", db.CloudId.Value.ToString());
+        root.SetAttribute("binary", "false");
+        if (binary)
+        {
+            // Save binary data
+            root.SetAttribute("binary", "true");
+            return;
+        }
+
+        // Save body(XML)
+
+        // Save devices
+        var devices = doc.CreateElement("devices");
+        foreach (var device in db.Devices)
+        {
+            var deviceNode = doc.CreateElement("device");
+            deviceNode.SetAttribute("id", device.Key.ToString());
+            deviceNode.SetAttribute("name", device.Value.Name);
+            deviceNode.SetAttribute("midiname", device.Value.MidiId);
+            deviceNode.SetAttribute("isremote", device.Value.IsRemoteSource.ToString());
+            deviceNode.SetAttribute("type", device.Value.Type.ToString());
+            devices.AppendChild(deviceNode);
+        }
+        root.AppendChild(devices);
+
+        // Save patches
+        var patches = doc.CreateElement("patches");
+        foreach (var patch in db.Patches)
+        {
+            var patchNode = doc.CreateElement("patch");
+            patchNode.SetAttribute("id", patch.Key.ToString());
+            patchNode.SetAttribute("name", patch.Value.Name);
+            patchNode.SetAttribute("type", patch.Value.DeviceType.ToString());
+            patch.Value.Serialize(patchNode);
+            patches.AppendChild(patchNode);
+        }
+        root.AppendChild(patches);
+
+        // Save cues
+        var cues = doc.CreateElement("cues");
+        foreach (var cue in db.LightingCues)
+        {
+            var cueNode = doc.CreateElement("cue");
+            cueNode.SetAttribute("id", cue.Key.ToString());
+            cueNode.SetAttribute("name", cue.Value.Name);
+            cueNode.SetAttribute("note", cue.Value.NoteValue.ToString());
+            cues.AppendChild(cueNode);
+        }
+        root.AppendChild(cues);
+
+        // Save actions
+        var actions = doc.CreateElement("actions");
+        foreach (var action in db.Actions)
+        {
+            var actionNode = doc.CreateElement("action");
+            actionNode.SetAttribute("event", action.SourceEventType.ToString());
+            actionNode.SetAttribute("channel", action.SourceEventChannel.ToString());
+            actionNode.SetAttribute("value", action.SourceEventValue.ToString());
+            actionNode.SetAttribute("type", action.Action.ToString());
+            if (action.Argument.HasValue) actionNode.SetAttribute("arg", action.Argument.Value.ToString());
+            actions.AppendChild(actionNode);
+        }
+        root.AppendChild(actions);
+
+        // Save songs
+        var songs = doc.CreateElement("songs");
+        foreach (var song in db.Songs)
+        {
+            // Save basic song data
+            var songNode = doc.CreateElement("song");
+            songNode.SetAttribute("id", song.Key.ToString());
+            songNode.SetAttribute("title", song.Value.Title);
+            songNode.SetAttribute("artist", song.Value.Artist);
+            songNode.SetAttribute("key", song.Value.Key);
+            songNode.SetAttribute("duration", song.Value.ExpectedDurationSeconds.ToString());
+            songNode.SetAttribute("tempo", song.Value.Tempo.ToString());
+            songNode.SetAttribute("click", song.Value.Click.ToString());
+
+            // Save lyrics
+            if (!string.IsNullOrWhiteSpace(song.Value.Lyrics))
+            {
+                var lyrics = doc.CreateElement("lyrics");
+                lyrics.InnerText = song.Value.Lyrics;
+                songNode.AppendChild(lyrics);
+            }
+
+            // Save instructions
+            if (!string.IsNullOrWhiteSpace(song.Value.Instructions))
+            {
+                var instructions = doc.CreateElement("instructions");
+                instructions.InnerText = song.Value.Instructions;
+                songNode.AppendChild(instructions);
+            }
+
+            // Save routing overrides
+            if (song.Value.RoutingOverrides.Count > 0)
+            {
+                var routes = doc.CreateElement("routing");
+                foreach (var routingOverride in song.Value.RoutingOverrides)
+                {
+                    var routingNode = doc.CreateElement("route");
+                    routingNode.SetAttribute("src", routingOverride.SourceDeviceId.ToString());
+                    routingNode.SetAttribute("dest", routingOverride.DestinationDeviceId.ToString());
+                    routingNode.SetAttribute("type", routingOverride.Type.ToString());
+                    routes.AppendChild(routingNode);
+                }
+                songNode.AppendChild(routes);
+            }
+
+            // Save patches
+            if (song.Value.Patches.Count > 0)
+            {
+                patches = doc.CreateElement("patches");
+                foreach (var patch in song.Value.Patches)
+                {
+                    var patchNode = doc.CreateElement("patch");
+                    patchNode.SetAttribute("id", patch.PatchId.ToString());
+                    patchNode.SetAttribute("device", patch.DeviceId.ToString());
+                    patches.AppendChild(patchNode);
+                }
+                songNode.AppendChild(patches);
+            }
+
+            // Save cues
+            if (song.Value.Cues.Count > 0)
+            {
+                var songCues = doc.CreateElement("cues");
+                foreach (var cue in song.Value.Cues)
+                {
+                    var cueNode = doc.CreateElement("cue");
+                    cueNode.SetAttribute("id", cue.CueId.ToString());
+                    cueNode.SetAttribute("description", cue.Description);
+                    songCues.AppendChild(cueNode);
+                }
+                songNode.AppendChild(songCues);
+            }
+
+            // Save chord macros
+            if (song.Value.ChordMacros.Count > 0)
+            {
+                var macro = doc.CreateElement("macro");
+                macro.SetAttribute("src", song.Value.ChordMacroSourceDeviceId.ToString());
+                macro.SetAttribute("dest", song.Value.ChordMacroDestinationDeviceId.ToString());
+                foreach (var chordMacro in song.Value.ChordMacros)
+                {
+                    var macroNode = doc.CreateElement("chord");
+                    macroNode.SetAttribute("name", chordMacro.Name);
+                    macroNode.SetAttribute("trigger", chordMacro.TriggerNote.ToString());
+                    macroNode.SetAttribute("velocity", chordMacro.Velocity.ToString());
+                    macroNode.SetAttribute("notes", string.Join(",", chordMacro.PlayNotes));
+                    macro.AppendChild(macroNode);
+                }
+                songNode.AppendChild(macro);
+            }
+        }
+
+        // Save playlists
+        var playlists = doc.CreateElement("playlists");
+        foreach (var playlist in db.Playlists)
+        {
+            var playlistNode = doc.CreateElement("playlist");
+            playlistNode.SetAttribute("name", playlist.Name);
+            playlistNode.SetAttribute("date", playlist.Date.ToString());
+
+            foreach (var element in playlist.Elements)
+            {
+                var elementNode = doc.CreateElement("element");
+                elementNode.SetAttribute("type", element.Type.ToString());
+                switch (element)
+                {
+                    case SongPlaylistEntry songEntry:
+                        elementNode.SetAttribute("id", songEntry.SongId.ToString());
+                        break;
+                    case MarkerPlaylistEntry markerEntry:
+                        markerEntry.Serialize(elementNode);
+                        break;
+                }
+                playlistNode.AppendChild(elementNode);
+            }
+
+            playlists.AppendChild(playlistNode);
+        }
+
+        // Save default routing
+        var routing = doc.CreateElement("routing");
+        foreach (var routingOverride in db.DefaultRouting)
+        {
+            var routingNode = doc.CreateElement("route");
+            routingNode.SetAttribute("src", routingOverride.SourceDeviceId.ToString());
+            routingNode.SetAttribute("dest", routingOverride.DestinationDeviceId.ToString());
+            routingNode.SetAttribute("type", routingOverride.Type.ToString());
+            routing.AppendChild(routingNode);
+        }
+
         doc.AppendChild(root);
 
         doc.Save(path);
