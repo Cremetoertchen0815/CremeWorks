@@ -81,6 +81,7 @@ public partial class MidiSetUp : Form
             boxSelector.Text = string.Empty;
             comboBoxValueChange(sender, e);
         }
+
     }
 
     private void txtName_TextChanged(object sender, EventArgs e)
@@ -127,12 +128,26 @@ public partial class MidiSetUp : Form
     {
         if (DialogResult != DialogResult.OK) return;
 
+        var toRemove = _parent.Database.Devices.Keys.Except(_comboBoxDeviceItems.Select(x => x.Id)).ToList();
+
         _parent.Database.Devices.Clear();
         foreach (var item in boxSelector.Items)
         {
             var objectItem = (ComboBoxDeviceItem)item;
             if (objectItem.Id == -1) continue;
             _parent.Database.Devices.Add(objectItem.Id, new MidiDevice(objectItem.Name, objectItem.MidiId, objectItem.IsRemote, objectItem.MidiDeviceType));
+        }
+
+        // Remove all references to devices that were removed
+        foreach (var id in toRemove)
+        {
+            // Remove all references to this device
+            foreach (var song in _parent.Database.Songs)
+            {
+                song.Value.Patches.RemoveAll(p => p.DeviceId == id);
+                song.Value.RoutingOverrides.RemoveAll(r => r.SourceDeviceId == id || r.DestinationDeviceId == id);
+            }
+            _parent.Database.DefaultRouting.RemoveAll(r => r.SourceDeviceId == id || r.DestinationDeviceId == id);
         }
     }
 

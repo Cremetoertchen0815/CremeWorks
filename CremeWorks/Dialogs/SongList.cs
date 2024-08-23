@@ -102,5 +102,11 @@ public partial class SongList : Form
         lstSongs.Items.Remove(lvi);
         lstSongs.Sort();
         lstSongs.SelectedItems.Clear();
+
+        // Remove all references to this song in the database
+        foreach (var p in _parent.Database.Playlists)
+        {
+            p.Elements.Where(x => x is SongPlaylistEntry sp && sp.SongId == id).ToList().ForEach(x => p.Elements.Remove(x));
+        }
     }
 }

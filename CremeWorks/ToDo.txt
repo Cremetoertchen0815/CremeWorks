@@ -1,4 +1,3 @@
--Implement patch window
 -Implement new/open/save project system
 -Implement import/export system
 -Implement action system
