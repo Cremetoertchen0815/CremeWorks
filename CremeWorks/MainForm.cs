@@ -93,6 +93,8 @@ namespace CremeWorks
 
             playList.Items.AddRange(sortedSongEntries.Select(x => new SetListBoxItem(x.GetCommonInformation(_database).Header, x)).ToArray());
             //_server.SendToAll(MessageTypeEnum.SET_DATA, GetClientSet());
+            _activeEntry = null;
+            UpdateSong();
         }
 
         private readonly string[] Buchstaben = { "A", "B", "C", "D", "E", "F" };

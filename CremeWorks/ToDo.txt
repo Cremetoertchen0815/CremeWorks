@@ -1,4 +1,5 @@
--Implement new/open/save project system
+-ADD SOLO MODE DATA STRUCTURE TO DATABASE
+-Test MIDI matrix
 -Implement import/export system
 -Implement action system
 -Implement/test cue system

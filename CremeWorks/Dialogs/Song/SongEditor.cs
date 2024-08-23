@@ -55,8 +55,8 @@ namespace CremeWorks.App.Dialogs
                 cmbBox.Location = new Point(589, patchBaseYPos);
                 cmbBox.Name = "boxPatch" + item.Key;
                 cmbBox.Size = new Size(146, 23);
-                cmbBox.Items.Add(new ComboBoxPatchItem(-1, "-"));
                 cmbBox.Items.AddRange(_parent.Database.Patches.Where(x => x.Value.DeviceType == item.Value.Type).Select(x => new ComboBoxPatchItem(x.Key, x.Value.Name)).ToArray());
+                cmbBox.SelectedItem = cmbBox.Items.Cast<ComboBoxPatchItem>().FirstOrDefault(x => x.PatchId == _s.Patches.FirstOrDefault(y => y.DeviceId == item.Key).PatchId);
                 Controls.Add(cmbBox);
                 _patchBoxes.Add(item.Key, cmbBox);
 
@@ -96,7 +96,11 @@ namespace CremeWorks.App.Dialogs
             _s.Tempo = (byte)txtBpm.Value;
             _s.ExpectedDurationSeconds = (int)(txtDurationMin.Value * 60 + txtDurationSec.Value);
             _s.Patches.Clear();
-            _s.Patches.AddRange(_patchBoxes.Select(x => new PatchInstance(x.Key, ((ComboBoxPatchItem)x.Value.SelectedItem!).PatchId)).Where(x => x.PatchId >= 0));
+            foreach (var item in _patchBoxes)
+            {
+                if (item.Value.SelectedItem is not ComboBoxPatchItem ca) continue;
+                _s.Patches.Add(new PatchInstance { DeviceId = item.Key, PatchId = ca.PatchId });
+            }
         }
 
         private void btnChordMakro_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Xml;
 using CremeWorks.App.Data;
 
 namespace CremeWorks.App.Data.Patches
@@ -16,6 +17,52 @@ namespace CremeWorks.App.Data.Patches
         //public void ApplySettings(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0, 0, 0 }, StructMarshal<RefaceSystemData>.getBytes(SystemSettings));
         //public void ApplyPatch(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceCSVoiceData>.getBytes(VoiceSettings));
 
+        public void Serialize(XmlNode node)
+        {
+            node.Attributes!.Append(node.OwnerDocument!.CreateAttribute("name")).Value = Name;
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("volume")).Value = VoiceSettings.Volume.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("lfoAssign")).Value = VoiceSettings.LFOAssign.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("lfoDepth")).Value = VoiceSettings.LFODepth.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("lfoSpeed")).Value = VoiceSettings.LFOSpeed.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("portamento")).Value = VoiceSettings.Portamento.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("oscType")).Value = VoiceSettings.OSCType.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("oscTexture")).Value = VoiceSettings.OSCTexture.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("oscMod")).Value = VoiceSettings.OSCMod.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("filterCutoff")).Value = VoiceSettings.FilterCutoff.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("filterResonance")).Value = VoiceSettings.FilterResonance.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("egBalance")).Value = VoiceSettings.EGBalance.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("egAttack")).Value = VoiceSettings.EGAttack.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("egDecay")).Value = VoiceSettings.EGDecay.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("egSustain")).Value = VoiceSettings.EGSustain.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("egRelease")).Value = VoiceSettings.EGRelease.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("fxType")).Value = VoiceSettings.FXType.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("fxDepth")).Value = VoiceSettings.FXDepth.ToString();
+            node.Attributes.Append(node.OwnerDocument.CreateAttribute("fxRate")).Value = VoiceSettings.FXRate.ToString();
+        }   
+
+        public void Deserialize(XmlNode node)
+        {
+            var voiceSettings = new RefaceCSVoiceData();
+            voiceSettings.Volume = byte.Parse(node.Attributes?["volume"]?.Value ?? throw new Exception("Missing volume"));
+            voiceSettings.LFOAssign = (RefaceCSLFOAssign)Enum.Parse(typeof(RefaceCSLFOAssign), node.Attributes?["lfoAssign"]?.Value ?? throw new Exception("Missing lfoAssign"));
+            voiceSettings.LFODepth = byte.Parse(node.Attributes?["lfoDepth"]?.Value ?? throw new Exception("Missing lfoDepth"));
+            voiceSettings.LFOSpeed = byte.Parse(node.Attributes?["lfoSpeed"]?.Value ?? throw new Exception("Missing lfoSpeed"));
+            voiceSettings.Portamento = byte.Parse(node.Attributes?["portamento"]?.Value ?? throw new Exception("Missing portamento"));
+            voiceSettings.OSCType = (RefaceCSOSCType)Enum.Parse(typeof(RefaceCSOSCType), node.Attributes?["oscType"]?.Value ?? throw new Exception("Missing oscType"));
+            voiceSettings.OSCTexture = byte.Parse(node.Attributes?["oscTexture"]?.Value ?? throw new Exception("Missing oscTexture"));
+            voiceSettings.OSCMod = byte.Parse(node.Attributes?["oscMod"]?.Value ?? throw new Exception("Missing oscMod"));
+            voiceSettings.FilterCutoff = byte.Parse(node.Attributes?["filterCutoff"]?.Value ?? throw new Exception("Missing filterCutoff"));
+            voiceSettings.FilterResonance = byte.Parse(node.Attributes?["filterResonance"]?.Value ?? throw new Exception("Missing filterResonance"));
+            voiceSettings.EGBalance = byte.Parse(node.Attributes?["egBalance"]?.Value ?? throw new Exception("Missing egBalance"));
+            voiceSettings.EGAttack = byte.Parse(node.Attributes?["egAttack"]?.Value ?? throw new Exception("Missing egAttack"));
+            voiceSettings.EGDecay = byte.Parse(node.Attributes?["egDecay"]?.Value ?? throw new Exception("Missing egDecay"));
+            voiceSettings.EGSustain = byte.Parse(node.Attributes?["egSustain"]?.Value ?? throw new Exception("Missing egSustain"));
+            voiceSettings.EGRelease = byte.Parse(node.Attributes?["egRelease"]?.Value ?? throw new Exception("Missing egRelease"));
+            voiceSettings.FXType = (RefaceCSFXType)Enum.Parse(typeof(RefaceCSFXType), node.Attributes?["fxType"]?.Value ?? throw new Exception("Missing fxType"));
+            voiceSettings.FXDepth = byte.Parse(node.Attributes?["fxDepth"]?.Value ?? throw new Exception("Missing fxDepth"));
+            voiceSettings.FXRate = byte.Parse(node.Attributes?["fxRate"]?.Value ?? throw new Exception("Missing fxRate"));
+            VoiceSettings = voiceSettings;
+        }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct RefaceCSVoiceData

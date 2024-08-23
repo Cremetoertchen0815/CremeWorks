@@ -11,7 +11,7 @@ public class FileParser
 
     public static Database? ParseFile(string path)
     {
-        var db = new Database();
+        var db = new Database() { FilePath = path };
         var doc = new XmlDocument();
         doc.Load(path);
 
@@ -104,10 +104,10 @@ public class FileParser
                             switch (subNode.Name)
                             {
                                 case "lyrics":
-                                    db.Songs[id].Lyrics = subNode.InnerText;
+                                    song.Lyrics = subNode.InnerText;
                                     break;
                                 case "instructions":
-                                    db.Songs[id].Instructions = subNode.InnerText;
+                                    song.Instructions = subNode.InnerText;
                                     break;
                                 case "routing":
                                     foreach (XmlNode routingNode in subNode.ChildNodes)
@@ -115,7 +115,7 @@ public class FileParser
                                         var srcId = int.Parse(routingNode.Attributes?["src"]?.Value ?? throw new Exception("Routing source id cannot be null!"));
                                         var destId = int.Parse(routingNode.Attributes["dest"]?.Value ?? throw new Exception("Routing destination id cannot be null!"));
                                         var type = Enum.Parse<MidiMatrixNodeType>(routingNode.Attributes["type"]?.Value ?? throw new Exception("Routing type cannot be null!"));
-                                        db.Songs[id].RoutingOverrides.Add(new MidiMatrixNode(srcId, destId, type));
+                                        song.RoutingOverrides.Add(new MidiMatrixNode(srcId, destId, type));
                                     }
                                     break;
                                 case "patches":
@@ -123,7 +123,7 @@ public class FileParser
                                     {
                                         var patchId = int.Parse(patchNode.Attributes?["id"]?.Value ?? throw new Exception("Patch id cannot be null!"));
                                         var deviceId = int.Parse(patchNode.Attributes["device"]?.Value ?? throw new Exception("Patch device id cannot be null!"));
-                                        db.Songs[id].Patches.Add(new PatchInstance(patchId, deviceId));
+                                        song.Patches.Add(new PatchInstance(patchId, deviceId));
                                     }
                                     break;
                                 case "cues":
@@ -131,19 +131,19 @@ public class FileParser
                                     {
                                         var cueId = int.Parse(cueNode.Attributes?["id"]?.Value ?? throw new Exception("Cue id cannot be null!"));
                                         var description = cueNode.Attributes["description"]?.Value ?? string.Empty;
-                                        db.Songs[id].Cues.Add(new CueInstance(cueId, description));
+                                        song.Cues.Add(new CueInstance(cueId, description));
                                     }
                                     break;
                                 case "macro":
-                                    db.Songs[id].ChordMacroSourceDeviceId = int.Parse(subNode.Attributes?["src"]?.Value ?? throw new Exception("Macro source device id cannot be null!"));
-                                    db.Songs[id].ChordMacroDestinationDeviceId = int.Parse(subNode.Attributes["dest"]?.Value ?? throw new Exception("Macro destination device id cannot be null!"));
+                                    song.ChordMacroSourceDeviceId = int.Parse(subNode.Attributes?["src"]?.Value ?? throw new Exception("Macro source device id cannot be null!"));
+                                    song.ChordMacroDestinationDeviceId = int.Parse(subNode.Attributes["dest"]?.Value ?? throw new Exception("Macro destination device id cannot be null!"));
                                     foreach (XmlNode macroNode in subNode.ChildNodes)
                                     {
                                         var name = macroNode.Attributes?["name"]?.Value ?? throw new Exception("Macro name cannot be null!");
                                         var triggerNote = int.Parse(macroNode.Attributes["trigger"]?.Value ?? throw new Exception("Macro trigger note cannot be null!"));
                                         var velocity = int.Parse(macroNode.Attributes["velocity"]?.Value ?? throw new Exception("Macro velocity cannot be null!"));
                                         var notes = macroNode.Attributes["notes"]?.Value.Split(',').Select(int.Parse).ToList() ?? throw new Exception("Macro notes cannot be null!");
-                                        db.Songs[id].ChordMacros.Add(new ChordMacro(name, triggerNote, velocity, notes));
+                                        song.ChordMacros.Add(new ChordMacro(name, triggerNote, velocity, notes));
                                     }
                                     break;
                             }
@@ -351,7 +351,10 @@ public class FileParser
                 }
                 songNode.AppendChild(macro);
             }
+
+            songs.AppendChild(songNode);
         }
+        root.AppendChild(songs);
 
         // Save playlists
         var playlists = doc.CreateElement("playlists");
@@ -379,6 +382,7 @@ public class FileParser
 
             playlists.AppendChild(playlistNode);
         }
+        root.AppendChild(playlists);
 
         // Save default routing
         var routing = doc.CreateElement("routing");
@@ -390,6 +394,7 @@ public class FileParser
             routingNode.SetAttribute("type", routingOverride.Type.ToString());
             routing.AppendChild(routingNode);
         }
+        root.AppendChild(routing);
 
         doc.AppendChild(root);
 
