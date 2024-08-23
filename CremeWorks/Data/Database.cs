@@ -1,8 +1,12 @@
-﻿namespace CremeWorks.App.Data;
+﻿using System.Xml.Serialization;
+
+namespace CremeWorks.App.Data;
 
 public class Database
 {
-    public string? FilePath { get; set; }
+    [XmlIgnore]
+    public string? FilePath { get; set; } = null;
+    public int? CloudId { get; set; } = null;
     public Dictionary<int, MidiDevice> Devices { get; } = [];
     public Dictionary<int, IDevicePatch> Patches { get; } = [];
     public Dictionary<int, LightingCueItem> LightingCues { get; } = [];

@@ -4,6 +4,8 @@ public record SongPlaylistEntry : IPlaylistEntry
 {
     public int SongId { get; set; }
 
+    public PlaylistEntryType Type => PlaylistEntryType.Song;
+
     public SongPlaylistEntry(int songId) => SongId = songId;
 
     public PlaylistEntryCommonInfo GetCommonInformation(Database db, int? indexInPlaylist = null)

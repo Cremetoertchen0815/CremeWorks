@@ -1,10 +1,13 @@
 ﻿using CremeWorks.App;
 using CremeWorks.App.Data;
 using CremeWorks.App.Dialogs;
+using CremeWorks.App.Properties;
 using CremeWorks.Common;
 using CremeWorks.Networking;
 using Melanchall.DryWetMidi.Core;
 using System.Runtime.InteropServices;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace CremeWorks
 {
@@ -45,6 +48,14 @@ namespace CremeWorks
 
             _metronome = new Metronome();
             _metronome.Tick += TickMetronome;
+
+            syncToolStripMenuItem.Checked = Settings.Default.SyncToCloud;
+            if (Settings.Default.Recents == null)
+            {
+                Settings.Default.Recents = new();
+                Settings.Default.Save();
+            }
+            foreach (var item in Settings.Default.Recents) openRecentToolStripMenuItem.DropDownItems.Add(new ToolStripMenuItem(item));
 
             UpdateConcert();
         }
@@ -156,8 +167,8 @@ namespace CremeWorks
 
         private void New(object sender, EventArgs e)
         {
-            //_c = Concert.Empty(SendLighingData);
-            //UpdateConcert();
+            _database = new Database();
+            UpdateConcert();
         }
 
         private void UpdateConcert()
@@ -179,32 +190,45 @@ namespace CremeWorks
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
-            //_c = Concert.LoadFromFile(openFileDialog1.FileName, SendLighingData);
-            //if (_c is null) MessageBox.Show("Concert file is corrupted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
+            try
+            {
+                _database = FileParser.ParseFile(openFileDialog1.FileName) ?? throw new Exception("Deserializer is null!");
 
-            //UpdateConcert();
+                // Update recents list
+                if (!Settings.Default.Recents.Contains(openFileDialog1.FileName))
+                {
+                    Settings.Default.Recents.Add(openFileDialog1.FileName);
+                    openRecentToolStripMenuItem.DropDownItems.Add(new ToolStripMenuItem(openFileDialog1.FileName));
+                }
+            }
+            catch (Exception)
+            {
+                _database = new Database();
+                MessageBox.Show("Database file is corrupted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            UpdateConcert();
         }
 
         private void Save(object sender, EventArgs e)
         {
-            //if (_c == null) return;
-            //if (_c.FilePath == null || _c.FilePath == string.Empty)
-            //{
-            //    if (saveFileDialog1.ShowDialog() == DialogResult.OK) _c.SaveToFile(saveFileDialog1.FileName);
-            //}
-            //else
-            //{
-            //    _c.SaveToFile(_c.FilePath);
-            //}
-            //UpdateConcert();
+            if (_database.FilePath == null || _database.FilePath == string.Empty)
+            {
+                if (saveFileDialog1.ShowDialog() != DialogResult.OK) return;
+                _database.FilePath = saveFileDialog1.FileName;
+            }
+            FileParser.SaveFile(_database.FilePath, _database);
+
+            UpdateConcert();
         }
 
         private void SaveAs(object sender, EventArgs e)
         {
-            //if (_c == null || saveFileDialog1.ShowDialog() != DialogResult.OK) return;
-            //_c.SaveToFile(saveFileDialog1.FileName);
-            //UpdateConcert();
+            if (saveFileDialog1.ShowDialog() != DialogResult.OK) return;
+            _database.FilePath = saveFileDialog1.FileName;
+            FileParser.SaveFile(_database.FilePath, _database);
+            UpdateConcert();
         }
 
         private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightCueManager(this).ShowDialog();
@@ -348,6 +372,12 @@ namespace CremeWorks
         private void boxSet_SelectedIndexChanged(object sender, EventArgs e) => UpdateConcert();
 
         private void patchesToolStripMenuItem_Click(object sender, EventArgs e) => new PatchEditor(this).ShowDialog();
+
+        private void syncToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+        {
+            Settings.Default.SyncToCloud = syncToolStripMenuItem.Checked;
+            Settings.Default.Save();
+        }
 
         private record SetListBoxItem(string Name, IPlaylistEntry Entry)
         {
