@@ -347,6 +347,8 @@ namespace CremeWorks
 
         private void boxSet_SelectedIndexChanged(object sender, EventArgs e) => UpdateConcert();
 
+        private void patchesToolStripMenuItem_Click(object sender, EventArgs e) => new PatchEditor(this).ShowDialog();
+
         private record SetListBoxItem(string Name, IPlaylistEntry Entry)
         {
             public override string ToString() => Name;

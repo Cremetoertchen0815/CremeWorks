@@ -27,6 +27,11 @@ public partial class PlaylistAddSongDialog : Form
 
     private void btnOk_Click(object sender, EventArgs e)
     {
+        if (boxSelector.SelectedItem == null)
+        {
+            MessageBox.Show("Please select a song!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         DialogResult = DialogResult.OK;
         Close();
     }

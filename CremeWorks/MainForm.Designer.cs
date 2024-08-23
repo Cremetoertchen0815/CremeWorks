@@ -199,6 +199,7 @@ namespace CremeWorks
             patchesToolStripMenuItem.Name = "patchesToolStripMenuItem";
             patchesToolStripMenuItem.Size = new Size(116, 22);
             patchesToolStripMenuItem.Text = "Patches";
+            patchesToolStripMenuItem.Click += patchesToolStripMenuItem_Click;
             // 
             // configureToolStripMenuItem1
             // 
@@ -347,7 +348,6 @@ namespace CremeWorks
             chatBox.FormattingEnabled = true;
             chatBox.IntegralHeight = false;
             chatBox.ItemHeight = 18;
-            chatBox.Items.AddRange(new object[] { "A", "B", "C", "D", "E", "F" });
             chatBox.Location = new Point(328, 608);
             chatBox.Margin = new Padding(4, 3, 4, 3);
             chatBox.Name = "chatBox";
@@ -358,7 +358,7 @@ namespace CremeWorks
             // 
             label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label3.AutoSize = true;
-            label3.Location = new Point(1079, 45);
+            label3.Location = new Point(1076, 45);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new Size(69, 15);

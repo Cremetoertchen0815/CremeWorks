@@ -49,6 +49,17 @@ namespace CremeWorks.App.Dialogs
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (comboBox1.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a cue!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(textBox1.Text))
+            {
+                MessageBox.Show("Please enter a comment!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             DialogResult = DialogResult.OK;
             _comment = textBox1.Text;
             _id = _availableCues.FirstOrDefault(x => x.Value.Name == (string)comboBox1.SelectedItem!).Key;

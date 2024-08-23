@@ -37,6 +37,12 @@ namespace CremeWorks.App.Dialogs
 
         private void btnMacrosAdd_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(valItemName.Text))
+            {
+                MessageBox.Show("Please enter a name for the macro!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             _ignoreMacroListSelChange = true;
             var nuElement = new ChordMacro(valItemName.Text, (int)valItemTrigger.Value, (int)valItemVelocity.Value, lstItemNotes.Items.Cast<int>().ToList());
             _s.ChordMacros.Add(nuElement);

@@ -1,5 +1,4 @@
-﻿using CremeWorks.Reface;
-using Melanchall.DryWetMidi.Core;
+﻿using Melanchall.DryWetMidi.Core;
 using System.Diagnostics;
 
 namespace CremeWorks.App.Data.Compatibility

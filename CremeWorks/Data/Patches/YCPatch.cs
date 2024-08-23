@@ -1,18 +1,13 @@
 ﻿using System.Runtime.InteropServices;
 using CremeWorks.App.Data;
-using CremeWorks.App.Reface;
 
-namespace CremeWorks.Reface
+namespace CremeWorks.App.Data.Patches
 {
-    internal class YCPatch : IDevicePatch
+    public class YCPatch(string name) : IDevicePatch
     {
-        public string Name => throw new NotImplementedException();
-
-        public MidiDeviceType DeviceType => throw new NotImplementedException();
-
-        //public RefaceSystemData SystemSettings { get; set; }
-        //public RefaceYCVoiceData VoiceSettings { get; set; }
-        //public DeviceType Type => DeviceType.RefaceYC;
+        public string Name { get; init; } = name;
+        public MidiDeviceType DeviceType => MidiDeviceType.RefaceYC;
+        public RefaceYCVoiceData VoiceSettings { get; set; }
 
         //public void ApplySettings(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0, 0, 0 }, StructMarshal<RefaceSystemData>.getBytes(SystemSettings));
         //public void ApplyPatch(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceYCVoiceData>.getBytes(VoiceSettings));

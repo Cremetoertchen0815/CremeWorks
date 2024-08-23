@@ -1,23 +1,21 @@
 ﻿using System.Runtime.InteropServices;
 using CremeWorks.App.Data;
-using CremeWorks.App.Reface;
 
-namespace CremeWorks.Reface
+namespace CremeWorks.App.Data.Patches
 {
-    internal class CSPatch : IDevicePatch
+    public class CSPatch(string name) : IDevicePatch
     {
-        //public RefaceSystemData SystemSettings { get; set; }
-        //public RefaceCSVoiceData VoiceSettings { get; set; }
-        //public DeviceType Type => DeviceType.RefaceCS;
+        public string Name { get; init; } = name;
+        public MidiDeviceType DeviceType => MidiDeviceType.RefaceCS;
+        public RefaceCSVoiceData VoiceSettings { get; set; }
 
-        public string Name => "throw new NotImplementedException()";
 
-        public MidiDeviceType DeviceType => throw new NotImplementedException();
+        public IDevicePatch Clone() => (IDevicePatch)MemberwiseClone();
+        public void ApplyPatch(int deviceId) => throw new NotImplementedException();
 
         //public void ApplySettings(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0, 0, 0 }, StructMarshal<RefaceSystemData>.getBytes(SystemSettings));
         //public void ApplyPatch(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceCSVoiceData>.getBytes(VoiceSettings));
-        public IDevicePatch Clone() => (IDevicePatch)MemberwiseClone();
-        public void ApplyPatch(int deviceId) => throw new NotImplementedException();
+
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct RefaceCSVoiceData

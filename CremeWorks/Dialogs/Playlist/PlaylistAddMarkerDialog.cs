@@ -60,6 +60,13 @@ public partial class PlaylistAddMarkerDialog : Form
 
     private void btnOk_Click(object sender, EventArgs e)
     {
+
+        if (string.IsNullOrWhiteSpace(txtTitle.Text))
+        {
+            MessageBox.Show("Please enter a title for the marker!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
         DialogResult = DialogResult.OK;
         _entry.Text = txtTitle.Text;
         _entry.Instructions = txtInstructions.Text;

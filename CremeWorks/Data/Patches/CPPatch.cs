@@ -1,15 +1,14 @@
-﻿using System.Runtime.InteropServices;
-using CremeWorks.App.Data;
-using CremeWorks.App.Reface;
+﻿using CremeWorks.App.Data;
+using System.Runtime.InteropServices;
 
-namespace CremeWorks.Reface
+namespace CremeWorks.App.Data.Patches
 {
-    internal class CPPatch : IDevicePatch
+    public class CPPatch(string name) : IDevicePatch
     {
+        public string Name { get; init; } = name;
+        public MidiDeviceType DeviceType => MidiDeviceType.RefaceCP;
         public RefaceCPVoiceData VoiceSettings { get; set; }
-        public MidiDeviceType DeviceType => MidiDeviceType.RefaceCS;
 
-        public string Name => "throw new NotImplementedException()";
 
         public void ApplyPatch(int deviceId) { return; } // => CommonHelpers.SendParameterChange(d?.Output, CommonHelpers.GetRefaceType(DeviceType), new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceCPVoiceData>.getBytes(VoiceSettings));
         public IDevicePatch Clone() => (IDevicePatch)MemberwiseClone();
