@@ -1,4 +1,5 @@
-﻿using Melanchall.DryWetMidi.Core;
+﻿using CremeWorks.App.Data.Patches;
+using Melanchall.DryWetMidi.Core;
 
 namespace CremeWorks.App.Data.Compatibility;
 
@@ -108,59 +109,56 @@ public static class CompatibilityFileParser
 
             var autoPatchCount = br.ReadInt32();
             s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, Concert.PATCH_DEVICE_COUNT)).Select(x => ((bool, IDevicePatch?))(false, null)).ToArray();
+
+            var csPatchCount = 1;
+            var dxPatchCount = 1;
+            var cpPatchCount = 1;
+            var ycPatchCount = 1;
             for (int j = 0; j < autoPatchCount; j++)
             {
                 bool enabled = br.ReadBoolean();
                 int type = br.ReadInt32();
 
-                IDevicePatch? patch;
+                IDevicePatch? patch = null;
                 switch ((OldDeviceType)type)
                 {
                     case OldDeviceType.RefaceCS:
-                        //var cs = new CSPatch
-                        //{
-                        //    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                        //    VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                        //};
-                        //patch = cs;
-                        br.ReadBytes(br.ReadInt32());
-                        br.ReadBytes(br.ReadInt32());
+                        _ = br.ReadBytes(br.ReadInt32()); //System settings(obsolete)
+                        var cs = new CSPatch($"Reface CS Patch #{csPatchCount++}")
+                        {
+                            VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                        };
+                        patch = cs;
                         break;
                     case OldDeviceType.RefaceDX:
-                        //var dx = new DXPatch
-                        //{
-                        //    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                        //    ProgramChangeNr = br.ReadByte()
-                        //};
-                        //patch = dx;
-                        br.ReadBytes(br.ReadInt32());
+                        _ = br.ReadBytes(br.ReadInt32());
+                        var dx = new ProgramChangePatch($"Reface DX Patch #{dxPatchCount++}")
+                        {
+                            ProgramChangeNr = br.ReadByte()
+                        };
+                        patch = dx;
                         break;
                     case OldDeviceType.RefaceCP:
-                        //var cp = new CPPatch
-                        //{
-                        //    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                        //    VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                        //};
-                        //patch = cp;
-                        br.ReadBytes(br.ReadInt32());
-                        br.ReadBytes(br.ReadInt32());
+                        _ = br.ReadBytes(br.ReadInt32());
+                        var cp = new CPPatch($"Reface CP Patch #{cpPatchCount++}")
+                        {
+                            VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                        };
+                        patch = cp;
                         break;
                     case OldDeviceType.RefaceYC:
-                        //var yc = new YCPatch
-                        //{
-                        //    SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(br.ReadBytes(br.ReadInt32())),
-                        //    VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
-                        //};
-                        //patch = yc;
-                        br.ReadBytes(br.ReadInt32());
-                        br.ReadBytes(br.ReadInt32());
+                        _ = br.ReadBytes(br.ReadInt32());
+                        var yc = new YCPatch($"Reface YC Patch #{ycPatchCount++}")
+                        {
+                            VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                        };
                         break;
                     default:
                         patch = null;
                         break;
                 }
 
-                //s.AutoPatchSlots[j] = (enabled, patch);
+                s.AutoPatchSlots[j] = (enabled, patch);
             }
 
             //Read lighting cue

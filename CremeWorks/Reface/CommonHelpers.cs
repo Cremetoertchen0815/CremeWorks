@@ -18,7 +18,6 @@ namespace CremeWorks.App.Reface
         public static RefaceType GetRefaceType(MidiDeviceType deviceType) => deviceType switch
         {
             MidiDeviceType.RefaceCS => RefaceType.RefaceCS,
-            MidiDeviceType.RefaceDX => RefaceType.RefaceDX,
             MidiDeviceType.RefaceCP => RefaceType.RefaceCP,
             MidiDeviceType.RefaceYC => RefaceType.RefaceYC,
             _ => RefaceType.Undefined,

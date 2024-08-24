@@ -85,6 +85,7 @@ namespace CremeWorks
             songTime = new Label();
             button1 = new Button();
             button2 = new Button();
+            cwcImportOpenFile = new OpenFileDialog();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -190,8 +191,9 @@ namespace CremeWorks
             // cWCDateiToolStripMenuItem
             // 
             cWCDateiToolStripMenuItem.Name = "cWCDateiToolStripMenuItem";
-            cWCDateiToolStripMenuItem.Size = new Size(223, 22);
-            cWCDateiToolStripMenuItem.Text = "CremeWorks Concert (*.csv)";
+            cWCDateiToolStripMenuItem.Size = new Size(227, 22);
+            cWCDateiToolStripMenuItem.Text = "CremeWorks Concert (*.cwc)";
+            cWCDateiToolStripMenuItem.Click += cWCDateiToolStripMenuItem_Click;
             // 
             // exportToolStripMenuItem
             // 
@@ -229,21 +231,21 @@ namespace CremeWorks
             // songsToolStripMenuItem
             // 
             songsToolStripMenuItem.Name = "songsToolStripMenuItem";
-            songsToolStripMenuItem.Size = new Size(116, 22);
+            songsToolStripMenuItem.Size = new Size(180, 22);
             songsToolStripMenuItem.Text = "Songs";
             songsToolStripMenuItem.Click += songsToolStripMenuItem_Click;
             // 
             // playlistsToolStripMenuItem
             // 
             playlistsToolStripMenuItem.Name = "playlistsToolStripMenuItem";
-            playlistsToolStripMenuItem.Size = new Size(116, 22);
+            playlistsToolStripMenuItem.Size = new Size(180, 22);
             playlistsToolStripMenuItem.Text = "Playlists";
             playlistsToolStripMenuItem.Click += playlistsToolStripMenuItem_Click;
             // 
             // patchesToolStripMenuItem
             // 
             patchesToolStripMenuItem.Name = "patchesToolStripMenuItem";
-            patchesToolStripMenuItem.Size = new Size(116, 22);
+            patchesToolStripMenuItem.Size = new Size(180, 22);
             patchesToolStripMenuItem.Text = "Patches";
             patchesToolStripMenuItem.Click += patchesToolStripMenuItem_Click;
             // 
@@ -570,6 +572,11 @@ namespace CremeWorks
             button2.Text = "Store";
             button2.UseVisualStyleBackColor = true;
             // 
+            // cwcImportOpenFile
+            // 
+            cwcImportOpenFile.FileName = "openFileDialog2";
+            cwcImportOpenFile.Filter = "CremeWorks Concert(.cwc)|*.cwc";
+            // 
             // MainForm
             // 
             AcceptButton = btnChatSend;
@@ -667,6 +674,7 @@ namespace CremeWorks
         private ToolStripSeparator toolStripMenuItem1;
         private ToolStripMenuItem syncToolStripMenuItem;
         private ToolStripMenuItem openRecentToolStripMenuItem;
+        private OpenFileDialog cwcImportOpenFile;
     }
 }
 

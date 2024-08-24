@@ -7,12 +7,13 @@ public record ControllerAction(MidiEventType SourceEventType, FourBitNumber Sour
 
 public enum ControllerActionType
 {
+    Undefined = -1,
+    PrevSong = 0,
     NextSong,
-    PrevSong,
     ScrollUp,
     ScrollDown,
-    CueAdvance,
     CueBack,
+    CueAdvance,
     SoloMode,
     MuteMode,
     ReconnectMidi,

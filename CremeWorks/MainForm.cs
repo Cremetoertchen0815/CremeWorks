@@ -381,6 +381,12 @@ namespace CremeWorks
             Settings.Default.Save();
         }
 
+        private void cWCDateiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (cwcImportOpenFile.ShowDialog() != DialogResult.OK) return;
+
+        }
+
         private record SetListBoxItem(string Name, IPlaylistEntry Entry)
         {
             public override string ToString() => Name;

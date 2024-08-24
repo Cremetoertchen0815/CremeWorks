@@ -11,7 +11,6 @@ public enum MidiDeviceType
     GenericController = 1,
     Lighting = 2,
     RefaceCS = 3,
-    RefaceDX = 4,
     RefaceCP = 5,
     RefaceYC = 6,
 }
