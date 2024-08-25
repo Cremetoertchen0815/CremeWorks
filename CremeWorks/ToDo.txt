@@ -1,4 +1,3 @@
--Implement in import dialog a way to change double matches
 -Finish import logic
 -ADD SOLO MODE DATA STRUCTURE TO DATABASE
 -Test MIDI matrix

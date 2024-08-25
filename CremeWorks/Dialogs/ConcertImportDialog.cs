@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using OldSong = CremeWorks.App.Data.Compatibility.Song;
 using NewSong = CremeWorks.App.Data.Song;
+using CremeWorks.App.Dialogs.Playlist;
 
 namespace CremeWorks.App.Dialogs;
 public partial class ConcertImportDialog : Form
@@ -59,7 +60,7 @@ public partial class ConcertImportDialog : Form
 
         if (DialogResult == DialogResult.OK)
         {
-            var _songRemapIds = lstSongs.Items.Cast<ListViewItem>().Select<ListViewItem, int?>(x => x.Checked && int.TryParse(x.SubItems[1].Text, out var id) ? id : null).ToArray();
+            var _songRemapIds = lstSongs.Items.Cast<ListViewItem>().Select<ListViewItem, int?>(x => x.Checked && int.TryParse(x.SubItems[2].Text, out var id) ? id : null).ToArray();
             Config = new ConcertConversionConfig
             {
                 ImportActions = chkActions.Checked,
@@ -76,5 +77,19 @@ public partial class ConcertImportDialog : Form
     {
         DialogResult = DialogResult.OK;
         Close();
+    }
+
+    private void LstSongs_MouseClick(object sender, MouseEventArgs e)
+    {
+        if (e.Button != MouseButtons.Right) return;
+        var item = lstSongs.GetItemAt(e.X, e.Y);
+        if (item is null) return;
+
+
+        var dialog = new SelectSongDialog(_db, true, int.TryParse(item.SubItems[2].Text, out var id) ? id : null);
+        if (dialog.ShowDialog() == DialogResult.OK)
+        {
+            item.SubItems[2].Text = dialog.SelectedSongId?.ToString() ?? "-";
+        }
     }
 }

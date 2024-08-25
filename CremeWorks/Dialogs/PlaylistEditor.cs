@@ -116,9 +116,9 @@ public partial class PlaylistEditor : Form
     private void btnAddSong_Click(object sender, EventArgs e)
     {
         if (boxSelector.SelectedItem is not PlaylistComboboxItem item) return;
-        var dialog = new PlaylistAddSongDialog(_parent, null);
-        if (dialog.ShowDialog() != DialogResult.OK) return;
-        var songId = dialog.SelectedSongId;
+        var dialog = new SelectSongDialog(_parent.Database, false, null);
+        if (dialog.ShowDialog() != DialogResult.OK || dialog.SelectedSongId is null) return;
+        var songId = dialog.SelectedSongId.Value;
         if (!_parent.Database.Songs.TryGetValue(songId, out var song)) return;
 
         var entry = new SongPlaylistEntry(songId);
@@ -161,9 +161,9 @@ public partial class PlaylistEditor : Form
 
         if (entry is SongPlaylistEntry song)
         {
-            var dialog = new PlaylistAddSongDialog(_parent, song.SongId);
-            if (dialog.ShowDialog() != DialogResult.OK) return;
-            var songId = dialog.SelectedSongId;
+            var dialog = new SelectSongDialog(_parent.Database, false, song.SongId);
+            if (dialog.ShowDialog() != DialogResult.OK || dialog.SelectedSongId is null) return;
+            var songId = dialog.SelectedSongId.Value;
             if (!_parent.Database.Songs.TryGetValue(songId, out var newSong)) return;
             song.SongId = songId;
             lstEntries.SelectedItems[0].SubItems[1].Text = newSong.Title;

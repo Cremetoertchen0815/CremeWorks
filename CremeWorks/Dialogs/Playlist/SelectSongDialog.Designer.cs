@@ -1,6 +1,6 @@
 ﻿namespace CremeWorks.App.Dialogs.Playlist;
 
-partial class PlaylistAddSongDialog
+partial class SelectSongDialog
 {
     /// <summary>
     /// Required designer variable.
@@ -91,7 +91,7 @@ partial class PlaylistAddSongDialog
         MinimizeBox = false;
         Name = "PlaylistAddSongDialog";
         StartPosition = FormStartPosition.CenterScreen;
-        Text = "Add Song";
+        Text = "Select Song";
         ResumeLayout(false);
     }
 

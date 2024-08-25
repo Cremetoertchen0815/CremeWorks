@@ -97,6 +97,7 @@ partial class ConcertImportDialog
         lstSongs.TabIndex = 5;
         lstSongs.UseCompatibleStateImageBehavior = false;
         lstSongs.View = View.Details;
+        lstSongs.MouseClick += LstSongs_MouseClick;
         // 
         // columnHeader1
         // 
@@ -134,11 +135,11 @@ partial class ConcertImportDialog
         // label3
         // 
         label3.AutoSize = true;
-        label3.Location = new Point(190, 73);
+        label3.Location = new Point(202, 73);
         label3.Name = "label3";
-        label3.Size = new Size(156, 15);
+        label3.Size = new Size(144, 15);
         label3.TabIndex = 8;
-        label3.Text = "(double click to edit double)";
+        label3.Text = "(right click to edit double)";
         // 
         // boxRouting
         // 
@@ -186,7 +187,7 @@ partial class ConcertImportDialog
         btnOk.UseVisualStyleBackColor = true;
         btnOk.Click += btnOk_Click;
         // 
-        // ImportDialog
+        // ConcertImportDialog
         // 
         AcceptButton = btnOk;
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -207,7 +208,7 @@ partial class ConcertImportDialog
         Controls.Add(chkActions);
         MaximizeBox = false;
         MinimizeBox = false;
-        Name = "ImportDialog";
+        Name = "ConcertImportDialog";
         ShowIcon = false;
         StartPosition = FormStartPosition.CenterParent;
         Text = "Import";
