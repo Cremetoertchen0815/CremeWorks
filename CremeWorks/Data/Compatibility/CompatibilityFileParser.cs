@@ -17,6 +17,8 @@ public static class CompatibilityFileParser
             return;
         }
 
+        if (nu is null) return;
+
         var lightDevice = true;
         var devCount = br.ReadInt32();
         nu.MIDIDevices = new string[Math.Max(devCount, ALL_DEVICES_COUNT_PRE5) - 1];

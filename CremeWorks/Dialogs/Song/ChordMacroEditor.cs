@@ -9,7 +9,7 @@ namespace CremeWorks.App.Dialogs
     {
         private IDataParent _parent;
         private Song _s;
-        private bool _inTest = false;
+       // private bool _inTest = false;
         private bool _disconnectAfterTest = false;
         private bool _ignoreMacroListSelChange = true;
         private bool _ignoreMacroListValChange = false;
@@ -128,18 +128,18 @@ namespace CremeWorks.App.Dialogs
         }
 
 
-        private void TriggerCapture(object sender, MidiEventReceivedEventArgs e)
+        private void TriggerCapture(object? sender, MidiEventReceivedEventArgs e)
         {
             if (e.Event.EventType != MidiEventType.NoteOn) return;
 
             //Disable capture
-            var scon = (InputDevice)sender;
+            var scon = (InputDevice)sender!;
             scon.EventReceived -= TriggerCapture;
             if (_disconnectAfterTest) scon.StopEventsListening();
-            _inTest = false;
+            //_inTest = false;
 
             //Process data
-            var note = (e.Event as NoteOnEvent);
+            var note = ((NoteOnEvent)e.Event);
             var sel = _s.ChordMacros[lstMacros.SelectedIndex];
             sel.TriggerNote = note.NoteNumber;
             sel.Velocity = note.Velocity;
@@ -167,7 +167,7 @@ namespace CremeWorks.App.Dialogs
         }
 
         private List<int> _activeSenseKeys = new List<int>();
-        private void NoteCapture(object sender, MidiEventReceivedEventArgs e)
+        private void NoteCapture(object? sender, MidiEventReceivedEventArgs e)
         {
             //Capture key presses
             if (e.Event.EventType == MidiEventType.NoteOn)
@@ -177,21 +177,21 @@ namespace CremeWorks.App.Dialogs
             }
             else if (e.Event.EventType == MidiEventType.NoteOff)
             {
-                var noteVal = (e.Event as NoteOnEvent).NoteNumber;
+                var noteVal = ((NoteOnEvent)e.Event).NoteNumber;
                 if (_activeSenseKeys.Contains(noteVal)) _activeSenseKeys.Remove(noteVal);
                 return;
             }
             else if (e.Event.EventType != MidiEventType.ControlChange)
                 return;
 
-            var ctrl = (e.Event as ControlChangeEvent);
+            var ctrl = (ControlChangeEvent)e.Event;
             if (ctrl.ControlNumber != 64 || ctrl.ControlValue < 64) return;
 
             //Disable capture
-            var scon = (InputDevice)sender;
+            var scon = (InputDevice)sender!;
             scon.EventReceived -= NoteCapture;
             if (_disconnectAfterTest) scon.StopEventsListening();
-            _inTest = false;
+            //_inTest = false;
 
             //Process data
             var macro = _s.ChordMacros[lstMacros.SelectedIndex];

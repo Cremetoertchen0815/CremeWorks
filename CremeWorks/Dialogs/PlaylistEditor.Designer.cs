@@ -353,7 +353,6 @@ partial class PlaylistEditor
     private Button btnDuplicate;
     private Button btnDelete;
     private Button btnEdit;
-    private Button btnCreate;
     private ListView lstEntries;
     private Panel panel1;
     private Button btnAddMarker;

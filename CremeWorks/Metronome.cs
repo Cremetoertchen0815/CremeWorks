@@ -4,13 +4,13 @@ namespace CremeWorks.Common
 {
     public class Metronome
     {
-        private WinMMWrapper _timer = null;
+        private WinMMWrapper? _timer = null;
         private const int ACCURACY = 2;
 
         private int _currentTick;
         private int _futureTick;
 
-        public event Action Tick;
+        public event Action? Tick;
 
         public void Start(int tempoBPM)
         {

@@ -9,7 +9,7 @@ namespace CremeWorks
 {
     public static class Prompt
     {
-        public static string ShowDialog(string text, string caption, string defaultVal)
+        public static string? ShowDialog(string text, string caption, string defaultVal)
         {
             Form prompt = new Form()
             {
