@@ -45,5 +45,65 @@ namespace CremeWorks.App.Properties {
                 this["Recents"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ImportActions {
+            get {
+                return ((bool)(this["ImportActions"]));
+            }
+            set {
+                this["ImportActions"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ImportCreatePlaylist {
+            get {
+                return ((bool)(this["ImportCreatePlaylist"]));
+            }
+            set {
+                this["ImportCreatePlaylist"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int ImportDoubles {
+            get {
+                return ((int)(this["ImportDoubles"]));
+            }
+            set {
+                this["ImportDoubles"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int ImportRouting {
+            get {
+                return ((int)(this["ImportRouting"]));
+            }
+            set {
+                this["ImportRouting"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int ImportPatches {
+            get {
+                return ((int)(this["ImportPatches"]));
+            }
+            set {
+                this["ImportPatches"] = value;
+            }
+        }
     }
 }

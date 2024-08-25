@@ -8,13 +8,8 @@ using System.Threading.Tasks;
 namespace CremeWorks.App.Data.Compatibility;
 public class ConcertConverter
 {
-    public static bool Convert(ref Database db, Concert c, ConcertConversionConfig config, out string? errorMsg)
+    public static bool Convert(Database db, Concert c, ConcertConversionConfig config, out string? errorMsg)
     {
-        if (config.SongOverride == ConversionOverrideType.CreateNew)
-        {
-            db = new Database();
-        }
-
         //Convert devices
         var deviceMap = new Dictionary<int, int>(); //Maps device index from concert to database index
         var devicesForRemappingRouting = new List<int>();
@@ -23,16 +18,11 @@ public class ConcertConverter
             if (c.MIDIDevices[i] == null) continue;
 
             // If we are not importing devices, we need to find the old device that matches the new one
-            if (!config.ImportDevices)
+            var oldId = db.Devices.FirstOrDefault(x => x.Value.MidiId == c.MIDIDevices[i]!).Key;
+            if (oldId != 0)
             {
-
-                var oldId = db.Devices.FirstOrDefault(x => x.Value.MidiId == c.MIDIDevices[i]!).Key;
-                if (oldId == 0)
-                {
-                    errorMsg = $"No matching device found for {c.MIDIDevices[i]}";
-                    return false;
-                }
                 deviceMap.Add(i, oldId);
+                continue;
             }
 
             // We are importing devices, so we need to create new ones
@@ -72,6 +62,8 @@ public class ConcertConverter
                     _ => ControllerActionType.Undefined
                 };
 
+                var toBeRemoved = db.Actions.Where(x => x.SourceEventType == eventType && x.SourceEventChannel == channel && x.SourceEventValue == value).ToArray();
+                foreach (var item in toBeRemoved) db.Actions.Remove(item);
                 db.Actions.Add(new ControllerAction(eventType, new FourBitNumber(channel), (byte)value, actionType));
             }
         }
@@ -95,21 +87,23 @@ public class ConcertConverter
 
         //Convert songs
         var songMap = new Dictionary<int, int>(); //Maps song index from concert to database id
+        int listIndex = -1;
         for (int i = 0; i < c.Playlist.Count; i++)
         {
             var origSong = c.Playlist[i];
             if (origSong is null || origSong.SpecialEvent) continue; //Only use real songs, not special events(now called markers)
+            listIndex++;
 
             var id = Random.Shared.Next();
             var newSong = new Data.Song();
-            if (config.SongImportDoubleHandling == SongImportDoubleHandling.KeepBoth || config.SongRemapIds[i] is null)
+            if (config.SongImportDoubleHandling == SongImportDoubleHandling.KeepBoth || config.SongRemapIds[listIndex] is null)
             {
                 songMap.Add(i, id);
                 db.Songs.Add(id, newSong);
             }
             else
             {
-                id = config.SongRemapIds[i]!.Value;
+                id = config.SongRemapIds[listIndex]!.Value;
                 songMap.Add(i, id);
                 newSong = db.Songs[id];
                 if (config.SongImportDoubleHandling == SongImportDoubleHandling.KeepOld) continue;
@@ -135,15 +129,15 @@ public class ConcertConverter
             newSong.Patches.Clear();
             foreach (var patch in origSong.AutoPatchSlots)
             {
-                
+
             }
 
 
 
 
 
-        //Convert default routing and routing overrides if needed
-        if (config.DefaultRoutingConversionMethod == DefaultRoutingConversionType.CalculateRoutingFromMajority)
+            //Convert default routing and routing overrides if needed
+            if (config.DefaultRoutingConversionMethod == DefaultRoutingConversionType.CalculateRoutingFromMajority)
             {
                 //Calculate default routing from majority
                 var newDefaultRouting = new Dictionary<(int, int), MidiMatrixNodeType>();
@@ -197,6 +191,6 @@ public class ConcertConverter
 
 
         errorMsg = null;
-        return false;
+        return true;
     }
 }

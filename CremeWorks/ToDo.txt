@@ -1,12 +1,14 @@
+-Implement in import dialog a way to change double matches
+-Finish import logic
 -ADD SOLO MODE DATA STRUCTURE TO DATABASE
 -Test MIDI matrix
--Implement import/export system
 -Implement action system
 -Implement/test cue system
 -Implement networking features
 -Implement sound macros
 -Implement solo mode function for increasing volume
 -Implement checks when deleting reference data(make sure the data is not being used)
+-Implement CSV import/export system
 
 -Implement backlog system(move to .cwdb file type)
 -Fix SoundPlayer lag under Linux

@@ -1,20 +1,13 @@
 ﻿namespace CremeWorks.App.Data.Compatibility;
 
 public record struct ConcertConversionConfig(
-    ConversionOverrideType SongOverride,
-    bool ImportDevices,
-    DefaultRoutingConversionType DefaultRoutingConversionMethod,
     bool ImportActions,
-    int?[] SongRemapIds,
+    bool CreatePlaylist,
+    int?[] SongRemapIds, // Special events are not included in this list! Because of that the index of the song in the list is not the same as the index in the playlist.
+    DefaultRoutingConversionType DefaultRoutingConversionMethod,
     SongImportDoubleHandling SongImportDoubleHandling,
-    bool CreatePlaylist
+    PatchImportDoubleHandling PatchImportDoubleHandling
     );
-
-public enum ConversionOverrideType
-{
-    ImportIntoCurrent,
-    CreateNew
-}
 
 public enum DefaultRoutingConversionType
 {

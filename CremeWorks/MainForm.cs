@@ -1,5 +1,6 @@
 ﻿using CremeWorks.App;
 using CremeWorks.App.Data;
+using CremeWorks.App.Data.Compatibility;
 using CremeWorks.App.Dialogs;
 using CremeWorks.App.Properties;
 using CremeWorks.Common;
@@ -384,7 +385,30 @@ namespace CremeWorks
         private void cWCDateiToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (cwcImportOpenFile.ShowDialog() != DialogResult.OK) return;
+            Concert? concert = null;
+            try
+            {
+                concert = Concert.LoadFromFile(cwcImportOpenFile.FileName);
+            }
+            catch (Exception)
+            {
+            }
 
+            if (concert == null)
+            {
+                MessageBox.Show("Invalid concert file!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var dialog = new ConcertImportDialog(concert, _database, Path.GetFileNameWithoutExtension(cwcImportOpenFile.FileName));
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+            if (!ConcertConverter.Convert(_database, concert, dialog.Config, out var errorMsg))
+            {
+                MessageBox.Show(errorMsg, "Error converting concert", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            UpdateConcert();
         }
 
         private record SetListBoxItem(string Name, IPlaylistEntry Entry)
