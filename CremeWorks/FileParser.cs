@@ -135,8 +135,8 @@ public class FileParser
                                     }
                                     break;
                                 case "macro":
-                                    song.ChordMacroSourceDeviceId = int.Parse(subNode.Attributes?["src"]?.Value ?? throw new Exception("Macro source device id cannot be null!"));
-                                    song.ChordMacroDestinationDeviceId = int.Parse(subNode.Attributes["dest"]?.Value ?? throw new Exception("Macro destination device id cannot be null!"));
+                                    song.ChordMacroSourceDeviceId = int.Parse(subNode.Attributes?["src"]?.Value ?? "-1");
+                                    song.ChordMacroDestinationDeviceId = int.Parse(subNode.Attributes?["dest"]?.Value ?? "-1");
                                     foreach (XmlNode macroNode in subNode.ChildNodes)
                                     {
                                         var name = macroNode.Attributes?["name"]?.Value ?? throw new Exception("Macro name cannot be null!");
@@ -338,8 +338,8 @@ public class FileParser
             if (song.Value.ChordMacros.Count > 0)
             {
                 var macro = doc.CreateElement("macro");
-                macro.SetAttribute("src", song.Value.ChordMacroSourceDeviceId.ToString());
-                macro.SetAttribute("dest", song.Value.ChordMacroDestinationDeviceId.ToString());
+                if (song.Value.ChordMacroSourceDeviceId < 0) macro.SetAttribute("src", song.Value.ChordMacroSourceDeviceId.ToString());
+                if (song.Value.ChordMacroDestinationDeviceId < 0) macro.SetAttribute("dest", song.Value.ChordMacroDestinationDeviceId.ToString());
                 foreach (var chordMacro in song.Value.ChordMacros)
                 {
                     var macroNode = doc.CreateElement("chord");

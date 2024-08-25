@@ -8,7 +8,7 @@ namespace CremeWorks.App.Data
         MidiDeviceType DeviceType { get; }
         void ApplyPatch(int deviceId);
         IDevicePatch Clone();
-        bool AreEqual(IDevicePatch other);
+        bool AreEqual(IDevicePatch? other);
 
         void Serialize(XmlNode node);
         void Deserialize(XmlNode node);

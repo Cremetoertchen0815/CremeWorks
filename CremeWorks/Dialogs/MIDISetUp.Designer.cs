@@ -91,7 +91,7 @@ namespace CremeWorks
             // boxType
             // 
             boxType.FormattingEnabled = true;
-            boxType.Items.AddRange(new object[] { "Generic Keyboard", "Generic Controller", "Lighting Device", "RefaceCS", "RefaceDX", "RefaceCP", "RefaceYC" });
+            boxType.Items.AddRange(new object[] { "Generic Keyboard", "Generic Controller", "Lighting Device", "Yamaha Reface CS", "Yamaha Reface CP", "Yamaha Reface YC" });
             boxType.Location = new Point(97, 83);
             boxType.Margin = new Padding(4);
             boxType.Name = "boxType";

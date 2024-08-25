@@ -13,7 +13,7 @@ namespace CremeWorks.App.Data.Patches
 
         public IDevicePatch Clone() => (IDevicePatch)MemberwiseClone();
         public void ApplyPatch(int deviceId) => throw new NotImplementedException();
-        public bool AreEqual(IDevicePatch other) => other is CSPatch c && c.VoiceSettings == VoiceSettings;
+        public bool AreEqual(IDevicePatch? other) => other is CSPatch c && c.VoiceSettings == VoiceSettings;
 
         //public void ApplySettings(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0, 0, 0 }, StructMarshal<RefaceSystemData>.getBytes(SystemSettings));
         //public void ApplyPatch(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceCSVoiceData>.getBytes(VoiceSettings));

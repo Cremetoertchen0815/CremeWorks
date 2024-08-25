@@ -1,4 +1,4 @@
--Finish import logic
+-Finish import logic(Import playlist)
 -ADD SOLO MODE DATA STRUCTURE TO DATABASE
 -Test MIDI matrix
 -Implement action system

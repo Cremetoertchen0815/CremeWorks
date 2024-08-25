@@ -60,6 +60,7 @@ public partial class ConcertImportDialog : Form
 
         if (DialogResult == DialogResult.OK)
         {
+            var _importSong = lstSongs.Items.Cast<ListViewItem>().Select(x => x.Checked).ToArray();
             var _songRemapIds = lstSongs.Items.Cast<ListViewItem>().Select<ListViewItem, int?>(x => x.Checked && int.TryParse(x.SubItems[2].Text, out var id) ? id : null).ToArray();
             Config = new ConcertConversionConfig
             {
@@ -68,7 +69,8 @@ public partial class ConcertImportDialog : Form
                 SongImportDoubleHandling = (SongImportDoubleHandling)boxDoubles.SelectedIndex,
                 DefaultRoutingConversionMethod = (DefaultRoutingConversionType)boxRouting.SelectedIndex,
                 PatchImportDoubleHandling = (PatchImportDoubleHandling)boxPatches.SelectedIndex,
-                SongRemapIds = _songRemapIds
+                SongRemapIds = _songRemapIds,
+                ImportSong = _importSong
             };
         }
     }

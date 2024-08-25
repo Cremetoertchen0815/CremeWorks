@@ -14,7 +14,7 @@ namespace CremeWorks.App.Data.Patches
         //public void ApplyPatch(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceYCVoiceData>.getBytes(VoiceSettings));
         public IDevicePatch Clone() => (IDevicePatch)MemberwiseClone();
         public void ApplyPatch(int deviceId) => throw new NotImplementedException();
-        public bool AreEqual(IDevicePatch other) => other is YCPatch c && c.VoiceSettings == VoiceSettings;
+        public bool AreEqual(IDevicePatch? other) => other is YCPatch c && c.VoiceSettings == VoiceSettings;
 
         public void Serialize(XmlNode node)
         {

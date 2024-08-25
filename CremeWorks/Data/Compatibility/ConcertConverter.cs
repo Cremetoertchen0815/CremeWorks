@@ -15,7 +15,7 @@ public class ConcertConverter
         var devicesForRemappingRouting = new List<int>();
         for (int i = 0; i < c.MIDIDevices.Length; i++)
         {
-            if (c.MIDIDevices[i] == null) continue;
+            if (string.IsNullOrEmpty(c.MIDIDevices[i])) continue;
 
             // If we are not importing devices, we need to find the old device that matches the new one
             var oldId = db.Devices.FirstOrDefault(x => x.Value.MidiId == c.MIDIDevices[i]!).Key;
@@ -98,6 +98,7 @@ public class ConcertConverter
             var newSong = new Data.Song();
             if (config.SongImportDoubleHandling == SongImportDoubleHandling.KeepBoth || config.SongRemapIds[listIndex] is null)
             {
+                if (!config.ImportSong[listIndex]) continue;
                 songMap.Add(i, id);
                 db.Songs.Add(id, newSong);
             }
@@ -118,21 +119,74 @@ public class ConcertConverter
             newSong.Tempo = origSong.Tempo;
             newSong.Click = origSong.Click;
 
+            //Convert chord macro data
             newSong.ChordMacros.Clear();
             newSong.ChordMacros.AddRange(origSong.ChordMacros);
-            newSong.ChordMacroDestinationDeviceId = deviceMap[origSong.ChordMacroDst];
-            newSong.ChordMacroSourceDeviceId = deviceMap[origSong.ChordMacroSrc];
+            newSong.ChordMacroDestinationDeviceId = deviceMap.TryGetValue(origSong.ChordMacroDst, out var dest) ? dest : -1;
+            newSong.ChordMacroSourceDeviceId = deviceMap.TryGetValue(origSong.ChordMacroSrc, out var src) ? src : -1;
 
+            //Convert cues
             newSong.Cues.Clear();
             newSong.Cues.AddRange(origSong.CueQueue.Select(x => new CueInstance(cueMap[x.ID], x.comment)));
 
+            //Convert patches
             newSong.Patches.Clear();
-            foreach (var patch in origSong.AutoPatchSlots)
+            for (int patchIdx = 0; patchIdx < origSong.AutoPatchSlots.Length; patchIdx++)
             {
+                var patch = origSong.AutoPatchSlots[patchIdx];
+                if (!patch.Enabled || patch.Patch is null || !deviceMap.ContainsKey(patchIdx + 1)) continue;
 
+                if (config.PatchImportDoubleHandling == PatchImportDoubleHandling.Unify && db.Patches.Any(x => x.Value.AreEqual(patch.Patch)))
+                {
+                    var existing = db.Patches.First(x => x.Value.AreEqual(patch.Patch));
+                    newSong.Patches.Add(new PatchInstance(deviceMap[patchIdx + 1], existing.Key));
+                }
+                else
+                {
+                    var newId = Random.Shared.Next();
+                    db.Patches.Add(newId, patch.Patch);
+                    newSong.Patches.Add(new PatchInstance(deviceMap[patchIdx + 1], newId));
+                }
             }
 
+            //Convert note routing overrides
+            newSong.RoutingOverrides.Clear();
+            for (int srcIdx = 0; srcIdx < origSong.NotePatchMap.Length; srcIdx++)
+            {
+                if (!deviceMap.TryGetValue(srcIdx + 1, out var srcDeviceId)) continue;
+                for (int dstIdx = 0; dstIdx < origSong.NotePatchMap.Length; dstIdx++)
+                {
+                    if (!deviceMap.TryGetValue(dstIdx + 1, out var dstDeviceId)) continue;
+                    var type = origSong.NotePatchMap[srcIdx][dstIdx];
+                    var isInBase = (db.DefaultRouting.FirstOrDefault(x => x.SourceDeviceId == srcDeviceId && x.DestinationDeviceId == dstDeviceId).Type & MidiMatrixNodeType.Notes) != 0;
+                    
+                    if (type && !isInBase) newSong.RoutingOverrides.Add(new MidiMatrixNode(srcDeviceId, dstDeviceId, MidiMatrixNodeType.Notes));
+                    else if (!type && isInBase) newSong.RoutingOverrides.Add(new MidiMatrixNode(srcDeviceId, dstDeviceId, MidiMatrixNodeType.None));
+                }
+            }
 
+            //Convert CC routing overrides
+            for (int srcIdx = 0; srcIdx < origSong.CCPatchMap.Length; srcIdx++)
+            {
+                if (!deviceMap.TryGetValue(srcIdx + 1, out var srcDeviceId)) continue;
+                for (int dstIdx = 0; dstIdx < origSong.CCPatchMap.Length; dstIdx++)
+                {
+                    if (!deviceMap.TryGetValue(dstIdx + 1, out var dstDeviceId)) continue;
+                    var type = origSong.CCPatchMap[srcIdx][dstIdx];
+                    var isInBase = (db.DefaultRouting.FirstOrDefault(x => x.SourceDeviceId == srcDeviceId && x.DestinationDeviceId == dstDeviceId).Type & MidiMatrixNodeType.ControlChange) != 0;
+
+                    var existing = newSong.RoutingOverrides.FirstOrDefault(x => x.SourceDeviceId == srcDeviceId && x.DestinationDeviceId == dstDeviceId);
+                    if (type && !isInBase)
+                    {
+                        if (existing != default) newSong.RoutingOverrides.Remove(existing);
+                        newSong.RoutingOverrides.Add(new MidiMatrixNode(srcDeviceId, dstDeviceId, existing.Type | MidiMatrixNodeType.ControlChange));
+                    } else if (!type && isInBase)
+                    {
+                        if (existing != default) newSong.RoutingOverrides.Remove(existing);
+                        newSong.RoutingOverrides.Add(new MidiMatrixNode(srcDeviceId, dstDeviceId, existing.Type & ~MidiMatrixNodeType.ControlChange));
+                    }
+                }
+            }
 
 
 
@@ -184,6 +238,7 @@ public class ConcertConverter
                 db.DefaultRouting.Clear();
                 foreach (var item in newDefaultRouting)
                 {
+                    if (item.Value == MidiMatrixNodeType.None) continue;
                     db.DefaultRouting.Add(new MidiMatrixNode(item.Key.Item1, item.Key.Item2, item.Value));
                 }
             }
