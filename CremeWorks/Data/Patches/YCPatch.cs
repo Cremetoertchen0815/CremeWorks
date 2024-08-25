@@ -14,6 +14,7 @@ namespace CremeWorks.App.Data.Patches
         //public void ApplyPatch(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceYCVoiceData>.getBytes(VoiceSettings));
         public IDevicePatch Clone() => (IDevicePatch)MemberwiseClone();
         public void ApplyPatch(int deviceId) => throw new NotImplementedException();
+        public bool AreEqual(IDevicePatch other) => other is YCPatch c && c.VoiceSettings == VoiceSettings;
 
         public void Serialize(XmlNode node)
         {
@@ -88,6 +89,31 @@ namespace CremeWorks.App.Data.Patches
             public byte DistortionDrive;
             public byte ReverbDepth;
             public short Reserved2;
+
+            public static bool operator ==(RefaceYCVoiceData a, RefaceYCVoiceData b) =>
+                a.Volume == b.Volume &&
+                a.VoiceType == b.VoiceType &&
+                a.Footage16 == b.Footage16 &&
+                a.Footage5_13 == b.Footage5_13 &&
+                a.Footage8 == b.Footage8 &&
+                a.Footage4 == b.Footage4 &&
+                a.Footage2_23 == b.Footage2_23 &&
+                a.Footage2 == b.Footage2 &&
+                a.Footage1_35 == b.Footage1_35 &&
+                a.Footage1_13 == b.Footage1_13 &&
+                a.Footage1 == b.Footage1 &&
+                a.VibratoChorusSwitch == b.VibratoChorusSwitch &&
+                a.VibratoChorusDepth == b.VibratoChorusDepth &&
+                a.PercussionOnOff == b.PercussionOnOff &&
+                a.PercussionType == b.PercussionType &&
+                a.PercussionLength == b.PercussionLength &&
+                a.RotarySpeakerSpeed == b.RotarySpeakerSpeed &&
+                a.DistortionDrive == b.DistortionDrive &&
+                a.ReverbDepth == b.ReverbDepth;
+
+            public static bool operator !=(RefaceYCVoiceData a, RefaceYCVoiceData b) => !(a == b);
+            public override bool Equals(object? obj) => obj is RefaceYCVoiceData data && this == data;
+            public override int GetHashCode() => HashCode.Combine(HashCode.Combine(Volume, VoiceType, Footage16, Footage5_13, Footage8, Footage4, Footage2_23, Footage2), HashCode.Combine(Footage1_35, Footage1_13, Footage1, VibratoChorusSwitch, VibratoChorusDepth, PercussionOnOff, PercussionType, PercussionLength), HashCode.Combine(RotarySpeakerSpeed, DistortionDrive, ReverbDepth));
         }
 
 

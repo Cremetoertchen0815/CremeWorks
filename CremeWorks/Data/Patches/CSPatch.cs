@@ -13,6 +13,7 @@ namespace CremeWorks.App.Data.Patches
 
         public IDevicePatch Clone() => (IDevicePatch)MemberwiseClone();
         public void ApplyPatch(int deviceId) => throw new NotImplementedException();
+        public bool AreEqual(IDevicePatch other) => other is CSPatch c && c.VoiceSettings == VoiceSettings;
 
         //public void ApplySettings(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0, 0, 0 }, StructMarshal<RefaceSystemData>.getBytes(SystemSettings));
         //public void ApplyPatch(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceCSVoiceData>.getBytes(VoiceSettings));
@@ -64,6 +65,7 @@ namespace CremeWorks.App.Data.Patches
             VoiceSettings = voiceSettings;
         }
 
+
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct RefaceCSVoiceData
         {
@@ -88,6 +90,31 @@ namespace CremeWorks.App.Data.Patches
             public byte FXRate;
             public byte Reserved2;
             public short Reserved3;
+
+            public static bool operator !=(RefaceCSVoiceData a, RefaceCSVoiceData b) => !(a == b);
+            public static bool operator ==(RefaceCSVoiceData a, RefaceCSVoiceData b) => 
+                a.Volume == b.Volume &&
+                a.LFOAssign == b.LFOAssign &&
+                a.LFODepth == b.LFODepth &&
+                a.LFOSpeed == b.LFOSpeed &&
+                a.Portamento == b.Portamento &&
+                a.OSCType == b.OSCType &&
+                a.OSCTexture == b.OSCTexture &&
+                a.OSCMod == b.OSCMod &&
+                a.FilterCutoff == b.FilterCutoff &&
+                a.FilterResonance == b.FilterResonance &&
+                a.EGBalance == b.EGBalance &&
+                a.EGAttack == b.EGAttack &&
+                a.EGDecay == b.EGDecay &&
+                a.EGSustain == b.EGSustain &&
+                a.EGRelease == b.EGRelease &&
+                a.FXType == b.FXType &&
+                a.FXDepth == b.FXDepth &&
+                a.FXRate == b.FXRate;
+
+            public override readonly bool Equals(object? obj) => obj is RefaceCSVoiceData data && this == data;
+
+            public override readonly int GetHashCode() => HashCode.Combine(HashCode.Combine(Volume, LFOAssign, LFODepth, LFOSpeed, Portamento, OSCType, OSCTexture, OSCMod), HashCode.Combine(FilterCutoff, FilterResonance, EGBalance, EGAttack, EGDecay, EGSustain, EGRelease, FXType), FXDepth, FXRate);
         }
 
         public enum RefaceCSLFOAssign : byte { Off = 0, Amp = 1, Filter = 2, Pitch = 3, Oscillator = 4 }

@@ -77,24 +77,24 @@ public class ConcertConverter
         }
 
         //Convert cues
-        var cueMap = new Dictionary<int, int>(); //Maps cue index from concert to database index
+        var cueMap = new Dictionary<ulong, int>(); //Maps cue index from concert to database id
         foreach (var cue in c.LightingCues)
         {
             // Ignore/remap duplicate cues
-            if (db.LightingCues.ContainsKey(cue.Key)) continue;
-            if (db.LightingCues.Any(x => x.Value.NoteValue == cue.Value.NoteValue))
+            if (db.LightingCues.Any(x => x.Value.NoteValue == cue.NoteValue))
             {
-                cueMap[cue.Key] = db.LightingCues.First(x => x.Value.NoteValue == cue.Value.NoteValue).Key;
+                cueMap[cue.ID] = db.LightingCues.First(x => x.Value.NoteValue == cue.NoteValue).Key;
                 continue;
             }
 
             // Copy over the other cues
-            db.LightingCues.Add(cue.Key, new LightingCueItem(cue.Value.NoteValue, cue.Value.Name));
-            cueMap[cue.Key] = cue.Key;
+            var id = Random.Shared.Next();
+            db.LightingCues.Add(id, new LightingCueItem(cue.NoteValue, cue.Name));
+            cueMap[cue.ID] = id;
         }
 
         //Convert songs
-        var songMap = new Dictionary<int, int>(); //Maps song index from concert to database index
+        var songMap = new Dictionary<int, int>(); //Maps song index from concert to database id
         for (int i = 0; i < c.Playlist.Count; i++)
         {
             var origSong = c.Playlist[i];
@@ -116,7 +116,83 @@ public class ConcertConverter
             }
 
             //Copy over the song data
+            newSong.Title = origSong.Title;
+            newSong.Artist = origSong.Artist;
+            newSong.Key = origSong.Key;
+            newSong.Lyrics = origSong.Lyrics;
+            newSong.Instructions = origSong.Instructions;
+            newSong.Tempo = origSong.Tempo;
+            newSong.Click = origSong.Click;
 
+            newSong.ChordMacros.Clear();
+            newSong.ChordMacros.AddRange(origSong.ChordMacros);
+            newSong.ChordMacroDestinationDeviceId = deviceMap[origSong.ChordMacroDst];
+            newSong.ChordMacroSourceDeviceId = deviceMap[origSong.ChordMacroSrc];
+
+            newSong.Cues.Clear();
+            newSong.Cues.AddRange(origSong.CueQueue.Select(x => new CueInstance(cueMap[x.ID], x.comment)));
+
+            newSong.Patches.Clear();
+            foreach (var patch in origSong.AutoPatchSlots)
+            {
+                
+            }
+
+
+
+
+
+        //Convert default routing and routing overrides if needed
+        if (config.DefaultRoutingConversionMethod == DefaultRoutingConversionType.CalculateRoutingFromMajority)
+            {
+                //Calculate default routing from majority
+                var newDefaultRouting = new Dictionary<(int, int), MidiMatrixNodeType>();
+                foreach (var source in db.Devices)
+                {
+                    foreach (var destination in db.Devices)
+                    {
+                        var defaultValue = db.DefaultRouting.FirstOrDefault(x => x.SourceDeviceId == source.Key && x.DestinationDeviceId == destination.Key).Type;
+                        var overrides = db.Songs.Values.Select(x => x.RoutingOverrides.FirstOrDefault(y => y.SourceDeviceId == source.Key && y.DestinationDeviceId == destination.Key)).Select(x => x == default ? defaultValue : x.Type).ToList();
+                        var majority = overrides.GroupBy(x => x).MaxBy(x => x.Count())?.Key ?? MidiMatrixNodeType.None;
+                        newDefaultRouting.Add((source.Key, destination.Key), majority);
+                    }
+                }
+
+                //Remap routing overrides
+                foreach (var song in db.Songs.Values)
+                {
+                    var newSongRouting = new Dictionary<(int, int), MidiMatrixNodeType>();
+                    foreach (var source in db.Devices)
+                    {
+                        foreach (var destination in db.Devices)
+                        {
+                            //Get old value for this routing pair
+                            var oldBase = db.DefaultRouting.FirstOrDefault(x => x.SourceDeviceId == source.Key && x.DestinationDeviceId == destination.Key).Type;
+                            var hasOverride = song.RoutingOverrides.Any(x => x.SourceDeviceId == source.Key && x.DestinationDeviceId == destination.Key);
+                            var oldOverride = hasOverride ? song.RoutingOverrides.First(x => x.SourceDeviceId == source.Key && x.DestinationDeviceId == destination.Key).Type : oldBase;
+
+                            //If the value is the same as the new default, we don't need to add it
+                            if (oldOverride == MidiMatrixNodeType.None && !newDefaultRouting.ContainsKey((source.Key, destination.Key))) continue;
+                            if (oldOverride == newDefaultRouting[(source.Key, destination.Key)]) continue;
+                            newSongRouting.Add((source.Key, destination.Key), oldOverride);
+                        }
+                    }
+
+                    //Update the song
+                    song.RoutingOverrides.Clear();
+                    foreach (var item in newSongRouting)
+                    {
+                        song.RoutingOverrides.Add(new MidiMatrixNode(item.Key.Item1, item.Key.Item2, item.Value));
+                    }
+                }
+
+                //Update default routing
+                db.DefaultRouting.Clear();
+                foreach (var item in newDefaultRouting)
+                {
+                    db.DefaultRouting.Add(new MidiMatrixNode(item.Key.Item1, item.Key.Item2, item.Value));
+                }
+            }
         }
 
 

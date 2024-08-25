@@ -10,7 +10,7 @@ namespace CremeWorks.App.Data.Compatibility
         public const int PATCH_DEVICE_COUNT = 6;
         public string?[] MIDIDevices = new string[ALL_DEVICES_COUNT];
         public (MidiEventType, short, byte)[] FootSwitchConfig = new (MidiEventType, short, byte)[6];
-        public Dictionary<int, LightingCueItem> LightingCues = [];
+        public List<OldLightingCueItem> LightingCues = [];
         public List<Song> Playlist = [];
 
         public static Concert Empty => new Concert()
@@ -46,12 +46,7 @@ namespace CremeWorks.App.Data.Compatibility
 
                 //Lighting cues config
                 var cueCount = br.ReadInt32();
-                for (int i = 0; i < cueCount; i++)
-                {
-                    var oldId = br.ReadUInt64();
-                    var newId = (int)(oldId & 0x7FFFFFFF ^ (oldId >> 33));
-                    nu.LightingCues.Add(newId, new LightingCueItem(Name: br.ReadString(), NoteValue: br.ReadByte()));
-                }
+                for (int i = 0; i < cueCount; i++) nu.LightingCues.Add(new OldLightingCueItem(br.ReadUInt64(), br.ReadString(), br.ReadByte()));
 
                 //Playlist
                 int count = br.ReadInt32();

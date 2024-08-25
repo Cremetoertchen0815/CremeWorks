@@ -29,3 +29,9 @@ public enum SongImportDoubleHandling
     KeepOld,
     KeepNew
 }
+
+public enum PatchImportDoubleHandling
+{
+    KeepBoth,
+    Unify
+}

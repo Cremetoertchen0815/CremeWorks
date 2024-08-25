@@ -13,6 +13,7 @@ namespace CremeWorks.App.Data.Patches
 
         public void ApplyPatch(int deviceId) { return; } // => CommonHelpers.SendParameterChange(d?.Output, CommonHelpers.GetRefaceType(DeviceType), new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceCPVoiceData>.getBytes(VoiceSettings));
         public IDevicePatch Clone() => (IDevicePatch)MemberwiseClone();
+        public bool AreEqual(IDevicePatch other) => other is CPPatch c && c.VoiceSettings == VoiceSettings;
 
         public void Serialize(XmlNode node)
         {
@@ -69,6 +70,11 @@ namespace CremeWorks.App.Data.Patches
             public byte EffectCTime;
             public byte ReverbDepth;
             public short Reserved2;
+
+            public static bool operator ==(RefaceCPVoiceData a, RefaceCPVoiceData b) => a.Volume == b.Volume && a.WaveType == b.WaveType && a.Drive == b.Drive && a.EffectAType == b.EffectAType && a.EffectADepth == b.EffectADepth && a.EffectARate == b.EffectARate && a.EffectBType == b.EffectBType && a.EffectBDepth == b.EffectBDepth && a.EffectBSpeed == b.EffectBSpeed && a.EffectCType == b.EffectCType && a.EffectCDepth == b.EffectCDepth && a.EffectCTime == b.EffectCTime && a.ReverbDepth == b.ReverbDepth;
+            public static bool operator !=(RefaceCPVoiceData a, RefaceCPVoiceData b) => !(a == b);
+            public override readonly bool Equals(object? obj) => obj is RefaceCPVoiceData data && this == data;
+            public override int GetHashCode() => HashCode.Combine(HashCode.Combine(WaveType, Drive, EffectAType, EffectADepth, EffectARate, EffectBType, EffectBDepth, EffectBSpeed), HashCode.Combine(EffectCType, EffectCDepth, EffectCTime, ReverbDepth, Volume));
         }
 
 
