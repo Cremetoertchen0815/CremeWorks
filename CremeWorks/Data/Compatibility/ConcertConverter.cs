@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CremeWorks.App.Data.Compatibility;
 public class ConcertConverter
 {
-    public static bool Convert(Database db, Concert c, ConcertConversionConfig config, out string? errorMsg)
+    public static bool Convert(Database db, Concert c, ConcertConversionConfig config, string playlistName, out string? errorMsg)
     {
         //Convert devices
         var deviceMap = new Dictionary<int, int>(); //Maps device index from concert to database index
@@ -242,6 +242,32 @@ public class ConcertConverter
                     db.DefaultRouting.Add(new MidiMatrixNode(item.Key.Item1, item.Key.Item2, item.Value));
                 }
             }
+        }
+
+        //Generate new playlist
+        if (config.CreatePlaylist)
+        {
+            var elements = new List<IPlaylistEntry>();
+            for (int i = 0; i < c.Playlist.Count; i++)
+            {
+                var item = c.Playlist[i];
+                if (item is null) continue;
+                if (!item.SpecialEvent)
+                {
+                    if (songMap.TryGetValue(i, out var id)) elements.Add(new SongPlaylistEntry(id));
+                    continue;
+                }
+
+                //Special event
+            }
+
+            var pl = new Playlist()
+            {
+                Date = DateOnly.FromDateTime(DateTime.Now),
+                Name = playlistName,
+                Elements = elements
+            };
+            db.Playlists.Add(pl);
         }
 
 
