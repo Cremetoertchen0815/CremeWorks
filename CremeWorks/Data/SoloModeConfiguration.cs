@@ -1,6 +1,6 @@
 ﻿namespace CremeWorks.App.Data;
 
-public class SoloModeConfigurtion
+public class SoloModeConfiguration
 {
     public bool Enabled { get; set; } = false;
     public int CCNumber { get; set; } = 7;
