@@ -8,5 +8,4 @@
 -Implement checks when deleting reference data(make sure the data is not being used)
 -Implement CSV import/export system
 
--Implement backlog system(move to .cwdb file type)
 -Fix SoundPlayer lag under Linux

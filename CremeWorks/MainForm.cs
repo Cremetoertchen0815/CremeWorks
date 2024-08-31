@@ -6,6 +6,7 @@ using CremeWorks.App.Properties;
 using CremeWorks.Common;
 using CremeWorks.Networking;
 using Melanchall.DryWetMidi.Core;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml;
 using System.Xml.Serialization;
@@ -21,6 +22,7 @@ namespace CremeWorks
         private readonly MidiEventToBytesConverter _converter = new();
         private readonly Metronome _metronome;
         private bool _sendMetronomeData = false;
+        private bool _ignoreSetChange = false;
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -80,19 +82,29 @@ namespace CremeWorks
 
         private void UpdatePlaylist()
         {
+            var playlistEntry = (SetsListBoxItem)boxSet.SelectedItem!;
+            _server.SendToAll(MessageTypeEnum.CONCERT_NAME, playlistEntry.ToString());
+
             playList.Items.Clear();
-            var sortedSongEntries = Enumerable.Empty<IPlaylistEntry>();
-            if (boxSet.SelectedIndex > 0)
+            var sortedSongEntries = new List<(IPlaylistEntry entry, int? index)>();
+
+            if (playlistEntry.playlist is null)
             {
-                var playlist = _database.Playlists[boxSet.SelectedIndex - 1];
-                sortedSongEntries = playlist.Elements;
+                //Add backlog songs
+                sortedSongEntries = _database.Songs.OrderBy(x => x.Value.Artist).ThenBy(x => x.Value.Title).Select(x => ((IPlaylistEntry, int?))(new SongPlaylistEntry(x.Key), null)).ToList();
             }
             else
             {
-                sortedSongEntries = _database.Songs.OrderBy(x => x.Value.Artist).ThenBy(x => x.Value.Title).Select(x => new SongPlaylistEntry(x.Key));
+                //Add playlist songs
+                int songIndex = 0;
+                foreach (var song in playlistEntry.playlist.Elements)
+                {
+                    sortedSongEntries.Add((song, songIndex));
+                    if (song is SongPlaylistEntry) songIndex++;
+                }
             }
+            playList.Items.AddRange(sortedSongEntries.Select(x => new PlaylistListBoxItem(x.entry.GetCommonInformation(_database, x.index).Header, x.entry)).ToArray());
 
-            playList.Items.AddRange(sortedSongEntries.Select(x => new SetListBoxItem(x.GetCommonInformation(_database).Header, x)).ToArray());
             //_server.SendToAll(MessageTypeEnum.SET_DATA, GetClientSet());
             _activeEntry = null;
             UpdateSong();
@@ -164,7 +176,7 @@ namespace CremeWorks
 
         private void playList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _activeEntry = playList.SelectedIndex >= 0 ? (playList.SelectedItem as SetListBoxItem)?.Entry : null;
+            _activeEntry = playList.SelectedIndex >= 0 ? (playList.SelectedItem as PlaylistListBoxItem)?.Entry : null;
             UpdateSong();
         }
 
@@ -179,13 +191,17 @@ namespace CremeWorks
             string tit = _database.FilePath is null or "" ? "Untitled" : _database.FilePath;
             string titClean = _database.FilePath is null or "" ? "Untitled" : Path.GetFileNameWithoutExtension(_database.FilePath);
             Text = "CremeWorks Stage Controller - " + tit;
-            _server.SendToAll(MessageTypeEnum.CONCERT_NAME, titClean);
-            if (_database is null)
-            {
-                playList.Items.Clear();
-                _server.SendToAll(MessageTypeEnum.SET_DATA, "[]");
-                return;
-            }
+
+            //Update set ListBox
+            _ignoreSetChange = true;
+            var prevSelItem = (playList.SelectedItem as SetsListBoxItem)?.playlist;
+            var newItems = new List<SetsListBoxItem> { new SetsListBoxItem(null) };
+            newItems.AddRange(_database.Playlists.OrderByDescending(x => x.Date).Select(x => new SetsListBoxItem(x)).ToArray());
+            var newSelItem = newItems.FirstOrDefault(x => x.playlist == prevSelItem) ?? newItems[0];
+            boxSet.Items.Clear();
+            boxSet.Items.AddRange(newItems.ToArray());
+            boxSet.SelectedItem = newSelItem;
+            _ignoreSetChange = false;
 
             UpdatePlaylist();
             playList.SelectedIndex = -1;
@@ -372,7 +388,7 @@ namespace CremeWorks
 
         private void defaultMIDIRoutingToolStripMenuItem_Click(object sender, EventArgs e) => new SongRoutingEditor(this, null).ShowDialog();
 
-        private void boxSet_SelectedIndexChanged(object sender, EventArgs e) => UpdateConcert();
+        private void boxSet_SelectedIndexChanged(object sender, EventArgs e) => UpdatePlaylist();
 
         private void patchesToolStripMenuItem_Click(object sender, EventArgs e) => new PatchEditor(this).ShowDialog();
 
@@ -411,9 +427,14 @@ namespace CremeWorks
             UpdateConcert();
         }
 
-        private record SetListBoxItem(string Name, IPlaylistEntry Entry)
+        private record PlaylistListBoxItem(string Name, IPlaylistEntry Entry)
         {
             public override string ToString() => Name;
+        }
+
+        private record SetsListBoxItem(Playlist? playlist)
+        {
+            public override string ToString() => playlist is null ? "[BACKLOG]" : $"{playlist.Name} ({playlist.Date})";
         }
 
         private record CueListBoxItem(int Index, CueInstance cue, string cueName)

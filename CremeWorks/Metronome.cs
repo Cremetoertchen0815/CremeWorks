@@ -14,6 +14,11 @@ namespace CremeWorks.Common
 
         public void Start(int tempoBPM)
         {
+            if (tempoBPM <= 0)
+            {
+                Stop();
+                return;
+            }
             _futureTick = 60000 / tempoBPM;
             if (_timer is null)
             {
