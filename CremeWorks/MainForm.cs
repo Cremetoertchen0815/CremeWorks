@@ -107,6 +107,7 @@ namespace CremeWorks
 
             //_server.SendToAll(MessageTypeEnum.SET_DATA, GetClientSet());
             _activeEntry = null;
+            if (playList.Items.Count > 0) playList.SelectedIndex = 0;
             UpdateSong();
         }
 
