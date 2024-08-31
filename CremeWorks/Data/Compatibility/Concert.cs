@@ -49,6 +49,10 @@ namespace CremeWorks.App.Data.Compatibility
                 for (int i = 0; i < cueCount; i++) nu.LightingCues.Add(new OldLightingCueItem(br.ReadUInt64(), br.ReadString(), br.ReadByte()));
 
                 //Playlist
+                var csPatchCount = 1;
+                var dxPatchCount = 1;
+                var cpPatchCount = 1;
+                var ycPatchCount = 1;
                 int count = br.ReadInt32();
                 for (int i = 0; i < count; i++)
                 {
@@ -77,10 +81,6 @@ namespace CremeWorks.App.Data.Compatibility
                     var autoPatchCount = br.ReadInt32();
                     s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, PATCH_DEVICE_COUNT)).Select(x => ((bool, IDevicePatch?))(false, null)).ToArray();
 
-                    var csPatchCount = 1;
-                    var dxPatchCount = 1;
-                    var cpPatchCount = 1;
-                    var ycPatchCount = 1;
                     for (int j = 0; j < autoPatchCount; j++)
                     {
                         bool enabled = br.ReadBoolean();

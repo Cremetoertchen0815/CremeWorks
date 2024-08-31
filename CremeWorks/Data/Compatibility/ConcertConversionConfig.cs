@@ -2,7 +2,7 @@
 
 public record struct ConcertConversionConfig(
     bool ImportActions,
-    bool CreatePlaylist,
+    string? PlaylistName,
     bool[] ImportSong,
     int?[] SongRemapIds, // Special events are not included in this list! Because of that the index of the song in the list is not the same as the index in the playlist.
     DefaultRoutingConversionType DefaultRoutingConversionMethod,

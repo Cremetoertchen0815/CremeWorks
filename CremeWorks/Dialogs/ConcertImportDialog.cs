@@ -65,7 +65,7 @@ public partial class ConcertImportDialog : Form
             Config = new ConcertConversionConfig
             {
                 ImportActions = chkActions.Checked,
-                CreatePlaylist = chkPlaylist.Checked,
+                PlaylistName = chkPlaylist.Checked ? txtPlaylist.Text : null,
                 SongImportDoubleHandling = (SongImportDoubleHandling)boxDoubles.SelectedIndex,
                 DefaultRoutingConversionMethod = (DefaultRoutingConversionType)boxRouting.SelectedIndex,
                 PatchImportDoubleHandling = (PatchImportDoubleHandling)boxPatches.SelectedIndex,

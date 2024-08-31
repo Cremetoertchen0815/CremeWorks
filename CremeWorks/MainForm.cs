@@ -402,7 +402,7 @@ namespace CremeWorks
 
             var dialog = new ConcertImportDialog(concert, _database, Path.GetFileNameWithoutExtension(cwcImportOpenFile.FileName));
             if (dialog.ShowDialog() != DialogResult.OK) return;
-            if (!ConcertConverter.Convert(_database, concert, dialog.Config, cwcImportOpenFile.FileName, out var errorMsg))
+            if (!ConcertConverter.Convert(_database, concert, dialog.Config, out var errorMsg))
             {
                 MessageBox.Show(errorMsg, "Error converting concert", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

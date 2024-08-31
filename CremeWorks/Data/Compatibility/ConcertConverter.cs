@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CremeWorks.App.Data.Compatibility;
 public class ConcertConverter
 {
-    public static bool Convert(Database db, Concert c, ConcertConversionConfig config, string playlistName, out string? errorMsg)
+    public static bool Convert(Database db, Concert c, ConcertConversionConfig config, out string? errorMsg)
     {
         //Convert devices
         var deviceMap = new Dictionary<int, int>(); //Maps device index from concert to database index
@@ -245,12 +245,12 @@ public class ConcertConverter
         }
 
         //Generate new playlist
-        if (config.CreatePlaylist)
+        if (config.PlaylistName is not null)
         {
             var pl = new Playlist()
             {
                 Date = DateOnly.FromDateTime(DateTime.Now),
-                Name = playlistName
+                Name = config.PlaylistName
             };
 
             for (int i = 0; i < c.Playlist.Count; i++)
