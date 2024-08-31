@@ -14,4 +14,5 @@ public class Database
     public Dictionary<int, Song> Songs { get; } = [];
     public List<Playlist> Playlists { get; } = [];
     public List<MidiMatrixNode> DefaultRouting { get; } = [];
+    public SoloModeConfigurtion SoloModeConfig { get; } = new();
 }

@@ -71,13 +71,13 @@ namespace CremeWorks
             if (!startMIDIToolStripMenuItem.Checked)
             {
                 _midiManager.Connect();
+                _midiManager.UpdateMatrix();
             }
             else
             {
+                _midiManager.SendAllNotesOff();
                 _midiManager.Disconnect();
             }
-
-            startMIDIToolStripMenuItem.Checked = !startMIDIToolStripMenuItem.Checked;
         }
 
         private void UpdatePlaylist()
@@ -139,6 +139,7 @@ namespace CremeWorks
             //Configure shit
             _sendMetronomeData = true;
             _midiManager.UpdateMatrix();
+            if (_activeEntry.Type == PlaylistEntryType.Marker) _midiManager.SendAllNotesOff();
 
             //Load default cue patch
             if (lightCue.Items.Count > 0) lightCue.SelectedIndex = 0;
@@ -426,6 +427,8 @@ namespace CremeWorks
 
             UpdateConcert();
         }
+
+        private void allNotesOffToolStripMenuItem_Click(object sender, EventArgs e) => _midiManager.SendAllNotesOff();
 
         private record PlaylistListBoxItem(string Name, IPlaylistEntry Entry)
         {

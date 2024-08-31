@@ -61,6 +61,7 @@ namespace CremeWorks
             serverToolStripMenuItem = new ToolStripMenuItem();
             startMIDIToolStripMenuItem = new ToolStripMenuItem();
             startToolStripMenuItem = new ToolStripMenuItem();
+            allNotesOffToolStripMenuItem = new ToolStripMenuItem();
             label1 = new Label();
             playList = new ListBox();
             songTitle = new Label();
@@ -286,7 +287,7 @@ namespace CremeWorks
             // 
             // serverToolStripMenuItem
             // 
-            serverToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { startMIDIToolStripMenuItem, startToolStripMenuItem });
+            serverToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { startMIDIToolStripMenuItem, startToolStripMenuItem, allNotesOffToolStripMenuItem });
             serverToolStripMenuItem.Name = "serverToolStripMenuItem";
             serverToolStripMenuItem.Size = new Size(81, 20);
             serverToolStripMenuItem.Text = "Connection";
@@ -294,16 +295,24 @@ namespace CremeWorks
             // startMIDIToolStripMenuItem
             // 
             startMIDIToolStripMenuItem.Name = "startMIDIToolStripMenuItem";
-            startMIDIToolStripMenuItem.Size = new Size(150, 22);
+            startMIDIToolStripMenuItem.Size = new Size(180, 22);
             startMIDIToolStripMenuItem.Text = "MIDI Host";
             startMIDIToolStripMenuItem.Click += startMIDIToolStripMenuItem_Click;
             // 
             // startToolStripMenuItem
             // 
             startToolStripMenuItem.Name = "startToolStripMenuItem";
-            startToolStripMenuItem.Size = new Size(150, 22);
+            startToolStripMenuItem.Size = new Size(180, 22);
             startToolStripMenuItem.Text = "Remote Server";
             startToolStripMenuItem.Click += startToolStripMenuItem_Click;
+            // 
+            // allNotesOffToolStripMenuItem
+            // 
+            allNotesOffToolStripMenuItem.BackColor = Color.FromArgb(255, 169, 169);
+            allNotesOffToolStripMenuItem.Name = "allNotesOffToolStripMenuItem";
+            allNotesOffToolStripMenuItem.Size = new Size(180, 22);
+            allNotesOffToolStripMenuItem.Text = "MIDI Panic";
+            allNotesOffToolStripMenuItem.Click += allNotesOffToolStripMenuItem_Click;
             // 
             // label1
             // 
@@ -674,6 +683,7 @@ namespace CremeWorks
         private ToolStripMenuItem syncToolStripMenuItem;
         private ToolStripMenuItem openRecentToolStripMenuItem;
         private OpenFileDialog cwcImportOpenFile;
+        private ToolStripMenuItem allNotesOffToolStripMenuItem;
     }
 }
 

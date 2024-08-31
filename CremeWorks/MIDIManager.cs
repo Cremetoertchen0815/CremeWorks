@@ -36,6 +36,7 @@ public class MidiManager
         int i = 0;
         foreach (var item in _parent.Database.Devices)
         {
+            var currentIndex = i;
             if (item.Value.Name is "" || item.Value.Type == MidiDeviceType.Unknown) continue;
             if (item.Value.IsInstrument) _matrixIds[i++] = item.Key;
 
@@ -47,7 +48,7 @@ public class MidiManager
                 if (item.Value.IsInstrument || item.Value.Type is MidiDeviceType.GenericController)
                 {
                     inputDev = InputDevice.GetByName(item.Value.Name);
-                    inputDev.EventReceived += item.Value.IsInstrument ? (sender, e) => ListenInstrument(item.Key, e.Event) : ListenFootPedal;
+                    inputDev.EventReceived += item.Value.IsInstrument ? (sender, e) => ListenInstrument(currentIndex, e.Event) : ListenFootPedal;
                     inputDev.StartEventsListening();
                 }
                 //Connect to output device
@@ -119,6 +120,8 @@ public class MidiManager
 
     }
 
+    public Task SendAllNotesOff() => Task.WhenAll(_midiDevices.Select(item => Task.Run(() => item.Value.Output?.TurnAllNotesOff())));
+
     public void UpdateMatrix()
     {
         MidiMatrixNode[]? nodes = _parent.CurrentEntry is SongPlaylistEntry se ? [.. _parent.Database.DefaultRouting, .. _parent.Database.Songs[se.SongId].RoutingOverrides] : null;
@@ -140,8 +143,12 @@ public class MidiManager
             if (sourceIdx < 0 || destIdx < 0) continue;
             if (sourceIdx >= _matrixIds.Length || destIdx >= _matrixIds.Length) continue;
 
+            var prevNoteOn = _matrixNote[sourceIdx, destIdx];
             _matrixNote[sourceIdx, destIdx] = (node.Type & MidiMatrixNodeType.Notes) == MidiMatrixNodeType.Notes;
             _matrixCC[sourceIdx, destIdx] = (node.Type & MidiMatrixNodeType.ControlChange) == MidiMatrixNodeType.ControlChange;
+
+            //If the matrix has turn off a connection, send all notes off to the destination
+            if (prevNoteOn && !_matrixNote[sourceIdx, destIdx]) Task.Run(() => _midiDevices[_matrixIds[destIdx]]?.Output?.TurnAllNotesOff());
         }
 
         //Update macro information
@@ -193,9 +200,9 @@ public class MidiManager
 
     private void ListenInstrument(int index, MidiEvent e)
     {
-        if (PlaybackPaused || _matrixIds is null) return;
+        if (PlaybackPaused || _matrixIds is null || _matrixNote is null || _matrixCC is null || e.EventType is MidiEventType.TimingClock or MidiEventType.ActiveSensing) return;
 
-        if (e.EventType == MidiEventType.NoteOn || e.EventType == MidiEventType.NoteOff && _matrixIds[index] == _macroDeviceSourceId)
+        if (e.EventType is MidiEventType.NoteOn or MidiEventType.NoteOff && _matrixIds[index] == _macroDeviceSourceId)
         {
             //Check for chord macros
             var note = (NoteEvent)e;
@@ -219,10 +226,8 @@ public class MidiManager
         //If no chord macro, simply forward
         for (int i = 0; i < _matrixIds.Length; i++)
         {
-            if (i == index) continue;
-
-            if (_matrixNote![index, i] && e.EventType is MidiEventType.NoteOn or MidiEventType.NoteOff ||
-                _matrixCC![index, i] && e.EventType is MidiEventType.ControlChange)
+            if (_matrixNote[index, i] && e.EventType is MidiEventType.NoteOn or MidiEventType.NoteOff ||
+                _matrixCC[index, i] && e.EventType is MidiEventType.ControlChange)
             {
                 _midiDevices[_matrixIds[i]].Output?.SendEvent(e);
             }
