@@ -247,26 +247,33 @@ public class ConcertConverter
         //Generate new playlist
         if (config.CreatePlaylist)
         {
-            var elements = new List<IPlaylistEntry>();
+            var pl = new Playlist()
+            {
+                Date = DateOnly.FromDateTime(DateTime.Now),
+                Name = playlistName
+            };
+
             for (int i = 0; i < c.Playlist.Count; i++)
             {
                 var item = c.Playlist[i];
                 if (item is null) continue;
                 if (!item.SpecialEvent)
                 {
-                    if (songMap.TryGetValue(i, out var id)) elements.Add(new SongPlaylistEntry(id));
+                    if (songMap.TryGetValue(i, out var id)) pl.Elements.Add(new SongPlaylistEntry(id));
                     continue;
                 }
 
                 //Special event
+                var marker = new MarkerPlaylistEntry
+                {
+                    Text = item.Title,
+                    Instructions = item.Instructions
+                };
+                marker.Cues.AddRange(item.CueQueue.Select(x => new CueInstance(cueMap[x.ID], x.comment)));
+                pl.Elements.Add(marker);
+
             }
 
-            var pl = new Playlist()
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now),
-                Name = playlistName,
-                Elements = elements
-            };
             db.Playlists.Add(pl);
         }
 
