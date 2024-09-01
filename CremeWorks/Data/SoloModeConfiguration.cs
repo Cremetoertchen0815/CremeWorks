@@ -3,9 +3,9 @@
 public class SoloModeConfiguration
 {
     public bool Enabled { get; set; } = false;
-    public int CCNumber { get; set; } = 7;
-    public int RegularValue { get; set; } = 100;
-    public int SoloValue { get; set; } = 127;
+    public byte CCNumber { get; set; } = 7;
+    public byte DefaultValue { get; set; } = 100;
+    public byte SoloValue { get; set; } = 127;
     public List<int> Devices { get; } = [];
     public float? FadeDurationSeconds { get; set; } = null;
 }

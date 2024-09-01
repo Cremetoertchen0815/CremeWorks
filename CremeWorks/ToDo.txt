@@ -1,4 +1,3 @@
--ADD SOLO MODE DATA STRUCTURE TO DATABASE
 -Implement action system
 -Implement/test cue system
 -Implement networking features

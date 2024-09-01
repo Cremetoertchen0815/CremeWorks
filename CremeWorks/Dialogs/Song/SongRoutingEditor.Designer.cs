@@ -89,6 +89,7 @@ partial class SongRoutingEditor
         Controls.Add(panel1);
         Controls.Add(dataGridView1);
         Name = "SongRoutingEditor";
+        StartPosition = FormStartPosition.CenterParent;
         Text = "SongRoutingEditor";
         FormClosed += SongRoutingEditor_FormClosed;
         ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();

@@ -185,6 +185,21 @@ public class FileParser
                         db.DefaultRouting.Add(new MidiMatrixNode(srcId, destId, type));
                     }
                     break;
+                case "solo":
+                    var soloConfig = new SoloModeConfiguration();
+                    var fadeRaw = node.Attributes?["fade"]?.Value;
+                    soloConfig.Enabled = bool.Parse(node.Attributes!["enabled"]?.Value ?? throw new Exception("Solo enabled cannot be null!"));
+                    soloConfig.CCNumber = byte.Parse(node.Attributes["cc"]?.Value ?? throw new Exception("Solo cc number cannot be null!"));
+                    soloConfig.DefaultValue = byte.Parse(node.Attributes["regular"]?.Value ?? throw new Exception("Solo regular value cannot be null!"));
+                    soloConfig.SoloValue = byte.Parse(node.Attributes["solo"]?.Value ?? throw new Exception("Solo solo value cannot be null!"));
+                    soloConfig.FadeDurationSeconds = fadeRaw is null or "null" ? null : float.Parse(fadeRaw);
+
+                    foreach (XmlNode deviceNode in node.ChildNodes)
+                    {
+                        if (deviceNode.Name != "device") continue;
+                        soloConfig.Devices.Add(int.Parse(deviceNode.Attributes!["id"]?.Value ?? throw new Exception("Solo device id cannot be null!")));
+                    }
+                    break;
             }
         }
 
@@ -395,6 +410,21 @@ public class FileParser
             routing.AppendChild(routingNode);
         }
         root.AppendChild(routing);
+
+        // Save solo mode configuration
+        var solo = doc.CreateElement("solo");
+        solo.SetAttribute("enabled", db.SoloModeConfig.Enabled.ToString());
+        solo.SetAttribute("cc", db.SoloModeConfig.CCNumber.ToString());
+        solo.SetAttribute("regular", db.SoloModeConfig.DefaultValue.ToString());
+        solo.SetAttribute("solo", db.SoloModeConfig.SoloValue.ToString());
+        if (db.SoloModeConfig.FadeDurationSeconds.HasValue) solo.SetAttribute("fade", db.SoloModeConfig.FadeDurationSeconds.Value.ToString());
+        foreach (var deviceId in db.SoloModeConfig.Devices)
+        {
+            var deviceNode = doc.CreateElement("device");
+            deviceNode.SetAttribute("id", deviceId.ToString());
+            solo.AppendChild(deviceNode);
+        }
+        root.AppendChild(solo);
 
         doc.AppendChild(root);
 

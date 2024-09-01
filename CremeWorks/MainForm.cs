@@ -391,6 +391,8 @@ namespace CremeWorks
 
         private void patchesToolStripMenuItem_Click(object sender, EventArgs e) => new PatchEditor(this).ShowDialog();
 
+        private void soloModeToolStripMenuItem_Click(object sender, EventArgs e) => new SoloModeSetup(this).ShowDialog();
+
         private void syncToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {
             Settings.Default.SyncToCloud = syncToolStripMenuItem.Checked;
