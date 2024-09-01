@@ -1,6 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using System.Xml;
 using CremeWorks.App.Data;
+using CremeWorks.App.Reface;
+using static CremeWorks.App.Data.Patches.CPPatch;
 
 namespace CremeWorks.App.Data.Patches
 {
@@ -15,8 +17,11 @@ namespace CremeWorks.App.Data.Patches
         public void ApplyPatch(int deviceId) => throw new NotImplementedException();
         public bool AreEqual(IDevicePatch? other) => other is CSPatch c && c.VoiceSettings == VoiceSettings;
 
-        //public void ApplySettings(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0, 0, 0 }, StructMarshal<RefaceSystemData>.getBytes(SystemSettings));
-        //public void ApplyPatch(MIDIDevice d) => CommonHelpers.SendParameterChange(d?.Output, Type, new byte[] { 0x30, 0, 0 }, StructMarshal<RefaceCSVoiceData>.getBytes(VoiceSettings));
+        public void ApplyPatch(IDataParent parent, int deviceId)
+        {
+            if (!parent.MidiManager.TryGetMidiDevicePort(deviceId, out _, out var outputDevice) || outputDevice is null) return;
+            CommonHelpers.SendParameterChange(outputDevice, CommonHelpers.GetRefaceType(DeviceType), [0x30, 0, 0], StructMarshal<RefaceCSVoiceData>.getBytes(VoiceSettings));
+        }
 
         public void Serialize(XmlNode node)
         {

@@ -6,7 +6,7 @@ namespace CremeWorks.App.Data
     {
         string Name { get; }
         MidiDeviceType DeviceType { get; }
-        void ApplyPatch(int deviceId);
+        void ApplyPatch(IDataParent parent, int deviceId);
         IDevicePatch Clone();
         bool AreEqual(IDevicePatch? other);
 

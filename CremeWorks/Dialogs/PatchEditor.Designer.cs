@@ -139,6 +139,8 @@ namespace CremeWorks
             boxSelector = new ComboBox();
             btnNew = new Button();
             btnDelete = new Button();
+            label1 = new Label();
+            boxPlayback = new ComboBox();
             voiceBoxCP.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown16).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown14).BeginInit();
@@ -186,7 +188,7 @@ namespace CremeWorks
             // 
             // pushVoiceData
             // 
-            pushVoiceData.Location = new Point(410, 500);
+            pushVoiceData.Location = new Point(410, 511);
             pushVoiceData.Margin = new Padding(4);
             pushVoiceData.Name = "pushVoiceData";
             pushVoiceData.Size = new Size(109, 40);
@@ -914,7 +916,7 @@ namespace CremeWorks
             // 
             // fetchVoiceData
             // 
-            fetchVoiceData.Location = new Point(293, 500);
+            fetchVoiceData.Location = new Point(293, 511);
             fetchVoiceData.Margin = new Padding(4);
             fetchVoiceData.Name = "fetchVoiceData";
             fetchVoiceData.Size = new Size(109, 40);
@@ -1385,11 +1387,31 @@ namespace CremeWorks
             btnDelete.UseVisualStyleBackColor = true;
             btnDelete.Click += btnDelete_Click;
             // 
+            // label1
+            // 
+            label1.Location = new Point(13, 521);
+            label1.Name = "label1";
+            label1.Size = new Size(94, 23);
+            label1.TabIndex = 42;
+            label1.Text = "Playback device:";
+            label1.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // boxPlayback
+            // 
+            boxPlayback.Enabled = false;
+            boxPlayback.FormattingEnabled = true;
+            boxPlayback.Location = new Point(113, 521);
+            boxPlayback.Name = "boxPlayback";
+            boxPlayback.Size = new Size(172, 23);
+            boxPlayback.TabIndex = 43;
+            // 
             // PatchEditor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(532, 548);
+            ClientSize = new Size(532, 564);
+            Controls.Add(boxPlayback);
+            Controls.Add(label1);
             Controls.Add(voiceBoxPC);
             Controls.Add(btnDelete);
             Controls.Add(btnNew);
@@ -1570,5 +1592,7 @@ namespace CremeWorks
         private ComboBox boxSelector;
         private Button btnNew;
         private Button btnDelete;
+        private Label label1;
+        private ComboBox boxPlayback;
     }
 }

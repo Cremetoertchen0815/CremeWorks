@@ -2,6 +2,8 @@
 public record MidiDevice(string Name, string MidiId, bool IsRemoteSource, MidiDeviceType Type)
 {
     public bool IsInstrument => Type is not MidiDeviceType.Lighting and not MidiDeviceType.GenericController;
+
+    public override string ToString() => Name;
 }
 
 public enum MidiDeviceType

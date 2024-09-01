@@ -1,4 +1,8 @@
-﻿using System.Xml;
+﻿using CremeWorks.App.Reface;
+using Melanchall.DryWetMidi.Common;
+using Melanchall.DryWetMidi.Core;
+using System.Xml;
+using static CremeWorks.App.Data.Patches.CPPatch;
 
 namespace CremeWorks.App.Data.Patches;
 
@@ -8,8 +12,12 @@ public class ProgramChangePatch(string name) : IDevicePatch
     public MidiDeviceType DeviceType => MidiDeviceType.GenericKeyboard;
     public byte ProgramChangeNr { get; set; }
 
+    public void ApplyPatch(IDataParent parent, int deviceId)
+    {
+        if (!parent.MidiManager.TryGetMidiDevicePort(deviceId, out _, out var outputDevice) || outputDevice is null) return;
+        outputDevice.SendEvent(new ProgramChangeEvent(new SevenBitNumber(ProgramChangeNr)));
+    }
 
-    //public void ApplyPatch(MIDIDevice d) => d.Output?.SendEvent(new ProgramChangeEvent(new SevenBitNumber(ProgramChangeNr)));
     public void ApplyPatch(int deviceId) => throw new NotImplementedException();
     public IDevicePatch Clone() => (IDevicePatch)MemberwiseClone();
     public bool AreEqual(IDevicePatch? other) => other is ProgramChangePatch c && c.ProgramChangeNr == ProgramChangeNr;

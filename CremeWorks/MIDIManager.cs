@@ -2,13 +2,13 @@
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
+using static CremeWorks.App.Reface.CommonHelpers;
 
 namespace CremeWorks.App;
 public class MidiManager
 {
     public event Action<bool>? ConnectionChanged;
 
-    private bool _isConnected = false;
     private Dictionary<int, InternalMidiDevice> _midiDevices = [];
     private int[]? _matrixIds = null;
     private bool[,]? _matrixNote = null;
@@ -19,6 +19,7 @@ public class MidiManager
     private readonly IDataParent _parent;
 
     public bool PlaybackPaused { get; set; } = false;
+    public bool IsConnected { get; private set; } = false;
 
     public const int INSTR_DEVICE_OFFSET = 1;
 
@@ -26,7 +27,7 @@ public class MidiManager
 
     public void Connect()
     {
-        if (_isConnected) return;
+        if (IsConnected) return;
 
         _midiDevices.Clear();
         _matrixIds = new int[_parent.Database.Devices.Count(x => x.Value.IsInstrument && x.Value.Name != "")];
@@ -70,13 +71,13 @@ public class MidiManager
             _midiDevices.Add(item.Key, new InternalMidiDevice(item.Value.MidiId, inputDev, outputDev));
         }
 
-        _isConnected = true;
+        IsConnected = true;
         ConnectionChanged?.Invoke(true);
     }
 
     public void Disconnect()
     {
-        if (!_isConnected) return;
+        if (!IsConnected) return;
         foreach (var element in _midiDevices.Values)
         {
             if (element.Input != null) element.Input.Dispose();
@@ -84,7 +85,7 @@ public class MidiManager
         }
         _midiDevices.Clear();
 
-        _isConnected = false;
+        IsConnected = false;
         ConnectionChanged?.Invoke(false);
     }
 
@@ -102,7 +103,7 @@ public class MidiManager
 
     public string[] GetAllDevices()
     {
-        var wasConnected = _isConnected;
+        var wasConnected = IsConnected;
         Disconnect();
         var outList = OutputDevice.GetAll();
         var inList = InputDevice.GetAll();
@@ -113,11 +114,6 @@ public class MidiManager
 
         if (wasConnected) Connect();
         return [.. outNames, .. inNames];
-    }
-
-    public void RefreshDevices()
-    {
-
     }
 
     public Task SendAllNotesOff() => Task.WhenAll(_midiDevices.Select(item => Task.Run(() => item.Value.Output?.TurnAllNotesOff())));
@@ -156,6 +152,20 @@ public class MidiManager
         _macroDeviceSourceId = song.ChordMacroSourceDeviceId;
         _macroDeviceDestId = song.ChordMacroDestinationDeviceId;
         _activeMacros = song.ChordMacros;
+    }
+
+
+    public bool TryGetMidiDevicePort(int deviceId, out InputDevice? input, out OutputDevice? output)
+    {
+        if (_midiDevices.TryGetValue(deviceId, out var dev) && dev.Input is not null && dev.Output is not null)
+        {
+            input = dev.Input;
+            output = dev.Output;
+            return true;
+        }
+        input = null;
+        output = null;
+        return false;
     }
 
     private void ListenFootPedal(object? sender, MidiEventReceivedEventArgs e)

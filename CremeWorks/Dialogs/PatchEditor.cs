@@ -2,6 +2,9 @@
 using CremeWorks.App.Data;
 using CremeWorks.App.Data.Patches;
 using CremeWorks.App.Dialogs.Patch;
+using Melanchall.DryWetMidi.Core;
+using Melanchall.DryWetMidi.Multimedia;
+using static CremeWorks.App.Reface.CommonHelpers;
 
 namespace CremeWorks
 {
@@ -23,43 +26,40 @@ namespace CremeWorks
                 UpdateControls();
             }
 
-            //Load data from old patch
-            //_c = c;
-            //_s = s;
-            //_id = id;
-            //_d = _c.MIDIDevices[1 + id];
-            //CheckForIllegalCrossThreadCalls = false;
-            //_refaceDat = _s.AutoPatchSlots[id].Patch;
-
-            ////Adapt controls
-            //typeSelector.SelectedIndex = (int?)_refaceDat?.DeviceType ?? 0;
-            //UpdateControls();
-
-            ////Set up MIDI shit
-            //_c.Connect();
-            //if (_d.Input == null || _d.Output == null)
-            //{
-            //    MessageBox.Show("Device not connected yet!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
-            //else
-            //{
-            //    _wasListening = _d.Input.IsListeningForEvents;
-            //    if (!_d.Input.IsListeningForEvents) _d.Input.StartEventsListening();
-            //    _d.Input.EventReceived += ListenForSysEx;
-            //}
+            if (!parent.MidiManager.IsConnected)
+            {
+                MessageBox.Show("MIDI devices are not connected. You need to connect to them first if you want to fetch or push voice data.", "No MIDI devices connected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
         }
 
         private void UpdateControls()
         {
-            //Prepare controls
+            //Disable all controls first
             voiceBoxCS.Visible = false;
             voiceBoxPC.Visible = false;
             voiceBoxCP.Visible = false;
             voiceBoxYC.Visible = false;
-            fetchVoiceData.Enabled = true;
+            fetchVoiceData.Enabled = false;
+            pushVoiceData.Enabled = false;
+            boxPlayback.Enabled = false;
 
             if (boxSelector.SelectedItem is not PatchComboBoxItem item) return;
+
+            //If actual patch was selected, enable controls
+            boxPlayback.Enabled = true;
+
+            //Find viable playback devices
+            boxPlayback.Items.Clear();
+            var devices = _parent.Database.Devices.Where(d => d.Value.Type == item.patch.DeviceType && _parent.MidiManager.TryGetMidiDevicePort(d.Key, out _, out _))
+                            .Select(d => new DeviceComboBoxItem(d.Key, d.Value)).ToArray();
+            boxPlayback.Items.AddRange(devices);
+            if (boxPlayback.Items.Count > 0)
+            {
+                boxPlayback.SelectedIndex = 0;
+                fetchVoiceData.Enabled = true;
+                pushVoiceData.Enabled = true;
+            }
 
             switch (item.patch)
             {
@@ -130,52 +130,43 @@ namespace CremeWorks
             }
         }
 
-        //private void ListenForSysEx(object sender, MidiEventReceivedEventArgs e)
-        //{
-        //    //Implement feedback
-        //    _d.Output?.SendEvent(e.Event);
-
-        //    if (e.Event.EventType == MidiEventType.ProgramChange && _refaceDat is DXPatch dx)
-        //    {
-        //        //DX program change received
-        //        var pc = (ProgramChangeEvent)e.Event;
-        //        dx.ProgramChangeNr = pc.ProgramNumber;
-        //        UpdateControls();
-        //        return;
-        //    }
-
-        //    if (e.Event.EventType != MidiEventType.NormalSysEx) return;
-
-        //    var ev = (NormalSysExEvent)e.Event;
-        //    if (ev.Data.Length == 44)
-        //    {
-        //        //System settings bulk received
-        //        _refaceDat.SystemSettings = StructMarshal<RefaceSystemData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
-        //        UpdateControls();
-        //    }
-        //    else if (ev.Data.Length == 28 && _refaceDat is CPPatch cp)
-        //    {
-        //        //CP voice data bulk received
-        //        cp.VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
-        //        UpdateControls();
-        //    }
-        //    else if (ev.Data.Length == 34 && _refaceDat is CSPatch cs)
-        //    {
-        //        //CS voice data bulk received
-        //        cs.VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
-        //        UpdateControls();
-        //    }
-        //    else if (ev.Data.Length == 34 && _refaceDat is YCPatch yc)
-        //    {
-        //        //CS voice data bulk received
-        //        yc.VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(CutOffBulkDumpHeader(ev.Data));
-        //        UpdateControls();
-        //    }
-        //}
-
-        private void SaveVoiceData()
+        private void ListenForSysEx(MidiEvent e, IDevicePatch patch)
         {
-            if (_oldItem is null) return;
+            if (e.EventType == MidiEventType.ProgramChange && patch is ProgramChangePatch pc)
+            {
+                //DX program change received
+                var evPc = (ProgramChangeEvent)e;
+                pc.ProgramChangeNr = evPc.ProgramNumber;
+                UpdateControls();
+                return;
+            }
+
+            if (e.EventType != MidiEventType.NormalSysEx) return;
+
+            var ev = (NormalSysExEvent)e;
+            if (ev.Data.Length == 28 && patch is CPPatch cp)
+            {
+                //CP voice data bulk received
+                cp.VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(ev.Data[9..^2]);
+                UpdateControls();
+            }
+            else if (ev.Data.Length == 34 && patch is CSPatch cs)
+            {
+                //CS voice data bulk received
+                cs.VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(ev.Data[9..^2]);
+                UpdateControls();
+            }
+            else if (ev.Data.Length == 34 && patch is YCPatch yc)
+            {
+                //CS voice data bulk received
+                yc.VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(ev.Data[9..^2]);
+                UpdateControls();
+            }
+        }
+
+        private IDevicePatch? SaveVoiceData()
+        {
+            if (_oldItem is null) return null;
 
             switch (_oldItem.patch)
             {
@@ -251,23 +242,39 @@ namespace CremeWorks
                     yc.VoiceSettings = ycDat;
                     break;
             }
+
+            return _oldItem.patch;
         }
 
-        //private byte[] CutOffBulkDumpHeader(byte[] dat)
-        //{
-        //    byte[] res = new byte[dat.Length - 12];
-        //    for (int i = 0; i < res.Length; i++) res[i] = dat[i + 10];
-        //    return res;
-        //}
+        private void fetchVoiceData_Click(object sender, EventArgs e)
+        {
+            if (boxPlayback.SelectedItem is not DeviceComboBoxItem dev || !_parent.MidiManager.TryGetMidiDevicePort(dev.deviceId, out var inputDev, out var outputDev)) return;
 
-        private void fetchVoiceData_Click(object sender, EventArgs e) { return; } //=> SendVoiceBulkdumpRequest(_d.Output, _refaceDat?.DeviceType ?? RefaceType.Undefined);
+            var patch = _oldItem?.patch;
+            if (patch is null || inputDev is null || outputDev is null) return;
+
+            var refaceType = GetRefaceType(patch.DeviceType);
+
+            EventHandler<MidiEventReceivedEventArgs>? handler = null;
+            handler = (_, args) =>
+            {
+                ListenForSysEx(args.Event, patch);
+                inputDev.EventReceived -= handler;
+                fetchVoiceData.Enabled = true;
+            };
+            inputDev.EventReceived += handler;
+
+            SendVoiceBulkdumpRequest(outputDev, refaceType);
+            fetchVoiceData.Enabled = false;
+        }
 
         private void SaveStuffWhenClosing(object sender, FormClosingEventArgs e) => SaveVoiceData();
 
         private void PushVoiceSettings(object sender, EventArgs e)
         {
-            //SaveVoiceData();
-            //_refaceDat?.ApplyPatch(_d);
+            var dev = (DeviceComboBoxItem)boxPlayback.SelectedItem!;
+            var voice = SaveVoiceData();
+            voice?.ApplyPatch(_parent, dev.deviceId);
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -312,6 +319,11 @@ namespace CremeWorks
         private record PatchComboBoxItem(int patchId, IDevicePatch patch)
         {
             public override string ToString() => $"{patch.Name} ({patch.DeviceType})";
+        }
+
+        private record DeviceComboBoxItem(int deviceId, App.Data.MidiDevice device)
+        {
+            public override string ToString() => device.Name;
         }
     }
 }
