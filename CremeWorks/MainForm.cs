@@ -22,7 +22,6 @@ namespace CremeWorks
         private readonly MidiEventToBytesConverter _converter = new();
         private readonly Metronome _metronome;
         private bool _sendMetronomeData = false;
-        private bool _ignoreSetChange = false;
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -195,7 +194,6 @@ namespace CremeWorks
             Text = "CremeWorks Stage Controller - " + tit;
 
             //Update set ListBox
-            _ignoreSetChange = true;
             var prevSelItem = (playList.SelectedItem as SetsListBoxItem)?.playlist;
             var newItems = new List<SetsListBoxItem> { new SetsListBoxItem(null) };
             newItems.AddRange(_database.Playlists.OrderByDescending(x => x.Date).Select(x => new SetsListBoxItem(x)).ToArray());
@@ -203,7 +201,6 @@ namespace CremeWorks
             boxSet.Items.Clear();
             boxSet.Items.AddRange(newItems.ToArray());
             boxSet.SelectedItem = newSelItem;
-            _ignoreSetChange = false;
 
             UpdatePlaylist();
             playList.SelectedIndex = -1;

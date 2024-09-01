@@ -1,5 +1,4 @@
 -ADD SOLO MODE DATA STRUCTURE TO DATABASE
--Test MIDI matrix
 -Implement action system
 -Implement/test cue system
 -Implement networking features

@@ -152,6 +152,13 @@ public class MidiManager
         _macroDeviceSourceId = song.ChordMacroSourceDeviceId;
         _macroDeviceDestId = song.ChordMacroDestinationDeviceId;
         _activeMacros = song.ChordMacros;
+
+        //Apply patches to instruments
+        foreach (var item in song.Patches)
+        {
+            if (!_parent.Database.Patches.TryGetValue(item.PatchId, out var patch)) continue;
+            patch.ApplyPatch(_parent, item.DeviceId);
+        }
     }
 
 
