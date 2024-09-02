@@ -1,16 +1,15 @@
 ﻿using System.Xml;
 
-namespace CremeWorks.App.Data
-{
-    public interface IDevicePatch
-    {
-        string Name { get; }
-        MidiDeviceType DeviceType { get; }
-        void ApplyPatch(IDataParent parent, int deviceId);
-        IDevicePatch Clone();
-        bool AreEqual(IDevicePatch? other);
+namespace CremeWorks.App.Data;
 
-        void Serialize(XmlNode node);
-        void Deserialize(XmlNode node);
-    }
+public interface IDevicePatch
+{
+    string Name { get; }
+    MidiDeviceType DeviceType { get; }
+    void ApplyPatch(IDataParent parent, int deviceId);
+    IDevicePatch Clone();
+    bool AreEqual(IDevicePatch? other);
+
+    void Serialize(XmlNode node);
+    void Deserialize(XmlNode node);
 }
