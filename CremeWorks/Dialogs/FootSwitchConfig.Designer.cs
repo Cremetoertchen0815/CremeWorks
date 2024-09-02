@@ -29,121 +29,196 @@ namespace CremeWorks
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            label2 = new Label();
-            label5 = new Label();
-            label6 = new Label();
+            panel1 = new Panel();
+            btnRemove = new Button();
+            groupBox1 = new GroupBox();
+            btnDetect = new Button();
+            label4 = new Label();
+            boxAction = new ComboBox();
+            nbrNumber = new NumericUpDown();
             label3 = new Label();
-            label12 = new Label();
-            label13 = new Label();
-            label14 = new Label();
-            label15 = new Label();
+            nbrChannel = new NumericUpDown();
+            label2 = new Label();
+            label1 = new Label();
+            boxType = new ComboBox();
+            btnAdd = new Button();
+            lstActions = new ListView();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
+            columnHeader3 = new ColumnHeader();
+            columnHeader4 = new ColumnHeader();
+            panel1.SuspendLayout();
+            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nbrNumber).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nbrChannel).BeginInit();
             SuspendLayout();
             // 
-            // label1
+            // panel1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(14, 51);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(62, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Next Song";
+            panel1.Controls.Add(btnRemove);
+            panel1.Controls.Add(groupBox1);
+            panel1.Controls.Add(btnAdd);
+            panel1.Dock = DockStyle.Bottom;
+            panel1.Location = new Point(0, 228);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(325, 233);
+            panel1.TabIndex = 0;
             // 
-            // label2
+            // btnRemove
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(274, 10);
-            label2.Margin = new Padding(4, 0, 4, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(44, 15);
-            label2.TabIndex = 1;
-            label2.Text = "Value 1";
+            btnRemove.Location = new Point(237, 6);
+            btnRemove.Name = "btnRemove";
+            btnRemove.Size = new Size(70, 37);
+            btnRemove.TabIndex = 12;
+            btnRemove.Text = "Remove";
+            btnRemove.UseVisualStyleBackColor = true;
+            btnRemove.Click += btnRemove_Click;
             // 
-            // label5
+            // groupBox1
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(363, 10);
-            label5.Margin = new Padding(4, 0, 4, 0);
-            label5.Name = "label5";
-            label5.Size = new Size(51, 15);
-            label5.TabIndex = 6;
-            label5.Text = "Channel";
+            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            groupBox1.Controls.Add(btnDetect);
+            groupBox1.Controls.Add(label4);
+            groupBox1.Controls.Add(boxAction);
+            groupBox1.Controls.Add(nbrNumber);
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(nbrChannel);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Controls.Add(boxType);
+            groupBox1.Location = new Point(12, 49);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(301, 172);
+            groupBox1.TabIndex = 1;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "New Action";
             // 
-            // label6
+            // btnDetect
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(165, 10);
-            label6.Margin = new Padding(4, 0, 4, 0);
-            label6.Name = "label6";
-            label6.Size = new Size(31, 15);
-            label6.TabIndex = 7;
-            label6.Text = "Type";
+            btnDetect.Location = new Point(225, 138);
+            btnDetect.Name = "btnDetect";
+            btnDetect.Size = new Size(70, 28);
+            btnDetect.TabIndex = 12;
+            btnDetect.Text = "Detect";
+            btnDetect.UseVisualStyleBackColor = true;
+            btnDetect.Click += btnDetect_Click;
+            // 
+            // label4
+            // 
+            label4.Location = new Point(0, 109);
+            label4.Name = "label4";
+            label4.Size = new Size(93, 23);
+            label4.TabIndex = 10;
+            label4.Text = "Action:";
+            label4.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // boxAction
+            // 
+            boxAction.FormattingEnabled = true;
+            boxAction.Location = new Point(99, 109);
+            boxAction.Name = "boxAction";
+            boxAction.Size = new Size(196, 23);
+            boxAction.TabIndex = 9;
+            // 
+            // nbrNumber
+            // 
+            nbrNumber.Location = new Point(99, 80);
+            nbrNumber.Maximum = new decimal(new int[] { 127, 0, 0, 0 });
+            nbrNumber.Name = "nbrNumber";
+            nbrNumber.Size = new Size(196, 23);
+            nbrNumber.TabIndex = 8;
             // 
             // label3
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(14, 81);
-            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Location = new Point(0, 80);
             label3.Name = "label3";
-            label3.Size = new Size(82, 15);
-            label3.TabIndex = 9;
-            label3.Text = "Previous Song";
+            label3.Size = new Size(93, 23);
+            label3.TabIndex = 7;
+            label3.Text = "Event Number:";
+            label3.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // label12
+            // nbrChannel
             // 
-            label12.AutoSize = true;
-            label12.Location = new Point(14, 144);
-            label12.Margin = new Padding(4, 0, 4, 0);
-            label12.Name = "label12";
-            label12.Size = new Size(94, 15);
-            label12.TabIndex = 56;
-            label12.Text = "Scroll Text Down";
+            nbrChannel.Location = new Point(99, 51);
+            nbrChannel.Maximum = new decimal(new int[] { 16, 0, 0, 0 });
+            nbrChannel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nbrChannel.Name = "nbrChannel";
+            nbrChannel.Size = new Size(196, 23);
+            nbrChannel.TabIndex = 6;
+            nbrChannel.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // label13
+            // label2
             // 
-            label13.AutoSize = true;
-            label13.Location = new Point(14, 112);
-            label13.Margin = new Padding(4, 0, 4, 0);
-            label13.Name = "label13";
-            label13.Size = new Size(78, 15);
-            label13.TabIndex = 55;
-            label13.Text = "Scroll Text Up";
+            label2.Location = new Point(0, 51);
+            label2.Name = "label2";
+            label2.Size = new Size(93, 23);
+            label2.TabIndex = 5;
+            label2.Text = "Event Channel:";
+            label2.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // label14
+            // label1
             // 
-            label14.AutoSize = true;
-            label14.Location = new Point(14, 205);
-            label14.Margin = new Padding(4, 0, 4, 0);
-            label14.Name = "label14";
-            label14.Size = new Size(121, 15);
-            label14.TabIndex = 58;
-            label14.Text = "Lighting Cue Forward";
+            label1.Location = new Point(0, 22);
+            label1.Name = "label1";
+            label1.Size = new Size(93, 23);
+            label1.TabIndex = 3;
+            label1.Text = "Event Type:";
+            label1.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // label15
+            // boxType
             // 
-            label15.AutoSize = true;
-            label15.Location = new Point(14, 175);
-            label15.Margin = new Padding(4, 0, 4, 0);
-            label15.Name = "label15";
-            label15.Size = new Size(129, 15);
-            label15.TabIndex = 57;
-            label15.Text = "Lighting Cue Backward";
+            boxType.FormattingEnabled = true;
+            boxType.Location = new Point(99, 22);
+            boxType.Name = "boxType";
+            boxType.Size = new Size(196, 23);
+            boxType.TabIndex = 2;
+            // 
+            // btnAdd
+            // 
+            btnAdd.Location = new Point(161, 6);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(70, 37);
+            btnAdd.TabIndex = 11;
+            btnAdd.Text = "Add";
+            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
+            // 
+            // lstActions
+            // 
+            lstActions.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
+            lstActions.Dock = DockStyle.Fill;
+            lstActions.Location = new Point(0, 0);
+            lstActions.Name = "lstActions";
+            lstActions.Size = new Size(325, 228);
+            lstActions.TabIndex = 0;
+            lstActions.UseCompatibleStateImageBehavior = false;
+            lstActions.View = View.Details;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "Action";
+            columnHeader1.Width = 105;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Event Type";
+            columnHeader2.Width = 95;
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "Channel";
+            // 
+            // columnHeader4
+            // 
+            columnHeader4.Text = "Number";
             // 
             // FootSwitchConfig
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(526, 236);
-            Controls.Add(label14);
-            Controls.Add(label15);
-            Controls.Add(label12);
-            Controls.Add(label13);
-            Controls.Add(label3);
-            Controls.Add(label6);
-            Controls.Add(label5);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            ClientSize = new Size(325, 461);
+            Controls.Add(lstActions);
+            Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Margin = new Padding(4);
             MaximizeBox = false;
@@ -152,22 +227,34 @@ namespace CremeWorks
             ShowIcon = false;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Foot Controller";
+            Text = "Controller Actions";
             FormClosing += FootSwitchConfig_FormClosing;
+            panel1.ResumeLayout(false);
+            groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)nbrNumber).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nbrChannel).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
+        private Panel panel1;
+        private ListView lstActions;
+        private GroupBox groupBox1;
+        private NumericUpDown nbrChannel;
+        private Label label2;
+        private Label label1;
+        private ComboBox boxType;
+        private Button btnDetect;
+        private Button btnAdd;
+        private Label label4;
+        private ComboBox boxAction;
+        private NumericUpDown nbrNumber;
+        private Label label3;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
+        private ColumnHeader columnHeader3;
+        private ColumnHeader columnHeader4;
+        private Button btnRemove;
     }
 }

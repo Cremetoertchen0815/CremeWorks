@@ -1,4 +1,6 @@
 ﻿using CremeWorks.App;
+using CremeWorks.App.Data;
+using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 
 namespace CremeWorks
@@ -6,7 +8,29 @@ namespace CremeWorks
     public partial class FootSwitchConfig : Form
     {
         private readonly IDataParent _parent;
-        private const int PARAM_COUNT = 6;
+
+        private string GetEventType(MidiEventType type) => type switch
+        {
+            MidiEventType.NoteOn => "Note On",
+            MidiEventType.ControlChange => "Control Change",
+            MidiEventType.ProgramChange => "Program Change",
+            _ => "Unknown"
+        };
+
+        private readonly string[] _actionNames = new string[]
+        {
+            "Prev Song",
+            "Next Song",
+            "Scroll Up",
+            "Scroll Down",
+            "Cue Back",
+            "Cue Advance",
+            "Solo Mode",
+            "Mute Mode",
+            "Reconnect MIDI",
+            "Toggle Click",
+            "Play/Stop Sample"
+        };
 
         public FootSwitchConfig(IDataParent parent)
         {
@@ -15,116 +39,116 @@ namespace CremeWorks
 
             _parent = parent;
 
-            ////Load data into dialogue
-            //for (int i = 0; i < PARAM_COUNT; i++)
-            //{
-            //    var cfg = _c.FootSwitchConfig[i];
-            //    var cnt = _cont[i];
-            //    cnt.Item1.SelectedIndex = MidiEventTypeToIndex(cfg.Item1);
-            //    cnt.Item2.Value = cfg.Item2;
-            //    cnt.Item3.Value = Math.Max((int)cfg.Item3, 1);
-            //}
+            //Load combobox values
+            boxType.Items.AddRange(["Note On", "Control Change", "Program Change"]);
+            boxType.SelectedIndex = 0;
+            boxAction.Items.AddRange(_actionNames);
+            boxAction.SelectedIndex = 0;
+
+            foreach (var item in parent.Database.Actions)
+            {
+                var listViewItem = new ListViewItem(_actionNames[(int)item.Action]);
+                listViewItem.SubItems.Add(GetEventType(item.SourceEventType));
+                listViewItem.SubItems.Add((item.SourceEventChannel + 1).ToString());
+                listViewItem.SubItems.Add(item.SourceEventValue.ToString());
+                listViewItem.Tag = item;
+                lstActions.Items.Add(listViewItem);
+            }
         }
 
-        //private bool _InTest = false;
-        //private int _scanID;
-        //private void det1_Click(object sender, EventArgs e)
-        //{
-        //    if (_InTest) return;
+        private bool _InTest = false;
+        private void btnDetect_Click(object sender, EventArgs e)
+        {
+            if (_InTest) return;
+            if (!_parent.MidiManager.IsConnected)
+            {
+                MessageBox.Show("MIDI devices are not connected. Please connect to use the detect function!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-        //    //Grad data
-        //    var btn = (Button)sender;
-        //    _scanID = int.Parse((string)btn.Tag);
-        //    var dev = _c.MIDIDevices[0].Input;
-        //    if (dev == null) return;
-        //    _InTest = true;
-        //    btn.Text = "Sensing...";
+            //Grad data
+            _parent.MidiManager.ControllerEventReceived += ScanSub;
+            _InTest = true;
+            btnDetect.Text = "Sensing...";
+        }
 
-        //    //Enable testing
-        //    var hasListened = dev.IsListeningForEvents;
-        //    dev.EventReceived += ScanSub;
-        //    if (!hasListened) dev.StartEventsListening();
-        //}
+        private void ScanSub(MidiEvent evnt)
+        {
+            if (evnt.EventType != MidiEventType.NoteOn && evnt.EventType != MidiEventType.ControlChange && evnt.EventType != MidiEventType.ProgramChange) return;
 
-        //private void ScanSub(object sender, MidiEventReceivedEventArgs e)
-        //{
-        //    if (e.Event.EventType != MidiEventType.NoteOn && e.Event.EventType != MidiEventType.ControlChange && e.Event.EventType != MidiEventType.ProgramChange) return;
+            //Disable tetsing
+            _parent.MidiManager.ControllerEventReceived -= ScanSub;
+            _InTest = false;
+            btnDetect.Text = "Detect";
 
-        //    //Disable tetsing
-        //    var scon = (InputDevice)sender;
-        //    scon.EventReceived -= ScanSub;
-        //    scon.StopEventsListening();
-        //    _InTest = false;
-
-        //    //Process data
-        //    var controls = _cont[_scanID];
-        //    if (e.Event.EventType == MidiEventType.NoteOn)
-        //    {
-        //        var ev = (NoteOnEvent)e.Event;
-        //        controls.Item1.SelectedIndex = 0;
-        //        controls.Item2.Value = ev.NoteNumber;
-        //        controls.Item3.Value = ev.Channel + 1;
-        //    }
-        //    else if (e.Event.EventType == MidiEventType.ControlChange)
-        //    {
-        //        var ev = (ControlChangeEvent)e.Event;
-        //        controls.Item1.SelectedIndex = 1;
-        //        controls.Item2.Value = ev.ControlNumber;
-        //        controls.Item3.Value = ev.Channel + 1;
-        //    }
-        //    else if (e.Event.EventType == MidiEventType.ProgramChange)
-        //    {
-        //        var ev = (ProgramChangeEvent)e.Event;
-        //        controls.Item1.SelectedIndex = 2;
-        //        controls.Item2.Value = ev.ProgramNumber;
-        //        controls.Item3.Value = ev.Channel + 1;
-        //    }
-        //    controls.Item4.Text = "Detect";
-        //}
+            //Process data
+            if (evnt.EventType == MidiEventType.NoteOn)
+            {
+                var ev = (NoteOnEvent)evnt;
+                boxType.SelectedIndex = 0;
+                nbrNumber.Value = ev.NoteNumber;
+                nbrChannel.Value = ev.Channel + 1;
+            }
+            else if (evnt.EventType == MidiEventType.ControlChange)
+            {
+                var ev = (ControlChangeEvent)evnt;
+                boxType.SelectedIndex = 1;
+                nbrNumber.Value = ev.ControlNumber;
+                nbrChannel.Value = ev.Channel + 1;
+            }
+            else if (evnt.EventType == MidiEventType.ProgramChange)
+            {
+                var ev = (ProgramChangeEvent)evnt;
+                boxType.SelectedIndex = 2;
+                nbrNumber.Value = ev.ProgramNumber;
+                nbrChannel.Value = ev.Channel + 1;
+            }
+        }
 
         private void FootSwitchConfig_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //var dev = _c.MIDIDevices[0].Input;
-            //if (dev?.IsListeningForEvents == true) dev.StopEventsListening();
-
-            ////Save data from dialogue
-            //for (int i = 0; i < PARAM_COUNT; i++)
-            //{
-            //    var cnt = _cont[i];
-            //    _c.FootSwitchConfig[i] = (IndexToMidiEventType(cnt.Item1.SelectedIndex), (short)cnt.Item2.Value, (byte)(cnt.Item3.Value - 1));
-            //}
-
-            //_c.MidiMatrix.Register();
-        }
-
-        private MidiEventType IndexToMidiEventType(int i)
-        {
-            switch (i)
+            if (_InTest)
             {
-                case 0:
-                    return MidiEventType.NoteOn;
-                case 1:
-                    return MidiEventType.ControlChange;
-                case 2:
-                    return MidiEventType.ProgramChange;
-                default:
-                    return MidiEventType.UnknownMeta;
+                _parent.MidiManager.ControllerEventReceived -= ScanSub;
+                _InTest = false;
             }
         }
 
-        private int MidiEventTypeToIndex(MidiEventType i)
+        private void btnRemove_Click(object sender, EventArgs e)
         {
-            switch (i)
+            if (lstActions.SelectedItems.Count == 0) return;
+            var item = (ControllerAction)lstActions.SelectedItems[0].Tag!;
+            lstActions.Items.Remove(lstActions.SelectedItems[0]);
+            _parent.Database.Actions.Remove(item);
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            var eventType = boxType.SelectedIndex switch
             {
-                case MidiEventType.NoteOn:
-                    return 0;
-                case MidiEventType.ControlChange:
-                    return 1;
-                case MidiEventType.ProgramChange:
-                    return 2;
-                default:
-                    return -1;
+                0 => MidiEventType.NoteOn,
+                1 => MidiEventType.ControlChange,
+                2 => MidiEventType.ProgramChange,
+                _ => MidiEventType.UnknownMeta
+            };
+            var channel = new FourBitNumber((byte)(nbrChannel.Value - 1));
+            var value = (byte)nbrNumber.Value;
+            var action = (ControllerActionType)boxAction.SelectedIndex;
+            var item = new ControllerAction(eventType, channel, value, action);
+
+            if (_parent.Database.Actions.Any(x => x.SourceEventType == eventType && x.SourceEventChannel == channel && x.SourceEventValue == value))
+            {
+                MessageBox.Show("There's already an action defined for these MIDI settings!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+
+            var listViewItem = new ListViewItem(_actionNames[(int)item.Action]);
+            listViewItem.SubItems.Add(GetEventType(item.SourceEventType));
+            listViewItem.SubItems.Add(item.SourceEventChannel.ToString());
+            listViewItem.SubItems.Add(item.SourceEventValue.ToString());
+            listViewItem.Tag = item;
+            lstActions.Items.Add(listViewItem);
+            _parent.Database.Actions.Add(item);
         }
     }
 }

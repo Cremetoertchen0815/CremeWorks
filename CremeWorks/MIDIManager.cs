@@ -2,12 +2,17 @@
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
-using static CremeWorks.App.Reface.CommonHelpers;
 
 namespace CremeWorks.App;
 public class MidiManager
 {
     public event Action<bool>? ConnectionChanged;
+    public event Action<MidiEvent>? ControllerEventReceived;
+    public event ControllerActionDelegate? ControllerActionExecuted;
+    
+
+    public delegate void ControllerActionDelegate(ControllerActionType action, bool? argument);
+
 
     private Dictionary<int, InternalMidiDevice> _midiDevices = [];
     private int[]? _matrixIds = null;
@@ -20,8 +25,6 @@ public class MidiManager
 
     public bool PlaybackPaused { get; set; } = false;
     public bool IsConnected { get; private set; } = false;
-
-    public const int INSTR_DEVICE_OFFSET = 1;
 
     public MidiManager(IDataParent parent) => _parent = parent;
 
@@ -179,7 +182,7 @@ public class MidiManager
     {
         //If it isn't, redirect to lighting board
         if (PlaybackPaused || e.Event.EventType == MidiEventType.NoteOff || e.Event.EventType == MidiEventType.ActiveSensing) return;
-        //_lightingSendDelegate(e.Event);
+        ControllerEventReceived?.Invoke(e.Event);
 
         //Check if foot pedal event is a macro
         foreach (var action in _parent.Database.Actions)
@@ -191,7 +194,7 @@ public class MidiManager
                     var note = (NoteOnEvent)e.Event;
                     if (note.NoteNumber == action.SourceEventValue && note.Channel == action.SourceEventChannel)
                     {
-                        _parent.ExecuteAction(action.Action, note.Velocity > 0);
+                        ControllerActionExecuted?.Invoke(action.Action, note.Velocity > 0);
                         return;
                     }
                     break;
@@ -199,7 +202,7 @@ public class MidiManager
                     var cc = (ControlChangeEvent)e.Event;
                     if (cc.ControlNumber == action.SourceEventValue && cc.Channel == action.SourceEventChannel)
                     {
-                        _parent.ExecuteAction(action.Action, cc.ControlValue >= 64);
+                        ControllerActionExecuted?.Invoke(action.Action, cc.ControlValue >= 64);
                         return;
                     }
                     break;
@@ -207,7 +210,7 @@ public class MidiManager
                     var pc = (ProgramChangeEvent)e.Event;
                     if (pc.ProgramNumber == action.SourceEventValue && pc.Channel == action.SourceEventChannel)
                     {
-                        _parent.ExecuteAction(action.Action, null);
+                        ControllerActionExecuted?.Invoke(action.Action, null);
                         return;
                     }
                     break;

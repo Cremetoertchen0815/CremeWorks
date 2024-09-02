@@ -43,6 +43,7 @@ namespace CremeWorks
             _database = new Database();
             _midiManager = new MidiManager(this);
             _midiManager.ConnectionChanged += x => startMIDIToolStripMenuItem.Checked = x;
+            _midiManager.ControllerActionExecuted += ExecuteAction;
 
             _server = new NetworkingServer();
             _server.UserJoined += _server_UserJoined;

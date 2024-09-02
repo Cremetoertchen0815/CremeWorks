@@ -1,9 +1,10 @@
--Implement action system
+-Test actions and MIDI detection
+-Implement action responses
 -Implement/test cue system
 -Implement networking features
 -Implement sound macros
 -Implement solo mode function for increasing volume
--Implement checks when deleting reference data(make sure the data is not being used)
 -Implement CSV import/export system
+-Implement checks when deleting reference data(make sure the data is not being used)
 
 -Fix SoundPlayer lag under Linux
