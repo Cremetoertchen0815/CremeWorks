@@ -8,7 +8,7 @@ public partial class SongRoutingEditor : Form
     private IDataParent parent;
     private Song? song;
 
-    private bool wasCCPreviouslySelected = false;
+    private bool wasCCPreviouslySelected = true;
     private readonly DataTable table = new DataTable();
     private readonly (int key, MidiDevice device)[] devices;
     private readonly bool[,] routingNotes;
@@ -136,6 +136,7 @@ public partial class SongRoutingEditor : Form
                 row[j + 1] = routingArray[i, j];
             }
         }
+        table.AcceptChanges();
     }
 
     private void SongRoutingEditor_FormClosed(object sender, FormClosedEventArgs e)
@@ -196,6 +197,14 @@ public partial class SongRoutingEditor : Form
                     });
                 }
             }
+        }
+    }
+
+    private void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+    {
+        if (dataGridView1.IsCurrentCellDirty)
+        {
+            dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
         }
     }
 }

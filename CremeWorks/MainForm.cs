@@ -17,9 +17,9 @@ namespace CremeWorks
     {
         private Database _database;
         private MidiManager _midiManager;
+        private readonly SoloManager _soloManager;
         private IPlaylistEntry? _activeEntry = null;
         private NetworkingServer _server;
-        private readonly MidiEventToBytesConverter _converter = new();
         private readonly Metronome _metronome;
         private bool _sendMetronomeData = false;
 
@@ -48,6 +48,9 @@ namespace CremeWorks
             _server = new NetworkingServer();
             _server.UserJoined += _server_UserJoined;
             _server.MessageReceived += _server_MessageReceived;
+
+            _soloManager = new SoloManager(this);
+
 
             _metronome = new Metronome();
             _metronome.Tick += TickMetronome;
@@ -140,6 +143,7 @@ namespace CremeWorks
             //Configure shit
             _sendMetronomeData = true;
             _midiManager.UpdateMatrix();
+            _soloManager.Active = false;
             if (_activeEntry.Type == PlaylistEntryType.Marker) _midiManager.SendAllNotesOff();
 
             //Load default cue patch
@@ -363,6 +367,7 @@ namespace CremeWorks
 
         public Database Database => _database;
         public MidiManager MidiManager => _midiManager;
+        public SoloManager SoloManager => _soloManager;
 
         public IPlaylistEntry? CurrentEntry => _activeEntry;
 
@@ -392,7 +397,11 @@ namespace CremeWorks
 
         private void patchesToolStripMenuItem_Click(object sender, EventArgs e) => new PatchEditor(this).ShowDialog();
 
-        private void soloModeToolStripMenuItem_Click(object sender, EventArgs e) => new SoloModeSetup(this).ShowDialog();
+        private void soloModeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new SoloModeSetup(this).ShowDialog();
+            _soloManager.UpdateState();
+        }
 
         private void syncToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {

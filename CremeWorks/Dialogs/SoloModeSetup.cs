@@ -18,7 +18,7 @@ public partial class SoloModeSetup : Form
         InitializeComponent();
         _dataParent = dataParent;
 
-        chkEnable.Checked = _dataParent.Database.SoloModeConfig.Enabled;
+        groupBox1.Enabled = chkEnable.Checked = _dataParent.Database.SoloModeConfig.Enabled;
         nbrCC.Value = _dataParent.Database.SoloModeConfig.CCNumber;
         nbrDefault.Value = _dataParent.Database.SoloModeConfig.DefaultValue;
         nbrSolo.Value = _dataParent.Database.SoloModeConfig.SoloValue;

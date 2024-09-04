@@ -76,6 +76,7 @@ public class MidiManager
 
         IsConnected = true;
         ConnectionChanged?.Invoke(true);
+        _parent.SoloManager?.UpdateState();
     }
 
     public void Disconnect()

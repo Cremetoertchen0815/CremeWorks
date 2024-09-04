@@ -49,6 +49,7 @@ partial class SongRoutingEditor
         dataGridView1.SelectionMode = DataGridViewSelectionMode.CellSelect;
         dataGridView1.Size = new Size(443, 450);
         dataGridView1.TabIndex = 0;
+        dataGridView1.CurrentCellDirtyStateChanged += dataGridView1_CurrentCellDirtyStateChanged;
         // 
         // panel1
         // 
@@ -89,8 +90,9 @@ partial class SongRoutingEditor
         Controls.Add(panel1);
         Controls.Add(dataGridView1);
         Name = "SongRoutingEditor";
+        ShowIcon = false;
         StartPosition = FormStartPosition.CenterParent;
-        Text = "SongRoutingEditor";
+        Text = "Routing";
         FormClosed += SongRoutingEditor_FormClosed;
         ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
         panel1.ResumeLayout(false);
