@@ -11,6 +11,8 @@ public class SoloManager
     private bool _soloMode;
     private OutputDevice[] _outputDevices = [];
 
+    public event Action<bool>? SoloStateChanged;
+
     public SoloManager(IDataParent dataParent)
     {
         _dataParent = dataParent;
@@ -41,6 +43,7 @@ public class SoloManager
             var evnt = new ControlChangeEvent(new SevenBitNumber(_dataParent.Database.SoloModeConfig.CCNumber), new SevenBitNumber(soloValue));
             foreach (var device in _outputDevices) device.SendEvent(evnt);
             _soloMode = value;
+            SoloStateChanged?.Invoke(value);
         }
     }
 }

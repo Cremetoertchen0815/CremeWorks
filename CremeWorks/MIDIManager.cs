@@ -9,7 +9,7 @@ public class MidiManager
     public event Action<bool>? ConnectionChanged;
     public event Action<MidiEvent>? ControllerEventReceived;
     public event ControllerActionDelegate? ControllerActionExecuted;
-    
+
 
     public delegate void ControllerActionDelegate(ControllerActionType action, bool? argument);
 
@@ -132,6 +132,7 @@ public class MidiManager
             return;
         }
 
+        var oldNotes = _matrixNote;
         _matrixNote = new bool[_matrixIds.Length, _matrixIds.Length];
         _matrixCC = new bool[_matrixIds.Length, _matrixIds.Length];
 
@@ -143,13 +144,28 @@ public class MidiManager
             if (sourceIdx < 0 || destIdx < 0) continue;
             if (sourceIdx >= _matrixIds.Length || destIdx >= _matrixIds.Length) continue;
 
-            var prevNoteOn = _matrixNote[sourceIdx, destIdx];
+            var prevNoteOn = oldNotes is not null && oldNotes[sourceIdx, destIdx];
             _matrixNote[sourceIdx, destIdx] = (node.Type & MidiMatrixNodeType.Notes) == MidiMatrixNodeType.Notes;
             _matrixCC[sourceIdx, destIdx] = (node.Type & MidiMatrixNodeType.ControlChange) == MidiMatrixNodeType.ControlChange;
-
-            //If the matrix has turn off a connection, send all notes off to the destination
-            if (prevNoteOn && !_matrixNote[sourceIdx, destIdx]) Task.Run(() => _midiDevices[_matrixIds[destIdx]]?.Output?.TurnAllNotesOff());
         }
+
+        //Kill off notes for disselected devices
+        List<int> killOffDevices = [];
+        if (oldNotes is not null)
+        {
+            for (int src = 0; src < _matrixIds.Length; src++)
+            {
+                for (int dst = 0; dst < _matrixIds.Length; dst++)
+                {
+                    if (!oldNotes[src, dst] || _matrixNote[src, dst] || killOffDevices.Contains(dst)) continue;
+                    killOffDevices.Add(dst);
+                    var dev = _midiDevices[_matrixIds[dst]]?.Output;
+                    Task.Run(() => dev?.TurnAllNotesOff());
+                }
+            }
+        }
+
+        foreach (var item in killOffDevices) Task.Run(() => _midiDevices[_matrixIds[item]]?.Output?.TurnAllNotesOff());
 
         //Update macro information
         var song = _parent.Database.Songs[((SongPlaylistEntry)_parent.CurrentEntry!).SongId];

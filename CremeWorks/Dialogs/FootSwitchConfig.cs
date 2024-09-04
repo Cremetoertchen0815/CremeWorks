@@ -144,7 +144,7 @@ namespace CremeWorks
 
             var listViewItem = new ListViewItem(_actionNames[(int)item.Action]);
             listViewItem.SubItems.Add(GetEventType(item.SourceEventType));
-            listViewItem.SubItems.Add(item.SourceEventChannel.ToString());
+            listViewItem.SubItems.Add(((int)nbrChannel.Value).ToString());
             listViewItem.SubItems.Add(item.SourceEventValue.ToString());
             listViewItem.Tag = item;
             lstActions.Items.Add(listViewItem);

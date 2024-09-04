@@ -35,11 +35,12 @@ public class ConcertConverter
             };
 
             var id = Random.Shared.Next();
-            db.Devices.Add(id, new MidiDevice(c.MIDIDevices[i]!, c.MIDIDevices[i]!, false, type));
+            var dev = new MidiDevice(c.MIDIDevices[i]!, c.MIDIDevices[i]!, false, type);
+            db.Devices.Add(id, dev);
             deviceMap.Add(i, id);
 
             // Add loopback to default routing if needed
-            if (config.DefaultRoutingConversionMethod == DefaultRoutingConversionType.GenerateLoopbackForNewDevices)
+            if (config.DefaultRoutingConversionMethod == DefaultRoutingConversionType.GenerateLoopbackForNewDevices && dev.IsInstrument)
             {
                 db.DefaultRouting.Add(new MidiMatrixNode(id, id, MidiMatrixNodeType.Both));
             }

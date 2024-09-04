@@ -186,18 +186,17 @@ public class FileParser
                     }
                     break;
                 case "solo":
-                    var soloConfig = new SoloModeConfiguration();
                     var fadeRaw = node.Attributes?["fade"]?.Value;
-                    soloConfig.Enabled = bool.Parse(node.Attributes!["enabled"]?.Value ?? throw new Exception("Solo enabled cannot be null!"));
-                    soloConfig.CCNumber = byte.Parse(node.Attributes["cc"]?.Value ?? throw new Exception("Solo cc number cannot be null!"));
-                    soloConfig.DefaultValue = byte.Parse(node.Attributes["regular"]?.Value ?? throw new Exception("Solo regular value cannot be null!"));
-                    soloConfig.SoloValue = byte.Parse(node.Attributes["solo"]?.Value ?? throw new Exception("Solo solo value cannot be null!"));
-                    soloConfig.FadeDurationSeconds = fadeRaw is null or "null" ? null : float.Parse(fadeRaw);
+                    db.SoloModeConfig.Enabled = bool.Parse(node.Attributes!["enabled"]?.Value ?? throw new Exception("Solo enabled cannot be null!"));
+                    db.SoloModeConfig.CCNumber = byte.Parse(node.Attributes["cc"]?.Value ?? throw new Exception("Solo cc number cannot be null!"));
+                    db.SoloModeConfig.DefaultValue = byte.Parse(node.Attributes["regular"]?.Value ?? throw new Exception("Solo regular value cannot be null!"));
+                    db.SoloModeConfig.SoloValue = byte.Parse(node.Attributes["solo"]?.Value ?? throw new Exception("Solo solo value cannot be null!"));
+                    db.SoloModeConfig.FadeDurationSeconds = fadeRaw is null or "null" ? null : float.Parse(fadeRaw);
 
                     foreach (XmlNode deviceNode in node.ChildNodes)
                     {
                         if (deviceNode.Name != "device") continue;
-                        soloConfig.Devices.Add(int.Parse(deviceNode.Attributes!["id"]?.Value ?? throw new Exception("Solo device id cannot be null!")));
+                        db.SoloModeConfig.Devices.Add(int.Parse(deviceNode.Attributes!["id"]?.Value ?? throw new Exception("Solo device id cannot be null!")));
                     }
                     break;
             }

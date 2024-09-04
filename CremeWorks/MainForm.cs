@@ -50,6 +50,7 @@ namespace CremeWorks
             _server.MessageReceived += _server_MessageReceived;
 
             _soloManager = new SoloManager(this);
+            _soloManager.SoloStateChanged += _soloManager_SoloStateChanged;
 
 
             _metronome = new Metronome();
@@ -361,6 +362,12 @@ namespace CremeWorks
         {
             //if (_c is null || csvExportSaveFile.ShowDialog() != DialogResult.OK) return;
             //File.WriteAllText(csvExportSaveFile.FileName, _c.ToCsv());
+        }
+
+        private void _soloManager_SoloStateChanged(bool enabled)
+        {
+            songSolo.ForeColor = enabled ? Color.Green : Color.Red;
+            songSolo.Text = enabled ? "On" : "Off";
         }
 
         private bool _chatboxLit = false;

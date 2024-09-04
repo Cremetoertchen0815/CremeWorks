@@ -1,3 +1,5 @@
+-Fix reconnecting
+-Inspect bug when playing test tone(connections are gone)
 -Test actions and MIDI detection
 -Implement action responses
 -Implement/test cue system
