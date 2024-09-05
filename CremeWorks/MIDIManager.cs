@@ -82,6 +82,8 @@ public class MidiManager
     public void Disconnect()
     {
         if (!IsConnected) return;
+        SendAllNotesOff();
+
         foreach (var element in _midiDevices.Values)
         {
             if (element.Input != null) element.Input.Dispose();
@@ -120,7 +122,11 @@ public class MidiManager
         return [.. outNames, .. inNames];
     }
 
-    public Task SendAllNotesOff() => Task.WhenAll(_midiDevices.Select(item => Task.Run(() => item.Value.Output?.TurnAllNotesOff())));
+    public void SendAllNotesOff()
+    {
+        var allNotesOffEvent = new ControlChangeEvent(new SevenBitNumber(120), new SevenBitNumber(0));
+        foreach (var item in _midiDevices) item.Value.Output?.SendEvent(allNotesOffEvent);
+    }
 
     public void UpdateMatrix()
     {
@@ -150,6 +156,7 @@ public class MidiManager
         }
 
         //Kill off notes for disselected devices
+        var allNotesOffEvent = new ControlChangeEvent(new SevenBitNumber(120), new SevenBitNumber(0));
         List<int> killOffDevices = [];
         if (oldNotes is not null)
         {
@@ -159,13 +166,10 @@ public class MidiManager
                 {
                     if (!oldNotes[src, dst] || _matrixNote[src, dst] || killOffDevices.Contains(dst)) continue;
                     killOffDevices.Add(dst);
-                    var dev = _midiDevices[_matrixIds[dst]]?.Output;
-                    Task.Run(() => dev?.TurnAllNotesOff());
+                    _midiDevices[_matrixIds[dst]]?.Output?.SendEvent(allNotesOffEvent);
                 }
             }
         }
-
-        foreach (var item in killOffDevices) Task.Run(() => _midiDevices[_matrixIds[item]]?.Output?.TurnAllNotesOff());
 
         //Update macro information
         var song = _parent.Database.Songs[((SongPlaylistEntry)_parent.CurrentEntry!).SongId];
