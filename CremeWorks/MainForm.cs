@@ -336,7 +336,7 @@ namespace CremeWorks
                     var msg = $"{con.Name}: {data}";
                     chatBox.Items.Add(msg);
                     _server.SendToAll(MessageTypeEnum.CHAT_MESSAGE, msg);
-                    chatBox.SelectedIndex = chatBox.Items.Count - 1;
+                    chatBox.TopIndex = chatBox.Items.Count - 1;
                     LightUpChatbox();
                     break;
                 default:
@@ -352,9 +352,9 @@ namespace CremeWorks
                 _sendMetronomeData = false;
             }
             await Task.Delay(15);
-            boxTempo.BackColor = System.Drawing.Color.Navy;
+            boxTempo.BackColor = Color.Navy;
             await Task.Delay(50);
-            boxTempo.BackColor = System.Drawing.Color.White;
+            boxTempo.BackColor = Color.White;
         }
 
         private void exportSetToCSVToolStripMenuItem_Click(object sender, EventArgs e)
