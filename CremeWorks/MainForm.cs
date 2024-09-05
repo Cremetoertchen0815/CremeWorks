@@ -280,7 +280,7 @@ namespace CremeWorks
             chatBox.Items.Add(msg);
             _server.SendToAll(MessageTypeEnum.CHAT_MESSAGE, msg);
             chatInput.Text = string.Empty;
-            chatBox.SelectedIndex = chatBox.Items.Count - 1;
+            chatBox.TopIndex = chatBox.Items.Count - 1;
         }
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)

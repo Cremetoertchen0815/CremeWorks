@@ -1,11 +1,9 @@
--Fix reconnecting
--Inspect bug when playing test tone(connections are gone)
--Test actions and MIDI detection
--Implement action responses
+-Fix Open Recent
+-Implement duration functions
+-Implement networking
 -Implement/test cue system
--Implement networking features
+-Implement action responses
 -Implement sound macros
--Implement solo mode function for increasing volume
 -Implement CSV import/export system
 -Implement checks when deleting reference data(make sure the data is not being used)
 
