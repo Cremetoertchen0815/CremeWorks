@@ -193,11 +193,12 @@ namespace CremeWorks
             UpdateConcert();
         }
 
-        private void UpdateConcert()
+        private void UpdateConcert(bool onlyUpdateTitle = false)
         {
             string tit = _database.FilePath is null or "" ? "Untitled" : _database.FilePath;
             string titClean = _database.FilePath is null or "" ? "Untitled" : Path.GetFileNameWithoutExtension(_database.FilePath);
             Text = "CremeWorks Stage Controller - " + tit;
+            if (onlyUpdateTitle) return;
 
             //Update set ListBox
             var prevSelItem = (playList.SelectedItem as SetsListBoxItem)?.playlist;
@@ -243,8 +244,6 @@ namespace CremeWorks
                 _database.FilePath = saveFileDialog1.FileName;
             }
             FileParser.SaveFile(_database.FilePath, _database);
-
-            UpdateConcert();
         }
 
         private void SaveAs(object sender, EventArgs e)
@@ -252,7 +251,7 @@ namespace CremeWorks
             if (saveFileDialog1.ShowDialog() != DialogResult.OK) return;
             _database.FilePath = saveFileDialog1.FileName;
             FileParser.SaveFile(_database.FilePath, _database);
-            UpdateConcert();
+            UpdateConcert(true);
         }
 
         private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightCueManager(this).ShowDialog();
