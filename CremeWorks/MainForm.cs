@@ -62,7 +62,13 @@ namespace CremeWorks
                 Settings.Default.Recents = new();
                 Settings.Default.Save();
             }
-            foreach (var item in Settings.Default.Recents) openRecentToolStripMenuItem.DropDownItems.Add(new ToolStripMenuItem(item));
+            foreach (var item in Settings.Default.Recents)
+            {
+                var menuItem = new ToolStripMenuItem(item);
+                menuItem.Tag = item;
+                menuItem.Click += openRecentToolStripMenuItem_Click;
+                openRecentToolStripMenuItem.DropDownItems.Add(menuItem);
+            }
 
             UpdateConcert();
         }
@@ -114,8 +120,6 @@ namespace CremeWorks
             if (playList.Items.Count > 0) playList.SelectedIndex = 0;
             UpdateSong();
         }
-
-        private readonly string[] Buchstaben = { "A", "B", "C", "D", "E", "F" };
 
         private void UpdateSong()
         {
@@ -224,7 +228,11 @@ namespace CremeWorks
                 if (!Settings.Default.Recents.Contains(openFileDialog1.FileName))
                 {
                     Settings.Default.Recents.Add(openFileDialog1.FileName);
-                    openRecentToolStripMenuItem.DropDownItems.Add(new ToolStripMenuItem(openFileDialog1.FileName));
+                    Settings.Default.Save();
+                    var item = new ToolStripMenuItem(openFileDialog1.FileName);
+                    item.Tag = openFileDialog1.FileName;
+                    item.Click += openRecentToolStripMenuItem_Click;
+                    openRecentToolStripMenuItem.DropDownItems.Add(item);
                 }
             }
             catch (Exception)
@@ -446,6 +454,43 @@ namespace CremeWorks
 
         private void allNotesOffToolStripMenuItem_Click(object sender, EventArgs e) => _midiManager.SendAllNotesOff();
 
+        private void openRecentToolStripMenuItem_Click(object? sender, EventArgs e)
+        {
+            var item = sender as ToolStripMenuItem;
+            if (item == null) return;
+            var path = item.Tag as string;
+
+            if (!File.Exists(path))
+            {
+                if (Settings.Default.Recents.Contains(path))
+                {
+                    Settings.Default.Recents.Remove(path);
+                    Settings.Default.Save();
+                }
+                openRecentToolStripMenuItem.DropDownItems.Remove(item);
+                MessageBox.Show("File not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                _database = FileParser.ParseFile(path) ?? throw new Exception("Deserializer is null!");
+            }
+            catch (Exception)
+            {
+                if (Settings.Default.Recents.Contains(path))
+                {
+                    Settings.Default.Recents.Remove(path);
+                    Settings.Default.Save();
+                }
+                openRecentToolStripMenuItem.DropDownItems.Remove(item);
+                _database = new Database();
+                MessageBox.Show("Database file is corrupted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            UpdateConcert();
+        }
+
         private record PlaylistListBoxItem(string Name, IPlaylistEntry Entry)
         {
             public override string ToString() => Name;
@@ -456,9 +501,9 @@ namespace CremeWorks
             public override string ToString() => playlist is null ? "[BACKLOG]" : $"{playlist.Name} ({playlist.Date})";
         }
 
-        private record CueListBoxItem(int Index, CueInstance cue, string cueName)
+        private record CueListBoxItem(int Index, CueInstance Cue, string CueName)
         {
-            public override string ToString() => $"{Index + 1}. {cue.Description}({cueName})";
+            public override string ToString() => $"{Index + 1}. {Cue.Description}({CueName})";
         }
     }
 }
