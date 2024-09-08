@@ -132,6 +132,9 @@ public class ConcertConverter
 
             //Convert patches
             newSong.Patches.Clear();
+            var patchCount = new Dictionary<MidiDeviceType, int>(); //Maps device index from concert to database index
+            foreach (var item in Enum.GetValues<MidiDeviceType>()) patchCount.Add(item, db.Patches.Count(x => x.Value.DeviceType == item));
+
             for (int patchIdx = 0; patchIdx < origSong.AutoPatchSlots.Length; patchIdx++)
             {
                 var patch = origSong.AutoPatchSlots[patchIdx];
@@ -145,6 +148,7 @@ public class ConcertConverter
                 else
                 {
                     var newId = Random.Shared.Next();
+                    patch.Patch.Name = $"{patch.Patch.DeviceType} #{++patchCount[patch.Patch.DeviceType]}";
                     db.Patches.Add(newId, patch.Patch);
                     newSong.Patches.Add(new PatchInstance(deviceMap[patchIdx + 1], newId));
                 }

@@ -1,14 +1,12 @@
-﻿using CremeWorks.App.Reface;
-using Melanchall.DryWetMidi.Common;
+﻿using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 using System.Xml;
-using static CremeWorks.App.Data.Patches.CPPatch;
 
 namespace CremeWorks.App.Data.Patches;
 
 public class ProgramChangePatch(string name) : IDevicePatch
 {
-    public string Name { get; init; } = name;
+    public string Name { get; set; } = name;
     public MidiDeviceType DeviceType => MidiDeviceType.GenericKeyboard;
     public byte ProgramChangeNr { get; set; }
 

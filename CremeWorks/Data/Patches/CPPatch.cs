@@ -7,7 +7,7 @@ namespace CremeWorks.App.Data.Patches
 {
     public class CPPatch(string name) : IDevicePatch
     {
-        public string Name { get; init; } = name;
+        public string Name { get; set; } = name;
         public MidiDeviceType DeviceType => MidiDeviceType.RefaceCP;
         public RefaceCPVoiceData VoiceSettings { get; set; }
 

@@ -49,10 +49,6 @@ namespace CremeWorks.App.Data.Compatibility
                 for (int i = 0; i < cueCount; i++) nu.LightingCues.Add(new OldLightingCueItem(br.ReadUInt64(), br.ReadString(), br.ReadByte()));
 
                 //Playlist
-                var csPatchCount = 1;
-                var dxPatchCount = 1;
-                var cpPatchCount = 1;
-                var ycPatchCount = 1;
                 int count = br.ReadInt32();
                 for (int i = 0; i < count; i++)
                 {
@@ -91,7 +87,7 @@ namespace CremeWorks.App.Data.Compatibility
                         {
                             case OldDeviceType.RefaceCS:
                                 _ = br.ReadBytes(br.ReadInt32()); //System settings(obsolete)
-                                var cs = new CSPatch($"Reface CS Patch #{csPatchCount++}")
+                                var cs = new CSPatch(string.Empty)
                                 {
                                     VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
                                 };
@@ -99,7 +95,7 @@ namespace CremeWorks.App.Data.Compatibility
                                 break;
                             case OldDeviceType.RefaceDX:
                                 _ = br.ReadBytes(br.ReadInt32());
-                                var dx = new ProgramChangePatch($"Reface DX Patch #{dxPatchCount++}")
+                                var dx = new ProgramChangePatch(string.Empty)
                                 {
                                     ProgramChangeNr = br.ReadByte()
                                 };
@@ -107,7 +103,7 @@ namespace CremeWorks.App.Data.Compatibility
                                 break;
                             case OldDeviceType.RefaceCP:
                                 _ = br.ReadBytes(br.ReadInt32());
-                                var cp = new CPPatch($"Reface CP Patch #{cpPatchCount++}")
+                                var cp = new CPPatch(string.Empty)
                                 {
                                     VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
                                 };
@@ -115,10 +111,11 @@ namespace CremeWorks.App.Data.Compatibility
                                 break;
                             case OldDeviceType.RefaceYC:
                                 _ = br.ReadBytes(br.ReadInt32());
-                                var yc = new YCPatch($"Reface YC Patch #{ycPatchCount++}")
+                                var yc = new YCPatch(string.Empty)
                                 {
                                     VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
                                 };
+                                patch = yc;
                                 break;
                             default:
                                 patch = null;

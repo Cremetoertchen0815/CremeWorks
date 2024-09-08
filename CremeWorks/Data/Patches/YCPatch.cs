@@ -8,7 +8,7 @@ namespace CremeWorks.App.Data.Patches
 {
     public class YCPatch(string name) : IDevicePatch
     {
-        public string Name { get; init; } = name;
+        public string Name { get; set; } = name;
         public MidiDeviceType DeviceType => MidiDeviceType.RefaceYC;
         public RefaceYCVoiceData VoiceSettings { get; set; }
 

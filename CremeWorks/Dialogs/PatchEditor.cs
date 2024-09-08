@@ -19,7 +19,7 @@ namespace CremeWorks
             InitializeComponent();
 
             _parent = parent;
-            boxSelector.Items.AddRange(_parent.Database.Patches.Select(p => new PatchComboBoxItem(p.Key, p.Value)).ToArray());
+            boxSelector.Items.AddRange(_parent.Database.Patches.OrderBy(x => x.Value.DeviceType).Select(p => new PatchComboBoxItem(p.Key, p.Value)).ToArray());
             if (boxSelector.Items.Count > 0)
             {
                 boxSelector.SelectedIndex = 0;

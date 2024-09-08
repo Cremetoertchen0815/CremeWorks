@@ -112,10 +112,6 @@ public static class CompatibilityFileParser
             var autoPatchCount = br.ReadInt32();
             s.AutoPatchSlots = Enumerable.Range(0, Math.Max(autoPatchCount, Concert.PATCH_DEVICE_COUNT)).Select(x => ((bool, IDevicePatch?))(false, null)).ToArray();
 
-            var csPatchCount = 1;
-            var dxPatchCount = 1;
-            var cpPatchCount = 1;
-            var ycPatchCount = 1;
             for (int j = 0; j < autoPatchCount; j++)
             {
                 bool enabled = br.ReadBoolean();
@@ -126,7 +122,7 @@ public static class CompatibilityFileParser
                 {
                     case OldDeviceType.RefaceCS:
                         _ = br.ReadBytes(br.ReadInt32()); //System settings(obsolete)
-                        var cs = new CSPatch($"Reface CS Patch #{csPatchCount++}")
+                        var cs = new CSPatch(string.Empty)
                         {
                             VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
                         };
@@ -134,7 +130,7 @@ public static class CompatibilityFileParser
                         break;
                     case OldDeviceType.RefaceDX:
                         _ = br.ReadBytes(br.ReadInt32());
-                        var dx = new ProgramChangePatch($"Reface DX Patch #{dxPatchCount++}")
+                        var dx = new ProgramChangePatch(string.Empty)
                         {
                             ProgramChangeNr = br.ReadByte()
                         };
@@ -142,7 +138,7 @@ public static class CompatibilityFileParser
                         break;
                     case OldDeviceType.RefaceCP:
                         _ = br.ReadBytes(br.ReadInt32());
-                        var cp = new CPPatch($"Reface CP Patch #{cpPatchCount++}")
+                        var cp = new CPPatch(string.Empty)
                         {
                             VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
                         };
@@ -150,10 +146,11 @@ public static class CompatibilityFileParser
                         break;
                     case OldDeviceType.RefaceYC:
                         _ = br.ReadBytes(br.ReadInt32());
-                        var yc = new YCPatch($"Reface YC Patch #{ycPatchCount++}")
+                        var yc = new YCPatch(string.Empty)
                         {
                             VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
                         };
+                        patch = yc;
                         break;
                     default:
                         patch = null;
