@@ -41,6 +41,8 @@ partial class PlaylistEditor
         columnType = new ColumnHeader();
         columnDuration = new ColumnHeader();
         panel2 = new Panel();
+        label2 = new Label();
+        lblDuration = new Label();
         btnDown = new Button();
         btnUp = new Button();
         btnAddMarker = new Button();
@@ -165,6 +167,8 @@ partial class PlaylistEditor
         // 
         // panel2
         // 
+        panel2.Controls.Add(label2);
+        panel2.Controls.Add(lblDuration);
         panel2.Controls.Add(btnDown);
         panel2.Controls.Add(btnUp);
         panel2.Controls.Add(btnAddMarker);
@@ -178,6 +182,25 @@ partial class PlaylistEditor
         panel2.Name = "panel2";
         panel2.Size = new Size(95, 344);
         panel2.TabIndex = 37;
+        // 
+        // label2
+        // 
+        label2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+        label2.Location = new Point(4, 299);
+        label2.Name = "label2";
+        label2.Size = new Size(86, 23);
+        label2.TabIndex = 13;
+        label2.Text = "Total duration:";
+        label2.TextAlign = ContentAlignment.MiddleLeft;
+        // 
+        // lblDuration
+        // 
+        lblDuration.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+        lblDuration.Location = new Point(4, 320);
+        lblDuration.Name = "lblDuration";
+        lblDuration.Size = new Size(86, 23);
+        lblDuration.TabIndex = 12;
+        lblDuration.TextAlign = ContentAlignment.MiddleLeft;
         // 
         // btnDown
         // 
@@ -364,4 +387,6 @@ partial class PlaylistEditor
     private ColumnHeader columnArtist;
     private ColumnHeader columnType;
     private ColumnHeader columnDuration;
+    private Label label2;
+    private Label lblDuration;
 }

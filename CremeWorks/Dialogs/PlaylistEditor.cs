@@ -96,7 +96,8 @@ public partial class PlaylistEditor : Form
                 }
             }
         }
-        _canDataBeUpdated = true;
+        _canDataBeUpdated = true; 
+        CalculateTotalDuration();
     }
 
     private void txtName_TextChanged(object sender, EventArgs e)
@@ -132,6 +133,7 @@ public partial class PlaylistEditor : Form
             TimeSpan.FromSeconds(song.ExpectedDurationSeconds).ToString(@"mm\:ss")
         })
         { Tag = entry });
+        CalculateTotalDuration();
     }
 
     private void btnAddMarker_Click(object sender, EventArgs e)
@@ -176,6 +178,8 @@ public partial class PlaylistEditor : Form
             if (dialog.ShowDialog() != DialogResult.OK) return;
             lstEntries.SelectedItems[0].SubItems[1].Text = marker.Text;
         }
+
+        CalculateTotalDuration();
     }
 
     private void btnUp_Click(object sender, EventArgs e)
@@ -242,7 +246,8 @@ public partial class PlaylistEditor : Form
             })
             { Tag = newEntry });
         }
-        FixSongNumeration();
+        FixSongNumeration(); 
+        CalculateTotalDuration();
     }
 
     private void btnDelete_Click(object sender, EventArgs e)
@@ -251,7 +256,8 @@ public partial class PlaylistEditor : Form
         var entityToRemove = lstEntries.SelectedItems[0].Tag as IPlaylistEntry;
         if (entityToRemove is not null) item.PlaylistEntries.Remove(entityToRemove);
         lstEntries.Items.Remove(lstEntries.SelectedItems[0]);
-        FixSongNumeration();
+        FixSongNumeration(); 
+        CalculateTotalDuration();
     }
 
     private void PlaylistEditor_FormClosing(object sender, FormClosingEventArgs e)
@@ -355,6 +361,12 @@ public partial class PlaylistEditor : Form
                 item.SubItems[0].Text = playlistIndex++.ToString();
             }
         }
+    }
+
+    private void CalculateTotalDuration()
+    {
+        var duration = lstEntries.Items.OfType<ListViewItem>().Select(x => x.Tag as SongPlaylistEntry).Where(x => x is not null).Sum(x => _parent.Database.Songs[x!.SongId].ExpectedDurationSeconds);
+        lblDuration.Text = TimeSpan.FromSeconds(duration).ToString(@"hh\:mm\:ss");
     }
 }
 

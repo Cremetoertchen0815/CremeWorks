@@ -6,6 +6,7 @@ using CremeWorks.App.Properties;
 using CremeWorks.Common;
 using CremeWorks.Networking;
 using Melanchall.DryWetMidi.Core;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml;
@@ -22,6 +23,7 @@ namespace CremeWorks
         private NetworkingServer _server;
         private readonly Metronome _metronome;
         private bool _sendMetronomeData = false;
+        private int _secondsCounter = 0;
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -127,8 +129,16 @@ namespace CremeWorks
             songLyrics.Text = string.Empty;
             songKey.Text = "";
             songTempo.Text = "";
+            btnTimeReset.Enabled = false;
+            btnTimeStore.Enabled = false;
             lightCue.Items.Clear();
             //_server.SendToAll(MessageTypeEnum.CURRENT_SONG, GetCurrentSongInformation());
+
+
+            songTime.Text = "00:00 (+00:00)";
+            songTime.ForeColor = Color.Black;
+            songTimer.Stop();
+            _secondsCounter = 0;
 
             if (_activeEntry == null)
             {
@@ -143,7 +153,10 @@ namespace CremeWorks
             songKey.Text = information.Key;
             songTempo.Text = information.Tempo.ToString() + " BPM";
             _metronome.Start(information.Tempo);
+            btnTimeReset.Enabled = true;
+            btnTimeStore.Enabled = true;
             lightCue.Items.AddRange(information.Cues.Select((x, i) => new CueListBoxItem(i, x, _database.LightingCues[x.CueId].Name)).ToArray());
+            songTimer.Start();
 
             //Configure shit
             _sendMetronomeData = true;
@@ -489,6 +502,40 @@ namespace CremeWorks
             }
 
             UpdateConcert();
+        }
+
+        private void songTimer_Tick(object sender, EventArgs e)
+        {
+            if (_activeEntry is null || _activeEntry.Type != PlaylistEntryType.Song) return;
+            var songEntry = (SongPlaylistEntry)_activeEntry;
+            var song = _database.Songs[songEntry.SongId];
+            var time = TimeSpan.FromSeconds(++_secondsCounter);
+            var diff = time - TimeSpan.FromSeconds(song.ExpectedDurationSeconds);
+            songTime.Text = $"{time:mm\\:ss} ({(diff.TotalSeconds < 0 ? "-" : "+")}{diff:mm\\:ss})";
+            songTime.ForeColor = diff.TotalSeconds > 0 && song.ExpectedDurationSeconds > 0 ? Color.Red : Color.Black;
+        }
+
+        private void btnTimeReset_Click(object sender, EventArgs e)
+        {
+            songTimer.Stop();
+            _secondsCounter = 0;
+
+            var expectedSec = _activeEntry is null || _activeEntry.Type != PlaylistEntryType.Song ? 0 : _database.Songs[((SongPlaylistEntry)_activeEntry).SongId].ExpectedDurationSeconds;
+            var expectedDuration = TimeSpan.FromSeconds(-expectedSec);
+            songTime.Text = $"00:00 ({(expectedSec == 0 ? "+" : "-")}{expectedDuration:mm\\:ss})";
+            songTime.ForeColor = Color.Black;
+
+            if (_activeEntry is not null && _activeEntry.Type == PlaylistEntryType.Song) songTimer.Start();
+        }
+
+        private void btnTimeStore_Click(object sender, EventArgs e)
+        {
+            if (_activeEntry is null || _activeEntry.Type != PlaylistEntryType.Song) return;
+            var songEntry = (SongPlaylistEntry)_activeEntry;
+            var song = _database.Songs[songEntry.SongId];
+            song.ExpectedDurationSeconds = _secondsCounter;
+            songTime.Text = $"{TimeSpan.FromSeconds(_secondsCounter):mm\\:ss} (+00:00)";
+            songTime.ForeColor = Color.Black;
         }
 
         private record PlaylistListBoxItem(string Name, IPlaylistEntry Entry)

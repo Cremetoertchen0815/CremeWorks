@@ -29,6 +29,7 @@ namespace CremeWorks
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             var resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             menuStrip1 = new MenuStrip();
             configToolStripMenuItem = new ToolStripMenuItem();
@@ -85,9 +86,10 @@ namespace CremeWorks
             label6 = new Label();
             label7 = new Label();
             songTime = new Label();
-            button1 = new Button();
-            button2 = new Button();
+            btnTimeReset = new Button();
+            btnTimeStore = new Button();
             cwcImportOpenFile = new OpenFileDialog();
+            songTimer = new System.Windows.Forms.Timer(components);
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -113,47 +115,47 @@ namespace CremeWorks
             // newToolStripMenuItem
             // 
             newToolStripMenuItem.Name = "newToolStripMenuItem";
-            newToolStripMenuItem.Size = new Size(180, 22);
+            newToolStripMenuItem.Size = new Size(177, 22);
             newToolStripMenuItem.Text = "New";
             newToolStripMenuItem.Click += New;
             // 
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(180, 22);
+            openToolStripMenuItem.Size = new Size(177, 22);
             openToolStripMenuItem.Text = "Open";
             openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // openRecentToolStripMenuItem
             // 
             openRecentToolStripMenuItem.Name = "openRecentToolStripMenuItem";
-            openRecentToolStripMenuItem.Size = new Size(180, 22);
+            openRecentToolStripMenuItem.Size = new Size(177, 22);
             openRecentToolStripMenuItem.Text = "Open Recent";
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(180, 22);
+            saveToolStripMenuItem.Size = new Size(177, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += Save;
             // 
             // saveAsToolStripMenuItem
             // 
             saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            saveAsToolStripMenuItem.Size = new Size(180, 22);
+            saveAsToolStripMenuItem.Size = new Size(177, 22);
             saveAsToolStripMenuItem.Text = "Save As";
             saveAsToolStripMenuItem.Click += SaveAs;
             // 
             // toolStripMenuItem2
             // 
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(177, 6);
+            toolStripMenuItem2.Size = new Size(174, 6);
             // 
             // cremeWorksCloudToolStripMenuItem
             // 
             cremeWorksCloudToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cloneFromCloudToolStripMenuItem, publishToCloudToolStripMenuItem, toolStripMenuItem1, syncToolStripMenuItem });
             cremeWorksCloudToolStripMenuItem.Name = "cremeWorksCloudToolStripMenuItem";
-            cremeWorksCloudToolStripMenuItem.Size = new Size(180, 22);
+            cremeWorksCloudToolStripMenuItem.Size = new Size(177, 22);
             cremeWorksCloudToolStripMenuItem.Text = "CremeWorks Cloud";
             // 
             // cloneFromCloudToolStripMenuItem
@@ -187,7 +189,7 @@ namespace CremeWorks
             // 
             importToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cWCDateiToolStripMenuItem });
             importToolStripMenuItem.Name = "importToolStripMenuItem";
-            importToolStripMenuItem.Size = new Size(180, 22);
+            importToolStripMenuItem.Size = new Size(177, 22);
             importToolStripMenuItem.Text = "Import";
             // 
             // cWCDateiToolStripMenuItem
@@ -201,7 +203,7 @@ namespace CremeWorks
             // 
             exportToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { setToolStripMenuItem });
             exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            exportToolStripMenuItem.Size = new Size(180, 22);
+            exportToolStripMenuItem.Size = new Size(177, 22);
             exportToolStripMenuItem.Text = "Export";
             // 
             // setToolStripMenuItem
@@ -214,12 +216,12 @@ namespace CremeWorks
             // toolStripMenuItem3
             // 
             toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new Size(177, 6);
+            toolStripMenuItem3.Size = new Size(174, 6);
             // 
             // beendenToolStripMenuItem
             // 
             beendenToolStripMenuItem.Name = "beendenToolStripMenuItem";
-            beendenToolStripMenuItem.Size = new Size(180, 22);
+            beendenToolStripMenuItem.Size = new Size(177, 22);
             beendenToolStripMenuItem.Text = "Exit";
             beendenToolStripMenuItem.Click += beendenToolStripMenuItem_Click;
             // 
@@ -568,32 +570,39 @@ namespace CremeWorks
             songTime.Text = "00:00 (+00:00)";
             songTime.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // button1
+            // btnTimeReset
             // 
-            button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button1.Location = new Point(1177, 721);
-            button1.Margin = new Padding(4, 3, 4, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(72, 27);
-            button1.TabIndex = 41;
-            button1.Text = "Reset";
-            button1.UseVisualStyleBackColor = true;
+            btnTimeReset.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnTimeReset.Location = new Point(1177, 721);
+            btnTimeReset.Margin = new Padding(4, 3, 4, 3);
+            btnTimeReset.Name = "btnTimeReset";
+            btnTimeReset.Size = new Size(72, 27);
+            btnTimeReset.TabIndex = 41;
+            btnTimeReset.Text = "Reset";
+            btnTimeReset.UseVisualStyleBackColor = true;
+            btnTimeReset.Click += btnTimeReset_Click;
             // 
-            // button2
+            // btnTimeStore
             // 
-            button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button2.Location = new Point(1253, 721);
-            button2.Margin = new Padding(4, 3, 4, 3);
-            button2.Name = "button2";
-            button2.Size = new Size(72, 27);
-            button2.TabIndex = 42;
-            button2.Text = "Store";
-            button2.UseVisualStyleBackColor = true;
+            btnTimeStore.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnTimeStore.Location = new Point(1253, 721);
+            btnTimeStore.Margin = new Padding(4, 3, 4, 3);
+            btnTimeStore.Name = "btnTimeStore";
+            btnTimeStore.Size = new Size(72, 27);
+            btnTimeStore.TabIndex = 42;
+            btnTimeStore.Text = "Store";
+            btnTimeStore.UseVisualStyleBackColor = true;
+            btnTimeStore.Click += btnTimeStore_Click;
             // 
             // cwcImportOpenFile
             // 
             cwcImportOpenFile.FileName = "openFileDialog2";
             cwcImportOpenFile.Filter = "CremeWorks Concert(.cwc)|*.cwc";
+            // 
+            // songTimer
+            // 
+            songTimer.Interval = 1000;
+            songTimer.Tick += songTimer_Tick;
             // 
             // MainForm
             // 
@@ -601,8 +610,8 @@ namespace CremeWorks
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1334, 757);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(btnTimeStore);
+            Controls.Add(btnTimeReset);
             Controls.Add(label7);
             Controls.Add(songTime);
             Controls.Add(label6);
@@ -684,8 +693,8 @@ namespace CremeWorks
         private ToolStripMenuItem patchesToolStripMenuItem;
         private Label label7;
         private Label songTime;
-        private Button button1;
-        private Button button2;
+        private Button btnTimeReset;
+        private Button btnTimeStore;
         private ToolStripMenuItem cremeWorksCloudToolStripMenuItem;
         private ToolStripMenuItem cloneFromCloudToolStripMenuItem;
         private ToolStripMenuItem publishToCloudToolStripMenuItem;
@@ -695,6 +704,7 @@ namespace CremeWorks
         private OpenFileDialog cwcImportOpenFile;
         private ToolStripMenuItem allNotesOffToolStripMenuItem;
         private ToolStripMenuItem soloModeToolStripMenuItem;
+        private System.Windows.Forms.Timer songTimer;
     }
 }
 
