@@ -5,12 +5,7 @@ using CremeWorks.App.Dialogs;
 using CremeWorks.App.Properties;
 using CremeWorks.Common;
 using CremeWorks.Networking;
-using Melanchall.DryWetMidi.Core;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace CremeWorks
 {
@@ -19,7 +14,7 @@ namespace CremeWorks
         private Database _database;
         private MidiManager _midiManager;
         private readonly SoloManager _soloManager;
-        private IPlaylistEntry? _activeEntry = null;
+        private PlaylistListBoxItem? _activeEntry = null;
         private NetworkingServer _server;
         private readonly Metronome _metronome;
         private bool _sendMetronomeData = false;
@@ -98,12 +93,12 @@ namespace CremeWorks
             _server.SendToAll(MessageTypeEnum.CONCERT_NAME, playlistEntry.ToString());
 
             playList.Items.Clear();
-            var sortedSongEntries = new List<(IPlaylistEntry entry, int? index)>();
+            var sortedSongEntries = new List<(IPlaylistEntry entry, int index)>();
 
             if (playlistEntry.playlist is null)
             {
                 //Add backlog songs
-                sortedSongEntries = _database.Songs.OrderBy(x => x.Value.Artist).ThenBy(x => x.Value.Title).Select(x => ((IPlaylistEntry, int?))(new SongPlaylistEntry(x.Key), null)).ToList();
+                sortedSongEntries = _database.Songs.OrderBy(x => x.Value.Artist).ThenBy(x => x.Value.Title).Select((x, i) => ((IPlaylistEntry)new SongPlaylistEntry(x.Key), i)).ToList();
             }
             else
             {
@@ -115,9 +110,12 @@ namespace CremeWorks
                     if (song is SongPlaylistEntry) songIndex++;
                 }
             }
-            playList.Items.AddRange(sortedSongEntries.Select(x => new PlaylistListBoxItem(x.entry.GetCommonInformation(_database, x.index).Header, x.entry)).ToArray());
 
-            //_server.SendToAll(MessageTypeEnum.SET_DATA, GetClientSet());
+            //Add playlist to listbox
+            var inSet = playlistEntry.playlist is null;
+            playList.Items.AddRange(sortedSongEntries.Select(x => new PlaylistListBoxItem(x.entry.GetCommonInformation(_database, x.index, inSet), x.entry)).ToArray());
+
+            _server.SendToAll(MessageTypeEnum.SET_DATA, GetClientSet());
             _activeEntry = null;
             if (playList.Items.Count > 0) playList.SelectedIndex = 0;
             UpdateSong();
@@ -132,7 +130,7 @@ namespace CremeWorks
             btnTimeReset.Enabled = false;
             btnTimeStore.Enabled = false;
             lightCue.Items.Clear();
-            //_server.SendToAll(MessageTypeEnum.CURRENT_SONG, GetCurrentSongInformation());
+            _server.SendToAll(MessageTypeEnum.CURRENT_SONG, _activeEntry?.Info ?? PlaylistEntryCommonInfo.None);
 
 
             songTime.Text = "00:00 (+00:00)";
@@ -147,22 +145,21 @@ namespace CremeWorks
                 return;
             }
 
-            var information = _activeEntry.GetCommonInformation(_database);
-            songTitle.Text = information.Title;
-            songLyrics.Text = information.Lyrics;
-            songKey.Text = information.Key;
-            songTempo.Text = information.Tempo.ToString() + " BPM";
-            _metronome.Start(information.Tempo);
+            songTitle.Text = _activeEntry.Info.Title;
+            songLyrics.Text = _activeEntry.Info.Lyrics;
+            songKey.Text = _activeEntry.Info.Key;
+            songTempo.Text = _activeEntry.Info.Tempo.ToString() + " BPM";
+            _metronome.Start(_activeEntry.Info.Tempo);
             btnTimeReset.Enabled = true;
             btnTimeStore.Enabled = true;
-            lightCue.Items.AddRange(information.Cues.Select((x, i) => new CueListBoxItem(i, x, _database.LightingCues[x.CueId].Name)).ToArray());
+            lightCue.Items.AddRange(_activeEntry.Info.Cues.Select((x, i) => new CueListBoxItem(i, x, _database.LightingCues[x.CueId].Name)).ToArray());
             songTimer.Start();
 
             //Configure shit
             _sendMetronomeData = true;
             _midiManager.UpdateMatrix();
             _soloManager.Active = false;
-            if (_activeEntry.Type == PlaylistEntryType.Marker) _midiManager.SendAllNotesOff();
+            if (_activeEntry.Entry.Type == PlaylistEntryType.Marker) _midiManager.SendAllNotesOff();
 
             //Load default cue patch
             if (lightCue.Items.Count > 0) lightCue.SelectedIndex = 0;
@@ -200,7 +197,7 @@ namespace CremeWorks
 
         private void playList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _activeEntry = playList.SelectedIndex >= 0 ? (playList.SelectedItem as PlaylistListBoxItem)?.Entry : null;
+            _activeEntry = playList.SelectedIndex >= 0 ? playList.SelectedItem as PlaylistListBoxItem : null;
             UpdateSong();
         }
 
@@ -219,7 +216,7 @@ namespace CremeWorks
 
             //Update set ListBox
             var prevSelItem = (playList.SelectedItem as SetsListBoxItem)?.playlist;
-            var newItems = new List<SetsListBoxItem> { new SetsListBoxItem(null) };
+            var newItems = new List<SetsListBoxItem> { new(null) };
             newItems.AddRange(_database.Playlists.OrderByDescending(x => x.Date).Select(x => new SetsListBoxItem(x)).ToArray());
             var newSelItem = newItems.FirstOrDefault(x => x.playlist == prevSelItem) ?? newItems[0];
             boxSet.Items.Clear();
@@ -279,19 +276,15 @@ namespace CremeWorks
 
         private void playlistsToolStripMenuItem_Click(object sender, EventArgs e) => new PlaylistEditor(this).ShowDialog();
 
-        private void lightCue_SelectedIndexChanged(object sender, EventArgs e)
+        private async void lightCue_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //if (_s != null && lightCue.SelectedIndex >= 0)
-            //{
-            //    _server.SendToAll(MessageTypeEnum.CUE_INDEX, lightCue.SelectedIndex.ToString());
+            if (_activeEntry is null) return;
+            _server.SendToAll(MessageTypeEnum.CUE_INDEX, lightCue.SelectedIndex.ToString());
 
-            //    //Send light cue
-            //    var noteOnVal = _c.LightingCues.FirstOrDefault(x => x.ID == _s.CueQueue[lightCue.SelectedIndex].ID)?.NoteValue;
-            //    if (noteOnVal is null) return;
-            //    SendLighingData(new NoteOnEvent(new SevenBitNumber(noteOnVal.Value), SevenBitNumber.MaxValue) { Channel = new FourBitNumber(1) });
-            //    await Task.Delay(50);
-            //    SendLighingData(new NoteOnEvent(new SevenBitNumber(noteOnVal.Value), SevenBitNumber.MinValue) { Channel = new FourBitNumber(1) });
-            //}
+            //Send light cue
+            var cueItem = lightCue.SelectedItem as CueListBoxItem;
+            if (cueItem is null || !Database.LightingCues.TryGetValue(cueItem.Cue.CueId, out var cue)) return;
+            await _midiManager.SendToLighting(cue.NoteValue);
         }
 
         private void btnChatSend_Click(object sender, EventArgs e)
@@ -324,30 +317,14 @@ namespace CremeWorks
 
         private void _server_UserJoined(NetworkConnection con)
         {
-            //string tit = (_c?.FilePath == string.Empty ? null : Path.GetFileNameWithoutExtension(_c?.FilePath)) ?? "Untitled";
-            //con.SendMessage(MessageTypeEnum.CONCERT_NAME, tit);
-            //con.SendMessage(MessageTypeEnum.SET_DATA, GetClientSet());
-            //con.SendMessage(MessageTypeEnum.CURRENT_SONG, GetCurrentSongInformation());
-            //con.SendMessage(MessageTypeEnum.CUE_INDEX, lightCue.SelectedIndex.ToString());
+            string tit = Database.FilePath is null or "" ? "Untitled" : Path.GetFileNameWithoutExtension(Database.FilePath);
+            con.SendMessage(MessageTypeEnum.CONCERT_NAME, tit);
+            con.SendMessage(MessageTypeEnum.SET_DATA, GetClientSet());
+            con.SendMessage(MessageTypeEnum.CURRENT_SONG, _activeEntry?.Info ?? PlaylistEntryCommonInfo.None);
+            con.SendMessage(MessageTypeEnum.CUE_INDEX, lightCue.SelectedIndex.ToString());
         }
-        //private string[] GetClientSet()
-        //{
-        //    int idx = 1;
-        //    return _c.Playlist.Select(x => x.SpecialEvent ? $"---{x.Title}---" : $"{idx++:D2}.{x.Title} - {x.Artist}").ToArray();
-        //}
 
-        //private void SendLighingData(MidiEvent e)
-        //{
-        //    var bytes = _converter.Convert(e);
-        //    _server.SendToAll(MessageTypeEnum.LIGHT_MESSAGE, Convert.ToBase64String(bytes));
-        //}
-
-        //private void SendLightNoteOnOff(byte noteVal) => Task.Run(async () =>
-        //{
-        //    SendLighingData(new NoteOnEvent(new SevenBitNumber(noteVal), SevenBitNumber.MaxValue) { Channel = new FourBitNumber(1) });
-        //    await Task.Delay(50);
-        //    SendLighingData(new NoteOnEvent(new SevenBitNumber(noteVal), SevenBitNumber.MinValue) { Channel = new FourBitNumber(1) });
-        //});
+        private string[] GetClientSet() => playList.Items.OfType<PlaylistListBoxItem>().Select(x => x.Info.Header).ToArray();
 
         private void _server_MessageReceived(MessageTypeEnum type, string data, NetworkConnection con) => Invoke(new Action(() =>
         {
@@ -369,7 +346,8 @@ namespace CremeWorks
         {
             if (_sendMetronomeData)
             {
-                //_server.SendToAll(MessageTypeEnum.CLICK_INFO, !_s.Click ? "off" : _s.Tempo.ToString());
+                byte? metronomeVal = _activeEntry?.Entry is SongPlaylistEntry se && Database.Songs.TryGetValue(se.SongId, out var song) && song.Click ? song.Tempo : null;
+                _server.SendToAll(MessageTypeEnum.CLICK_INFO, metronomeVal.ToString() ?? "off");
                 _sendMetronomeData = false;
             }
             await Task.Delay(15);
@@ -395,8 +373,9 @@ namespace CremeWorks
         public Database Database => _database;
         public MidiManager MidiManager => _midiManager;
         public SoloManager SoloManager => _soloManager;
+        public NetworkingServer NetworkManager => _server;
+        public IPlaylistEntry? CurrentEntry => _activeEntry?.Entry;
 
-        public IPlaylistEntry? CurrentEntry => _activeEntry;
 
         private async void LightUpChatbox()
         {
@@ -506,8 +485,8 @@ namespace CremeWorks
 
         private void songTimer_Tick(object sender, EventArgs e)
         {
-            if (_activeEntry is null || _activeEntry.Type != PlaylistEntryType.Song) return;
-            var songEntry = (SongPlaylistEntry)_activeEntry;
+            if (_activeEntry is null || _activeEntry.Entry.Type != PlaylistEntryType.Song) return;
+            var songEntry = (SongPlaylistEntry)_activeEntry.Entry;
             var song = _database.Songs[songEntry.SongId];
             var time = TimeSpan.FromSeconds(++_secondsCounter);
             var diff = time - TimeSpan.FromSeconds(song.ExpectedDurationSeconds);
@@ -520,27 +499,27 @@ namespace CremeWorks
             songTimer.Stop();
             _secondsCounter = 0;
 
-            var expectedSec = _activeEntry is null || _activeEntry.Type != PlaylistEntryType.Song ? 0 : _database.Songs[((SongPlaylistEntry)_activeEntry).SongId].ExpectedDurationSeconds;
+            var expectedSec = _activeEntry is null || _activeEntry.Entry.Type != PlaylistEntryType.Song ? 0 : _database.Songs[((SongPlaylistEntry)_activeEntry.Entry).SongId].ExpectedDurationSeconds;
             var expectedDuration = TimeSpan.FromSeconds(-expectedSec);
             songTime.Text = $"00:00 ({(expectedSec == 0 ? "+" : "-")}{expectedDuration:mm\\:ss})";
             songTime.ForeColor = Color.Black;
 
-            if (_activeEntry is not null && _activeEntry.Type == PlaylistEntryType.Song) songTimer.Start();
+            if (_activeEntry is not null && _activeEntry.Entry.Type == PlaylistEntryType.Song) songTimer.Start();
         }
 
         private void btnTimeStore_Click(object sender, EventArgs e)
         {
-            if (_activeEntry is null || _activeEntry.Type != PlaylistEntryType.Song) return;
-            var songEntry = (SongPlaylistEntry)_activeEntry;
+            if (_activeEntry is null || _activeEntry.Entry.Type != PlaylistEntryType.Song) return;
+            var songEntry = (SongPlaylistEntry)_activeEntry.Entry;
             var song = _database.Songs[songEntry.SongId];
             song.ExpectedDurationSeconds = _secondsCounter;
             songTime.Text = $"{TimeSpan.FromSeconds(_secondsCounter):mm\\:ss} (+00:00)";
             songTime.ForeColor = Color.Black;
         }
 
-        private record PlaylistListBoxItem(string Name, IPlaylistEntry Entry)
+        private record PlaylistListBoxItem(PlaylistEntryCommonInfo Info, IPlaylistEntry Entry)
         {
-            public override string ToString() => Name;
+            public override string ToString() => Info.Header;
         }
 
         private record SetsListBoxItem(Playlist? playlist)

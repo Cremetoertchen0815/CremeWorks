@@ -1,4 +1,5 @@
 ﻿using CremeWorks.App.Data;
+using CremeWorks.Networking;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
@@ -13,7 +14,7 @@ public class MidiManager
 
     public delegate void ControllerActionDelegate(ControllerActionType action, bool? argument);
 
-
+    private int[] _lightingDevices = [];
     private Dictionary<int, InternalMidiDevice> _midiDevices = [];
     private int[]? _matrixIds = null;
     private bool[,]? _matrixNote = null;
@@ -22,6 +23,7 @@ public class MidiManager
     private int _macroDeviceDestId = -1;
     private List<ChordMacro> _activeMacros = [];
     private readonly IDataParent _parent;
+    private readonly MidiEventToBytesConverter _converter = new();
 
     public bool PlaybackPaused { get; set; } = false;
     public bool IsConnected { get; private set; } = false;
@@ -105,7 +107,20 @@ public class MidiManager
         play_dev.SendEvent(new NoteOffEvent(new SevenBitNumber(84), new SevenBitNumber(80)));
     }
 
-    public Task SendNoteToLighting(byte noteValue) => Task.CompletedTask;
+    public async Task SendToLighting(byte noteValue)
+    {
+        SendToLighting(new NoteOnEvent(new SevenBitNumber(noteValue), SevenBitNumber.MaxValue) { Channel = new FourBitNumber(1) });
+        await Task.Delay(50);
+        SendToLighting(new NoteOnEvent(new SevenBitNumber(noteValue), SevenBitNumber.MinValue) { Channel = new FourBitNumber(1) });
+    }
+
+    public void SendToLighting(MidiEvent e)
+    {
+        var bytes = _converter.Convert(e);
+        _parent.NetworkManager.SendToAll(MessageTypeEnum.LIGHT_MESSAGE, Convert.ToBase64String(bytes));
+        if (_lightingDevices.Length == 0) return;
+        foreach (var item in _lightingDevices.Select(x => _midiDevices[x])) item?.Output?.SendEvent(e);
+    } 
 
     public string[] GetAllDevices()
     {

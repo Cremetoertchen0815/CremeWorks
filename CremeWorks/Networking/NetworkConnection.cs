@@ -1,19 +1,17 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.IO;
 using System.Net.Sockets;
 
 namespace CremeWorks.Networking
 {
-    public class NetworkConnection
+    public class NetworkConnection(TcpClient client, StreamWriter writer, StreamReader reader, string name)
     {
-        public Guid Key { get; set; }
-        public StreamWriter Writer { get; set; }
-        public StreamReader Reader { get; set; }
-        public TcpClient Client { get; set; }
-        public string Name { get; set; }
+        public Guid Key { get; init; } = new();
+        public StreamWriter Writer { get; init; } = writer;
+        public StreamReader Reader { get; init; } = reader;
+        public TcpClient Client { get; init; } = client;
+        public string Name { get; init; } = name;
 
-        private object _lock = new object();
+        private readonly object _lock = new();
 
         public void SendMessage(MessageTypeEnum type, object data)
         {

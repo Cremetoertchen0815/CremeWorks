@@ -10,7 +10,7 @@ public class MarkerPlaylistEntry : IPlaylistEntry
 
     public PlaylistEntryType Type => PlaylistEntryType.Marker;
 
-    public PlaylistEntryCommonInfo GetCommonInformation(Database db, int? indexInPlaylist = null) => new PlaylistEntryCommonInfo($"---{Text}---", Text, string.Empty, string.Empty, string.Empty, Instructions, 0, Cues);
+    public PlaylistEntryCommonInfo GetCommonInformation(Database db, int indexInPlaylist) => new PlaylistEntryCommonInfo(indexInPlaylist, $"---{Text}---", Text, string.Empty, string.Empty, string.Empty, Instructions, 0, Cues);
 
     public static MarkerPlaylistEntry Deserialize(XmlNode node)
     {

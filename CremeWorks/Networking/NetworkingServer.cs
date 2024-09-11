@@ -8,9 +8,9 @@ namespace CremeWorks.Networking;
 
 public class NetworkingServer
 {
-    private TcpListener _dataListener;
+    private TcpListener? _dataListener;
     private readonly UdpClient _broadcastClient = new();
-    private CancellationTokenSource _cancelSource = null;
+    private CancellationTokenSource? _cancelSource = null;
     private CancellationToken _cancelToken;
     private readonly ConcurrentDictionary<Guid, NetworkConnection> _connections = new();
 
@@ -23,9 +23,9 @@ public class NetworkingServer
     public delegate void UserActionDelegate(NetworkConnection con);
     public delegate void MessageHandleDelegate(MessageTypeEnum type, string data, NetworkConnection con);
 
-    public event UserActionDelegate UserJoined;
-    public event UserActionDelegate UserLeft;
-    public event MessageHandleDelegate MessageReceived;
+    public event UserActionDelegate? UserJoined;
+    public event UserActionDelegate? UserLeft;
+    public event MessageHandleDelegate? MessageReceived;
 
     public void Start(string broadcastAddr)
     {
@@ -75,6 +75,8 @@ public class NetworkingServer
 
     private async Task ListenForClients()
     {
+        if (_dataListener is null) return;
+
         while (!_cancelToken.IsCancellationRequested)
         {
             try
@@ -83,20 +85,18 @@ public class NetworkingServer
                 var stream = client.GetStream();
                 var streamw = new StreamWriter(stream);
                 var streamr = new StreamReader(stream);
-                var guid = Guid.NewGuid();
 
                 await streamw.WriteLineAsync(WELCOME_DATA);
                 await streamw.FlushAsync();
-                string? name = await streamr.ReadLineAsync();
-                var con = new NetworkConnection()
-                {
-                    Key = guid,
-                    Client = client,
-                    Reader = streamr,
-                    Writer = streamw,
-                    Name = name
-                };
-                _connections.TryAdd(guid, con);
+                string? name = await streamr.ReadLineAsync() ?? "[UNKNOWN]";
+                var con = new NetworkConnection
+                (
+                    client: client,
+                    reader: streamr,
+                    writer: streamw,
+                    name: name
+                );
+                _connections.TryAdd(con.Key, con);
                 UserJoined?.Invoke(con);
 
                 _ = Task.Run(() => ClientReadLoop(con), _cancelToken);
@@ -118,7 +118,7 @@ public class NetworkingServer
                 if (data is null) break;
                 var index = (MessageTypeEnum)byte.Parse(data);
                 string? nextData = await con.Reader.ReadLineAsync();
-                MessageReceived?.Invoke(index, nextData, con);
+                if (nextData is not null) MessageReceived?.Invoke(index, nextData, con);
             }
         }
         finally
