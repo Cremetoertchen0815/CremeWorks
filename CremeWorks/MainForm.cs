@@ -112,7 +112,7 @@ namespace CremeWorks
             }
 
             //Add playlist to listbox
-            var inSet = playlistEntry.playlist is null;
+            var inSet = playlistEntry.playlist is not null;
             playList.Items.AddRange(sortedSongEntries.Select(x => new PlaylistListBoxItem(x.entry.GetCommonInformation(_database, x.index, inSet), x.entry)).ToArray());
 
             _server.SendToAll(MessageTypeEnum.SET_DATA, GetClientSet());

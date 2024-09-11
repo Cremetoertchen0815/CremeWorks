@@ -22,7 +22,6 @@ public class SoloManager
 
     public void UpdateState()
     {
-        Active = false;
         _outputDevices = _dataParent.Database.SoloModeConfig.Devices.Select(x => _dataParent.MidiManager.TryGetMidiDevicePort(x, out _, out var device) ? device : null).Where(x => x is not null).Select(x => x!).ToArray();
         _enabled = _dataParent.Database.SoloModeConfig.Enabled;
     }
