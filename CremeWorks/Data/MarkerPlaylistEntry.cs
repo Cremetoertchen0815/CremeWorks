@@ -10,13 +10,15 @@ public class MarkerPlaylistEntry : IPlaylistEntry
 
     public PlaylistEntryType Type => PlaylistEntryType.Marker;
 
-    public PlaylistEntryCommonInfo GetCommonInformation(Database db, int indexInPlaylist) => new PlaylistEntryCommonInfo(indexInPlaylist, $"---{Text}---", Text, string.Empty, string.Empty, string.Empty, Instructions, 0, Cues);
+    public PlaylistEntryCommonInfo GetCommonInformation(Database db, int indexInPlaylist, bool isSet) => new(indexInPlaylist, $"---{Text}---", Text, string.Empty, string.Empty, string.Empty, Instructions, 0, Cues);
 
     public static MarkerPlaylistEntry Deserialize(XmlNode node)
     {
-        var entry = new MarkerPlaylistEntry();
-        entry.Text = node.Attributes?["text"]?.Value ?? throw new Exception("Marker entry without text");
-        entry.Instructions = node.Attributes?["instructions"]?.Value ?? "";
+        var entry = new MarkerPlaylistEntry
+        {
+            Text = node.Attributes?["text"]?.Value ?? throw new Exception("Marker entry without text"),
+            Instructions = node.Attributes?["instructions"]?.Value ?? ""
+        };
         foreach (XmlNode cueNode in node.ChildNodes)
         {
             var cueId = int.Parse(cueNode.Attributes?["id"]?.Value ?? throw new Exception("Cue without Id"));

@@ -41,7 +41,7 @@ namespace CremeWorks
         private async void btnTrigger_Click(object sender, System.EventArgs e)
         {
             if (lstCues.SelectedItem is not LightingCueItem lc) return;
-            await _parent.MidiManager.SendNoteToLighting(lc.NoteValue);
+            await _parent.MidiManager.SendToLighting(lc.NoteValue);
         }
 
         private void txtNoteOn_ValueChanged(object sender, System.EventArgs e)

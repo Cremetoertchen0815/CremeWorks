@@ -358,8 +358,27 @@ namespace CremeWorks
 
         private void exportSetToCSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //if (_c is null || csvExportSaveFile.ShowDialog() != DialogResult.OK) return;
-            //File.WriteAllText(csvExportSaveFile.FileName, _c.ToCsv());
+            if (boxSet.SelectedItem is null || csvExportSaveFile.ShowDialog() != DialogResult.OK) return;
+            var set = (boxSet.SelectedItem as SetsListBoxItem)?.playlist;
+            //If no set is selected, select backlog
+            if (set is null)
+            {
+                set = new Playlist
+                {
+                    Name = "Backlog",
+                    Date = DateOnly.FromDateTime(DateTime.Now)
+                };
+                set.Elements.AddRange(Database.Songs.OrderBy(x => x.Value.Artist).ThenBy(x => x.Value.Title).Select(x => new SongPlaylistEntry(x.Key)));
+            }
+
+            try
+            {
+                File.WriteAllText(csvExportSaveFile.FileName, set.ToCsv(Database));
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Selected file cannot be saved to!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void _soloManager_SoloStateChanged(bool enabled)
