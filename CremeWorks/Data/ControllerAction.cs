@@ -17,6 +17,7 @@ public enum ControllerActionType
     SoloMode,
     MuteMode,
     ReconnectMidi,
+    MidiPanic,
     ToggleClick,
     PlayStopSample
 }

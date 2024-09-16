@@ -7,7 +7,7 @@ public interface IDataParent
 {
     Database Database { get; }
     MidiManager MidiManager { get; }
-    SoloManager SoloManager { get; }
+    VolumeManager SoloManager { get; }
     NetworkingServer NetworkManager { get; }
     IPlaylistEntry? CurrentEntry { get; }
 }

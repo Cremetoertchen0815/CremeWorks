@@ -13,12 +13,14 @@ namespace CremeWorks
     {
         private Database _database;
         private MidiManager _midiManager;
-        private readonly SoloManager _soloManager;
+        private readonly VolumeManager _soloManager;
         private PlaylistListBoxItem? _activeEntry = null;
         private NetworkingServer _server;
         private readonly Metronome _metronome;
         private bool _sendMetronomeData = false;
         private int _secondsCounter = 0;
+        private Color _metronomeColor = Color.Navy;
+        private bool? _metronomeOverride = null;
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -46,8 +48,8 @@ namespace CremeWorks
             _server.UserJoined += _server_UserJoined;
             _server.MessageReceived += _server_MessageReceived;
 
-            _soloManager = new SoloManager(this);
-            _soloManager.SoloStateChanged += _soloManager_SoloStateChanged;
+            _soloManager = new VolumeManager(this);
+            _soloManager.StateChanged += _soloManager_SoloStateChanged;
 
 
             _metronome = new Metronome();
@@ -85,6 +87,8 @@ namespace CremeWorks
                 _midiManager.SendAllNotesOff();
                 _midiManager.Disconnect();
             }
+
+            _soloManager.UpdateState();
         }
 
         private void UpdatePlaylist()
@@ -150,6 +154,7 @@ namespace CremeWorks
             songKey.Text = _activeEntry.Info.Key;
             songTempo.Text = _activeEntry.Info.Tempo.ToString() + " BPM";
             _metronome.Start(_activeEntry.Info.Tempo);
+            _metronomeOverride = null;
             btnTimeReset.Enabled = true;
             btnTimeStore.Enabled = true;
             lightCue.Items.AddRange(_activeEntry.Info.Cues.Select((x, i) => new CueListBoxItem(i, x, _database.LightingCues[x.CueId].Name)).ToArray());
@@ -158,7 +163,7 @@ namespace CremeWorks
             //Configure shit
             _sendMetronomeData = true;
             _midiManager.UpdateMatrix();
-            _soloManager.Active = false;
+            _soloManager.Solo = false;
             if (_activeEntry.Entry.Type == PlaylistEntryType.Marker) _midiManager.SendAllNotesOff();
 
             //Load default cue patch
@@ -191,6 +196,10 @@ namespace CremeWorks
                     break;
                 case ControllerActionType.CueAdvance:
                     if (lightCue.SelectedIndex < lightCue.Items.Count - 1) lightCue.SelectedIndex++;
+                    break;
+                case ControllerActionType.ToggleClick:
+                    if (_activeEntry?.Entry is not SongPlaylistEntry se || !Database.Songs.TryGetValue(se.SongId, out var song)) break;
+                    _metronomeOverride = enable ?? !(_metronomeOverride ?? song.Click);
                     break;
             }
         }
@@ -346,12 +355,19 @@ namespace CremeWorks
         {
             if (_sendMetronomeData)
             {
-                byte? metronomeVal = _activeEntry?.Entry is SongPlaylistEntry se && Database.Songs.TryGetValue(se.SongId, out var song) && song.Click ? song.Tempo : null;
-                _server.SendToAll(MessageTypeEnum.CLICK_INFO, metronomeVal.ToString() ?? "off");
+                byte? metronomeVal = null;
+                if (_activeEntry?.Entry is SongPlaylistEntry se && Database.Songs.TryGetValue(se.SongId, out var song))
+                {
+                    metronomeVal = song.Tempo;
+                    if (_metronomeOverride == false || _metronomeOverride != true && !song.Click) metronomeVal = null;
+                }
+                
+                _metronomeColor = metronomeVal.HasValue ? Color.Lime : Color.Navy;
+                _server.SendToAll(MessageTypeEnum.CLICK_INFO, metronomeVal?.ToString() ?? "off");
                 _sendMetronomeData = false;
             }
             await Task.Delay(15);
-            boxTempo.BackColor = Color.Navy;
+            boxTempo.BackColor = _metronomeColor;
             await Task.Delay(50);
             boxTempo.BackColor = Color.White;
         }
@@ -381,17 +397,30 @@ namespace CremeWorks
             }
         }
 
-        private void _soloManager_SoloStateChanged(bool enabled)
+        private void _soloManager_SoloStateChanged(VolumeManager.VolumeLevel state)
         {
-            songSolo.ForeColor = enabled ? Color.Green : Color.Red;
-            songSolo.Text = enabled ? "On" : "Off";
+            songSolo.ForeColor = state switch
+            {
+                VolumeManager.VolumeLevel.Off => Color.Red,
+                VolumeManager.VolumeLevel.Regular => Color.Green,
+                VolumeManager.VolumeLevel.Solo => Color.Blue,
+                _ => Color.Black
+            };
+
+            songSolo.Text = state switch
+            {
+                VolumeManager.VolumeLevel.Off => "Off",
+                VolumeManager.VolumeLevel.Regular => "On",
+                VolumeManager.VolumeLevel.Solo => "Solo",
+                _ => "Disconnected"
+            };
         }
 
         private bool _chatboxLit = false;
 
         public Database Database => _database;
         public MidiManager MidiManager => _midiManager;
-        public SoloManager SoloManager => _soloManager;
+        public VolumeManager SoloManager => _soloManager;
         public NetworkingServer NetworkManager => _server;
         public IPlaylistEntry? CurrentEntry => _activeEntry?.Entry;
 

@@ -28,7 +28,11 @@ public class MidiManager
     public bool PlaybackPaused { get; set; } = false;
     public bool IsConnected { get; private set; } = false;
 
-    public MidiManager(IDataParent parent) => _parent = parent;
+    public MidiManager(IDataParent parent)
+    {
+        _parent = parent;
+        ControllerActionExecuted += HandleAction;
+    }
 
     public void Connect()
     {
@@ -43,7 +47,7 @@ public class MidiManager
         foreach (var item in _parent.Database.Devices)
         {
             var currentIndex = i;
-            if (item.Value.Name is "" || item.Value.Type == MidiDeviceType.Unknown) continue;
+            if (item.Value.MidiId is "" || item.Value.Type == MidiDeviceType.Unknown) continue;
             if (item.Value.IsInstrument) _matrixIds[i++] = item.Key;
 
             InputDevice? inputDev = null;
@@ -53,14 +57,14 @@ public class MidiManager
                 //Connect to input device and start listening
                 if (item.Value.IsInstrument || item.Value.Type is MidiDeviceType.GenericController)
                 {
-                    inputDev = InputDevice.GetByName(item.Value.Name);
+                    inputDev = InputDevice.GetByName(item.Value.MidiId);
                     inputDev.EventReceived += item.Value.IsInstrument ? (sender, e) => ListenInstrument(currentIndex, e.Event) : ListenFootPedal;
                     inputDev.StartEventsListening();
                 }
                 //Connect to output device
                 if (item.Value.IsInstrument || item.Value.Type is MidiDeviceType.Lighting)
                 {
-                    outputDev = OutputDevice.GetByName(item.Value.Name);
+                    outputDev = OutputDevice.GetByName(item.Value.MidiId);
                 }
             }
             catch (Exception)
@@ -95,6 +99,21 @@ public class MidiManager
 
         IsConnected = false;
         ConnectionChanged?.Invoke(false);
+    }
+
+    private void HandleAction(ControllerActionType action, bool? argument)
+    {
+        switch (action)
+        {
+            case ControllerActionType.ReconnectMidi:
+                if (!IsConnected) break;
+                Disconnect();
+                Connect();
+                break;
+            case ControllerActionType.MidiPanic:
+                SendAllNotesOff();
+                break;
+        }
     }
 
     public async Task PlayTestTone(string deviceId)
@@ -134,7 +153,8 @@ public class MidiManager
         foreach (var el in inList) el.Dispose();
 
         if (wasConnected) Connect();
-        return [.. outNames, .. inNames];
+        string[] common = [.. outNames, .. inNames];
+        return common.Distinct().ToArray();
     }
 
     public void SendAllNotesOff()

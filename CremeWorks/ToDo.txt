@@ -1,6 +1,4 @@
--Test networking
 -Implement/test cue system
--Implement action responses
 -Implement sound macros
 -Implement CSV import/export system
 -Implement checks when deleting reference data(make sure the data is not being used)

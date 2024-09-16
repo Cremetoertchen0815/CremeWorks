@@ -305,14 +305,14 @@ namespace CremeWorks
             // startMIDIToolStripMenuItem
             // 
             startMIDIToolStripMenuItem.Name = "startMIDIToolStripMenuItem";
-            startMIDIToolStripMenuItem.Size = new Size(150, 22);
+            startMIDIToolStripMenuItem.Size = new Size(180, 22);
             startMIDIToolStripMenuItem.Text = "MIDI Host";
             startMIDIToolStripMenuItem.Click += startMIDIToolStripMenuItem_Click;
             // 
             // startToolStripMenuItem
             // 
             startToolStripMenuItem.Name = "startToolStripMenuItem";
-            startToolStripMenuItem.Size = new Size(150, 22);
+            startToolStripMenuItem.Size = new Size(180, 22);
             startToolStripMenuItem.Text = "Remote Server";
             startToolStripMenuItem.Click += startToolStripMenuItem_Click;
             // 
@@ -320,7 +320,7 @@ namespace CremeWorks
             // 
             allNotesOffToolStripMenuItem.BackColor = Color.FromArgb(255, 169, 169);
             allNotesOffToolStripMenuItem.Name = "allNotesOffToolStripMenuItem";
-            allNotesOffToolStripMenuItem.Size = new Size(150, 22);
+            allNotesOffToolStripMenuItem.Size = new Size(180, 22);
             allNotesOffToolStripMenuItem.Text = "MIDI Panic";
             allNotesOffToolStripMenuItem.Click += allNotesOffToolStripMenuItem_Click;
             // 
@@ -505,7 +505,7 @@ namespace CremeWorks
             label4.Name = "label4";
             label4.Size = new Size(96, 23);
             label4.TabIndex = 35;
-            label4.Text = "Solo Mode:";
+            label4.Text = "Sound:";
             label4.TextAlign = ContentAlignment.MiddleRight;
             // 
             // songSolo
@@ -513,13 +513,13 @@ namespace CremeWorks
             songSolo.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             songSolo.BackColor = SystemColors.Control;
             songSolo.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            songSolo.ForeColor = Color.Red;
+            songSolo.ForeColor = Color.Black;
             songSolo.Location = new Point(1174, 663);
             songSolo.Margin = new Padding(4, 0, 4, 0);
             songSolo.Name = "songSolo";
             songSolo.Size = new Size(151, 23);
             songSolo.TabIndex = 36;
-            songSolo.Text = "Off";
+            songSolo.Text = "Disconnected";
             songSolo.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label2
