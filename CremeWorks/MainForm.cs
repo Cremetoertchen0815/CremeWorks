@@ -200,6 +200,7 @@ namespace CremeWorks
                 case ControllerActionType.ToggleClick:
                     if (_activeEntry?.Entry is not SongPlaylistEntry se || !Database.Songs.TryGetValue(se.SongId, out var song)) break;
                     _metronomeOverride = enable ?? !(_metronomeOverride ?? song.Click);
+                    _sendMetronomeData = true;
                     break;
             }
         }

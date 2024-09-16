@@ -1,3 +1,4 @@
+-Inspect clients getting kicked out after a while(connection still active)
 -Implement/test cue system
 -Implement sound macros
 -Implement CSV import/export system

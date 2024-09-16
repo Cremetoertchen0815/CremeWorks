@@ -79,8 +79,9 @@ public class VolumeManager
         get => _muteMode;
         set
         {
+            if (_muteMode == value) return;
             _muteMode = value;
-            if (!value)
+            if (value)
             {
                 var evnt = new ControlChangeEvent(new SevenBitNumber(_dataParent.Database.SoloModeConfig.CCNumber), new SevenBitNumber(0));
                 foreach (var device in _outputDevices) device.SendEvent(evnt);

@@ -27,9 +27,8 @@ namespace CremeWorks
             "Cue Advance",
             "Solo Mode",
             "Mute Mode",
-            "Reconnect MIDI",
-            "Toggle Click",
-            "Play/Stop Sample"
+            "MIDI Panic",
+            "Toggle Click"
         };
 
         public FootSwitchConfig(IDataParent parent)

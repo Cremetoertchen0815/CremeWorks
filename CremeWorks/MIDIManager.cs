@@ -105,11 +105,6 @@ public class MidiManager
     {
         switch (action)
         {
-            case ControllerActionType.ReconnectMidi:
-                if (!IsConnected) break;
-                Disconnect();
-                Connect();
-                break;
             case ControllerActionType.MidiPanic:
                 SendAllNotesOff();
                 break;

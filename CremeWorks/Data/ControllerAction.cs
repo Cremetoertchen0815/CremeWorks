@@ -16,8 +16,6 @@ public enum ControllerActionType
     CueAdvance,
     SoloMode,
     MuteMode,
-    ReconnectMidi,
     MidiPanic,
-    ToggleClick,
-    PlayStopSample
+    ToggleClick
 }
