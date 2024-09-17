@@ -25,7 +25,7 @@ namespace CremeWorks
 
             Marshal.Copy(arr, 0, ptr, size);
 
-            str = (T)Marshal.PtrToStructure(ptr, str.GetType());
+            str = (T)Marshal.PtrToStructure(ptr, str.GetType())!;
             Marshal.FreeHGlobal(ptr);
 
             return str;

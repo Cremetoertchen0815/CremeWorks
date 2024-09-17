@@ -1,3 +1,7 @@
--Implement solo mode function for increasing volume
--Implement backlog system(move to .cwdb file type)
+-Inspect clients getting kicked out after a while(connection still active)
+-Implement/test cue system
+-Implement sound macros
+-Implement CSV import/export system
+-Implement checks when deleting reference data(make sure the data is not being used)
+
 -Fix SoundPlayer lag under Linux

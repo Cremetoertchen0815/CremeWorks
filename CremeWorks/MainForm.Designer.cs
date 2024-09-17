@@ -29,510 +29,619 @@ namespace CremeWorks
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.exportSetToCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.devicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.configureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.applySongSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.serverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.configureToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.footSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lightControllerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
-            this.playList = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.songTitle = new System.Windows.Forms.Label();
-            this.songLyrics = new System.Windows.Forms.TextBox();
-            this.button12 = new System.Windows.Forms.Button();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lightCue = new System.Windows.Forms.ListBox();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button14 = new System.Windows.Forms.Button();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.songKey = new System.Windows.Forms.Label();
-            this.chatBox = new System.Windows.Forms.ListBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.chatInput = new System.Windows.Forms.TextBox();
-            this.btnChatSend = new System.Windows.Forms.Button();
-            this.songTempo = new System.Windows.Forms.Label();
-            this.boxTempo = new System.Windows.Forms.Panel();
-            this.csvExportSaveFile = new System.Windows.Forms.SaveFileDialog();
-            this.menuStrip1.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            var resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            menuStrip1 = new MenuStrip();
+            configToolStripMenuItem = new ToolStripMenuItem();
+            newToolStripMenuItem = new ToolStripMenuItem();
+            openToolStripMenuItem = new ToolStripMenuItem();
+            openRecentToolStripMenuItem = new ToolStripMenuItem();
+            saveToolStripMenuItem = new ToolStripMenuItem();
+            saveAsToolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem2 = new ToolStripSeparator();
+            cremeWorksCloudToolStripMenuItem = new ToolStripMenuItem();
+            cloneFromCloudToolStripMenuItem = new ToolStripMenuItem();
+            publishToCloudToolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripSeparator();
+            syncToolStripMenuItem = new ToolStripMenuItem();
+            importToolStripMenuItem = new ToolStripMenuItem();
+            cWCDateiToolStripMenuItem = new ToolStripMenuItem();
+            exportToolStripMenuItem = new ToolStripMenuItem();
+            setToolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem3 = new ToolStripSeparator();
+            beendenToolStripMenuItem = new ToolStripMenuItem();
+            editToolStripMenuItem = new ToolStripMenuItem();
+            songsToolStripMenuItem = new ToolStripMenuItem();
+            playlistsToolStripMenuItem = new ToolStripMenuItem();
+            patchesToolStripMenuItem = new ToolStripMenuItem();
+            configureToolStripMenuItem1 = new ToolStripMenuItem();
+            mIDIDevicesToolStripMenuItem = new ToolStripMenuItem();
+            defaultMIDIRoutingToolStripMenuItem = new ToolStripMenuItem();
+            soloModeToolStripMenuItem = new ToolStripMenuItem();
+            lightControllerToolStripMenuItem = new ToolStripMenuItem();
+            footSwitchToolStripMenuItem = new ToolStripMenuItem();
+            serverToolStripMenuItem = new ToolStripMenuItem();
+            startMIDIToolStripMenuItem = new ToolStripMenuItem();
+            startToolStripMenuItem = new ToolStripMenuItem();
+            allNotesOffToolStripMenuItem = new ToolStripMenuItem();
+            label1 = new Label();
+            playList = new ListBox();
+            songTitle = new Label();
+            songLyrics = new TextBox();
+            openFileDialog1 = new OpenFileDialog();
+            saveFileDialog1 = new SaveFileDialog();
+            lightCue = new ListBox();
+            songKey = new Label();
+            chatBox = new ListBox();
+            label3 = new Label();
+            chatInput = new TextBox();
+            btnChatSend = new Button();
+            songTempo = new Label();
+            boxTempo = new Panel();
+            csvExportSaveFile = new SaveFileDialog();
+            boxSet = new ComboBox();
+            label4 = new Label();
+            songSolo = new Label();
+            label2 = new Label();
+            label6 = new Label();
+            label7 = new Label();
+            songTime = new Label();
+            btnTimeReset = new Button();
+            btnTimeStore = new Button();
+            cwcImportOpenFile = new OpenFileDialog();
+            songTimer = new System.Windows.Forms.Timer(components);
+            menuStrip1.SuspendLayout();
+            SuspendLayout();
             // 
             // menuStrip1
             // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.configToolStripMenuItem,
-            this.devicesToolStripMenuItem,
-            this.serverToolStripMenuItem,
-            this.configureToolStripMenuItem1});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(1367, 28);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            menuStrip1.ImageScalingSize = new Size(20, 20);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { configToolStripMenuItem, editToolStripMenuItem, configureToolStripMenuItem1, serverToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Padding = new Padding(5, 2, 0, 2);
+            menuStrip1.RenderMode = ToolStripRenderMode.Professional;
+            menuStrip1.Size = new Size(1334, 24);
+            menuStrip1.TabIndex = 0;
+            menuStrip1.Text = "menuStrip1";
             // 
             // configToolStripMenuItem
             // 
-            this.configToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem,
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem,
-            this.toolStripMenuItem2,
-            this.exportSetToCSVToolStripMenuItem});
-            this.configToolStripMenuItem.Name = "configToolStripMenuItem";
-            this.configToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
-            this.configToolStripMenuItem.Text = "File";
+            configToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, openToolStripMenuItem, openRecentToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, toolStripMenuItem2, cremeWorksCloudToolStripMenuItem, importToolStripMenuItem, exportToolStripMenuItem, toolStripMenuItem3, beendenToolStripMenuItem });
+            configToolStripMenuItem.Name = "configToolStripMenuItem";
+            configToolStripMenuItem.Size = new Size(37, 20);
+            configToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
             // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
-            this.newToolStripMenuItem.Text = "New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.New);
+            newToolStripMenuItem.Name = "newToolStripMenuItem";
+            newToolStripMenuItem.Size = new Size(177, 22);
+            newToolStripMenuItem.Text = "New";
+            newToolStripMenuItem.Click += New;
             // 
             // openToolStripMenuItem
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
-            this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            openToolStripMenuItem.Name = "openToolStripMenuItem";
+            openToolStripMenuItem.Size = new Size(177, 22);
+            openToolStripMenuItem.Text = "Open";
+            openToolStripMenuItem.Click += openToolStripMenuItem_Click;
+            // 
+            // openRecentToolStripMenuItem
+            // 
+            openRecentToolStripMenuItem.Name = "openRecentToolStripMenuItem";
+            openRecentToolStripMenuItem.Size = new Size(177, 22);
+            openRecentToolStripMenuItem.Text = "Open Recent";
             // 
             // saveToolStripMenuItem
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.Save);
+            saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            saveToolStripMenuItem.Size = new Size(177, 22);
+            saveToolStripMenuItem.Text = "Save";
+            saveToolStripMenuItem.Click += Save;
             // 
             // saveAsToolStripMenuItem
             // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
-            this.saveAsToolStripMenuItem.Text = "Save As";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAs);
+            saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            saveAsToolStripMenuItem.Size = new Size(177, 22);
+            saveAsToolStripMenuItem.Text = "Save As";
+            saveAsToolStripMenuItem.Click += SaveAs;
             // 
             // toolStripMenuItem2
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(205, 6);
+            toolStripMenuItem2.Name = "toolStripMenuItem2";
+            toolStripMenuItem2.Size = new Size(174, 6);
             // 
-            // exportSetToCSVToolStripMenuItem
+            // cremeWorksCloudToolStripMenuItem
             // 
-            this.exportSetToCSVToolStripMenuItem.Name = "exportSetToCSVToolStripMenuItem";
-            this.exportSetToCSVToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
-            this.exportSetToCSVToolStripMenuItem.Text = "Export Set to CSV";
-            this.exportSetToCSVToolStripMenuItem.Click += new System.EventHandler(this.exportSetToCSVToolStripMenuItem_Click);
+            cremeWorksCloudToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cloneFromCloudToolStripMenuItem, publishToCloudToolStripMenuItem, toolStripMenuItem1, syncToolStripMenuItem });
+            cremeWorksCloudToolStripMenuItem.Name = "cremeWorksCloudToolStripMenuItem";
+            cremeWorksCloudToolStripMenuItem.Size = new Size(177, 22);
+            cremeWorksCloudToolStripMenuItem.Text = "CremeWorks Cloud";
             // 
-            // devicesToolStripMenuItem
+            // cloneFromCloudToolStripMenuItem
             // 
-            this.devicesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.configureToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.connectToolStripMenuItem,
-            this.applySongSettingsToolStripMenuItem});
-            this.devicesToolStripMenuItem.Name = "devicesToolStripMenuItem";
-            this.devicesToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
-            this.devicesToolStripMenuItem.Text = "MIDI";
+            cloneFromCloudToolStripMenuItem.Name = "cloneFromCloudToolStripMenuItem";
+            cloneFromCloudToolStripMenuItem.Size = new Size(171, 22);
+            cloneFromCloudToolStripMenuItem.Text = "Clone From Cloud";
             // 
-            // configureToolStripMenuItem
+            // publishToCloudToolStripMenuItem
             // 
-            this.configureToolStripMenuItem.Name = "configureToolStripMenuItem";
-            this.configureToolStripMenuItem.Size = new System.Drawing.Size(237, 26);
-            this.configureToolStripMenuItem.Text = "Set Up";
-            this.configureToolStripMenuItem.Click += new System.EventHandler(this.configureToolStripMenuItem_Click);
+            publishToCloudToolStripMenuItem.Name = "publishToCloudToolStripMenuItem";
+            publishToCloudToolStripMenuItem.Size = new Size(171, 22);
+            publishToCloudToolStripMenuItem.Text = "Publish To Cloud";
             // 
             // toolStripMenuItem1
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(234, 6);
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(168, 6);
             // 
-            // connectToolStripMenuItem
+            // syncToolStripMenuItem
             // 
-            this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-            this.connectToolStripMenuItem.Size = new System.Drawing.Size(237, 26);
-            this.connectToolStripMenuItem.Text = "Connect";
-            this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
+            syncToolStripMenuItem.Checked = true;
+            syncToolStripMenuItem.CheckOnClick = true;
+            syncToolStripMenuItem.CheckState = CheckState.Checked;
+            syncToolStripMenuItem.Name = "syncToolStripMenuItem";
+            syncToolStripMenuItem.Size = new Size(171, 22);
+            syncToolStripMenuItem.Text = "Sync";
+            syncToolStripMenuItem.CheckStateChanged += syncToolStripMenuItem_CheckStateChanged;
             // 
-            // applySongSettingsToolStripMenuItem
+            // importToolStripMenuItem
             // 
-            this.applySongSettingsToolStripMenuItem.Name = "applySongSettingsToolStripMenuItem";
-            this.applySongSettingsToolStripMenuItem.Size = new System.Drawing.Size(237, 26);
-            this.applySongSettingsToolStripMenuItem.Text = "Apply Device Settings";
-            this.applySongSettingsToolStripMenuItem.Click += new System.EventHandler(this.applySongSettingsToolStripMenuItem_Click);
+            importToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cWCDateiToolStripMenuItem });
+            importToolStripMenuItem.Name = "importToolStripMenuItem";
+            importToolStripMenuItem.Size = new Size(177, 22);
+            importToolStripMenuItem.Text = "Import";
             // 
-            // serverToolStripMenuItem
+            // cWCDateiToolStripMenuItem
             // 
-            this.serverToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startToolStripMenuItem});
-            this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
-            this.serverToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
-            this.serverToolStripMenuItem.Text = "Server";
+            cWCDateiToolStripMenuItem.Name = "cWCDateiToolStripMenuItem";
+            cWCDateiToolStripMenuItem.Size = new Size(227, 22);
+            cWCDateiToolStripMenuItem.Text = "CremeWorks Concert (*.cwc)";
+            cWCDateiToolStripMenuItem.Click += cWCDateiToolStripMenuItem_Click;
             // 
-            // startToolStripMenuItem
+            // exportToolStripMenuItem
             // 
-            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(123, 26);
-            this.startToolStripMenuItem.Text = "Start";
-            this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
+            exportToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { setToolStripMenuItem });
+            exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            exportToolStripMenuItem.Size = new Size(177, 22);
+            exportToolStripMenuItem.Text = "Export";
+            // 
+            // setToolStripMenuItem
+            // 
+            setToolStripMenuItem.Name = "setToolStripMenuItem";
+            setToolStripMenuItem.Size = new Size(126, 22);
+            setToolStripMenuItem.Text = "Set (*.csv)";
+            setToolStripMenuItem.Click += exportSetToCSVToolStripMenuItem_Click;
+            // 
+            // toolStripMenuItem3
+            // 
+            toolStripMenuItem3.Name = "toolStripMenuItem3";
+            toolStripMenuItem3.Size = new Size(174, 6);
+            // 
+            // beendenToolStripMenuItem
+            // 
+            beendenToolStripMenuItem.Name = "beendenToolStripMenuItem";
+            beendenToolStripMenuItem.Size = new Size(177, 22);
+            beendenToolStripMenuItem.Text = "Exit";
+            beendenToolStripMenuItem.Click += beendenToolStripMenuItem_Click;
+            // 
+            // editToolStripMenuItem
+            // 
+            editToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { songsToolStripMenuItem, playlistsToolStripMenuItem, patchesToolStripMenuItem });
+            editToolStripMenuItem.Name = "editToolStripMenuItem";
+            editToolStripMenuItem.Size = new Size(39, 20);
+            editToolStripMenuItem.Text = "Edit";
+            // 
+            // songsToolStripMenuItem
+            // 
+            songsToolStripMenuItem.Name = "songsToolStripMenuItem";
+            songsToolStripMenuItem.Size = new Size(116, 22);
+            songsToolStripMenuItem.Text = "Songs";
+            songsToolStripMenuItem.Click += songsToolStripMenuItem_Click;
+            // 
+            // playlistsToolStripMenuItem
+            // 
+            playlistsToolStripMenuItem.Name = "playlistsToolStripMenuItem";
+            playlistsToolStripMenuItem.Size = new Size(116, 22);
+            playlistsToolStripMenuItem.Text = "Playlists";
+            playlistsToolStripMenuItem.Click += playlistsToolStripMenuItem_Click;
+            // 
+            // patchesToolStripMenuItem
+            // 
+            patchesToolStripMenuItem.Name = "patchesToolStripMenuItem";
+            patchesToolStripMenuItem.Size = new Size(116, 22);
+            patchesToolStripMenuItem.Text = "Patches";
+            patchesToolStripMenuItem.Click += patchesToolStripMenuItem_Click;
             // 
             // configureToolStripMenuItem1
             // 
-            this.configureToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.footSwitchToolStripMenuItem,
-            this.lightControllerToolStripMenuItem});
-            this.configureToolStripMenuItem1.Name = "configureToolStripMenuItem1";
-            this.configureToolStripMenuItem1.Size = new System.Drawing.Size(67, 24);
-            this.configureToolStripMenuItem1.Text = "Config";
+            configureToolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { mIDIDevicesToolStripMenuItem, defaultMIDIRoutingToolStripMenuItem, soloModeToolStripMenuItem, lightControllerToolStripMenuItem, footSwitchToolStripMenuItem });
+            configureToolStripMenuItem1.Name = "configureToolStripMenuItem1";
+            configureToolStripMenuItem1.Size = new Size(61, 20);
+            configureToolStripMenuItem1.Text = "Settings";
             // 
-            // footSwitchToolStripMenuItem
+            // mIDIDevicesToolStripMenuItem
             // 
-            this.footSwitchToolStripMenuItem.Name = "footSwitchToolStripMenuItem";
-            this.footSwitchToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
-            this.footSwitchToolStripMenuItem.Text = "Foot Switch";
-            this.footSwitchToolStripMenuItem.Click += new System.EventHandler(this.footSwitchToolStripMenuItem_Click);
+            mIDIDevicesToolStripMenuItem.Name = "mIDIDevicesToolStripMenuItem";
+            mIDIDevicesToolStripMenuItem.Size = new Size(185, 22);
+            mIDIDevicesToolStripMenuItem.Text = "MIDI Devices";
+            mIDIDevicesToolStripMenuItem.Click += configureToolStripMenuItem_Click;
+            // 
+            // defaultMIDIRoutingToolStripMenuItem
+            // 
+            defaultMIDIRoutingToolStripMenuItem.Name = "defaultMIDIRoutingToolStripMenuItem";
+            defaultMIDIRoutingToolStripMenuItem.Size = new Size(185, 22);
+            defaultMIDIRoutingToolStripMenuItem.Text = "MIDI Default Routing";
+            defaultMIDIRoutingToolStripMenuItem.Click += defaultMIDIRoutingToolStripMenuItem_Click;
+            // 
+            // soloModeToolStripMenuItem
+            // 
+            soloModeToolStripMenuItem.Name = "soloModeToolStripMenuItem";
+            soloModeToolStripMenuItem.Size = new Size(185, 22);
+            soloModeToolStripMenuItem.Text = "Solo Mode";
+            soloModeToolStripMenuItem.Click += soloModeToolStripMenuItem_Click;
             // 
             // lightControllerToolStripMenuItem
             // 
-            this.lightControllerToolStripMenuItem.Name = "lightControllerToolStripMenuItem";
-            this.lightControllerToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
-            this.lightControllerToolStripMenuItem.Text = "Cues";
-            this.lightControllerToolStripMenuItem.Click += new System.EventHandler(this.lightControllerToolStripMenuItem_Click);
+            lightControllerToolStripMenuItem.Name = "lightControllerToolStripMenuItem";
+            lightControllerToolStripMenuItem.Size = new Size(185, 22);
+            lightControllerToolStripMenuItem.Text = "Light Cues";
+            lightControllerToolStripMenuItem.Click += lightControllerToolStripMenuItem_Click;
+            // 
+            // footSwitchToolStripMenuItem
+            // 
+            footSwitchToolStripMenuItem.Name = "footSwitchToolStripMenuItem";
+            footSwitchToolStripMenuItem.Size = new Size(185, 22);
+            footSwitchToolStripMenuItem.Text = "Controller Actions";
+            footSwitchToolStripMenuItem.Click += footSwitchToolStripMenuItem_Click;
+            // 
+            // serverToolStripMenuItem
+            // 
+            serverToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { startMIDIToolStripMenuItem, startToolStripMenuItem, allNotesOffToolStripMenuItem });
+            serverToolStripMenuItem.Name = "serverToolStripMenuItem";
+            serverToolStripMenuItem.Size = new Size(81, 20);
+            serverToolStripMenuItem.Text = "Connection";
+            // 
+            // startMIDIToolStripMenuItem
+            // 
+            startMIDIToolStripMenuItem.Name = "startMIDIToolStripMenuItem";
+            startMIDIToolStripMenuItem.Size = new Size(180, 22);
+            startMIDIToolStripMenuItem.Text = "MIDI Host";
+            startMIDIToolStripMenuItem.Click += startMIDIToolStripMenuItem_Click;
+            // 
+            // startToolStripMenuItem
+            // 
+            startToolStripMenuItem.Name = "startToolStripMenuItem";
+            startToolStripMenuItem.Size = new Size(180, 22);
+            startToolStripMenuItem.Text = "Remote Server";
+            startToolStripMenuItem.Click += startToolStripMenuItem_Click;
+            // 
+            // allNotesOffToolStripMenuItem
+            // 
+            allNotesOffToolStripMenuItem.BackColor = Color.FromArgb(255, 169, 169);
+            allNotesOffToolStripMenuItem.Name = "allNotesOffToolStripMenuItem";
+            allNotesOffToolStripMenuItem.Size = new Size(180, 22);
+            allNotesOffToolStripMenuItem.Text = "MIDI Panic";
+            allNotesOffToolStripMenuItem.Click += allNotesOffToolStripMenuItem_Click;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 48);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 16);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Playlist:";
+            label1.AutoSize = true;
+            label1.Location = new Point(14, 45);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(47, 15);
+            label1.TabIndex = 1;
+            label1.Text = "Playlist:";
             // 
             // playList
             // 
-            this.playList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.playList.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.playList.FormattingEnabled = true;
-            this.playList.IntegralHeight = false;
-            this.playList.ItemHeight = 22;
-            this.playList.Location = new System.Drawing.Point(16, 71);
-            this.playList.Margin = new System.Windows.Forms.Padding(4);
-            this.playList.Name = "playList";
-            this.playList.Size = new System.Drawing.Size(350, 686);
-            this.playList.TabIndex = 2;
-            this.playList.SelectedIndexChanged += new System.EventHandler(this.playList_SelectedIndexChanged);
-            this.playList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.playList_MouseDown);
-            this.playList.MouseMove += new System.Windows.Forms.MouseEventHandler(this.playList_MouseMove);
-            this.playList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.playList_MouseUp);
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(16, 765);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(70, 28);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.AddNewSong);
-            // 
-            // button2
-            // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button2.Location = new System.Drawing.Point(94, 765);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(70, 28);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Edit";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.EditSong);
-            // 
-            // button3
-            // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button3.Location = new System.Drawing.Point(172, 765);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(90, 28);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "Remove";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.RemSong);
+            playList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            playList.Font = new Font("Microsoft Sans Serif", 11F);
+            playList.FormattingEnabled = true;
+            playList.IntegralHeight = false;
+            playList.ItemHeight = 18;
+            playList.Location = new Point(14, 67);
+            playList.Margin = new Padding(4, 3, 4, 3);
+            playList.Name = "playList";
+            playList.Size = new Size(307, 650);
+            playList.TabIndex = 2;
+            playList.SelectedIndexChanged += playList_SelectedIndexChanged;
             // 
             // songTitle
             // 
-            this.songTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.songTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.songTitle.Location = new System.Drawing.Point(374, 30);
-            this.songTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.songTitle.Name = "songTitle";
-            this.songTitle.Size = new System.Drawing.Size(623, 38);
-            this.songTitle.TabIndex = 6;
-            this.songTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            songTitle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            songTitle.Font = new Font("Microsoft Sans Serif", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            songTitle.Location = new Point(327, 28);
+            songTitle.Margin = new Padding(4, 0, 4, 0);
+            songTitle.Name = "songTitle";
+            songTitle.Size = new Size(682, 36);
+            songTitle.TabIndex = 6;
+            songTitle.TextAlign = ContentAlignment.TopCenter;
             // 
             // songLyrics
             // 
-            this.songLyrics.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.songLyrics.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.songLyrics.Location = new System.Drawing.Point(374, 71);
-            this.songLyrics.Margin = new System.Windows.Forms.Padding(4);
-            this.songLyrics.Multiline = true;
-            this.songLyrics.Name = "songLyrics";
-            this.songLyrics.ReadOnly = true;
-            this.songLyrics.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.songLyrics.Size = new System.Drawing.Size(623, 686);
-            this.songLyrics.TabIndex = 7;
-            this.songLyrics.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // button12
-            // 
-            this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button12.Location = new System.Drawing.Point(270, 765);
-            this.button12.Margin = new System.Windows.Forms.Padding(4);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(96, 28);
-            this.button12.TabIndex = 17;
-            this.button12.Text = "Duplicate";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.DuplicateSong);
+            songLyrics.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            songLyrics.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            songLyrics.Location = new Point(328, 67);
+            songLyrics.Margin = new Padding(4, 3, 4, 3);
+            songLyrics.Multiline = true;
+            songLyrics.Name = "songLyrics";
+            songLyrics.ReadOnly = true;
+            songLyrics.ScrollBars = ScrollBars.Vertical;
+            songLyrics.Size = new Size(741, 535);
+            songLyrics.TabIndex = 7;
+            songLyrics.TextAlign = HorizontalAlignment.Center;
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.Filter = "CremeWorks Concert(.cwc)|*.cwc";
-            this.openFileDialog1.Title = "Open Concert";
+            openFileDialog1.Filter = "CremeWorks Database(.cwdb)|*.cwdb";
+            openFileDialog1.Title = "Open Concert";
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.Filter = "CremeWorks Concert(.cwc)|*.cwc";
-            this.saveFileDialog1.Title = "Save Concert";
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1005, 400);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 16);
-            this.label2.TabIndex = 21;
-            this.label2.Text = "Cue Queue:";
+            saveFileDialog1.Filter = "CremeWorks Database(.cwdb)|*.cwdb";
+            saveFileDialog1.Title = "Save Concert";
             // 
             // lightCue
             // 
-            this.lightCue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lightCue.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.lightCue.FormattingEnabled = true;
-            this.lightCue.IntegralHeight = false;
-            this.lightCue.ItemHeight = 22;
-            this.lightCue.Location = new System.Drawing.Point(1005, 420);
-            this.lightCue.Margin = new System.Windows.Forms.Padding(4);
-            this.lightCue.Name = "lightCue";
-            this.lightCue.Size = new System.Drawing.Size(350, 335);
-            this.lightCue.TabIndex = 22;
-            this.lightCue.SelectedIndexChanged += new System.EventHandler(this.lightCue_SelectedIndexChanged);
-            this.lightCue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lightCue_MouseDown);
-            this.lightCue.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lightCue_MouseMove);
-            this.lightCue.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lightCue_MouseUp);
-            // 
-            // button13
-            // 
-            this.button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button13.Location = new System.Drawing.Point(1161, 763);
-            this.button13.Margin = new System.Windows.Forms.Padding(4);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(90, 28);
-            this.button13.TabIndex = 25;
-            this.button13.Text = "Remove";
-            this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
-            // 
-            // button14
-            // 
-            this.button14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button14.Location = new System.Drawing.Point(1083, 763);
-            this.button14.Margin = new System.Windows.Forms.Padding(4);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(70, 28);
-            this.button14.TabIndex = 24;
-            this.button14.Text = "Edit";
-            this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.button14_Click);
-            // 
-            // button15
-            // 
-            this.button15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button15.Location = new System.Drawing.Point(1005, 763);
-            this.button15.Margin = new System.Windows.Forms.Padding(4);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(70, 28);
-            this.button15.TabIndex = 23;
-            this.button15.Text = "Add";
-            this.button15.UseVisualStyleBackColor = true;
-            this.button15.Click += new System.EventHandler(this.button15_Click);
-            // 
-            // button10
-            // 
-            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button10.Location = new System.Drawing.Point(1259, 763);
-            this.button10.Margin = new System.Windows.Forms.Padding(4);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(96, 28);
-            this.button10.TabIndex = 26;
-            this.button10.Text = "Duplicate";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            lightCue.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            lightCue.Font = new Font("Microsoft Sans Serif", 11F);
+            lightCue.FormattingEnabled = true;
+            lightCue.IntegralHeight = false;
+            lightCue.ItemHeight = 18;
+            lightCue.Location = new Point(1076, 67);
+            lightCue.Margin = new Padding(4, 3, 4, 3);
+            lightCue.Name = "lightCue";
+            lightCue.Size = new Size(249, 535);
+            lightCue.TabIndex = 22;
+            lightCue.SelectedIndexChanged += lightCue_SelectedIndexChanged;
             // 
             // songKey
             // 
-            this.songKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.songKey.AutoSize = true;
-            this.songKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.songKey.Location = new System.Drawing.Point(376, 765);
-            this.songKey.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.songKey.Name = "songKey";
-            this.songKey.Size = new System.Drawing.Size(0, 25);
-            this.songKey.TabIndex = 27;
+            songKey.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            songKey.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            songKey.Location = new Point(1174, 611);
+            songKey.Margin = new Padding(4, 0, 4, 0);
+            songKey.Name = "songKey";
+            songKey.Size = new Size(151, 23);
+            songKey.TabIndex = 27;
+            songKey.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // chatBox
             // 
-            this.chatBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chatBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.chatBox.FormattingEnabled = true;
-            this.chatBox.IntegralHeight = false;
-            this.chatBox.ItemHeight = 22;
-            this.chatBox.Location = new System.Drawing.Point(1005, 71);
-            this.chatBox.Margin = new System.Windows.Forms.Padding(4);
-            this.chatBox.Name = "chatBox";
-            this.chatBox.Size = new System.Drawing.Size(349, 278);
-            this.chatBox.TabIndex = 29;
+            chatBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            chatBox.Font = new Font("Microsoft Sans Serif", 11F);
+            chatBox.FormattingEnabled = true;
+            chatBox.IntegralHeight = false;
+            chatBox.ItemHeight = 18;
+            chatBox.Location = new Point(328, 608);
+            chatBox.Margin = new Padding(4, 3, 4, 3);
+            chatBox.Name = "chatBox";
+            chatBox.SelectionMode = SelectionMode.None;
+            chatBox.Size = new Size(741, 107);
+            chatBox.TabIndex = 29;
             // 
             // label3
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(1007, 50);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(37, 16);
-            this.label3.TabIndex = 28;
-            this.label3.Text = "Chat:";
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label3.AutoSize = true;
+            label3.Location = new Point(1076, 45);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(69, 15);
+            label3.TabIndex = 28;
+            label3.Text = "Cue Queue:";
             // 
             // chatInput
             // 
-            this.chatInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.chatInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.chatInput.Location = new System.Drawing.Point(1005, 355);
-            this.chatInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.chatInput.Name = "chatInput";
-            this.chatInput.Size = new System.Drawing.Size(251, 26);
-            this.chatInput.TabIndex = 30;
+            chatInput.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            chatInput.Font = new Font("Microsoft Sans Serif", 11F);
+            chatInput.Location = new Point(328, 723);
+            chatInput.Margin = new Padding(2);
+            chatInput.Name = "chatInput";
+            chatInput.Size = new Size(656, 24);
+            chatInput.TabIndex = 30;
             // 
             // btnChatSend
             // 
-            this.btnChatSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChatSend.Location = new System.Drawing.Point(1264, 354);
-            this.btnChatSend.Margin = new System.Windows.Forms.Padding(4);
-            this.btnChatSend.Name = "btnChatSend";
-            this.btnChatSend.Size = new System.Drawing.Size(91, 28);
-            this.btnChatSend.TabIndex = 31;
-            this.btnChatSend.Text = "Send";
-            this.btnChatSend.UseVisualStyleBackColor = true;
-            this.btnChatSend.Click += new System.EventHandler(this.btnChatSend_Click);
+            btnChatSend.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnChatSend.Location = new Point(989, 722);
+            btnChatSend.Margin = new Padding(4, 3, 4, 3);
+            btnChatSend.Name = "btnChatSend";
+            btnChatSend.Size = new Size(80, 27);
+            btnChatSend.TabIndex = 31;
+            btnChatSend.Text = "Send";
+            btnChatSend.UseVisualStyleBackColor = true;
+            btnChatSend.Click += btnChatSend_Click;
             // 
             // songTempo
             // 
-            this.songTempo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.songTempo.AutoSize = true;
-            this.songTempo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.songTempo.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            this.songTempo.Location = new System.Drawing.Point(885, 765);
-            this.songTempo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.songTempo.Name = "songTempo";
-            this.songTempo.Size = new System.Drawing.Size(0, 25);
-            this.songTempo.TabIndex = 32;
+            songTempo.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            songTempo.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            songTempo.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
+            songTempo.Location = new Point(1202, 637);
+            songTempo.Margin = new Padding(4, 0, 4, 0);
+            songTempo.Name = "songTempo";
+            songTempo.Size = new Size(123, 23);
+            songTempo.TabIndex = 32;
+            songTempo.Text = "BPM";
+            songTempo.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // boxTempo
             // 
-            this.boxTempo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.boxTempo.BackColor = System.Drawing.Color.White;
-            this.boxTempo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.boxTempo.Location = new System.Drawing.Point(854, 765);
-            this.boxTempo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.boxTempo.Name = "boxTempo";
-            this.boxTempo.Size = new System.Drawing.Size(23, 24);
-            this.boxTempo.TabIndex = 33;
+            boxTempo.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            boxTempo.BackColor = Color.White;
+            boxTempo.BorderStyle = BorderStyle.FixedSingle;
+            boxTempo.Location = new Point(1177, 637);
+            boxTempo.Margin = new Padding(2);
+            boxTempo.Name = "boxTempo";
+            boxTempo.Size = new Size(23, 23);
+            boxTempo.TabIndex = 33;
             // 
             // csvExportSaveFile
             // 
-            this.csvExportSaveFile.Filter = "CSV file|*.csv";
+            csvExportSaveFile.Filter = "CSV file|*.csv";
+            // 
+            // boxSet
+            // 
+            boxSet.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            boxSet.Font = new Font("Microsoft Sans Serif", 11F);
+            boxSet.FormattingEnabled = true;
+            boxSet.Location = new Point(15, 722);
+            boxSet.Margin = new Padding(4, 3, 4, 3);
+            boxSet.Name = "boxSet";
+            boxSet.Size = new Size(307, 26);
+            boxSet.TabIndex = 34;
+            boxSet.Text = "[BACKLOG]";
+            boxSet.SelectedIndexChanged += boxSet_SelectedIndexChanged;
+            // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            label4.Font = new Font("Microsoft Sans Serif", 11F);
+            label4.Location = new Point(1076, 663);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(96, 23);
+            label4.TabIndex = 35;
+            label4.Text = "Sound:";
+            label4.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // songSolo
+            // 
+            songSolo.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            songSolo.BackColor = SystemColors.Control;
+            songSolo.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            songSolo.ForeColor = Color.Black;
+            songSolo.Location = new Point(1174, 663);
+            songSolo.Margin = new Padding(4, 0, 4, 0);
+            songSolo.Name = "songSolo";
+            songSolo.Size = new Size(151, 23);
+            songSolo.TabIndex = 36;
+            songSolo.Text = "Disconnected";
+            songSolo.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            label2.Font = new Font("Microsoft Sans Serif", 11F);
+            label2.Location = new Point(1076, 637);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(96, 23);
+            label2.TabIndex = 37;
+            label2.Text = "Tempo:";
+            label2.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // label6
+            // 
+            label6.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            label6.Font = new Font("Microsoft Sans Serif", 11F);
+            label6.Location = new Point(1076, 611);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(96, 23);
+            label6.TabIndex = 38;
+            label6.Text = "Key:";
+            label6.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // label7
+            // 
+            label7.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            label7.Font = new Font("Microsoft Sans Serif", 11F);
+            label7.Location = new Point(1076, 689);
+            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(96, 23);
+            label7.TabIndex = 40;
+            label7.Text = "Time:";
+            label7.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // songTime
+            // 
+            songTime.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            songTime.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            songTime.Location = new Point(1174, 689);
+            songTime.Margin = new Padding(4, 0, 4, 0);
+            songTime.Name = "songTime";
+            songTime.Size = new Size(151, 23);
+            songTime.TabIndex = 39;
+            songTime.Text = "00:00 (+00:00)";
+            songTime.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // btnTimeReset
+            // 
+            btnTimeReset.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnTimeReset.Location = new Point(1177, 721);
+            btnTimeReset.Margin = new Padding(4, 3, 4, 3);
+            btnTimeReset.Name = "btnTimeReset";
+            btnTimeReset.Size = new Size(72, 27);
+            btnTimeReset.TabIndex = 41;
+            btnTimeReset.Text = "Reset";
+            btnTimeReset.UseVisualStyleBackColor = true;
+            btnTimeReset.Click += btnTimeReset_Click;
+            // 
+            // btnTimeStore
+            // 
+            btnTimeStore.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnTimeStore.Location = new Point(1253, 721);
+            btnTimeStore.Margin = new Padding(4, 3, 4, 3);
+            btnTimeStore.Name = "btnTimeStore";
+            btnTimeStore.Size = new Size(72, 27);
+            btnTimeStore.TabIndex = 42;
+            btnTimeStore.Text = "Store";
+            btnTimeStore.UseVisualStyleBackColor = true;
+            btnTimeStore.Click += btnTimeStore_Click;
+            // 
+            // cwcImportOpenFile
+            // 
+            cwcImportOpenFile.FileName = "openFileDialog2";
+            cwcImportOpenFile.Filter = "CremeWorks Concert(.cwc)|*.cwc";
+            // 
+            // songTimer
+            // 
+            songTimer.Interval = 1000;
+            songTimer.Tick += songTimer_Tick;
             // 
             // MainForm
             // 
-            this.AcceptButton = this.btnChatSend;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1367, 800);
-            this.Controls.Add(this.boxTempo);
-            this.Controls.Add(this.songTempo);
-            this.Controls.Add(this.btnChatSend);
-            this.Controls.Add(this.chatInput);
-            this.Controls.Add(this.chatBox);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.songKey);
-            this.Controls.Add(this.button10);
-            this.Controls.Add(this.button13);
-            this.Controls.Add(this.button14);
-            this.Controls.Add(this.button15);
-            this.Controls.Add(this.lightCue);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.button12);
-            this.Controls.Add(this.playList);
-            this.Controls.Add(this.songTitle);
-            this.Controls.Add(this.songLyrics);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.menuStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "MainForm";
-            this.Text = "CremeWorks Stage Controller";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AcceptButton = btnChatSend;
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1334, 757);
+            Controls.Add(btnTimeStore);
+            Controls.Add(btnTimeReset);
+            Controls.Add(label7);
+            Controls.Add(songTime);
+            Controls.Add(label6);
+            Controls.Add(label2);
+            Controls.Add(songSolo);
+            Controls.Add(label4);
+            Controls.Add(boxSet);
+            Controls.Add(boxTempo);
+            Controls.Add(songTempo);
+            Controls.Add(btnChatSend);
+            Controls.Add(chatInput);
+            Controls.Add(chatBox);
+            Controls.Add(label3);
+            Controls.Add(songKey);
+            Controls.Add(lightCue);
+            Controls.Add(playList);
+            Controls.Add(songTitle);
+            Controls.Add(songLyrics);
+            Controls.Add(label1);
+            Controls.Add(menuStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MainMenuStrip = menuStrip1;
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "MainForm";
+            Text = "CremeWorks Stage Controller";
+            FormClosed += MainForm_FormClosed;
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -543,28 +652,14 @@ namespace CremeWorks
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem devicesToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox playList;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label songTitle;
         private System.Windows.Forms.TextBox songLyrics;
-        private System.Windows.Forms.ToolStripMenuItem configureToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem applySongSettingsToolStripMenuItem;
-        private System.Windows.Forms.Button button12;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem lightControllerToolStripMenuItem;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox lightCue;
-        private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.Button button14;
-        private System.Windows.Forms.Button button15;
-        private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Label songKey;
         private System.Windows.Forms.ListBox chatBox;
         private System.Windows.Forms.Label label3;
@@ -577,8 +672,39 @@ namespace CremeWorks
         private System.Windows.Forms.ToolStripMenuItem footSwitchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configureToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem exportSetToCSVToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog csvExportSaveFile;
+        private System.Windows.Forms.ComboBox boxSet;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cWCDateiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem beendenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mIDIDevicesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startMIDIToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem songsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem playlistsToolStripMenuItem;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label songSolo;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label6;
+        private ToolStripMenuItem defaultMIDIRoutingToolStripMenuItem;
+        private ToolStripMenuItem patchesToolStripMenuItem;
+        private Label label7;
+        private Label songTime;
+        private Button btnTimeReset;
+        private Button btnTimeStore;
+        private ToolStripMenuItem cremeWorksCloudToolStripMenuItem;
+        private ToolStripMenuItem cloneFromCloudToolStripMenuItem;
+        private ToolStripMenuItem publishToCloudToolStripMenuItem;
+        private ToolStripSeparator toolStripMenuItem1;
+        private ToolStripMenuItem syncToolStripMenuItem;
+        private ToolStripMenuItem openRecentToolStripMenuItem;
+        private OpenFileDialog cwcImportOpenFile;
+        private ToolStripMenuItem allNotesOffToolStripMenuItem;
+        private ToolStripMenuItem soloModeToolStripMenuItem;
+        private System.Windows.Forms.Timer songTimer;
     }
 }
 

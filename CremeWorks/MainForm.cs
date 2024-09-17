@@ -1,26 +1,26 @@
-﻿using CremeWorks.Common;
+﻿using CremeWorks.App;
+using CremeWorks.App.Data;
+using CremeWorks.App.Data.Compatibility;
+using CremeWorks.App.Dialogs;
+using CremeWorks.App.Properties;
+using CremeWorks.Common;
 using CremeWorks.Networking;
-using Melanchall.DryWetMidi.Common;
-using Melanchall.DryWetMidi.Core;
-using System;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace CremeWorks
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IDataParent
     {
-        private Concert _c;
-        private Song _s = null;
-        private NetworkingServer _server = new NetworkingServer();
-        private readonly MidiEventToBytesConverter _converter = new MidiEventToBytesConverter();
-        private readonly Metronome _metronome = new Metronome();
+        private Database _database;
+        private MidiManager _midiManager;
+        private readonly VolumeManager _soloManager;
+        private PlaylistListBoxItem? _activeEntry = null;
+        private NetworkingServer _server;
+        private readonly Metronome _metronome;
         private bool _sendMetronomeData = false;
-        private int _playlistDragIndex = -1;
-        private bool _wasPlaylistOrderChanged = false;
+        private int _secondsCounter = 0;
+        private Color _metronomeColor = Color.Navy;
+        private bool? _metronomeOverride = null;
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -39,47 +39,91 @@ namespace CremeWorks
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
-            _c = Concert.Empty(SendLighingData);
+            _database = new Database();
+            _midiManager = new MidiManager(this);
+            _midiManager.ConnectionChanged += x => startMIDIToolStripMenuItem.Checked = x;
+            _midiManager.ControllerActionExecuted += ExecuteAction;
 
+            _server = new NetworkingServer();
             _server.UserJoined += _server_UserJoined;
             _server.MessageReceived += _server_MessageReceived;
 
+            _soloManager = new VolumeManager(this);
+            _soloManager.StateChanged += _soloManager_SoloStateChanged;
+
+
+            _metronome = new Metronome();
             _metronome.Tick += TickMetronome;
+
+            syncToolStripMenuItem.Checked = Settings.Default.SyncToCloud;
+            if (Settings.Default.Recents == null)
+            {
+                Settings.Default.Recents = new();
+                Settings.Default.Save();
+            }
+            foreach (var item in Settings.Default.Recents)
+            {
+                var menuItem = new ToolStripMenuItem(item);
+                menuItem.Tag = item;
+                menuItem.Click += openRecentToolStripMenuItem_Click;
+                openRecentToolStripMenuItem.DropDownItems.Add(menuItem);
+            }
 
             UpdateConcert();
         }
 
-        private void configureToolStripMenuItem_Click(object sender, EventArgs e) => new MIDISetUp(_c).ShowDialog();
-        private void footSwitchToolStripMenuItem_Click(object sender, EventArgs e) => new FootSwitchConfig(_c).ShowDialog();
+        private void configureToolStripMenuItem_Click(object sender, EventArgs e) => new MidiSetUp(this).ShowDialog();
+        private void footSwitchToolStripMenuItem_Click(object sender, EventArgs e) => new FootSwitchConfig(this).ShowDialog();
 
-        private void connectToolStripMenuItem_Click(object sender, EventArgs e)
+        private void startMIDIToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_c == null) return;
-            if (connectToolStripMenuItem.Text == "Connect")
+            if (!startMIDIToolStripMenuItem.Checked)
             {
-                _c.Connect();
-                _c.MidiMatrix.Register();
+                _midiManager.Connect();
+                _midiManager.UpdateMatrix();
             }
             else
             {
-                _c.Disconnect();
+                _midiManager.SendAllNotesOff();
+                _midiManager.Disconnect();
             }
+
+            _soloManager.UpdateState();
         }
 
         private void UpdatePlaylist()
         {
+            var playlistEntry = (SetsListBoxItem)boxSet.SelectedItem!;
+            _server.SendToAll(MessageTypeEnum.CONCERT_NAME, playlistEntry.ToString());
+
             playList.Items.Clear();
-            int idx = 1;
-            foreach (var element in _c.Playlist)
+            var sortedSongEntries = new List<(IPlaylistEntry entry, int index)>();
+
+            if (playlistEntry.playlist is null)
             {
-                string text = element.SpecialEvent ? $"---{element.Title}---" : $"{idx++.ToString("D2")}.{element.Title} - {element.Artist}";
-                playList.Items.Add(text);
+                //Add backlog songs
+                sortedSongEntries = _database.Songs.OrderBy(x => x.Value.Artist).ThenBy(x => x.Value.Title).Select((x, i) => ((IPlaylistEntry)new SongPlaylistEntry(x.Key), i)).ToList();
+            }
+            else
+            {
+                //Add playlist songs
+                int songIndex = 0;
+                foreach (var song in playlistEntry.playlist.Elements)
+                {
+                    sortedSongEntries.Add((song, songIndex));
+                    if (song is SongPlaylistEntry) songIndex++;
+                }
             }
 
-            _server.SendToAll(MessageTypeEnum.SET_DATA, GetClientSet());
-        }
+            //Add playlist to listbox
+            var inSet = playlistEntry.playlist is not null;
+            playList.Items.AddRange(sortedSongEntries.Select(x => new PlaylistListBoxItem(x.entry.GetCommonInformation(_database, x.index, inSet), x.entry)).ToArray());
 
-        private readonly string[] Buchstaben = { "A", "B", "C", "D", "E", "F" };
+            _server.SendToAll(MessageTypeEnum.SET_DATA, GetClientSet());
+            _activeEntry = null;
+            if (playList.Items.Count > 0) playList.SelectedIndex = 0;
+            UpdateSong();
+        }
 
         private void UpdateSong()
         {
@@ -87,162 +131,107 @@ namespace CremeWorks
             songLyrics.Text = string.Empty;
             songKey.Text = "";
             songTempo.Text = "";
+            btnTimeReset.Enabled = false;
+            btnTimeStore.Enabled = false;
             lightCue.Items.Clear();
-            _server.SendToAll(MessageTypeEnum.CURRENT_SONG, GetCurrentSongInformation());
+            _server.SendToAll(MessageTypeEnum.CURRENT_SONG, _activeEntry?.Info ?? PlaylistEntryCommonInfo.None);
 
-            if (_s == null)
+
+            songTime.Text = "00:00 (+00:00)";
+            songTime.ForeColor = Color.Black;
+            songTimer.Stop();
+            _secondsCounter = 0;
+
+            if (_activeEntry == null)
             {
                 _server.SendToAll(MessageTypeEnum.CLICK_INFO, "off");
                 _metronome.Stop();
                 return;
             }
 
-            for (int i = 0; i < _s.CueQueue.Count; i++)
-            {
-                var cueType = _c.LightingCues.FirstOrDefault(x => x.ID == _s.CueQueue[i].ID).Name;
-                lightCue.Items.Add($"{i + 1}. {_s.CueQueue[i].comment}({cueType})");
-            }
+            songTitle.Text = _activeEntry.Info.Title;
+            songLyrics.Text = _activeEntry.Info.Lyrics;
+            songKey.Text = _activeEntry.Info.Key;
+            songTempo.Text = _activeEntry.Info.Tempo.ToString() + " BPM";
+            _metronome.Start(_activeEntry.Info.Tempo);
+            _metronomeOverride = null;
+            btnTimeReset.Enabled = true;
+            btnTimeStore.Enabled = true;
+            lightCue.Items.AddRange(_activeEntry.Info.Cues.Select((x, i) => new CueListBoxItem(i, x, _database.LightingCues[x.CueId].Name)).ToArray());
+            songTimer.Start();
+
             //Configure shit
-            songTitle.Text = _s.Title;
-            songLyrics.Text = _s.Lyrics;
-            songKey.Text = _s.Key;
-            songTempo.Text = _s.Tempo.ToString() + " BPM";
-            _metronome.Start(_s.Tempo);
             _sendMetronomeData = true;
-            ConfigSongMIDI();
+            _midiManager.UpdateMatrix();
+            _soloManager.Solo = false;
+            if (_activeEntry.Entry.Type == PlaylistEntryType.Marker) _midiManager.SendAllNotesOff();
 
             //Load default cue patch
             if (lightCue.Items.Count > 0) lightCue.SelectedIndex = 0;
         }
 
-        private void ConfigSongMIDI()
-        {
-            _c.MidiMatrix.ActiveSong = _s;
-
-            for (int i = 0; i < Concert.PATCH_DEVICE_COUNT; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplyPatch(_c.Devices[MIDIMatrix.INSTR_DEVICE_OFFSET + i]);
-        }
-
-        private void ExecuteAction(int nr, bool? enable)
+        public void ExecuteAction(ControllerActionType type, bool? enable)
         {
             bool chk = enable ?? true;
-            switch (nr)
+            switch (type)
             {
-                case 0:
+                case ControllerActionType.PrevSong:
                     if (chk && playList.SelectedIndex > 0) playList.SelectedIndex--;
                     break;
-                case 1:
+                case ControllerActionType.NextSong:
                     if (chk && playList.SelectedIndex < playList.Items.Count - 1) playList.SelectedIndex++;
                     break;
-                case 2:
+                case ControllerActionType.ScrollUp:
                     if (!chk) break;
                     SetScrollPos(songLyrics.Handle, 1, -10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, -10);
                     break;
-                case 3:
+                case ControllerActionType.ScrollDown:
                     if (!chk) break;
                     SetScrollPos(songLyrics.Handle, 1, 10, true);
                     SendMessage(songLyrics.Handle, EM_LINESCROLL, 0, 10);
                     break;
-                case 4:
+                case ControllerActionType.CueBack:
                     if (lightCue.SelectedIndex > 0) lightCue.SelectedIndex--;
                     break;
-                case 5:
+                case ControllerActionType.CueAdvance:
                     if (lightCue.SelectedIndex < lightCue.Items.Count - 1) lightCue.SelectedIndex++;
                     break;
+                case ControllerActionType.ToggleClick:
+                    if (_activeEntry?.Entry is not SongPlaylistEntry se || !Database.Songs.TryGetValue(se.SongId, out var song)) break;
+                    _metronomeOverride = enable ?? !(_metronomeOverride ?? song.Click);
+                    _sendMetronomeData = true;
+                    break;
             }
-        }
-
-        private void AddNewSong(object sender, EventArgs e)
-        {
-            if (_c == null) return;
-            var ns = new Song();
-            if (new SongEditor(_c, ns).ShowDialog() != DialogResult.OK) return;
-            _c.Playlist.Add(ns);
-            UpdatePlaylist();
-        }
-
-        private void EditSong(object sender, EventArgs e)
-        {
-            if (_c == null || playList.SelectedIndex < 0) return;
-            new SongEditor(_c, _c.Playlist[playList.SelectedIndex]).ShowDialog();
-            UpdatePlaylist();
         }
 
         private void playList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _s = playList.SelectedIndex >= 0 ? _c.Playlist[playList.SelectedIndex] : null;
+            _activeEntry = playList.SelectedIndex >= 0 ? playList.SelectedItem as PlaylistListBoxItem : null;
             UpdateSong();
-        }
-
-        private void RemSong(object sender, EventArgs e)
-        {
-            if (playList.SelectedIndex >= 0) _c.Playlist.RemoveAt(playList.SelectedIndex);
-            UpdatePlaylist();
-        }
-
-        private void applySongSettingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (_c == null || _s == null) return;
-            for (int i = 0; i < Concert.PATCH_DEVICE_COUNT; i++) if (_s.AutoPatchSlots[i].Enabled) _s.AutoPatchSlots[i].Patch?.ApplySettings(_c.Devices[i + 2]);
-        }
-
-        private void playList_MouseDown(object sender, MouseEventArgs e) => _playlistDragIndex = playList.SelectedIndex;
-        private void playList_MouseUp(object sender, MouseEventArgs e)
-        {
-            _playlistDragIndex = -1;
-            if (_wasPlaylistOrderChanged) UpdatePlaylist();
-            _wasPlaylistOrderChanged = false;
-        }
-
-        private void playList_MouseMove(object sender, MouseEventArgs e)
-        {
-            int sIndex = playList.SelectedIndex;
-            if (e.Button == MouseButtons.Left && _playlistDragIndex > -1 && _playlistDragIndex != sIndex)
-            {
-                object aObj = playList.Items[_playlistDragIndex];
-                var bObj = _c.Playlist[_playlistDragIndex];
-
-                playList.Items[_playlistDragIndex] = playList.Items[sIndex];
-                _c.Playlist[_playlistDragIndex] = _c.Playlist[sIndex];
-
-
-                playList.Items[sIndex] = aObj;
-                _c.Playlist[sIndex] = bObj;
-
-                _playlistDragIndex = sIndex;
-                _wasPlaylistOrderChanged = true;
-            }
-        }
-
-        private void DuplicateSong(object sender, EventArgs e)
-        {
-            if (playList.SelectedIndex < 0) return;
-            var cpy = _c.Playlist[playList.SelectedIndex].Clone();
-            _c.Playlist.Add(cpy);
-            UpdatePlaylist();
         }
 
         private void New(object sender, EventArgs e)
         {
-            _c = Concert.Empty(SendLighingData);
+            _database = new Database();
             UpdateConcert();
         }
 
-        private void UpdateConcert()
+        private void UpdateConcert(bool onlyUpdateTitle = false)
         {
-            string tit = (_c?.FilePath == string.Empty ? null : _c?.FilePath) ?? "Untitled";
-            string titClean = (_c?.FilePath == string.Empty ? null : Path.GetFileNameWithoutExtension(_c?.FilePath)) ?? "Untitled";
+            string tit = _database.FilePath is null or "" ? "Untitled" : _database.FilePath;
+            string titClean = _database.FilePath is null or "" ? "Untitled" : Path.GetFileNameWithoutExtension(_database.FilePath);
             Text = "CremeWorks Stage Controller - " + tit;
-            _server.SendToAll(MessageTypeEnum.CONCERT_NAME, titClean);
-            if (_c is null)
-            {
-                playList.Items.Clear();
-                _server.SendToAll(MessageTypeEnum.SET_DATA, "[]");
-                return;
-            }
+            if (onlyUpdateTitle) return;
 
-            _c.MidiMatrix.ActionExecute = ExecuteAction;
-            _c.ConnectionChangeHandler = (x) => connectToolStripMenuItem.Text = x ? "Disconnect" : "Connect";
+            //Update set ListBox
+            var prevSelItem = (playList.SelectedItem as SetsListBoxItem)?.playlist;
+            var newItems = new List<SetsListBoxItem> { new(null) };
+            newItems.AddRange(_database.Playlists.OrderByDescending(x => x.Date).Select(x => new SetsListBoxItem(x)).ToArray());
+            var newSelItem = newItems.FirstOrDefault(x => x.playlist == prevSelItem) ?? newItems[0];
+            boxSet.Items.Clear();
+            boxSet.Items.AddRange(newItems.ToArray());
+            boxSet.SelectedItem = newSelItem;
 
             UpdatePlaylist();
             playList.SelectedIndex = -1;
@@ -251,103 +240,61 @@ namespace CremeWorks
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
-            _c = Concert.LoadFromFile(openFileDialog1.FileName, SendLighingData);
-            if (_c is null) MessageBox.Show("Concert file is corrupted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            try
+            {
+                _database = FileParser.ParseFile(openFileDialog1.FileName) ?? throw new Exception("Deserializer is null!");
+
+                // Update recents list
+                if (!Settings.Default.Recents.Contains(openFileDialog1.FileName))
+                {
+                    Settings.Default.Recents.Add(openFileDialog1.FileName);
+                    Settings.Default.Save();
+                    var item = new ToolStripMenuItem(openFileDialog1.FileName);
+                    item.Tag = openFileDialog1.FileName;
+                    item.Click += openRecentToolStripMenuItem_Click;
+                    openRecentToolStripMenuItem.DropDownItems.Add(item);
+                }
+            }
+            catch (Exception)
+            {
+                _database = new Database();
+                MessageBox.Show("Database file is corrupted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             UpdateConcert();
         }
 
         private void Save(object sender, EventArgs e)
         {
-            if (_c == null) return;
-            if (_c.FilePath == null || _c.FilePath == string.Empty)
+            if (_database.FilePath == null || _database.FilePath == string.Empty)
             {
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK) _c.SaveToFile(saveFileDialog1.FileName);
+                if (saveFileDialog1.ShowDialog() != DialogResult.OK) return;
+                _database.FilePath = saveFileDialog1.FileName;
             }
-            else
-            {
-                _c.SaveToFile(_c.FilePath);
-            }
-            UpdateConcert();
+            FileParser.SaveFile(_database.FilePath, _database);
         }
 
         private void SaveAs(object sender, EventArgs e)
         {
-            if (_c == null || saveFileDialog1.ShowDialog() != DialogResult.OK) return;
-            _c.SaveToFile(saveFileDialog1.FileName);
-            UpdateConcert();
+            if (saveFileDialog1.ShowDialog() != DialogResult.OK) return;
+            _database.FilePath = saveFileDialog1.FileName;
+            FileParser.SaveFile(_database.FilePath, _database);
+            UpdateConcert(true);
         }
 
-        private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightCueManager(_c, SendLightNoteOnOff).ShowDialog();
+        private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightCueManager(this).ShowDialog();
 
-        private void button15_Click(object sender, EventArgs e)
-        {
-            if (_s != null && LightCueEditor.AddToCue(_c.LightingCues, _s.CueQueue)) UpdateSong();
-        }
-
-        private void button14_Click(object sender, EventArgs e)
-        {
-            if (_s == null || lightCue.SelectedIndex < 0) return;
-
-            var tmp = _s.CueQueue[lightCue.SelectedIndex];
-            if (LightCueEditor.EditCue(_c.LightingCues, ref tmp))
-            {
-                _s.CueQueue[lightCue.SelectedIndex] = tmp;
-                UpdateSong();
-            }
-        }
-
-        private void button13_Click(object sender, EventArgs e)
-        {
-            if (_s == null || lightCue.SelectedIndex < 0) return;
-            _s.CueQueue.RemoveAt(lightCue.SelectedIndex);
-            UpdateSong();
-        }
+        private void playlistsToolStripMenuItem_Click(object sender, EventArgs e) => new PlaylistEditor(this).ShowDialog();
 
         private async void lightCue_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_s != null && lightCue.SelectedIndex >= 0)
-            {
-                _server.SendToAll(MessageTypeEnum.CUE_INDEX, lightCue.SelectedIndex.ToString());
+            if (_activeEntry is null) return;
+            _server.SendToAll(MessageTypeEnum.CUE_INDEX, lightCue.SelectedIndex.ToString());
 
-                //Send light cue
-                var noteOnVal = _c.LightingCues.FirstOrDefault(x => x.ID == _s.CueQueue[lightCue.SelectedIndex].ID)?.NoteValue;
-                if (noteOnVal is null) return;
-                SendLighingData(new NoteOnEvent(new SevenBitNumber(noteOnVal.Value), SevenBitNumber.MaxValue) { Channel = new FourBitNumber(1) });
-                await Task.Delay(50);
-                SendLighingData(new NoteOnEvent(new SevenBitNumber(noteOnVal.Value), SevenBitNumber.MinValue) { Channel = new FourBitNumber(1) });
-            }
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            if (_s == null || lightCue.SelectedIndex < 0) return;
-            _s.CueQueue.Add(_s.CueQueue[lightCue.SelectedIndex]);
-            UpdateSong();
-        }
-
-
-        private int nIndexB = -1;
-        private void lightCue_MouseDown(object sender, MouseEventArgs e) => nIndexB = lightCue.SelectedIndex;
-        private void lightCue_MouseUp(object sender, MouseEventArgs e) => nIndexB = -1;
-
-        private void lightCue_MouseMove(object sender, MouseEventArgs e)
-        {
-            int sIndex = lightCue.SelectedIndex;
-            if (e.Button == MouseButtons.Left && nIndexB > -1 && nIndexB != sIndex)
-            {
-                object aObj = lightCue.Items[nIndexB];
-                var bObj = _s.CueQueue[nIndexB];
-
-                lightCue.Items[nIndexB] = lightCue.Items[sIndex];
-                _s.CueQueue[nIndexB] = _s.CueQueue[sIndex];
-
-                lightCue.Items[sIndex] = aObj;
-                _s.CueQueue[sIndex] = bObj;
-
-                nIndexB = sIndex;
-
-            }
+            //Send light cue
+            var cueItem = lightCue.SelectedItem as CueListBoxItem;
+            if (cueItem is null || !Database.LightingCues.TryGetValue(cueItem.Cue.CueId, out var cue)) return;
+            await _midiManager.SendToLighting(cue.NoteValue);
         }
 
         private void btnChatSend_Click(object sender, EventArgs e)
@@ -356,7 +303,7 @@ namespace CremeWorks
             chatBox.Items.Add(msg);
             _server.SendToAll(MessageTypeEnum.CHAT_MESSAGE, msg);
             chatInput.Text = string.Empty;
-            chatBox.SelectedIndex = chatBox.Items.Count - 1;
+            chatBox.TopIndex = chatBox.Items.Count - 1;
         }
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
@@ -364,7 +311,6 @@ namespace CremeWorks
             if (startToolStripMenuItem.Checked)
             {
                 _server.Stop();
-                startToolStripMenuItem.Text = "Start";
                 startToolStripMenuItem.Checked = false;
             }
             else
@@ -372,7 +318,6 @@ namespace CremeWorks
                 var addr = Prompt.ShowDialog("Please enter the broadcast address of the network you want to use:", "Open Server", "255.255.255.255");
                 if (addr == null) return;
                 _server.Start(addr);
-                startToolStripMenuItem.Text = "Stop";
                 startToolStripMenuItem.Checked = true;
             }
         }
@@ -382,54 +327,14 @@ namespace CremeWorks
 
         private void _server_UserJoined(NetworkConnection con)
         {
-            string tit = (_c?.FilePath == string.Empty ? null : Path.GetFileNameWithoutExtension(_c?.FilePath)) ?? "Untitled";
+            string tit = Database.FilePath is null or "" ? "Untitled" : Path.GetFileNameWithoutExtension(Database.FilePath);
             con.SendMessage(MessageTypeEnum.CONCERT_NAME, tit);
             con.SendMessage(MessageTypeEnum.SET_DATA, GetClientSet());
-            con.SendMessage(MessageTypeEnum.CURRENT_SONG, GetCurrentSongInformation());
+            con.SendMessage(MessageTypeEnum.CURRENT_SONG, _activeEntry?.Info ?? PlaylistEntryCommonInfo.None);
             con.SendMessage(MessageTypeEnum.CUE_INDEX, lightCue.SelectedIndex.ToString());
         }
-        private string[] GetClientSet()
-        {
-            int idx = 1;
-            return _c.Playlist.Select(x => x.SpecialEvent ? $"---{x.Title}---" : $"{idx++:D2}.{x.Title} - {x.Artist}").ToArray();
-        }
 
-        private SongInformation GetCurrentSongInformation()
-        {
-            if (_s is null) return new SongInformation()
-            {
-                Index = -1,
-                SmallName = "-",
-                ClickActive = false,
-                Tempo = 120,
-                Cues = new string[] { },
-                Instructions = string.Empty
-            };
-
-
-            return new SongInformation()
-            {
-                Index = playList.SelectedIndex,
-                SmallName = _s.Title,
-                ClickActive = _s.Click,
-                Tempo = _s.Tempo,
-                Cues = _s.CueQueue.Select(x => x.comment).ToArray(),
-                Instructions = _s.Instructions
-            };
-        }
-
-        private void SendLighingData(MidiEvent e)
-        {
-            var bytes = _converter.Convert(e);
-            _server.SendToAll(MessageTypeEnum.LIGHT_MESSAGE, Convert.ToBase64String(bytes));
-        }
-
-        private void SendLightNoteOnOff(byte noteVal) => Task.Run(async () =>
-        {
-            SendLighingData(new NoteOnEvent(new SevenBitNumber(noteVal), SevenBitNumber.MaxValue) { Channel = new FourBitNumber(1) });
-            await Task.Delay(50);
-            SendLighingData(new NoteOnEvent(new SevenBitNumber(noteVal), SevenBitNumber.MinValue) { Channel = new FourBitNumber(1) });
-        });
+        private string[] GetClientSet() => playList.Items.OfType<PlaylistListBoxItem>().Select(x => x.Info.Header).ToArray();
 
         private void _server_MessageReceived(MessageTypeEnum type, string data, NetworkConnection con) => Invoke(new Action(() =>
         {
@@ -439,7 +344,7 @@ namespace CremeWorks
                     var msg = $"{con.Name}: {data}";
                     chatBox.Items.Add(msg);
                     _server.SendToAll(MessageTypeEnum.CHAT_MESSAGE, msg);
-                    chatBox.SelectedIndex = chatBox.Items.Count - 1;
+                    chatBox.TopIndex = chatBox.Items.Count - 1;
                     LightUpChatbox();
                     break;
                 default:
@@ -451,32 +356,229 @@ namespace CremeWorks
         {
             if (_sendMetronomeData)
             {
-                _server.SendToAll(MessageTypeEnum.CLICK_INFO, !_s.Click ? "off" : _s.Tempo.ToString());
+                byte? metronomeVal = null;
+                if (_activeEntry?.Entry is SongPlaylistEntry se && Database.Songs.TryGetValue(se.SongId, out var song))
+                {
+                    metronomeVal = song.Tempo;
+                    if (_metronomeOverride == false || _metronomeOverride != true && !song.Click) metronomeVal = null;
+                }
+                
+                _metronomeColor = metronomeVal.HasValue ? Color.Lime : Color.Navy;
+                _server.SendToAll(MessageTypeEnum.CLICK_INFO, metronomeVal?.ToString() ?? "off");
                 _sendMetronomeData = false;
             }
             await Task.Delay(15);
-            boxTempo.BackColor = System.Drawing.Color.Navy;
+            boxTempo.BackColor = _metronomeColor;
             await Task.Delay(50);
-            boxTempo.BackColor = System.Drawing.Color.White;
+            boxTempo.BackColor = Color.White;
         }
 
         private void exportSetToCSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_c is null || csvExportSaveFile.ShowDialog() != DialogResult.OK) return;
-            File.WriteAllText(csvExportSaveFile.FileName, _c.ToCsv());
+            if (boxSet.SelectedItem is null || csvExportSaveFile.ShowDialog() != DialogResult.OK) return;
+            var set = (boxSet.SelectedItem as SetsListBoxItem)?.playlist;
+            //If no set is selected, select backlog
+            if (set is null)
+            {
+                set = new Playlist
+                {
+                    Name = "Backlog",
+                    Date = DateOnly.FromDateTime(DateTime.Now)
+                };
+                set.Elements.AddRange(Database.Songs.OrderBy(x => x.Value.Artist).ThenBy(x => x.Value.Title).Select(x => new SongPlaylistEntry(x.Key)));
+            }
+
+            try
+            {
+                File.WriteAllText(csvExportSaveFile.FileName, set.ToCsv(Database));
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Selected file cannot be saved to!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void _soloManager_SoloStateChanged(VolumeManager.VolumeLevel state)
+        {
+            songSolo.ForeColor = state switch
+            {
+                VolumeManager.VolumeLevel.Off => Color.Red,
+                VolumeManager.VolumeLevel.Regular => Color.Green,
+                VolumeManager.VolumeLevel.Solo => Color.Blue,
+                _ => Color.Black
+            };
+
+            songSolo.Text = state switch
+            {
+                VolumeManager.VolumeLevel.Off => "Off",
+                VolumeManager.VolumeLevel.Regular => "On",
+                VolumeManager.VolumeLevel.Solo => "Solo",
+                _ => "Disconnected"
+            };
         }
 
         private bool _chatboxLit = false;
+
+        public Database Database => _database;
+        public MidiManager MidiManager => _midiManager;
+        public VolumeManager SoloManager => _soloManager;
+        public NetworkingServer NetworkManager => _server;
+        public IPlaylistEntry? CurrentEntry => _activeEntry?.Entry;
+
+
         private async void LightUpChatbox()
         {
             if (_chatboxLit) return;
             _chatboxLit = true;
             var original = chatBox.BackColor;
-            chatBox.BackColor = System.Drawing.Color.Lime;
+            chatBox.BackColor = Color.Lime;
             await Task.Delay(500);
             chatBox.BackColor = original;
             _chatboxLit = false;
 
+        }
+
+        private void beendenToolStripMenuItem_Click(object sender, EventArgs e) => Close();
+
+        private void songsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new SongList(this).ShowDialog();
+            UpdatePlaylist();
+        }
+
+        private void defaultMIDIRoutingToolStripMenuItem_Click(object sender, EventArgs e) => new SongRoutingEditor(this, null).ShowDialog();
+
+        private void boxSet_SelectedIndexChanged(object sender, EventArgs e) => UpdatePlaylist();
+
+        private void patchesToolStripMenuItem_Click(object sender, EventArgs e) => new PatchEditor(this).ShowDialog();
+
+        private void soloModeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new SoloModeSetup(this).ShowDialog();
+            _soloManager.UpdateState();
+        }
+
+        private void syncToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+        {
+            Settings.Default.SyncToCloud = syncToolStripMenuItem.Checked;
+            Settings.Default.Save();
+        }
+
+        private void cWCDateiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (cwcImportOpenFile.ShowDialog() != DialogResult.OK) return;
+            Concert? concert = null;
+            try
+            {
+                concert = Concert.LoadFromFile(cwcImportOpenFile.FileName);
+            }
+            catch (Exception)
+            {
+            }
+
+            if (concert == null)
+            {
+                MessageBox.Show("Invalid concert file!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var dialog = new ConcertImportDialog(concert, _database, Path.GetFileNameWithoutExtension(cwcImportOpenFile.FileName));
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+            if (!ConcertConverter.Convert(_database, concert, dialog.Config, out var errorMsg))
+            {
+                MessageBox.Show(errorMsg, "Error converting concert", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            UpdateConcert();
+        }
+
+        private void allNotesOffToolStripMenuItem_Click(object sender, EventArgs e) => _midiManager.SendAllNotesOff();
+
+        private void openRecentToolStripMenuItem_Click(object? sender, EventArgs e)
+        {
+            var item = sender as ToolStripMenuItem;
+            if (item == null) return;
+            var path = item.Tag as string;
+
+            if (!File.Exists(path))
+            {
+                if (Settings.Default.Recents.Contains(path))
+                {
+                    Settings.Default.Recents.Remove(path);
+                    Settings.Default.Save();
+                }
+                openRecentToolStripMenuItem.DropDownItems.Remove(item);
+                MessageBox.Show("File not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                _database = FileParser.ParseFile(path) ?? throw new Exception("Deserializer is null!");
+            }
+            catch (Exception)
+            {
+                if (Settings.Default.Recents.Contains(path))
+                {
+                    Settings.Default.Recents.Remove(path);
+                    Settings.Default.Save();
+                }
+                openRecentToolStripMenuItem.DropDownItems.Remove(item);
+                _database = new Database();
+                MessageBox.Show("Database file is corrupted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            UpdateConcert();
+        }
+
+        private void songTimer_Tick(object sender, EventArgs e)
+        {
+            if (_activeEntry is null || _activeEntry.Entry.Type != PlaylistEntryType.Song) return;
+            var songEntry = (SongPlaylistEntry)_activeEntry.Entry;
+            var song = _database.Songs[songEntry.SongId];
+            var time = TimeSpan.FromSeconds(++_secondsCounter);
+            var diff = time - TimeSpan.FromSeconds(song.ExpectedDurationSeconds);
+            songTime.Text = $"{time:mm\\:ss} ({(diff.TotalSeconds < 0 ? "-" : "+")}{diff:mm\\:ss})";
+            songTime.ForeColor = diff.TotalSeconds > 0 && song.ExpectedDurationSeconds > 0 ? Color.Red : Color.Black;
+        }
+
+        private void btnTimeReset_Click(object sender, EventArgs e)
+        {
+            songTimer.Stop();
+            _secondsCounter = 0;
+
+            var expectedSec = _activeEntry is null || _activeEntry.Entry.Type != PlaylistEntryType.Song ? 0 : _database.Songs[((SongPlaylistEntry)_activeEntry.Entry).SongId].ExpectedDurationSeconds;
+            var expectedDuration = TimeSpan.FromSeconds(-expectedSec);
+            songTime.Text = $"00:00 ({(expectedSec == 0 ? "+" : "-")}{expectedDuration:mm\\:ss})";
+            songTime.ForeColor = Color.Black;
+
+            if (_activeEntry is not null && _activeEntry.Entry.Type == PlaylistEntryType.Song) songTimer.Start();
+        }
+
+        private void btnTimeStore_Click(object sender, EventArgs e)
+        {
+            if (_activeEntry is null || _activeEntry.Entry.Type != PlaylistEntryType.Song) return;
+            var songEntry = (SongPlaylistEntry)_activeEntry.Entry;
+            var song = _database.Songs[songEntry.SongId];
+            song.ExpectedDurationSeconds = _secondsCounter;
+            songTime.Text = $"{TimeSpan.FromSeconds(_secondsCounter):mm\\:ss} (+00:00)";
+            songTime.ForeColor = Color.Black;
+        }
+
+        private record PlaylistListBoxItem(PlaylistEntryCommonInfo Info, IPlaylistEntry Entry)
+        {
+            public override string ToString() => Info.Header;
+        }
+
+        private record SetsListBoxItem(Playlist? playlist)
+        {
+            public override string ToString() => playlist is null ? "[BACKLOG]" : $"{playlist.Name} ({playlist.Date})";
+        }
+
+        private record CueListBoxItem(int Index, CueInstance Cue, string CueName)
+        {
+            public override string ToString() => $"{Index + 1}. {Cue.Description}({CueName})";
         }
     }
 }

@@ -7,7 +7,7 @@ namespace CremeWorks.Client;
 public partial class Form1 : Form
 {
     private readonly CommunicationHub _netHub;
-    private SongInformation? _currentSong = null;
+    private PlaylistEntryCommonInfo _currentSong = PlaylistEntryCommonInfo.None;
     private MIDIServer _midiServer = new();
 
     public Form1(CommunicationHub server)
@@ -52,19 +52,19 @@ public partial class Form1 : Form
                 lstSet.Items.AddRange(setData);
                 break;
             case MessageTypeEnum.CURRENT_SONG:
-                _currentSong = JsonConvert.DeserializeObject<SongInformation>(data) ?? throw new Exception("Invalid data!");
+                _currentSong = JsonConvert.DeserializeObject<PlaylistEntryCommonInfo>(data);
                 lstSet.SelectedIndex = _currentSong.Index;
-                lblTitle.Text = _currentSong.SmallName;
+                lblTitle.Text = _currentSong.Title;
                 lblTempo.Text = _currentSong.Tempo.ToString() + " BPM";
-                lblCurrCue.Text = _currentSong.Cues!.Length == 0 ? "-" : _currentSong.Cues[0];
-                lblNextCue.Text = _currentSong.Cues.Length < 2 ? "-" : _currentSong.Cues[1];
+                lblCurrCue.Text = _currentSong.Cues!.Length == 0 ? "-" : _currentSong.Cues[0].Description;
+                lblNextCue.Text = _currentSong.Cues.Length < 2 ? "-" : _currentSong.Cues[1].Description;
                 lblInstructions.Text = _currentSong.Instructions;
                 break;
             case MessageTypeEnum.CUE_INDEX:
                 var index = int.Parse(data);
-                if (_currentSong?.Cues is null) break;
-                lblCurrCue.Text = _currentSong.Cues.Length <= Math.Max(index, 0) ? "-" : _currentSong.Cues[index];
-                lblNextCue.Text = _currentSong.Cues.Length <= Math.Max(index, 0) + 1 ? "-" : _currentSong.Cues[index + 1];
+                if (_currentSong.Cues is null) break;
+                lblCurrCue.Text = _currentSong.Cues.Length <= Math.Max(index, 0) ? "-" : _currentSong.Cues[index].Description;
+                lblNextCue.Text = _currentSong.Cues.Length <= Math.Max(index, 0) + 1 ? "-" : _currentSong.Cues[index + 1].Description;
                 break;
             case MessageTypeEnum.CHAT_MESSAGE:
                 lstChat.Items.Add(data);
