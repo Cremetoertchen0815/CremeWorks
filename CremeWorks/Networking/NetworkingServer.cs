@@ -115,11 +115,15 @@ public class NetworkingServer
             while (con.Client.Connected && !_cancelToken.IsCancellationRequested)
             {
                 string? data = await con.Reader.ReadLineAsync();
-                if (data is null) break;
+                if (data is null) continue;
                 var index = (MessageTypeEnum)byte.Parse(data);
                 string? nextData = await con.Reader.ReadLineAsync();
                 if (nextData is not null) MessageReceived?.Invoke(index, nextData, con);
             }
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex);
         }
         finally
         {

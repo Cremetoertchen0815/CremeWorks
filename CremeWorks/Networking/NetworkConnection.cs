@@ -5,7 +5,7 @@ namespace CremeWorks.Networking
 {
     public class NetworkConnection(TcpClient client, StreamWriter writer, StreamReader reader, string name)
     {
-        public Guid Key { get; init; } = new();
+        public Guid Key { get; init; } = Guid.NewGuid();
         public StreamWriter Writer { get; init; } = writer;
         public StreamReader Reader { get; init; } = reader;
         public TcpClient Client { get; init; } = client;
