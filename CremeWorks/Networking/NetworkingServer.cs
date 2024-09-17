@@ -16,7 +16,7 @@ public class NetworkingServer
 
     private const int BROADCAST_INTERVAL_SEC = 2;
     private const int BROADCAST_PORT = 25565;
-    private const string BROADCAST_IDENTIFIER = "CremeWorks Listener v1.0";
+    private const string BROADCAST_IDENTIFIER = "CremeWorks Listener v1.6";
     private const int PORT = 187;
     private const string WELCOME_DATA = "Welcome to CremeWorks!";
 

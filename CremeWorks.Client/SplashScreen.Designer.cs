@@ -44,7 +44,7 @@ partial class SplashScreen
         label1.Name = "label1";
         label1.Size = new Size(397, 168);
         label1.TabIndex = 0;
-        label1.Text = "CremeWorks\r\nClient v1.0";
+        label1.Text = "CremeWorks\r\nClient v1.6";
         // 
         // pictureBox1
         // 

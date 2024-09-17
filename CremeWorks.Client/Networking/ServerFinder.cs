@@ -11,7 +11,7 @@ namespace CremeWorks.Client.Networking
         private UdpClient _listenClient;
 
         private const int LISTENING_PORT = 25565;
-        private const string LISTENING_IDENTIFIER = "CremeWorks Listener v1.0";
+        private const string LISTENING_IDENTIFIER = "CremeWorks Listener v1.6";
 
         public ServerFinder()
         {
