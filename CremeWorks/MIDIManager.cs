@@ -7,12 +7,14 @@ using Melanchall.DryWetMidi.Multimedia;
 namespace CremeWorks.App;
 public class MidiManager
 {
-    public event Action<bool>? ConnectionChanged;
-    public event Action<MidiEvent>? ControllerEventReceived;
+    public event ConnectionChangedDelegate? ConnectionChanged;
     public event ControllerActionDelegate? ControllerActionExecuted;
+    public event Action<MidiEvent>? ControllerEventReceived;
+    public event Action? SustainPedalPressed;
 
 
     public delegate void ControllerActionDelegate(ControllerActionType action, bool? argument);
+    public delegate void ConnectionChangedDelegate(bool isNowConnected);
 
     private int[] _lightingDevices = [];
     private Dictionary<int, InternalMidiDevice> _midiDevices = [];
@@ -303,6 +305,9 @@ public class MidiManager
                 _midiDevices[_matrixIds[i]].Output?.SendEvent(e);
             }
         }
+
+        //Trigger sustain pedal pressed event
+        if (e is ControlChangeEvent cc && cc.ControlNumber == 64 && cc.ControlValue >= 64) SustainPedalPressed?.Invoke();
     }
 
     private record InternalMidiDevice(string MidiName, InputDevice? Input, OutputDevice? Output);
