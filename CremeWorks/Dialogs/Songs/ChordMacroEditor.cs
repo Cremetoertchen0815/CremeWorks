@@ -115,9 +115,14 @@ namespace CremeWorks.App.Dialogs.Songs
 
         private void btnItemTriggerCapture_Click(object sender, EventArgs e)
         {
-            if (_inTest || _s.ChordMacroSourceDeviceId < 1) return;
+            if (_inTest) return;
 
-            if (!_parent.MidiManager.IsConnected)
+            if (_s.ChordMacroSourceDeviceId < 1)
+            {
+                MessageBox.Show("No source device selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (!_parent.MidiManager.IsConnected)
             {
                 MessageBox.Show("MIDI devices are not connected. Please connect to use the detect function!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -161,9 +166,14 @@ namespace CremeWorks.App.Dialogs.Songs
 
         private void btnItemNoteCapture_Click(object sender, EventArgs e)
         {
-            if (_inTest || _s.ChordMacroDestinationDeviceId < 1) return;
+            if (_inTest) return;
 
-            if (!_parent.MidiManager.IsConnected)
+            if (_s.ChordMacroDestinationDeviceId < 1)
+            {
+                MessageBox.Show("No destination device selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (!_parent.MidiManager.IsConnected)
             {
                 MessageBox.Show("MIDI devices are not connected. Please connect to use the detect function!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
