@@ -1,6 +1,9 @@
+-Fix current set not being selected when opening playlist tab
+-Fix timer not running
+-Fix set in main view not updating after closing playlist window
+
 -Test cue system
 -Test sound macros
--Implement CSV import system
 -Implement cloud saves
 
 -Fix SoundPlayer lag under Linux
