@@ -109,4 +109,6 @@ public partial class SongList : Form
             p.Elements.Where(x => x is SongPlaylistEntry sp && sp.SongId == id).ToList().ForEach(x => p.Elements.Remove(x));
         }
     }
+
+    private void lstSongs_MouseDoubleClick(object sender, MouseEventArgs e) => btnEdit_Click(sender, e);
 }

@@ -96,7 +96,7 @@ public partial class PlaylistEditor : Form
                 }
             }
         }
-        _canDataBeUpdated = true; 
+        _canDataBeUpdated = true;
         CalculateTotalDuration();
     }
 
@@ -246,7 +246,7 @@ public partial class PlaylistEditor : Form
             })
             { Tag = newEntry });
         }
-        FixSongNumeration(); 
+        FixSongNumeration();
         CalculateTotalDuration();
     }
 
@@ -256,7 +256,7 @@ public partial class PlaylistEditor : Form
         var entityToRemove = lstEntries.SelectedItems[0].Tag as IPlaylistEntry;
         if (entityToRemove is not null) item.PlaylistEntries.Remove(entityToRemove);
         lstEntries.Items.Remove(lstEntries.SelectedItems[0]);
-        FixSongNumeration(); 
+        FixSongNumeration();
         CalculateTotalDuration();
     }
 
@@ -368,6 +368,8 @@ public partial class PlaylistEditor : Form
         var duration = lstEntries.Items.OfType<ListViewItem>().Select(x => x.Tag as SongPlaylistEntry).Where(x => x is not null).Sum(x => _parent.Database.Songs[x!.SongId].ExpectedDurationSeconds);
         lblDuration.Text = TimeSpan.FromSeconds(duration).ToString(@"hh\:mm\:ss");
     }
+
+    private void lstEntries_MouseDoubleClick(object sender, MouseEventArgs e) => btnEdit_Click(sender, e);
 }
 
 public class PlaylistComboboxItem(string name, DateOnly date)
