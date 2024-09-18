@@ -7,6 +7,7 @@ public class Database
     [XmlIgnore]
     public string? FilePath { get; set; } = null;
     public int? CloudId { get; set; } = null;
+    public DateTime LastSaved { get; set; } = DateTime.UtcNow;
     public Dictionary<int, MidiDevice> Devices { get; } = [];
     public Dictionary<int, IDevicePatch> Patches { get; } = [];
     public Dictionary<int, LightingCueItem> LightingCues { get; } = [];

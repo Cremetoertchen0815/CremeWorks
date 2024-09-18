@@ -27,6 +27,9 @@ public class FileParser
         // Parse cloud id
         if (int.TryParse(root.Attributes["cloudid"]?.Value, out int cloudId)) db.CloudId = cloudId;
 
+        //Parse last saved
+        if (DateTime.TryParse(root.Attributes["lastsaved"]?.Value, out var datetime)) db.LastSaved = datetime;
+
         // Parse body
         foreach (XmlNode node in root.ChildNodes)
         {

@@ -9,6 +9,7 @@ public class CloudEntryInformation
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public DateTime LastUpdated { get; set; }
+    public DateTime LastSaved { get; set; }
+    public int Hash { get; set; }
     public bool IsPublic { get; set; }
 }
