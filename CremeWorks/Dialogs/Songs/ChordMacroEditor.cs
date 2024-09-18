@@ -3,7 +3,7 @@ using CremeWorks.App.Data;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
 
-namespace CremeWorks.App.Dialogs
+namespace CremeWorks.App.Dialogs.Songs
 {
     public partial class ChordMacroEditor : Form
     {
@@ -219,6 +219,15 @@ namespace CremeWorks.App.Dialogs
 
             btnItemNoteCapture.Text = "Detect Notes (on dst. device)";
             valDstDev.Enabled = true;
+        }
+
+        private void btnItemAddNote_Click(object sender, EventArgs e)
+        {
+            if (lstMacros.SelectedIndex < 0) return;
+            var macro = _s.ChordMacros[lstMacros.SelectedIndex];
+            if (ChordMacroAddNoteDialog.OpenDialog(macro.PlayNotes) is not int i) return;
+            macro.PlayNotes.Add(i);
+            lstItemNotes.Items.Add(i);
         }
 
         private record DeviceComboboxItem(int Id, string Name, string MidiId)

@@ -1,4 +1,4 @@
-﻿namespace CremeWorks.App.Dialogs
+﻿namespace CremeWorks.App.Dialogs.Songs
 {
     partial class ChordMacroEditor
     {
@@ -202,6 +202,7 @@
             btnItemAddNote.TabIndex = 26;
             btnItemAddNote.Text = "Add by Note Nr.";
             btnItemAddNote.UseVisualStyleBackColor = true;
+            btnItemAddNote.Click += btnItemAddNote_Click;
             // 
             // lstItemNotes
             // 

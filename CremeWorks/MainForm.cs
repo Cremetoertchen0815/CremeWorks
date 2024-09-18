@@ -2,6 +2,7 @@
 using CremeWorks.App.Data;
 using CremeWorks.App.Data.Compatibility;
 using CremeWorks.App.Dialogs;
+using CremeWorks.App.Dialogs.Songs;
 using CremeWorks.App.Properties;
 using CremeWorks.Common;
 using CremeWorks.Networking;

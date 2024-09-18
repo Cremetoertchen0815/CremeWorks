@@ -1,7 +1,7 @@
 ﻿using CremeWorks.App;
 using CremeWorks.App.Data;
 
-namespace CremeWorks.App.Dialogs
+namespace CremeWorks.App.Dialogs.Songs
 {
     public partial class SongCueEditor : Form
     {

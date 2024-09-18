@@ -1,7 +1,7 @@
 ﻿using CremeWorks.App.Data;
 using CremeWorks.Common;
 
-namespace CremeWorks.App.Dialogs
+namespace CremeWorks.App.Dialogs.Songs
 {
     public partial class SongEditor : Form
     {

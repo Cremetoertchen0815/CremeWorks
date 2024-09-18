@@ -1,5 +1,5 @@
 ﻿
-namespace CremeWorks.App.Dialogs
+namespace CremeWorks.App.Dialogs.Songs
 {
     partial class SongEditor
     {
