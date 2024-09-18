@@ -1,6 +1,6 @@
--Implement/test cue system
--Implement sound macros
--Implement CSV import/export system
--Implement checks when deleting reference data(make sure the data is not being used)
+-Test cue system
+-Test sound macros
+-Implement CSV import system
+-Implement cloud saves
 
 -Fix SoundPlayer lag under Linux
