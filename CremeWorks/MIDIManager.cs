@@ -160,9 +160,9 @@ public class MidiManager
         foreach (var item in _midiDevices) item.Value.Output?.SendEvent(allNotesOffEvent);
     }
 
-    public void UpdateMatrix()
+    public void UpdateMatrix(MidiMatrixNode[]? overrideRouting = null)
     {
-        MidiMatrixNode[]? nodes = _parent.CurrentEntry is SongPlaylistEntry se ? [.. _parent.Database.DefaultRouting, .. _parent.Database.Songs[se.SongId].RoutingOverrides] : null;
+        MidiMatrixNode[]? nodes = overrideRouting ?? (_parent.CurrentEntry is SongPlaylistEntry se ? [.. _parent.Database.DefaultRouting, .. _parent.Database.Songs[se.SongId].RoutingOverrides] : null);
         if (nodes == null || _matrixIds == null)
         {
             _matrixNote = null;
@@ -203,18 +203,23 @@ public class MidiManager
             }
         }
 
-        //Update macro information
-        var song = _parent.Database.Songs[((SongPlaylistEntry)_parent.CurrentEntry!).SongId];
-        _macroDeviceSourceId = song.ChordMacroSourceDeviceId;
-        _macroDeviceDestId = song.ChordMacroDestinationDeviceId;
-        _activeMacros = song.ChordMacros;
-
-        //Apply patches to instruments
-        foreach (var item in song.Patches)
+        //Apply song information if not doing manual override
+        if (_parent.CurrentEntry is SongPlaylistEntry spe && overrideRouting is null)
         {
-            if (!_parent.Database.Patches.TryGetValue(item.PatchId, out var patch)) continue;
-            patch.ApplyPatch(_parent, item.DeviceId);
+            //Update macro information
+            var song = _parent.Database.Songs[spe.SongId];
+            _macroDeviceSourceId = song.ChordMacroSourceDeviceId;
+            _macroDeviceDestId = song.ChordMacroDestinationDeviceId;
+            _activeMacros = song.ChordMacros;
+
+            //Apply patches to instruments
+            foreach (var item in song.Patches)
+            {
+                if (!_parent.Database.Patches.TryGetValue(item.PatchId, out var patch)) continue;
+                patch.ApplyPatch(_parent, item.DeviceId);
+            }
         }
+
     }
 
 

@@ -327,7 +327,11 @@ namespace CremeWorks
             }
         }
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e) => _server.Stop();
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _server.Stop();
+            if (!MidiManager.IsConnected) MidiManager.Disconnect();
+        }
 
 
         private void _server_UserJoined(NetworkConnection con)
