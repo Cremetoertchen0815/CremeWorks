@@ -28,7 +28,10 @@ public class FileParser
         if (int.TryParse(root.Attributes["cloudid"]?.Value, out int cloudId)) db.CloudId = cloudId;
 
         //Parse last saved
-        if (DateTime.TryParse(root.Attributes["lastsaved"]?.Value, out var datetime)) db.LastSaved = datetime;
+        if (DateTime.TryParse(root.Attributes["lastsaved"]?.Value, out var localdate)) db.LastLocalSave = localdate;
+
+        //Parse last server sync
+        if (DateTime.TryParse(root.Attributes["lastsynced"]?.Value, out var serverdate)) db.LastServerSync = serverdate;
 
         // Parse body
         foreach (XmlNode node in root.ChildNodes)
@@ -211,10 +214,14 @@ public class FileParser
 
     public static void SaveFile(string path, Database db, bool binary = false)
     {
+        db.LastLocalSave = DateTime.UtcNow;
+
         var doc = new XmlDocument();
         var root = doc.CreateElement("cwdb");
         root.SetAttribute("version", VERSION);
         if (db.CloudId.HasValue) root.SetAttribute("cloudid", db.CloudId.Value.ToString());
+        root.SetAttribute("lastsaved", db.LastLocalSave.ToString());
+        if (db.LastServerSync.HasValue) root.SetAttribute("lastsynced", db.LastServerSync.Value.ToString());
         root.SetAttribute("binary", "false");
         if (binary)
         {

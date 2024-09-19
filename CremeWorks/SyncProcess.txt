@@ -1,0 +1,13 @@
+When loading a file:
+-Local file is older than cloud version
+=> Ask if user will want to pull the newest cloud version
+-Local file is newer than cloud version
+=> Ask if user will want to push changes to the cloud
+SAVE THE OLD DATE
+
+
+When saving a file:
+-If the cloud version still has the same modification date
+=>save without a comment
+-If the cloud version has a different one, it has been modified in the meantime
+=>Ask if the user wants to keep the local version, the cloud version or do nothing

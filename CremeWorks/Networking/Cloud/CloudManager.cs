@@ -2,14 +2,6 @@
 using CremeWorks.App.Dialogs.Cloud;
 using CremeWorks.App.Properties;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace CremeWorks.App.Networking.Cloud;
 public class CloudManager(IDataParent parent)
@@ -30,7 +22,7 @@ public class CloudManager(IDataParent parent)
         return response.Data;
     }
 
-    public async Task SyncProgress(Database db, string rawXml)
+    public async Task SyncProgress(Database db, bool save)
     {
         //Don't do anything if the database is not synced to the cloud
         if (db.CloudId is null) return;
@@ -51,32 +43,77 @@ public class CloudManager(IDataParent parent)
         //Data has changed, so check which version to keep
         var decision = OverrideDecision.DoNothing;
 
-        //TODO: Create algorithm to decide what version to override
+        //Choose what syncing action to take
+        if (save)
+        {
+            if (response.Data.LastTimeUpdated == db.LastServerSync)
+            {
+                //The cloud version and the local version are based on the same data
+                //So we can just save the new data
+                decision = OverrideDecision.OverrideWithLocal;
+            } else
+            {
+                var result = MessageBox.Show("There is a conflict between your current version and the one in the cloud.\n"+
+                    "Would you like to forcefully update the version in the cloud? Data loss may occur!\n" +
+                    "(Yes = Force cloud update, No = Force loading from cloud, Cancel = Don't synchronize)",
+                    "Conflict", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+
+                decision = result switch
+                {
+                    DialogResult.Yes => OverrideDecision.OverrideWithLocal,
+                    DialogResult.No => OverrideDecision.ForceFetch,
+                    _ => OverrideDecision.DoNothing
+                };
+            }
+        }
+        else
+        {
+            //Loading a local database
+            if (db.LastLocalSave > response.Data.LastTimeUpdated)
+            {
+                var result = MessageBox.Show("The local database is more recent than the cloud copy. " +
+                                             "Would you like to update the cloud with this newer version?",
+                                             "Cloud database out of date", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                decision = result switch
+                {
+                    DialogResult.Yes => OverrideDecision.OverrideWithLocal,
+                    _ => OverrideDecision.DoNothing
+                };
+            }
+            else
+            {
+                var result = MessageBox.Show("There is a more recent version available in the cloud. " +
+                                             "Would you like to load the newest version?",
+                                             "Local database out of date", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                decision = result switch
+                {
+                    DialogResult.Yes => OverrideDecision.ForceFetch,
+                    _ => OverrideDecision.DoNothing
+                };
+            }
+        }
 
         //Act on override decision
         switch (decision)
         {
             case OverrideDecision.OverrideWithLocal:
+                //Update the last saved value
+                db.LastServerSync = db.LastLocalSave;
+
+                request = new RestRequest($"{BASE_URL}/entry", Method.Post);
+                request.AddParameter("token", _token!.Value);
+                request.AddParameter("id", db.CloudId!.Value);
+                request.AddParameter("synctime", db.LastLocalSave.Ticks);
+                request.AddBody(rawXml);
+                await _client.ExecuteAsync(request);
                 break;
             case OverrideDecision.ForceFetch:
                 break;
             default:
                 return;
         }
-    }
 
-    private OverrideDecision AskUserForDecision()
-    {
-        var result = MessageBox.Show("There is a conflict between your current version and the one in the cloud. " +
-            "Would you like to keep the local version?\n(Yes = Local version, No = Server version , Cancel = Do nothing",
-            "Conflict", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-
-        return result switch
-        {
-            DialogResult.Yes => OverrideDecision.OverrideWithLocal,
-            DialogResult.No => OverrideDecision.ForceFetch,
-            _ => OverrideDecision.DoNothing
-        };
+        //TODO: Implement seperate transfer format that doesn't contain meta data(-> hash actually signifies data change)
     }
 
     private async Task<bool> CheckCredentials()
