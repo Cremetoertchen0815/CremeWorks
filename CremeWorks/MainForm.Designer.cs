@@ -305,14 +305,14 @@ namespace CremeWorks
             // startMIDIToolStripMenuItem
             // 
             startMIDIToolStripMenuItem.Name = "startMIDIToolStripMenuItem";
-            startMIDIToolStripMenuItem.Size = new Size(180, 22);
+            startMIDIToolStripMenuItem.Size = new Size(150, 22);
             startMIDIToolStripMenuItem.Text = "MIDI Host";
             startMIDIToolStripMenuItem.Click += startMIDIToolStripMenuItem_Click;
             // 
             // startToolStripMenuItem
             // 
             startToolStripMenuItem.Name = "startToolStripMenuItem";
-            startToolStripMenuItem.Size = new Size(180, 22);
+            startToolStripMenuItem.Size = new Size(150, 22);
             startToolStripMenuItem.Text = "Remote Server";
             startToolStripMenuItem.Click += startToolStripMenuItem_Click;
             // 
@@ -320,7 +320,7 @@ namespace CremeWorks
             // 
             allNotesOffToolStripMenuItem.BackColor = Color.FromArgb(255, 169, 169);
             allNotesOffToolStripMenuItem.Name = "allNotesOffToolStripMenuItem";
-            allNotesOffToolStripMenuItem.Size = new Size(180, 22);
+            allNotesOffToolStripMenuItem.Size = new Size(150, 22);
             allNotesOffToolStripMenuItem.Text = "MIDI Panic";
             allNotesOffToolStripMenuItem.Click += allNotesOffToolStripMenuItem_Click;
             // 

@@ -1,4 +1,3 @@
--Fix current set not being selected when opening playlist tab
 -Fix timer not running
 -Fix set in main view not updating after closing playlist window
 

@@ -1,9 +1,7 @@
 ﻿using CremeWorks.App.Data;
 using CremeWorks.App.Dialogs.Playlist;
-using System;
 using System.ComponentModel;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using PlaylistClass = CremeWorks.App.Data.Playlist;
 
 namespace CremeWorks.App.Dialogs;
 public partial class PlaylistEditor : Form
@@ -13,7 +11,7 @@ public partial class PlaylistEditor : Form
     private bool _canDataBeUpdated = true;
     private ListViewItem? draggedItem;
 
-    public PlaylistEditor(IDataParent parent)
+    public PlaylistEditor(IDataParent parent, PlaylistClass? currentPlaylist)
     {
         _parent = parent;
         InitializeComponent();
@@ -24,16 +22,23 @@ public partial class PlaylistEditor : Form
                .SetValue(lstEntries, true, null);
 
         // Populate the combo box with the existing playlists
+        PlaylistComboboxItem? itemToSelect = null;
         boxSelector.DataSource = new BindingSource(_comboItems, null);
         foreach (var item in parent.Database.Playlists)
         {
             var pci = new PlaylistComboboxItem(item.Name, item.Date);
+            if (currentPlaylist is not null && item == currentPlaylist) itemToSelect = pci;
             pci.PlaylistEntries.AddRange(item.Elements);
             _comboItems.Add(pci);
         }
 
         // Select the first item
-        if (_comboItems.Count > 0)
+        if (itemToSelect is not null)
+        {
+            boxSelector.SelectedItem = itemToSelect;
+            boxSelector_SelectedIndexChanged(this, EventArgs.Empty);
+        }
+        else if (_comboItems.Count > 0)
         {
             boxSelector.SelectedIndex = 0;
             boxSelector_SelectedIndexChanged(this, EventArgs.Empty);
