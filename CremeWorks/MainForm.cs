@@ -226,10 +226,10 @@ namespace CremeWorks
             if (onlyUpdateTitle) return;
 
             //Update set ListBox
-            var prevSelItem = (playList.SelectedItem as SetsListBoxItem)?.playlist;
+            var prevSelItem = (boxSet.SelectedItem as SetsListBoxItem)?.playlist;
             var newItems = new List<SetsListBoxItem> { new(null) };
             newItems.AddRange(_database.Playlists.OrderByDescending(x => x.Date).Select(x => new SetsListBoxItem(x)).ToArray());
-            var newSelItem = newItems.FirstOrDefault(x => x.playlist == prevSelItem) ?? newItems[0];
+            var newSelItem = newItems.FirstOrDefault(x => x.playlist?.Name == prevSelItem?.Name) ?? newItems[0];
             boxSet.Items.Clear();
             boxSet.Items.AddRange(newItems.ToArray());
             boxSet.SelectedItem = newSelItem;
@@ -285,7 +285,11 @@ namespace CremeWorks
 
         private void lightControllerToolStripMenuItem_Click(object sender, EventArgs e) => new LightCueManager(this).ShowDialog();
 
-        private void playlistsToolStripMenuItem_Click(object sender, EventArgs e) => new PlaylistEditor(this, ((SetsListBoxItem)boxSet.SelectedItem!).playlist).ShowDialog();
+        private void playlistsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new PlaylistEditor(this, ((SetsListBoxItem)boxSet.SelectedItem!).playlist).ShowDialog(); 
+            UpdateConcert();
+        }
 
         private async void lightCue_SelectedIndexChanged(object sender, EventArgs e)
         {

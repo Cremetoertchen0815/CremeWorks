@@ -1,5 +1,4 @@
 -Fix timer not running
--Fix set in main view not updating after closing playlist window
 
 -Test cue system
 -Test sound macros
