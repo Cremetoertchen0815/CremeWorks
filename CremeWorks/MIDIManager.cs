@@ -98,6 +98,8 @@ public class MidiManager
             if (element.Output != null) element.Output.Dispose();
         }
         _midiDevices.Clear();
+        _matrixNote = null;
+        _matrixCC = null;
 
         IsConnected = false;
         ConnectionChanged?.Invoke(false);
