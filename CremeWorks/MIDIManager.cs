@@ -241,8 +241,9 @@ public class MidiManager
     private void ListenFootPedal(object? sender, MidiEventReceivedEventArgs e)
     {
         //If it isn't, redirect to lighting board
-        if (PlaybackPaused || e.Event.EventType == MidiEventType.NoteOff || e.Event.EventType == MidiEventType.ActiveSensing) return;
+        if (PlaybackPaused || e.Event.EventType is not MidiEventType.NoteOn and not MidiEventType.ControlChange and not MidiEventType.ProgramChange) return;
         ControllerEventReceived?.Invoke(e.Event);
+        SendToLighting(e.Event);
 
         //Check if foot pedal event is a macro
         foreach (var action in _parent.Database.Actions)
