@@ -22,7 +22,7 @@ public class CloudManager(IDataParent parent)
         return response.Data;
     }
 
-    public async Task SyncProgress(Database db, bool save)
+    public async Task SyncProgress(Database db, string rawXml, bool save)
     {
         //Don't do anything if the database is not synced to the cloud
         if (db.CloudId is null) return;
