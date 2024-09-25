@@ -2,6 +2,7 @@
 using CremeWorks.App.Data;
 using CremeWorks.App.Data.Compatibility;
 using CremeWorks.App.Dialogs;
+using CremeWorks.App.Dialogs.Cloud;
 using CremeWorks.App.Dialogs.Songs;
 using CremeWorks.App.Networking.Cloud;
 using CremeWorks.App.Properties;
@@ -59,13 +60,13 @@ namespace CremeWorks
             _metronome.Tick += TickMetronome;
 
             _cloudManager = new CloudManager(this);
-
             syncToolStripMenuItem.Checked = Settings.Default.SyncToCloud;
             if (Settings.Default.Recents == null)
             {
                 Settings.Default.Recents = [];
                 Settings.Default.Save();
             }
+
             foreach (var item in Settings.Default.Recents)
             {
                 var menuItem = new ToolStripMenuItem(item);
@@ -260,7 +261,7 @@ namespace CremeWorks
                     openRecentToolStripMenuItem.DropDownItems.Add(item);
                 }
 
-                await _cloudManager.SyncProgress(_database, false);
+                if (syncToolStripMenuItem.Checked) await _cloudManager.SyncProgress(_database, false);
             }
             catch (Exception)
             {
@@ -279,7 +280,7 @@ namespace CremeWorks
                 _database.FilePath = saveFileDialog1.FileName;
             }
 
-            await _cloudManager.SyncProgress(_database, true);
+            if (syncToolStripMenuItem.Checked) await _cloudManager.SyncProgress(_database, true);
             FileParser.SaveFile(_database.FilePath, _database);
         }
 
@@ -288,7 +289,7 @@ namespace CremeWorks
             if (saveFileDialog1.ShowDialog() != DialogResult.OK) return;
             _database.FilePath = saveFileDialog1.FileName;
 
-            await _cloudManager.SyncProgress(_database, true);
+            if (syncToolStripMenuItem.Checked) await _cloudManager.SyncProgress(_database, true);
             FileParser.SaveFile(_database.FilePath, _database);
             UpdateConcert(true);
         }
@@ -297,7 +298,7 @@ namespace CremeWorks
 
         private void playlistsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new PlaylistEditor(this, ((SetsListBoxItem)boxSet.SelectedItem!).playlist).ShowDialog(); 
+            new PlaylistEditor(this, ((SetsListBoxItem)boxSet.SelectedItem!).playlist).ShowDialog();
             UpdateConcert();
         }
 
@@ -381,7 +382,7 @@ namespace CremeWorks
                     metronomeVal = song.Tempo;
                     if (_metronomeOverride == false || _metronomeOverride != true && !song.Click) metronomeVal = null;
                 }
-                
+
                 _metronomeColor = metronomeVal.HasValue ? Color.Lime : Color.Navy;
                 _server.SendToAll(MessageTypeEnum.CLICK_INFO, metronomeVal?.ToString() ?? "off");
                 _sendMetronomeData = false;
@@ -583,6 +584,47 @@ namespace CremeWorks
             song.ExpectedDurationSeconds = _secondsCounter;
             songTime.Text = $"{TimeSpan.FromSeconds(_secondsCounter):mm\\:ss} (+00:00)";
             songTime.ForeColor = Color.Black;
+        }
+
+        private async void cloneFromCloudToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Fetch all entries
+            var allentries = await _cloudManager.GetAllDatabases();
+            if (allentries is null) return;
+
+            //Select a database to fetch
+            var selection = CloneDialog.OpenWindow(allentries);
+            if (selection is null) return;
+
+            //Fetch data
+            var db = await _cloudManager.Fetch(selection.Value);
+            if (db is null) return;
+            _database = db;
+            UpdateConcert();
+        }
+
+        private async void publishToCloudToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_database.CloudId is not null)
+            {
+                MessageBox.Show("Database is already in the cloud!", null, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (_database.FilePath is null)
+            {
+                MessageBox.Show("Please first save the database locally!", null, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            //Fetch information and register online
+            if (!PublishDialog.OpenWindow(out var name, out var isPublic)) return;
+            var result = await _cloudManager.Register(_database, name, isPublic);
+            if (result is null) return;
+
+            //Save id
+            _database.CloudId = result.Value;
+            FileParser.SaveFile(_database.FilePath, _database);
         }
 
         private record PlaylistListBoxItem(PlaylistEntryCommonInfo Info, IPlaylistEntry Entry)

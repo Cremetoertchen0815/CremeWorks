@@ -115,65 +115,67 @@ namespace CremeWorks
             // newToolStripMenuItem
             // 
             newToolStripMenuItem.Name = "newToolStripMenuItem";
-            newToolStripMenuItem.Size = new Size(177, 22);
+            newToolStripMenuItem.Size = new Size(180, 22);
             newToolStripMenuItem.Text = "New";
             newToolStripMenuItem.Click += New;
             // 
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(177, 22);
+            openToolStripMenuItem.Size = new Size(180, 22);
             openToolStripMenuItem.Text = "Open";
             openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // openRecentToolStripMenuItem
             // 
             openRecentToolStripMenuItem.Name = "openRecentToolStripMenuItem";
-            openRecentToolStripMenuItem.Size = new Size(177, 22);
+            openRecentToolStripMenuItem.Size = new Size(180, 22);
             openRecentToolStripMenuItem.Text = "Open Recent";
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(177, 22);
+            saveToolStripMenuItem.Size = new Size(180, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += Save;
             // 
             // saveAsToolStripMenuItem
             // 
             saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            saveAsToolStripMenuItem.Size = new Size(177, 22);
+            saveAsToolStripMenuItem.Size = new Size(180, 22);
             saveAsToolStripMenuItem.Text = "Save As";
             saveAsToolStripMenuItem.Click += SaveAs;
             // 
             // toolStripMenuItem2
             // 
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(174, 6);
+            toolStripMenuItem2.Size = new Size(177, 6);
             // 
             // cremeWorksCloudToolStripMenuItem
             // 
             cremeWorksCloudToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cloneFromCloudToolStripMenuItem, publishToCloudToolStripMenuItem, toolStripMenuItem1, syncToolStripMenuItem });
             cremeWorksCloudToolStripMenuItem.Name = "cremeWorksCloudToolStripMenuItem";
-            cremeWorksCloudToolStripMenuItem.Size = new Size(177, 22);
+            cremeWorksCloudToolStripMenuItem.Size = new Size(180, 22);
             cremeWorksCloudToolStripMenuItem.Text = "CremeWorks Cloud";
             // 
             // cloneFromCloudToolStripMenuItem
             // 
             cloneFromCloudToolStripMenuItem.Name = "cloneFromCloudToolStripMenuItem";
-            cloneFromCloudToolStripMenuItem.Size = new Size(171, 22);
+            cloneFromCloudToolStripMenuItem.Size = new Size(180, 22);
             cloneFromCloudToolStripMenuItem.Text = "Clone From Cloud";
+            cloneFromCloudToolStripMenuItem.Click += cloneFromCloudToolStripMenuItem_Click;
             // 
             // publishToCloudToolStripMenuItem
             // 
             publishToCloudToolStripMenuItem.Name = "publishToCloudToolStripMenuItem";
-            publishToCloudToolStripMenuItem.Size = new Size(171, 22);
+            publishToCloudToolStripMenuItem.Size = new Size(180, 22);
             publishToCloudToolStripMenuItem.Text = "Publish To Cloud";
+            publishToCloudToolStripMenuItem.Click += publishToCloudToolStripMenuItem_Click;
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(168, 6);
+            toolStripMenuItem1.Size = new Size(177, 6);
             // 
             // syncToolStripMenuItem
             // 
@@ -181,7 +183,7 @@ namespace CremeWorks
             syncToolStripMenuItem.CheckOnClick = true;
             syncToolStripMenuItem.CheckState = CheckState.Checked;
             syncToolStripMenuItem.Name = "syncToolStripMenuItem";
-            syncToolStripMenuItem.Size = new Size(171, 22);
+            syncToolStripMenuItem.Size = new Size(180, 22);
             syncToolStripMenuItem.Text = "Sync";
             syncToolStripMenuItem.CheckStateChanged += syncToolStripMenuItem_CheckStateChanged;
             // 
@@ -189,7 +191,7 @@ namespace CremeWorks
             // 
             importToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cWCDateiToolStripMenuItem });
             importToolStripMenuItem.Name = "importToolStripMenuItem";
-            importToolStripMenuItem.Size = new Size(177, 22);
+            importToolStripMenuItem.Size = new Size(180, 22);
             importToolStripMenuItem.Text = "Import";
             // 
             // cWCDateiToolStripMenuItem
@@ -203,7 +205,7 @@ namespace CremeWorks
             // 
             exportToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { setToolStripMenuItem });
             exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            exportToolStripMenuItem.Size = new Size(177, 22);
+            exportToolStripMenuItem.Size = new Size(180, 22);
             exportToolStripMenuItem.Text = "Export";
             // 
             // setToolStripMenuItem
@@ -216,12 +218,12 @@ namespace CremeWorks
             // toolStripMenuItem3
             // 
             toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new Size(174, 6);
+            toolStripMenuItem3.Size = new Size(177, 6);
             // 
             // beendenToolStripMenuItem
             // 
             beendenToolStripMenuItem.Name = "beendenToolStripMenuItem";
-            beendenToolStripMenuItem.Size = new Size(177, 22);
+            beendenToolStripMenuItem.Size = new Size(180, 22);
             beendenToolStripMenuItem.Text = "Exit";
             beendenToolStripMenuItem.Click += beendenToolStripMenuItem_Click;
             // 

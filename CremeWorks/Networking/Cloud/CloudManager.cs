@@ -22,6 +22,47 @@ public class CloudManager(IDataParent parent)
         return response.Data;
     }
 
+    public async Task<int?> Register(Database db, string name, bool isPublic)
+    {
+        //Check if token is valid
+        if (!await CheckCredentials()) return null;
+
+        var request = new RestRequest($"{BASE_URL}/publish", Method.Post);
+        request.AddQueryParameter("token", _token!.Value);
+        request.AddQueryParameter("name", name);
+        request.AddQueryParameter("public", isPublic);
+
+        var response = await _client.ExecuteAsync<int>(request);
+        return response.IsSuccessful ? response.Data : null;
+    }
+
+    public async Task<Database?> Fetch(int id)
+    {
+        //Check if token is valid
+        if (!await CheckCredentials()) return null;
+
+        //Fetch basic information
+        var request = new RestRequest($"{BASE_URL}/entryinfo", Method.Get);
+        request.AddQueryParameter("token", _token!.Value);
+        request.AddQueryParameter("id", id);
+        var responseA = await _client.ExecuteAsync<CloudEntryInformation>(request);
+        if (!responseA.IsSuccessful || responseA.Data is null) return null;
+
+        //Fetch body data
+        var requestB = new RestRequest($"{BASE_URL}/entrydata", Method.Get);
+        requestB.AddParameter("token", _token!.Value);
+        requestB.AddParameter("id", id);
+        var responseB = await _client.ExecuteAsync<string>(requestB);
+        if (!responseB.IsSuccessful || responseB.Data is null) return null;
+
+        //Build database
+        var db = new Database();
+        db.LastServerSync = responseA.Data.LastTimeUpdated;
+        db.CloudId = id;
+        FileParser.ParseFromXmlString(responseB.Data, db);
+        return db;
+    }
+
     public async Task SyncProgress(Database db, bool save)
     {
         //Don't do anything if the database is not synced to the cloud
@@ -129,6 +170,7 @@ public class CloudManager(IDataParent parent)
         //If server cannot be reached, the credential check has failed
         if (!await PingServer())
         {
+            MessageBox.Show("Server cannot be reached!", null, MessageBoxButtons.OK, MessageBoxIcon.Error);
             _token = null;
             return false;
         }
@@ -184,7 +226,14 @@ public class CloudManager(IDataParent parent)
         return (await _client.ExecuteAsync(requestUri)).IsSuccessStatusCode;
     }
 
-    private async Task<bool> PingServer() => (await _client.ExecuteAsync(new RestRequest(BASE_URL + "/ping"), Method.Get)).IsSuccessful;
+    private async Task<bool> PingServer()
+    {
+        var request = new RestRequest(BASE_URL + "/ping", Method.Get);
+        request.Timeout = TimeSpan.FromSeconds(1);
+        var response = await _client.ExecuteAsync(request);
+        return response.IsSuccessful;
+    }
+
     private async Task<bool> ValidateToken()
     {
         if (_token is null) return false;
