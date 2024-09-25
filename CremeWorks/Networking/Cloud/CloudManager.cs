@@ -22,7 +22,7 @@ public class CloudManager(IDataParent parent)
         return response.Data;
     }
 
-    public async Task SyncProgress(Database db, string rawXml, bool save)
+    public async Task SyncProgress(Database db, bool save)
     {
         //Don't do anything if the database is not synced to the cloud
         if (db.CloudId is null) return;
@@ -33,11 +33,13 @@ public class CloudManager(IDataParent parent)
         //Fetch the "last saved" value
         var request = new RestRequest($"{BASE_URL}/entryinfo", Method.Get);
         request.AddQueryParameter("token", _token!.Value);
+        request.AddQueryParameter("id", db.CloudId.Value);
         var response = await _client.ExecuteAsync<CloudEntryInformation>(request);
         if (!response.IsSuccessful || response.Data is null) return;
 
         //Check if the data has stayed the same
-        var newHash = rawXml.GetHashCode();
+        var newXml = FileParser.GetContentXmlString(db);
+        var newHash = newXml.GetHashCode();
         if (newHash == response.Data.Hash) return;
 
         //Data has changed, so check which version to keep
@@ -100,21 +102,26 @@ public class CloudManager(IDataParent parent)
                 //Update the last saved value
                 db.LastServerSync = db.LastLocalSave;
 
-                request = new RestRequest($"{BASE_URL}/entry", Method.Post);
+                request = new RestRequest($"{BASE_URL}/entrydata", Method.Post);
                 request.AddParameter("token", _token!.Value);
                 request.AddParameter("id", db.CloudId!.Value);
                 request.AddParameter("synctime", db.LastLocalSave.Ticks);
-                request.AddBody(rawXml);
+                request.AddBody(newXml);
                 await _client.ExecuteAsync(request);
                 break;
             case OverrideDecision.ForceFetch:
+                request = new RestRequest($"{BASE_URL}/entrydata", Method.Get);
+                request.AddParameter("token", _token!.Value);
+                request.AddParameter("id", db.CloudId!.Value);
+                var fetchResponse = await _client.ExecuteAsync<string>(request);
+                if (fetchResponse.IsSuccessful && fetchResponse.Data is not null) FileParser.ParseFromXmlString(fetchResponse.Data, db);
                 break;
             default:
                 return;
         }
 
-        //TODO: Implement seperate transfer format that doesn't contain meta data(-> hash actually signifies data change)
     }
+
 
     private async Task<bool> CheckCredentials()
     {
@@ -181,7 +188,7 @@ public class CloudManager(IDataParent parent)
     private async Task<bool> ValidateToken()
     {
         if (_token is null) return false;
-        var request = new RestRequest(BASE_URL + "/ping", Method.Get);
+        var request = new RestRequest(BASE_URL + "/checkvalidity", Method.Get);
         request.AddParameter("token", _token.Value);
         return (await _client.ExecuteAsync(request)).IsSuccessful;
     }

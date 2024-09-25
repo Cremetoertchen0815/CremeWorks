@@ -3,6 +3,7 @@ using CremeWorks.App.Data;
 using CremeWorks.App.Data.Compatibility;
 using CremeWorks.App.Dialogs;
 using CremeWorks.App.Dialogs.Songs;
+using CremeWorks.App.Networking.Cloud;
 using CremeWorks.App.Properties;
 using CremeWorks.Common;
 using CremeWorks.Networking;
@@ -14,10 +15,12 @@ namespace CremeWorks
     {
         private Database _database;
         private MidiManager _midiManager;
-        private readonly VolumeManager _soloManager;
+        private readonly VolumeManager _volumeManager;
+
         private PlaylistListBoxItem? _activeEntry = null;
         private NetworkingServer _server;
         private readonly Metronome _metronome;
+        private readonly CloudManager _cloudManager;
         private bool _sendMetronomeData = false;
         private int _secondsCounter = 0;
         private Color _metronomeColor = Color.Navy;
@@ -49,17 +52,18 @@ namespace CremeWorks
             _server.UserJoined += _server_UserJoined;
             _server.MessageReceived += _server_MessageReceived;
 
-            _soloManager = new VolumeManager(this);
-            _soloManager.StateChanged += _soloManager_SoloStateChanged;
-
+            _volumeManager = new VolumeManager(this);
+            _volumeManager.StateChanged += _soloManager_SoloStateChanged;
 
             _metronome = new Metronome();
             _metronome.Tick += TickMetronome;
 
+            _cloudManager = new CloudManager(this);
+
             syncToolStripMenuItem.Checked = Settings.Default.SyncToCloud;
             if (Settings.Default.Recents == null)
             {
-                Settings.Default.Recents = new();
+                Settings.Default.Recents = [];
                 Settings.Default.Save();
             }
             foreach (var item in Settings.Default.Recents)
@@ -89,7 +93,7 @@ namespace CremeWorks
                 _midiManager.Disconnect();
             }
 
-            _soloManager.UpdateState();
+            _volumeManager.UpdateState();
         }
 
         private void UpdatePlaylist()
@@ -164,7 +168,7 @@ namespace CremeWorks
             //Configure shit
             _sendMetronomeData = true;
             _midiManager.UpdateMatrix();
-            _soloManager.Solo = false;
+            _volumeManager.Solo = false;
             if (_activeEntry.Entry.Type == PlaylistEntryType.Marker) _midiManager.SendAllNotesOff();
 
             //Load default cue patch
@@ -238,7 +242,7 @@ namespace CremeWorks
             playList.SelectedIndex = -1;
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
             try
@@ -255,6 +259,8 @@ namespace CremeWorks
                     item.Click += openRecentToolStripMenuItem_Click;
                     openRecentToolStripMenuItem.DropDownItems.Add(item);
                 }
+
+                await _cloudManager.SyncProgress(_database, false);
             }
             catch (Exception)
             {
@@ -265,20 +271,24 @@ namespace CremeWorks
             UpdateConcert();
         }
 
-        private void Save(object sender, EventArgs e)
+        private async void Save(object sender, EventArgs e)
         {
             if (_database.FilePath == null || _database.FilePath == string.Empty)
             {
                 if (saveFileDialog1.ShowDialog() != DialogResult.OK) return;
                 _database.FilePath = saveFileDialog1.FileName;
             }
+
+            await _cloudManager.SyncProgress(_database, true);
             FileParser.SaveFile(_database.FilePath, _database);
         }
 
-        private void SaveAs(object sender, EventArgs e)
+        private async void SaveAs(object sender, EventArgs e)
         {
             if (saveFileDialog1.ShowDialog() != DialogResult.OK) return;
             _database.FilePath = saveFileDialog1.FileName;
+
+            await _cloudManager.SyncProgress(_database, true);
             FileParser.SaveFile(_database.FilePath, _database);
             UpdateConcert(true);
         }
@@ -430,7 +440,7 @@ namespace CremeWorks
 
         public Database Database => _database;
         public MidiManager MidiManager => _midiManager;
-        public VolumeManager SoloManager => _soloManager;
+        public VolumeManager SoloManager => _volumeManager;
         public NetworkingServer NetworkManager => _server;
         public IPlaylistEntry? CurrentEntry => _activeEntry?.Entry;
 
@@ -464,7 +474,7 @@ namespace CremeWorks
         private void soloModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new SoloModeSetup(this).ShowDialog();
-            _soloManager.UpdateState();
+            _volumeManager.UpdateState();
         }
 
         private void syncToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)

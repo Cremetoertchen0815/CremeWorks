@@ -34,6 +34,61 @@ public class FileParser
         if (DateTime.TryParse(root.Attributes["lastsynced"]?.Value, out var serverdate)) db.LastServerSync = serverdate;
 
         // Parse body
+        ParseXmlBody(root, db);
+
+
+        return db;
+    }
+
+    public static bool ParseFromXmlString(string data, Database db)
+    {
+        var doc = new XmlDocument();
+        doc.LoadXml(data);
+        var root = doc.DocumentElement;
+
+        if (root?.Name != "cwdb") return false;
+        ParseXmlBody(root, db);
+
+        return true;
+    }
+
+    public static void SaveFile(string path, Database db, bool binary = false)
+    {
+        db.LastLocalSave = DateTime.UtcNow;
+
+        var doc = new XmlDocument();
+        var root = doc.CreateElement("cwdb");
+        root.SetAttribute("version", VERSION);
+        if (db.CloudId.HasValue) root.SetAttribute("cloudid", db.CloudId.Value.ToString());
+        root.SetAttribute("lastsaved", db.LastLocalSave.ToString());
+        if (db.LastServerSync.HasValue) root.SetAttribute("lastsynced", db.LastServerSync.Value.ToString());
+        root.SetAttribute("binary", "false");
+        if (binary)
+        {
+            // Save binary data
+            root.SetAttribute("binary", "true");
+            return;
+        }
+
+        // Save body(XML)
+        FillXmlBody(doc, root, db);
+
+        doc.AppendChild(root);
+
+        doc.Save(path);
+    }
+
+    public static string GetContentXmlString(Database db)
+    {
+        var doc = new XmlDocument();
+        var root = doc.CreateElement("cwdb");
+        FillXmlBody(doc, root, db);
+
+        return doc.OuterXml;
+    }
+
+    private static void ParseXmlBody(XmlElement root, Database db)
+    {
         foreach (XmlNode node in root.ChildNodes)
         {
             switch (node.Name)
@@ -207,31 +262,10 @@ public class FileParser
                     break;
             }
         }
-
-
-        return db;
     }
 
-    public static void SaveFile(string path, Database db, bool binary = false)
+    private static void FillXmlBody(XmlDocument doc, XmlElement root, Database db)
     {
-        db.LastLocalSave = DateTime.UtcNow;
-
-        var doc = new XmlDocument();
-        var root = doc.CreateElement("cwdb");
-        root.SetAttribute("version", VERSION);
-        if (db.CloudId.HasValue) root.SetAttribute("cloudid", db.CloudId.Value.ToString());
-        root.SetAttribute("lastsaved", db.LastLocalSave.ToString());
-        if (db.LastServerSync.HasValue) root.SetAttribute("lastsynced", db.LastServerSync.Value.ToString());
-        root.SetAttribute("binary", "false");
-        if (binary)
-        {
-            // Save binary data
-            root.SetAttribute("binary", "true");
-            return;
-        }
-
-        // Save body(XML)
-
         // Save devices
         var devices = doc.CreateElement("devices");
         foreach (var device in db.Devices)
@@ -434,9 +468,5 @@ public class FileParser
             solo.AppendChild(deviceNode);
         }
         root.AppendChild(solo);
-
-        doc.AppendChild(root);
-
-        doc.Save(path);
     }
 }
