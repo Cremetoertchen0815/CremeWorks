@@ -30,11 +30,11 @@ partial class CloneDialog
     {
         label1 = new Label();
         listView1 = new ListView();
-        btnOk = new Button();
         columnHeader1 = new ColumnHeader();
         columnHeader2 = new ColumnHeader();
         columnHeader3 = new ColumnHeader();
         columnHeader4 = new ColumnHeader();
+        btnOk = new Button();
         SuspendLayout();
         // 
         // label1
@@ -57,17 +57,6 @@ partial class CloneDialog
         listView1.UseCompatibleStateImageBehavior = false;
         listView1.View = View.Details;
         // 
-        // btnOk
-        // 
-        btnOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-        btnOk.Location = new Point(281, 335);
-        btnOk.Name = "btnOk";
-        btnOk.Size = new Size(85, 48);
-        btnOk.TabIndex = 2;
-        btnOk.Text = "OK";
-        btnOk.UseVisualStyleBackColor = true;
-        btnOk.Click += btnOk_Click;
-        // 
         // columnHeader1
         // 
         columnHeader1.Text = "Name";
@@ -88,6 +77,17 @@ partial class CloneDialog
         columnHeader4.Text = "Last Edited";
         columnHeader4.Width = 100;
         // 
+        // btnOk
+        // 
+        btnOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+        btnOk.Location = new Point(281, 335);
+        btnOk.Name = "btnOk";
+        btnOk.Size = new Size(85, 48);
+        btnOk.TabIndex = 2;
+        btnOk.Text = "OK";
+        btnOk.UseVisualStyleBackColor = true;
+        btnOk.Click += btnOk_Click;
+        // 
         // CloneDialog
         // 
         AcceptButton = btnOk;
@@ -102,6 +102,7 @@ partial class CloneDialog
         MinimizeBox = false;
         Name = "CloneDialog";
         ShowIcon = false;
+        StartPosition = FormStartPosition.CenterScreen;
         Text = "Clone Database";
         ResumeLayout(false);
         PerformLayout();

@@ -28,12 +28,11 @@ public partial class PublishDialog : Form
         Close();
     }
 
-    public static bool OpenWindow(out string name, out bool isPublic)
+    public static bool OpenWindow(ref string name, ref bool isPublic)
     {
-        name = string.Empty;
-        isPublic = false;
-
         var dialog = new PublishDialog();
+        dialog.txtName.Text = name;
+        dialog.chkPublic.Checked = isPublic;
         if (dialog.ShowDialog() != DialogResult.OK) return false;
         name = dialog.txtName.Text;
         isPublic = dialog.chkPublic.Checked;

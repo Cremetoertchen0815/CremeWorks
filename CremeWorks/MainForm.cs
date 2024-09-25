@@ -618,7 +618,9 @@ namespace CremeWorks
             }
 
             //Fetch information and register online
-            if (!PublishDialog.OpenWindow(out var name, out var isPublic)) return;
+            string name = Path.GetFileNameWithoutExtension(_database.FilePath);
+            bool isPublic = false;
+            if (!PublishDialog.OpenWindow(ref name, ref isPublic)) return;
             var result = await _cloudManager.Register(_database, name, isPublic);
             if (result is null) return;
 

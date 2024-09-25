@@ -85,6 +85,7 @@ partial class PublishDialog
         MinimizeBox = false;
         Name = "PublishDialog";
         ShowIcon = false;
+        StartPosition = FormStartPosition.CenterParent;
         Text = "Publish";
         ResumeLayout(false);
         PerformLayout();
