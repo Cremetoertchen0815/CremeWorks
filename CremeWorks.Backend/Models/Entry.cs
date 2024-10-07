@@ -8,6 +8,6 @@ public class Entry
     public User? Creator { get; set; }
     public string Hash { get; set; } = null!;
     public bool IsPublic { get; set; }
-    public DateTime LastTimeUpdated { get; set; }
+    public long Timestamp { get; set; }
     public ContentBlob? Content { get; set; }
 }

@@ -22,22 +22,23 @@ public class EntryService(IDbContextFactory<DataContext> _contextFactory)
         return await context.Entries.Include(x => x.Content).FirstOrDefaultAsync(e => e.Id == id);
     }
 
-    public async Task<int> CreateEntryAsync(string name, int creatorId, bool isPublic, string hash, DateTime date)
+    public async Task<int> CreateEntryAsync(string name, int creatorId, bool isPublic)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
-        var entry = new Entry { Name = name, CreatorId = creatorId, IsPublic = isPublic, LastTimeUpdated = date, Hash = hash };
+        var entry = new Entry { Name = name, CreatorId = creatorId, IsPublic = isPublic };
         await context.Entries.AddAsync(entry);
         await context.SaveChangesAsync();
         return entry.Id;
     }
 
-    public async Task<bool> UpdateEntryAsync(int id, int userId, DateTime syncTime, byte[] data)
+    public async Task<bool> UpdateEntryAsync(int id, int userId, long syncTime, string hash, byte[] data)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
         var entry = await context.Entries.Include(x => x.Content).FirstOrDefaultAsync(e => e.Id == id);
         if (entry == null || entry.CreatorId != userId) return false;
+        entry.Hash = hash;
+        entry.Timestamp = syncTime;
 
-        entry.LastTimeUpdated = syncTime;
         if (entry.Content == null)
         {
             entry.Content = new ContentBlob { Data = data };

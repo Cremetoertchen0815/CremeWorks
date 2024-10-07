@@ -30,7 +30,6 @@ public class CloudManager(IDataParent parent)
 
         var newXml = FileParser.GetContentXmlString(db);
         var newHash = StringHasher.GetConsistentHash(newXml);
-        File.WriteAllText("a.txt", newXml);
         var request = new RestRequest($"{BASE_URL}/publish", Method.Post);
         request.AddQueryParameter("token", _token!.Value);
         request.AddQueryParameter("name", name);
@@ -64,7 +63,7 @@ public class CloudManager(IDataParent parent)
 
         //Build database
         var db = new Database();
-        db.LastServerSync = responseA.Data.LastTimeUpdated;
+        db.LastServerSync = DateTime.FromBinary(responseA.Data.LastTimeUpdated);
         db.CloudId = id;
         FileParser.ParseFromXmlString(responseB.Data, db);
         return db;
@@ -84,20 +83,21 @@ public class CloudManager(IDataParent parent)
         request.AddQueryParameter("id", db.CloudId.Value);
         var response = await _client.ExecuteAsync<CloudEntryInformation>(request);
         if (!response.IsSuccessful || response.Data is null) return;
+        var serverTime = DateTime.FromBinary(response.Data.LastTimeUpdated);
 
         //Check if the data has stayed the same
         var newXml = FileParser.GetContentXmlString(db);
         var newHash = StringHasher.GetConsistentHash(newXml);
-        File.WriteAllText("b.txt", newXml);
+
         if (newHash == response.Data.Hash) return;
 
         //Data has changed, so check which version to keep
-        var decision = OverrideDecision.DoNothing;
+        OverrideDecision decision;
 
         //Choose what syncing action to take
         if (save)
         {
-            if (response.Data.LastTimeUpdated == db.LastServerSync)
+            if (serverTime == db.LastServerSync)
             {
                 //The cloud version and the local version are based on the same data
                 //So we can just save the new data
@@ -120,7 +120,7 @@ public class CloudManager(IDataParent parent)
         else
         {
             //Loading a local database
-            if (db.LastLocalSave > response.Data.LastTimeUpdated)
+            if (db.LastLocalSave > serverTime)
             {
                 var result = MessageBox.Show("The local database is more recent than the cloud copy. " +
                                              "Would you like to update the cloud with this newer version?",
@@ -152,16 +152,17 @@ public class CloudManager(IDataParent parent)
                 db.LastServerSync = db.LastLocalSave;
 
                 request = new RestRequest($"{BASE_URL}/entrydata", Method.Post);
-                request.AddParameter("token", _token!.Value);
-                request.AddParameter("id", db.CloudId!.Value);
-                request.AddParameter("synctime", db.LastLocalSave.Ticks);
+                request.AddQueryParameter("token", _token!.Value);
+                request.AddQueryParameter("id", db.CloudId!.Value);
+                request.AddQueryParameter("synctime", db.LastLocalSave);
+                request.AddQueryParameter("hash", newHash);
                 request.AddJsonBody(newXml, true);
                 await _client.ExecuteAsync(request);
                 break;
             case OverrideDecision.ForceFetch:
                 request = new RestRequest($"{BASE_URL}/entrydata", Method.Get);
-                request.AddParameter("token", _token!.Value);
-                request.AddParameter("id", db.CloudId!.Value);
+                request.AddQueryParameter("token", _token!.Value);
+                request.AddQueryParameter("id", db.CloudId!.Value);
                 var fetchResponse = await _client.ExecuteAsync<string>(request);
                 if (fetchResponse.IsSuccessful && fetchResponse.Data is not null) FileParser.ParseFromXmlString(fetchResponse.Data, db);
                 break;

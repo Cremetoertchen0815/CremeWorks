@@ -45,24 +45,24 @@ public class EntryController(EntryService entries, UserService users) : Controll
 
     [HttpPost]
     [Route("/api/cremeworks/entrydata")]
-    public async Task<ActionResult> CreateEntry(int token, int id, DateTime synctime, [FromBody] string data)
+    public async Task<ActionResult> CreateEntry(int token, int id, long synctime, string hash, [FromBody] string data)
     {
         if (!users.IsUserAuthorized(token, out var userId)) return Unauthorized();
 
         var bytes = System.Text.Encoding.UTF8.GetBytes(data);
-        if (!await entries.UpdateEntryAsync(id, userId, synctime, bytes)) return Unauthorized();
+        if (!await entries.UpdateEntryAsync(id, userId, synctime, hash, bytes)) return Unauthorized();
         return Ok();
     }
 
     [HttpPost]
     [Route("/api/cremeworks/publish")]
-    public async Task<ActionResult<int>> PublishEntry(int token, string name, bool isPublic, string hash, DateTime date, [FromBody] string data)
+    public async Task<ActionResult<int>> PublishEntry(int token, string name, bool isPublic, long date, string hash, [FromBody] string data)
     {
         if (!users.IsUserAuthorized(token, out var userId)) return Unauthorized();
 
-        var entryId = await entries.CreateEntryAsync(name, userId, isPublic, hash, date);
+        var entryId = await entries.CreateEntryAsync(name, userId, isPublic);
         var bytes = System.Text.Encoding.UTF8.GetBytes(data);
-        if (!await entries.UpdateEntryAsync(entryId, userId, DateTime.UtcNow, bytes)) return Unauthorized();
+        if (!await entries.UpdateEntryAsync(entryId, userId, date, hash, bytes)) return Unauthorized();
 
         return Ok(entryId);
     }
@@ -74,6 +74,6 @@ public class EntryController(EntryService entries, UserService users) : Controll
         Hash = entry.Hash,
         Id = entry.Id,
         IsPublic = entry.IsPublic,
-        LastTimeUpdated = entry.LastTimeUpdated
+        LastTimeUpdated = entry.Timestamp
     };
 }
