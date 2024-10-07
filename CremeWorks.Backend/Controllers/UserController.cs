@@ -1,26 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CremeWorks.Backend.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CremeWorks.Backend.Controllers;
 
 [ApiController]
 [Route("/api/cremeworks/user")]
-public class UserController : Controller
+public class UserController(UserService userService) : Controller
 {
     [HttpGet]
-    public ActionResult Validate(int tokens)
+    public ActionResult Validate(int tokens) => userService.ValidateSession(tokens) ? Ok() : Unauthorized();
+
+    [HttpPost]
+    public async Task<ActionResult> Create(string username, string password)
     {
+        await userService.CreateUser(username, password);
         return Ok();
     }
 
-    [HttpPost]
-    public ActionResult Create(string username, string password)
-    {
-        return Ok(1234);
-    }
-
     [HttpPut]
-    public ActionResult<int> Logon(string username, string password)
+    public async Task<ActionResult<int>> Logon(string username, string password)
     {
-        return Ok(1234);
+        var token = await userService.CreateSessionAsync(username, password);
+        return token.HasValue ? Ok(token.Value) : Unauthorized();
     }
 }
