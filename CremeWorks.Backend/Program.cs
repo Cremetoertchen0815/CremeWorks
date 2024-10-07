@@ -1,4 +1,6 @@
+using BV.Server.Utils;
 using CremeWorks.Backend;
+using CremeWorks.Backend.Services;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
@@ -13,6 +15,8 @@ builder.Services.AddDbContextFactory<DataContext>(x =>
               .MigrationsHistoryTable("__EFMigrationsHistory", "cw")));
 
 // Add services to the container.
+builder.Services.AddSingleton<EntryService>();
+builder.Services.AddFindableHostedService<UserService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
