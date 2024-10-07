@@ -143,14 +143,14 @@ public class ConcertConverter
                 if (config.PatchImportDoubleHandling == PatchImportDoubleHandling.Unify && db.Patches.Any(x => x.Value.AreEqual(patch.Patch)))
                 {
                     var existing = db.Patches.First(x => x.Value.AreEqual(patch.Patch));
-                    newSong.Patches.Add(new PatchInstance(deviceMap[patchIdx + 1], existing.Key));
+                    newSong.Patches.Add(new PatchInstance(existing.Key, deviceMap[patchIdx + 1]));
                 }
                 else
                 {
                     var newId = Random.Shared.Next();
                     patch.Patch.Name = $"{patch.Patch.DeviceType} #{++patchCount[patch.Patch.DeviceType]}";
                     db.Patches.Add(newId, patch.Patch);
-                    newSong.Patches.Add(new PatchInstance(deviceMap[patchIdx + 1], newId));
+                    newSong.Patches.Add(new PatchInstance(newId, deviceMap[patchIdx + 1]));
                 }
             }
 
