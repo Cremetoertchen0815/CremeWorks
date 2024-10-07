@@ -15,6 +15,8 @@ public class DataContext : DbContext
         modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
         modelBuilder.Entity<Entry>().HasIndex(e => e.Hash).IsUnique();
         modelBuilder.Entity<Entry>().HasOne(e => e.Creator).WithMany(u => u.Entries).HasForeignKey(e => e.CreatorId).OnDelete(DeleteBehavior.Cascade);
-        modelBuilder.Entity<Entry>().Property(p => p.Content).HasColumnType("MediumBlob");
+        modelBuilder.Entity<Entry>().HasOne(e => e.Content).WithOne(u => u.Entry).HasForeignKey<Entry>(e => e.ContentId).OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<ContentBlob>().Property(p => p.Data).HasColumnType("MediumBlob");
+        modelBuilder.Entity<User>().Property(p => p.PasswordSalt).HasColumnType("MediumBlob");
     }
 }

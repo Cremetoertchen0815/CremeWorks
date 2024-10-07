@@ -5,10 +5,10 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 // Register database context
+var dbVersion = ServerVersion.Create(new Version("11.3.2"), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb);
 var connectionStr = builder.Configuration.GetValue<string>("DbConnection");
 builder.Services.AddDbContextFactory<DataContext>(x => 
-    x.UseMySql(connectionStr,
-        ServerVersion.AutoDetect(connectionStr), 
+    x.UseMySql(connectionStr, dbVersion, 
         x => x.SchemaBehavior(MySqlSchemaBehavior.Translate, (x, y) => $"{x}.{y}")
               .MigrationsHistoryTable("__EFMigrationsHistory", "cw")));
 

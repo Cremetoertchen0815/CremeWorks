@@ -40,7 +40,7 @@ public class EntryService(IDbContextFactory<DataContext> _contextFactory)
         entry.LastTimeUpdated = syncTime;
         if (entry.Content == null)
         {
-            entry.Content = new ContentBlob { Data = data, Entry = entry };
+            entry.Content = new ContentBlob { Data = data };
         }
         else
         {
