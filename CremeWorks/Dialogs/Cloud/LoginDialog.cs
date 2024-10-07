@@ -10,6 +10,12 @@ public partial class LoginDialog : Form
 
     private void button1_Click(object sender, EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(txtUsername.Text) || string.IsNullOrWhiteSpace(txtPassword.Text))
+        {
+            MessageBox.Show("Please fill in both fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
         _didRegister = false;
         DialogResult = DialogResult.OK;
         Close();
@@ -17,6 +23,12 @@ public partial class LoginDialog : Form
 
     private void button2_Click(object sender, EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(txtUsername.Text) || string.IsNullOrWhiteSpace(txtPassword.Text))
+        {
+            MessageBox.Show("Please fill in both fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
         _didRegister = true;
         DialogResult = DialogResult.OK;
         Close();

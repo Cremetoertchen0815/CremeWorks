@@ -6,9 +6,8 @@ public class Entry
     public required string Name { get; set; }
     public int CreatorId { get; set; }
     public User? Creator { get; set; }
-    public int Hash { get; set; }
+    public string Hash { get; set; } = null!;
     public bool IsPublic { get; set; }
     public DateTime LastTimeUpdated { get; set; }
-    public int? ContentId { get; set; }
     public ContentBlob? Content { get; set; }
 }

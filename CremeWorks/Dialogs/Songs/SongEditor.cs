@@ -100,7 +100,7 @@ namespace CremeWorks.App.Dialogs.Songs
             foreach (var item in _patchBoxes)
             {
                 if (item.Value.SelectedItem is not ComboBoxPatchItem ca) continue;
-                _s.Patches.Add(new PatchInstance { DeviceId = item.Key, PatchId = ca.PatchId });
+                _s.Patches.Add(new PatchInstance { PatchId = ca.PatchId, DeviceId = item.Key });
             }
 
             foreach (ComboBoxCueItem item in lstCues.Items)

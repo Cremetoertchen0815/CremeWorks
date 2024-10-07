@@ -22,10 +22,10 @@ public class EntryService(IDbContextFactory<DataContext> _contextFactory)
         return await context.Entries.Include(x => x.Content).FirstOrDefaultAsync(e => e.Id == id);
     }
 
-    public async Task<int> CreateEntryAsync(string name, int creatorId, bool isPublic)
+    public async Task<int> CreateEntryAsync(string name, int creatorId, bool isPublic, string hash, DateTime date)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
-        var entry = new Entry { Name = name, CreatorId = creatorId, IsPublic = isPublic, LastTimeUpdated = DateTime.UtcNow };
+        var entry = new Entry { Name = name, CreatorId = creatorId, IsPublic = isPublic, LastTimeUpdated = date, Hash = hash };
         await context.Entries.AddAsync(entry);
         await context.SaveChangesAsync();
         return entry.Id;
@@ -34,7 +34,7 @@ public class EntryService(IDbContextFactory<DataContext> _contextFactory)
     public async Task<bool> UpdateEntryAsync(int id, int userId, DateTime syncTime, byte[] data)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
-        var entry = await context.Entries.FirstOrDefaultAsync(e => e.Id == id);
+        var entry = await context.Entries.Include(x => x.Content).FirstOrDefaultAsync(e => e.Id == id);
         if (entry == null || entry.CreatorId != userId) return false;
 
         entry.LastTimeUpdated = syncTime;

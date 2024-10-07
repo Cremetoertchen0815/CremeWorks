@@ -515,7 +515,7 @@ namespace CremeWorks
 
         private void allNotesOffToolStripMenuItem_Click(object sender, EventArgs e) => _midiManager.SendAllNotesOff();
 
-        private void openRecentToolStripMenuItem_Click(object? sender, EventArgs e)
+        private async void openRecentToolStripMenuItem_Click(object? sender, EventArgs e)
         {
             var item = sender as ToolStripMenuItem;
             if (item == null) return;
@@ -550,6 +550,8 @@ namespace CremeWorks
             }
 
             UpdateConcert();
+
+            if (syncToolStripMenuItem.Checked) await _cloudManager.SyncProgress(_database, false);
         }
 
         private void songTimer_Tick(object sender, EventArgs e)
@@ -626,6 +628,7 @@ namespace CremeWorks
 
             //Save id
             _database.CloudId = result.Value;
+            _database.LastServerSync = _database.LastLocalSave;
             FileParser.SaveFile(_database.FilePath, _database);
         }
 

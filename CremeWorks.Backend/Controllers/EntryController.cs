@@ -20,23 +20,23 @@ public class EntryController(EntryService entries, UserService users) : Controll
 
     [HttpGet]
     [Route("/api/cremeworks/entryinfo")]
-    public async Task<ActionResult<CloudEntryInformation>> GetEntryInfo(int token, int entryId)
+    public async Task<ActionResult<CloudEntryInformation>> GetEntryInfo(int token, int id)
     {
         if (!users.IsUserAuthorized(token, out var userId)) return Unauthorized();
 
-        var entry = await entries.GetEntryWithCreatorAsync(entryId);
+        var entry = await entries.GetEntryWithCreatorAsync(id);
         if (entry == null) return NotFound();
         if (!entry.IsPublic && entry.CreatorId != userId) return Unauthorized();
-        return Ok(entry);
+        return Ok(GetDTO(entry));
     }
 
     [HttpGet]
     [Route("/api/cremeworks/entrydata")]
-    public async Task<ActionResult<string>> GetEntryData(int token, int entryId)
+    public async Task<ActionResult<string>> GetEntryData(int token, int id)
     {
         if (!users.IsUserAuthorized(token, out var userId)) return Unauthorized();
 
-        var entry = await entries.GetEntryWithContentAsync(entryId);
+        var entry = await entries.GetEntryWithContentAsync(id);
         if (entry == null) return NotFound();
         if (!entry.IsPublic && entry.CreatorId != userId) return Unauthorized();
 
@@ -45,22 +45,25 @@ public class EntryController(EntryService entries, UserService users) : Controll
 
     [HttpPost]
     [Route("/api/cremeworks/entrydata")]
-    public async Task<ActionResult> CreateEntry(int token, int entryId, DateTime syncTime, [FromBody] string data)
+    public async Task<ActionResult> CreateEntry(int token, int id, DateTime synctime, [FromBody] string data)
     {
         if (!users.IsUserAuthorized(token, out var userId)) return Unauthorized();
 
         var bytes = System.Text.Encoding.UTF8.GetBytes(data);
-        if (!await entries.UpdateEntryAsync(entryId, userId, syncTime, bytes)) return Unauthorized();
+        if (!await entries.UpdateEntryAsync(id, userId, synctime, bytes)) return Unauthorized();
         return Ok();
     }
 
     [HttpPost]
     [Route("/api/cremeworks/publish")]
-    public async Task<ActionResult<int>> PublishEntry(int token, string name, bool isPublic, [FromBody] string data)
+    public async Task<ActionResult<int>> PublishEntry(int token, string name, bool isPublic, string hash, DateTime date, [FromBody] string data)
     {
         if (!users.IsUserAuthorized(token, out var userId)) return Unauthorized();
 
-        var entryId = await entries.CreateEntryAsync(name, userId, isPublic);
+        var entryId = await entries.CreateEntryAsync(name, userId, isPublic, hash, date);
+        var bytes = System.Text.Encoding.UTF8.GetBytes(data);
+        if (!await entries.UpdateEntryAsync(entryId, userId, DateTime.UtcNow, bytes)) return Unauthorized();
+
         return Ok(entryId);
     }
 

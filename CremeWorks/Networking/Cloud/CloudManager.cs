@@ -29,10 +29,14 @@ public class CloudManager(IDataParent parent)
         if (!await CheckCredentials()) return null;
 
         var newXml = FileParser.GetContentXmlString(db);
+        var newHash = StringHasher.GetConsistentHash(newXml);
+        File.WriteAllText("a.txt", newXml);
         var request = new RestRequest($"{BASE_URL}/publish", Method.Post);
         request.AddQueryParameter("token", _token!.Value);
         request.AddQueryParameter("name", name);
         request.AddQueryParameter("isPublic", isPublic);
+        request.AddQueryParameter("hash", newHash);
+        request.AddQueryParameter("date", db.LastLocalSave);
         request.AddJsonBody(newXml, true);
 
         var response = await _client.ExecuteAsync<int>(request);
@@ -83,7 +87,8 @@ public class CloudManager(IDataParent parent)
 
         //Check if the data has stayed the same
         var newXml = FileParser.GetContentXmlString(db);
-        var newHash = newXml.GetHashCode();
+        var newHash = StringHasher.GetConsistentHash(newXml);
+        File.WriteAllText("b.txt", newXml);
         if (newHash == response.Data.Hash) return;
 
         //Data has changed, so check which version to keep
@@ -223,8 +228,8 @@ public class CloudManager(IDataParent parent)
     private async Task<bool> RegisterNewUser(string username, string password)
     {
         var requestUri = new RestRequest($"{BASE_URL}/user", Method.Post);
-        requestUri.AddParameter("username", username);
-        requestUri.AddParameter("password", password);
+        requestUri.AddQueryParameter("username", username);
+        requestUri.AddQueryParameter("password", password);
 
         return (await _client.ExecuteAsync(requestUri)).IsSuccessStatusCode;
     }

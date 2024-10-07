@@ -17,7 +17,7 @@ public class UserService(IDbContextFactory<DataContext> contextFactory) : Backgr
     {
         //Check if user exists and load user
         using var context = await contextFactory.CreateDbContextAsync();
-        var user = await context.Users.FindAsync(username);
+        var user = await context.Users.FirstOrDefaultAsync(x => x.Username == username);
         if (user == null)
         {
             return null;
