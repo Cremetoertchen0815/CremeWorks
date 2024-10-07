@@ -1404,6 +1404,7 @@ namespace CremeWorks
             boxPlayback.Name = "boxPlayback";
             boxPlayback.Size = new Size(172, 23);
             boxPlayback.TabIndex = 43;
+            boxPlayback.SelectedIndexChanged += boxPlayback_SelectedIndexChanged;
             // 
             // PatchEditor
             // 

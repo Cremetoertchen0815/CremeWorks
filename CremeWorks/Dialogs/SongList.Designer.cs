@@ -47,15 +47,16 @@
             lstSongs.Columns.AddRange(new ColumnHeader[] { ArtistColumn, TitleColumn, IdColumn });
             lstSongs.Dock = DockStyle.Fill;
             lstSongs.FullRowSelect = true;
-            lstSongs.Location = new Point(93, 0);
-            lstSongs.Margin = new Padding(4, 3, 4, 3);
+            lstSongs.Location = new Point(106, 0);
+            lstSongs.Margin = new Padding(5, 4, 5, 4);
             lstSongs.MultiSelect = false;
             lstSongs.Name = "lstSongs";
-            lstSongs.Size = new Size(303, 373);
+            lstSongs.Size = new Size(344, 497);
             lstSongs.Sorting = SortOrder.Ascending;
             lstSongs.TabIndex = 0;
             lstSongs.UseCompatibleStateImageBehavior = false;
             lstSongs.View = View.Details;
+            lstSongs.MouseDoubleClick += lstSongs_MouseDoubleClick;
             // 
             // ArtistColumn
             // 
@@ -82,18 +83,18 @@
             panel2.Controls.Add(btnCreate);
             panel2.Dock = DockStyle.Left;
             panel2.Location = new Point(0, 0);
-            panel2.Margin = new Padding(4, 3, 4, 3);
+            panel2.Margin = new Padding(5, 4, 5, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(93, 373);
+            panel2.Size = new Size(106, 497);
             panel2.TabIndex = 2;
             // 
             // btnDuplicate
             // 
             btnDuplicate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnDuplicate.Location = new Point(4, 118);
-            btnDuplicate.Margin = new Padding(4, 3, 4, 3);
+            btnDuplicate.Location = new Point(5, 157);
+            btnDuplicate.Margin = new Padding(5, 4, 5, 4);
             btnDuplicate.Name = "btnDuplicate";
-            btnDuplicate.Size = new Size(86, 51);
+            btnDuplicate.Size = new Size(98, 68);
             btnDuplicate.TabIndex = 4;
             btnDuplicate.Text = "Duplicate";
             btnDuplicate.UseVisualStyleBackColor = true;
@@ -102,10 +103,10 @@
             // btnDelete
             // 
             btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnDelete.Location = new Point(4, 175);
-            btnDelete.Margin = new Padding(4, 3, 4, 3);
+            btnDelete.Location = new Point(5, 233);
+            btnDelete.Margin = new Padding(5, 4, 5, 4);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(86, 51);
+            btnDelete.Size = new Size(98, 68);
             btnDelete.TabIndex = 3;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
@@ -114,10 +115,10 @@
             // btnEdit
             // 
             btnEdit.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnEdit.Location = new Point(4, 61);
-            btnEdit.Margin = new Padding(4, 3, 4, 3);
+            btnEdit.Location = new Point(5, 81);
+            btnEdit.Margin = new Padding(5, 4, 5, 4);
             btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(86, 51);
+            btnEdit.Size = new Size(98, 68);
             btnEdit.TabIndex = 1;
             btnEdit.Text = "Edit";
             btnEdit.UseVisualStyleBackColor = true;
@@ -126,10 +127,10 @@
             // btnCreate
             // 
             btnCreate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnCreate.Location = new Point(4, 3);
-            btnCreate.Margin = new Padding(4, 3, 4, 3);
+            btnCreate.Location = new Point(5, 4);
+            btnCreate.Margin = new Padding(5, 4, 5, 4);
             btnCreate.Name = "btnCreate";
-            btnCreate.Size = new Size(86, 51);
+            btnCreate.Size = new Size(98, 68);
             btnCreate.TabIndex = 0;
             btnCreate.Text = "Create";
             btnCreate.UseVisualStyleBackColor = true;
@@ -137,15 +138,15 @@
             // 
             // SongList
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(396, 373);
+            ClientSize = new Size(450, 497);
             Controls.Add(lstSongs);
             Controls.Add(panel2);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4, 3, 4, 3);
-            MaximumSize = new Size(412, 4000);
-            MinimumSize = new Size(412, 269);
+            Margin = new Padding(5, 4, 5, 4);
+            MaximumSize = new Size(468, 5318);
+            MinimumSize = new Size(468, 343);
             Name = "SongList";
             Text = "Songs";
             panel2.ResumeLayout(false);

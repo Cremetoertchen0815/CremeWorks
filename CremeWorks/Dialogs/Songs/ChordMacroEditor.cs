@@ -3,16 +3,16 @@ using CremeWorks.App.Data;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
 
-namespace CremeWorks.App.Dialogs
+namespace CremeWorks.App.Dialogs.Songs
 {
     public partial class ChordMacroEditor : Form
     {
         private IDataParent _parent;
         private Song _s;
-       // private bool _inTest = false;
-        private bool _disconnectAfterTest = false;
+        private bool _inTest = false;
         private bool _ignoreMacroListSelChange = true;
         private bool _ignoreMacroListValChange = false;
+        private List<int> _activeSenseKeys = [];
         public ChordMacroEditor(IDataParent parent, Song s)
         {
             _parent = parent;
@@ -22,8 +22,14 @@ namespace CremeWorks.App.Dialogs
 
         private void ChordMacroEditor_Load(object sender, EventArgs e)
         {
-            valSrcDev.SelectedIndex = Math.Max(_s.ChordMacroSourceDeviceId - 2, 0);
-            valDstDev.SelectedIndex = Math.Max(_s.ChordMacroDestinationDeviceId - 2, 0);
+            //Add device list to comboboxes
+            var devices = _parent.Database.Devices.Where(x => x.Value.IsInstrument)
+                .Select(x => new DeviceComboboxItem(x.Key, x.Value.Name, x.Value.MidiId)).ToArray();
+            valSrcDev.Items.AddRange(devices);
+            valDstDev.Items.AddRange(devices);
+
+            valSrcDev.SelectedItem = devices.FirstOrDefault(x => x.Id == _s.ChordMacroSourceDeviceId);
+            valDstDev.SelectedItem = devices.FirstOrDefault(x => x.Id == _s.ChordMacroDestinationDeviceId);
             for (int i = 0; i < _s.ChordMacros.Count; i++) lstMacros.Items.Add(_s.ChordMacros[i].Name);
             if (_s.ChordMacros.Count > 0) lstMacros.SelectedIndex = 0;
             _ignoreMacroListSelChange = false;
@@ -37,14 +43,8 @@ namespace CremeWorks.App.Dialogs
 
         private void btnMacrosAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(valItemName.Text))
-            {
-                MessageBox.Show("Please enter a name for the macro!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             _ignoreMacroListSelChange = true;
-            var nuElement = new ChordMacro(valItemName.Text, (int)valItemTrigger.Value, (int)valItemVelocity.Value, lstItemNotes.Items.Cast<int>().ToList());
+            var nuElement = new ChordMacro("New Macro", (int)valItemTrigger.Value, (int)valItemVelocity.Value, lstItemNotes.Items.Cast<int>().ToList());
             _s.ChordMacros.Add(nuElement);
             lstMacros.Items.Add(nuElement.Name);
             _ignoreMacroListSelChange = false;
@@ -115,16 +115,30 @@ namespace CremeWorks.App.Dialogs
 
         private void btnItemTriggerCapture_Click(object sender, EventArgs e)
         {
-            //var dev = _c.MIDIDevices?[_s.ChordMacroSrc + 2].Input;
-            //if (_inTest || dev == null) return;
+            if (_inTest) return;
 
-            //_inTest = true;
-            //btnItemTriggerCapture.Text = "Sensing...";
-            //valSrcDev.Enabled = false;
+            if (_s.ChordMacroSourceDeviceId < 1)
+            {
+                MessageBox.Show("No source device selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (!_parent.MidiManager.IsConnected)
+            {
+                MessageBox.Show("MIDI devices are not connected. Please connect to use the detect function!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!_parent.MidiManager.TryGetMidiDevicePort(_s.ChordMacroSourceDeviceId, out var inputDev, out _) || inputDev is null)
+            {
+                MessageBox.Show("Couldn't fetch destination device!", null, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            //_disconnectAfterTest = !dev.IsListeningForEvents;
-            //if (_disconnectAfterTest) dev.StartEventsListening();
-            //dev.EventReceived += TriggerCapture;
+
+            _inTest = true;
+            btnItemTriggerCapture.Text = "Sensing...";
+            valSrcDev.Enabled = false;
+
+            inputDev.EventReceived += TriggerCapture;
         }
 
 
@@ -135,7 +149,6 @@ namespace CremeWorks.App.Dialogs
             //Disable capture
             var scon = (InputDevice)sender!;
             scon.EventReceived -= TriggerCapture;
-            if (_disconnectAfterTest) scon.StopEventsListening();
             //_inTest = false;
 
             //Process data
@@ -153,20 +166,32 @@ namespace CremeWorks.App.Dialogs
 
         private void btnItemNoteCapture_Click(object sender, EventArgs e)
         {
-            //var dev = _c.MIDIDevices?[_s.ChordMacroDestinationDeviceId].Input;
-            //if (_inTest || dev == null) return;
+            if (_inTest) return;
 
-            //_inTest = true;
-            //btnItemNoteCapture.Text = "Press Sustain to capture";
-            //valDstDev.Enabled = false;
-            //_activeSenseKeys.Clear();
+            if (_s.ChordMacroDestinationDeviceId < 1)
+            {
+                MessageBox.Show("No destination device selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (!_parent.MidiManager.IsConnected)
+            {
+                MessageBox.Show("MIDI devices are not connected. Please connect to use the detect function!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!_parent.MidiManager.TryGetMidiDevicePort(_s.ChordMacroDestinationDeviceId, out var inputDev, out _) || inputDev is null)
+            {
+                MessageBox.Show("Couldn't fetch destination device!", null, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            //_disconnectAfterTest = !dev.IsListeningForEvents;
-            //if (_disconnectAfterTest) dev.StartEventsListening();
-            //dev.EventReceived += NoteCapture;
+            _inTest = true;
+            btnItemNoteCapture.Text = "Press Sustain to capture";
+            valDstDev.Enabled = false;
+            _activeSenseKeys.Clear();
+
+            inputDev.EventReceived += NoteCapture;
         }
 
-        private List<int> _activeSenseKeys = new List<int>();
         private void NoteCapture(object? sender, MidiEventReceivedEventArgs e)
         {
             //Capture key presses
@@ -190,8 +215,7 @@ namespace CremeWorks.App.Dialogs
             //Disable capture
             var scon = (InputDevice)sender!;
             scon.EventReceived -= NoteCapture;
-            if (_disconnectAfterTest) scon.StopEventsListening();
-            //_inTest = false;
+            _inTest = false;
 
             //Process data
             var macro = _s.ChordMacros[lstMacros.SelectedIndex];
@@ -205,6 +229,20 @@ namespace CremeWorks.App.Dialogs
 
             btnItemNoteCapture.Text = "Detect Notes (on dst. device)";
             valDstDev.Enabled = true;
+        }
+
+        private void btnItemAddNote_Click(object sender, EventArgs e)
+        {
+            if (lstMacros.SelectedIndex < 0) return;
+            var macro = _s.ChordMacros[lstMacros.SelectedIndex];
+            if (ChordMacroAddNoteDialog.OpenDialog(macro.PlayNotes) is not int i) return;
+            macro.PlayNotes.Add(i);
+            lstItemNotes.Items.Add(i);
+        }
+
+        private record DeviceComboboxItem(int Id, string Name, string MidiId)
+        {
+            public override string ToString() => Name;
         }
     }
 }

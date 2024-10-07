@@ -64,10 +64,10 @@ partial class PlaylistEditor
         // 
         btnMinus.Anchor = AnchorStyles.Top | AnchorStyles.Right;
         btnMinus.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-        btnMinus.Location = new Point(477, 6);
-        btnMinus.Margin = new Padding(4);
+        btnMinus.Location = new Point(545, 8);
+        btnMinus.Margin = new Padding(5, 5, 5, 5);
         btnMinus.Name = "btnMinus";
-        btnMinus.Size = new Size(32, 23);
+        btnMinus.Size = new Size(37, 31);
         btnMinus.TabIndex = 28;
         btnMinus.Text = "-";
         btnMinus.UseVisualStyleBackColor = true;
@@ -77,10 +77,10 @@ partial class PlaylistEditor
         // 
         btnPlus.Anchor = AnchorStyles.Top | AnchorStyles.Right;
         btnPlus.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-        btnPlus.Location = new Point(443, 6);
-        btnPlus.Margin = new Padding(4);
+        btnPlus.Location = new Point(506, 8);
+        btnPlus.Margin = new Padding(5, 5, 5, 5);
         btnPlus.Name = "btnPlus";
-        btnPlus.Size = new Size(32, 23);
+        btnPlus.Size = new Size(37, 31);
         btnPlus.TabIndex = 27;
         btnPlus.Text = "+";
         btnPlus.UseVisualStyleBackColor = true;
@@ -90,20 +90,20 @@ partial class PlaylistEditor
         // 
         boxSelector.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         boxSelector.FormattingEnabled = true;
-        boxSelector.Location = new Point(65, 6);
-        boxSelector.Margin = new Padding(4);
+        boxSelector.Location = new Point(74, 8);
+        boxSelector.Margin = new Padding(5, 5, 5, 5);
         boxSelector.Name = "boxSelector";
-        boxSelector.Size = new Size(370, 23);
+        boxSelector.Size = new Size(422, 28);
         boxSelector.TabIndex = 26;
         boxSelector.SelectedIndexChanged += boxSelector_SelectedIndexChanged;
         // 
         // lblDevice
         // 
         lblDevice.AutoSize = true;
-        lblDevice.Location = new Point(13, 9);
-        lblDevice.Margin = new Padding(4, 0, 4, 0);
+        lblDevice.Location = new Point(15, 12);
+        lblDevice.Margin = new Padding(5, 0, 5, 0);
         lblDevice.Name = "lblDevice";
-        lblDevice.Size = new Size(44, 15);
+        lblDevice.Size = new Size(55, 20);
         lblDevice.TabIndex = 25;
         lblDevice.Text = "Playlist";
         lblDevice.TextAlign = ContentAlignment.TopRight;
@@ -115,9 +115,11 @@ partial class PlaylistEditor
         groupBox1.Controls.Add(panel2);
         groupBox1.Controls.Add(panel1);
         groupBox1.Enabled = false;
-        groupBox1.Location = new Point(65, 36);
+        groupBox1.Location = new Point(74, 48);
+        groupBox1.Margin = new Padding(3, 4, 3, 4);
         groupBox1.Name = "groupBox1";
-        groupBox1.Size = new Size(444, 426);
+        groupBox1.Padding = new Padding(3, 4, 3, 4);
+        groupBox1.Size = new Size(507, 568);
         groupBox1.TabIndex = 32;
         groupBox1.TabStop = false;
         groupBox1.Text = "Properties";
@@ -128,11 +130,11 @@ partial class PlaylistEditor
         lstEntries.Columns.AddRange(new ColumnHeader[] { columnNr, columnTitle, columnArtist, columnType, columnDuration });
         lstEntries.Dock = DockStyle.Fill;
         lstEntries.FullRowSelect = true;
-        lstEntries.Location = new Point(98, 79);
-        lstEntries.Margin = new Padding(4, 3, 4, 3);
+        lstEntries.Location = new Point(112, 104);
+        lstEntries.Margin = new Padding(5, 4, 5, 4);
         lstEntries.MultiSelect = false;
         lstEntries.Name = "lstEntries";
-        lstEntries.Size = new Size(343, 344);
+        lstEntries.Size = new Size(392, 460);
         lstEntries.TabIndex = 36;
         lstEntries.UseCompatibleStateImageBehavior = false;
         lstEntries.View = View.Details;
@@ -140,6 +142,7 @@ partial class PlaylistEditor
         lstEntries.DragDrop += lstEntries_DragDrop;
         lstEntries.DragEnter += lstEntries_DragEnter;
         lstEntries.DragOver += lstEntries_DragOver;
+        lstEntries.MouseDoubleClick += lstEntries_MouseDoubleClick;
         // 
         // columnNr
         // 
@@ -177,18 +180,18 @@ partial class PlaylistEditor
         panel2.Controls.Add(btnEdit);
         panel2.Controls.Add(btnAddSong);
         panel2.Dock = DockStyle.Left;
-        panel2.Location = new Point(3, 79);
-        panel2.Margin = new Padding(4, 3, 4, 3);
+        panel2.Location = new Point(3, 104);
+        panel2.Margin = new Padding(5, 4, 5, 4);
         panel2.Name = "panel2";
-        panel2.Size = new Size(95, 344);
+        panel2.Size = new Size(109, 460);
         panel2.TabIndex = 37;
         // 
         // label2
         // 
         label2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-        label2.Location = new Point(4, 299);
+        label2.Location = new Point(5, 400);
         label2.Name = "label2";
-        label2.Size = new Size(86, 23);
+        label2.Size = new Size(98, 31);
         label2.TabIndex = 13;
         label2.Text = "Total duration:";
         label2.TextAlign = ContentAlignment.MiddleLeft;
@@ -196,9 +199,9 @@ partial class PlaylistEditor
         // lblDuration
         // 
         lblDuration.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-        lblDuration.Location = new Point(4, 320);
+        lblDuration.Location = new Point(5, 428);
         lblDuration.Name = "lblDuration";
-        lblDuration.Size = new Size(86, 23);
+        lblDuration.Size = new Size(98, 31);
         lblDuration.TabIndex = 12;
         lblDuration.TextAlign = ContentAlignment.MiddleLeft;
         // 
@@ -206,10 +209,10 @@ partial class PlaylistEditor
         // 
         btnDown.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         btnDown.Font = new Font("Segoe UI", 12F);
-        btnDown.Location = new Point(4, 142);
-        btnDown.Margin = new Padding(4, 3, 4, 3);
+        btnDown.Location = new Point(5, 189);
+        btnDown.Margin = new Padding(5, 4, 5, 4);
         btnDown.Name = "btnDown";
-        btnDown.Size = new Size(86, 28);
+        btnDown.Size = new Size(98, 37);
         btnDown.TabIndex = 11;
         btnDown.Text = "↓";
         btnDown.UseVisualStyleBackColor = true;
@@ -219,10 +222,10 @@ partial class PlaylistEditor
         // 
         btnUp.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         btnUp.Font = new Font("Segoe UI", 12F);
-        btnUp.Location = new Point(4, 108);
-        btnUp.Margin = new Padding(4, 3, 4, 3);
+        btnUp.Location = new Point(5, 144);
+        btnUp.Margin = new Padding(5, 4, 5, 4);
         btnUp.Name = "btnUp";
-        btnUp.Size = new Size(86, 28);
+        btnUp.Size = new Size(98, 37);
         btnUp.TabIndex = 10;
         btnUp.Text = "↑";
         btnUp.UseVisualStyleBackColor = true;
@@ -231,10 +234,10 @@ partial class PlaylistEditor
         // btnAddMarker
         // 
         btnAddMarker.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        btnAddMarker.Location = new Point(4, 40);
-        btnAddMarker.Margin = new Padding(4, 3, 4, 3);
+        btnAddMarker.Location = new Point(5, 53);
+        btnAddMarker.Margin = new Padding(5, 4, 5, 4);
         btnAddMarker.Name = "btnAddMarker";
-        btnAddMarker.Size = new Size(86, 28);
+        btnAddMarker.Size = new Size(98, 37);
         btnAddMarker.TabIndex = 9;
         btnAddMarker.Text = "Add Marker";
         btnAddMarker.UseVisualStyleBackColor = true;
@@ -243,10 +246,10 @@ partial class PlaylistEditor
         // btnDuplicate
         // 
         btnDuplicate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        btnDuplicate.Location = new Point(4, 176);
-        btnDuplicate.Margin = new Padding(4, 3, 4, 3);
+        btnDuplicate.Location = new Point(5, 235);
+        btnDuplicate.Margin = new Padding(5, 4, 5, 4);
         btnDuplicate.Name = "btnDuplicate";
-        btnDuplicate.Size = new Size(86, 28);
+        btnDuplicate.Size = new Size(98, 37);
         btnDuplicate.TabIndex = 8;
         btnDuplicate.Text = "Duplicate";
         btnDuplicate.UseVisualStyleBackColor = true;
@@ -255,10 +258,10 @@ partial class PlaylistEditor
         // btnDelete
         // 
         btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        btnDelete.Location = new Point(4, 210);
-        btnDelete.Margin = new Padding(4, 3, 4, 3);
+        btnDelete.Location = new Point(5, 280);
+        btnDelete.Margin = new Padding(5, 4, 5, 4);
         btnDelete.Name = "btnDelete";
-        btnDelete.Size = new Size(86, 28);
+        btnDelete.Size = new Size(98, 37);
         btnDelete.TabIndex = 7;
         btnDelete.Text = "Delete";
         btnDelete.UseVisualStyleBackColor = true;
@@ -267,10 +270,10 @@ partial class PlaylistEditor
         // btnEdit
         // 
         btnEdit.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        btnEdit.Location = new Point(4, 74);
-        btnEdit.Margin = new Padding(4, 3, 4, 3);
+        btnEdit.Location = new Point(5, 99);
+        btnEdit.Margin = new Padding(5, 4, 5, 4);
         btnEdit.Name = "btnEdit";
-        btnEdit.Size = new Size(86, 28);
+        btnEdit.Size = new Size(98, 37);
         btnEdit.TabIndex = 6;
         btnEdit.Text = "Edit";
         btnEdit.UseVisualStyleBackColor = true;
@@ -279,10 +282,10 @@ partial class PlaylistEditor
         // btnAddSong
         // 
         btnAddSong.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        btnAddSong.Location = new Point(4, 6);
-        btnAddSong.Margin = new Padding(4, 3, 4, 3);
+        btnAddSong.Location = new Point(5, 8);
+        btnAddSong.Margin = new Padding(5, 4, 5, 4);
         btnAddSong.Name = "btnAddSong";
-        btnAddSong.Size = new Size(86, 28);
+        btnAddSong.Size = new Size(98, 37);
         btnAddSong.TabIndex = 5;
         btnAddSong.Text = "Add Song";
         btnAddSong.UseVisualStyleBackColor = true;
@@ -295,61 +298,65 @@ partial class PlaylistEditor
         panel1.Controls.Add(lblMidiDevice);
         panel1.Controls.Add(lblName);
         panel1.Dock = DockStyle.Top;
-        panel1.Location = new Point(3, 19);
+        panel1.Location = new Point(3, 24);
+        panel1.Margin = new Padding(3, 4, 3, 4);
         panel1.Name = "panel1";
-        panel1.Size = new Size(438, 60);
+        panel1.Size = new Size(501, 80);
         panel1.TabIndex = 35;
         // 
         // txtName
         // 
         txtName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        txtName.Location = new Point(94, 0);
+        txtName.Location = new Point(107, 0);
+        txtName.Margin = new Padding(3, 4, 3, 4);
         txtName.Name = "txtName";
-        txtName.Size = new Size(344, 23);
+        txtName.Size = new Size(393, 27);
         txtName.TabIndex = 25;
         txtName.TextChanged += txtName_TextChanged;
         // 
         // txtDate
         // 
         txtDate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-        txtDate.Location = new Point(94, 30);
+        txtDate.Location = new Point(107, 40);
+        txtDate.Margin = new Padding(3, 4, 3, 4);
         txtDate.Name = "txtDate";
-        txtDate.Size = new Size(344, 23);
+        txtDate.Size = new Size(393, 27);
         txtDate.TabIndex = 28;
         txtDate.ValueChanged += txtDate_ValueChanged;
         // 
         // lblMidiDevice
         // 
-        lblMidiDevice.Location = new Point(7, 30);
-        lblMidiDevice.Margin = new Padding(4, 0, 4, 0);
+        lblMidiDevice.Location = new Point(8, 40);
+        lblMidiDevice.Margin = new Padding(5, 0, 5, 0);
         lblMidiDevice.Name = "lblMidiDevice";
-        lblMidiDevice.Size = new Size(73, 23);
+        lblMidiDevice.Size = new Size(83, 31);
         lblMidiDevice.TabIndex = 2;
         lblMidiDevice.Text = "Date";
         lblMidiDevice.TextAlign = ContentAlignment.MiddleRight;
         // 
         // lblName
         // 
-        lblName.Location = new Point(10, 0);
+        lblName.Location = new Point(11, 0);
         lblName.Name = "lblName";
-        lblName.Size = new Size(70, 23);
+        lblName.Size = new Size(80, 31);
         lblName.TabIndex = 27;
         lblName.Text = "Name";
         lblName.TextAlign = ContentAlignment.MiddleRight;
         // 
         // PlaylistEditor
         // 
-        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(519, 474);
+        ClientSize = new Size(591, 632);
         Controls.Add(groupBox1);
         Controls.Add(btnMinus);
         Controls.Add(btnPlus);
         Controls.Add(boxSelector);
         Controls.Add(lblDevice);
         Icon = (Icon)resources.GetObject("$this.Icon");
-        MaximumSize = new Size(535, 4000);
-        MinimumSize = new Size(535, 420);
+        Margin = new Padding(3, 4, 3, 4);
+        MaximumSize = new Size(609, 5318);
+        MinimumSize = new Size(609, 544);
         Name = "PlaylistEditor";
         Text = "Playlists";
         FormClosing += PlaylistEditor_FormClosing;

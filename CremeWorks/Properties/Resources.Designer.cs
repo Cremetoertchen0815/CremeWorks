@@ -59,5 +59,15 @@ namespace CremeWorks.App.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap cw_cloud {
+            get {
+                object obj = ResourceManager.GetObject("cw_cloud", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

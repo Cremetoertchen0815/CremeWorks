@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CremeWorks.App", "CremeWorks\CremeWorks.App.csproj", "{0A724313-9414-4C6C-B741-857156A0E3B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CremeWorks.App", "CremeWorks\CremeWorks.App.csproj", "{0A724313-9414-4C6C-B741-857156A0E3B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CremeWorks.Client", "CremeWorks.Client\CremeWorks.Client.csproj", "{824577FF-56D2-48D4-AD2C-D761B80D78DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CremeWorks.Client", "CremeWorks.Client\CremeWorks.Client.csproj", "{824577FF-56D2-48D4-AD2C-D761B80D78DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CremeWorks.Backend", "CremeWorks.Backend\CremeWorks.Backend.csproj", "{30FD31C3-27AE-4DBC-8395-1AEF5FAFCAD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{824577FF-56D2-48D4-AD2C-D761B80D78DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{824577FF-56D2-48D4-AD2C-D761B80D78DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{824577FF-56D2-48D4-AD2C-D761B80D78DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30FD31C3-27AE-4DBC-8395-1AEF5FAFCAD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30FD31C3-27AE-4DBC-8395-1AEF5FAFCAD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30FD31C3-27AE-4DBC-8395-1AEF5FAFCAD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30FD31C3-27AE-4DBC-8395-1AEF5FAFCAD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

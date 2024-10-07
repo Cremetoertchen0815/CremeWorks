@@ -7,12 +7,14 @@ using Melanchall.DryWetMidi.Multimedia;
 namespace CremeWorks.App;
 public class MidiManager
 {
-    public event Action<bool>? ConnectionChanged;
-    public event Action<MidiEvent>? ControllerEventReceived;
+    public event ConnectionChangedDelegate? ConnectionChanged;
     public event ControllerActionDelegate? ControllerActionExecuted;
+    public event Action<MidiEvent>? ControllerEventReceived;
+    public event Action? SustainPedalPressed;
 
 
     public delegate void ControllerActionDelegate(ControllerActionType action, bool? argument);
+    public delegate void ConnectionChangedDelegate(bool isNowConnected);
 
     private int[] _lightingDevices = [];
     private Dictionary<int, InternalMidiDevice> _midiDevices = [];
@@ -96,6 +98,8 @@ public class MidiManager
             if (element.Output != null) element.Output.Dispose();
         }
         _midiDevices.Clear();
+        _matrixNote = null;
+        _matrixCC = null;
 
         IsConnected = false;
         ConnectionChanged?.Invoke(false);
@@ -158,9 +162,9 @@ public class MidiManager
         foreach (var item in _midiDevices) item.Value.Output?.SendEvent(allNotesOffEvent);
     }
 
-    public void UpdateMatrix()
+    public void UpdateMatrix(MidiMatrixNode[]? overrideRouting = null)
     {
-        MidiMatrixNode[]? nodes = _parent.CurrentEntry is SongPlaylistEntry se ? [.. _parent.Database.DefaultRouting, .. _parent.Database.Songs[se.SongId].RoutingOverrides] : null;
+        MidiMatrixNode[]? nodes = overrideRouting ?? (_parent.CurrentEntry is SongPlaylistEntry se ? [.. _parent.Database.DefaultRouting, .. _parent.Database.Songs[se.SongId].RoutingOverrides] : null);
         if (nodes == null || _matrixIds == null)
         {
             _matrixNote = null;
@@ -201,18 +205,23 @@ public class MidiManager
             }
         }
 
-        //Update macro information
-        var song = _parent.Database.Songs[((SongPlaylistEntry)_parent.CurrentEntry!).SongId];
-        _macroDeviceSourceId = song.ChordMacroSourceDeviceId;
-        _macroDeviceDestId = song.ChordMacroDestinationDeviceId;
-        _activeMacros = song.ChordMacros;
-
-        //Apply patches to instruments
-        foreach (var item in song.Patches)
+        //Apply song information if not doing manual override
+        if (_parent.CurrentEntry is SongPlaylistEntry spe && overrideRouting is null)
         {
-            if (!_parent.Database.Patches.TryGetValue(item.PatchId, out var patch)) continue;
-            patch.ApplyPatch(_parent, item.DeviceId);
+            //Update macro information
+            var song = _parent.Database.Songs[spe.SongId];
+            _macroDeviceSourceId = song.ChordMacroSourceDeviceId;
+            _macroDeviceDestId = song.ChordMacroDestinationDeviceId;
+            _activeMacros = song.ChordMacros;
+
+            //Apply patches to instruments
+            foreach (var item in song.Patches)
+            {
+                if (!_parent.Database.Patches.TryGetValue(item.PatchId, out var patch)) continue;
+                patch.ApplyPatch(_parent, item.DeviceId);
+            }
         }
+
     }
 
 
@@ -232,8 +241,9 @@ public class MidiManager
     private void ListenFootPedal(object? sender, MidiEventReceivedEventArgs e)
     {
         //If it isn't, redirect to lighting board
-        if (PlaybackPaused || e.Event.EventType == MidiEventType.NoteOff || e.Event.EventType == MidiEventType.ActiveSensing) return;
+        if (PlaybackPaused || e.Event.EventType is not MidiEventType.NoteOn and not MidiEventType.ControlChange and not MidiEventType.ProgramChange) return;
         ControllerEventReceived?.Invoke(e.Event);
+        SendToLighting(e.Event);
 
         //Check if foot pedal event is a macro
         foreach (var action in _parent.Database.Actions)
@@ -303,6 +313,9 @@ public class MidiManager
                 _midiDevices[_matrixIds[i]].Output?.SendEvent(e);
             }
         }
+
+        //Trigger sustain pedal pressed event
+        if (e is ControlChangeEvent cc && cc.ControlNumber == 64 && cc.ControlValue >= 64) SustainPedalPressed?.Invoke();
     }
 
     private record InternalMidiDevice(string MidiName, InputDevice? Input, OutputDevice? Output);

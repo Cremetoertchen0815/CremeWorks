@@ -1,7 +1,7 @@
 ﻿using CremeWorks.App.Data;
 using System.Data;
 
-namespace CremeWorks.App.Dialogs;
+namespace CremeWorks.App.Dialogs.Songs;
 
 public partial class SongRoutingEditor : Form
 {

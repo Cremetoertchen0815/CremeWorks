@@ -1,7 +1,7 @@
 ﻿using CremeWorks.App.Data;
 using CremeWorks.Common;
 
-namespace CremeWorks.App.Dialogs
+namespace CremeWorks.App.Dialogs.Songs
 {
     public partial class SongEditor : Form
     {
@@ -96,10 +96,16 @@ namespace CremeWorks.App.Dialogs
             _s.Tempo = (byte)txtBpm.Value;
             _s.ExpectedDurationSeconds = (int)(txtDurationMin.Value * 60 + txtDurationSec.Value);
             _s.Patches.Clear();
+            _s.Cues.Clear();
             foreach (var item in _patchBoxes)
             {
                 if (item.Value.SelectedItem is not ComboBoxPatchItem ca) continue;
                 _s.Patches.Add(new PatchInstance { DeviceId = item.Key, PatchId = ca.PatchId });
+            }
+
+            foreach (ComboBoxCueItem item in lstCues.Items)
+            {
+                _s.Cues.Add(item.Instance);
             }
         }
 

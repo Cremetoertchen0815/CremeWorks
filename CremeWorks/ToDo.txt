@@ -1,7 +1,5 @@
--Inspect clients getting kicked out after a while(connection still active)
--Implement/test cue system
--Implement sound macros
--Implement CSV import/export system
--Implement checks when deleting reference data(make sure the data is not being used)
+-Test cue system
+-Test sound macros
+-Implement cloud saves
 
 -Fix SoundPlayer lag under Linux
