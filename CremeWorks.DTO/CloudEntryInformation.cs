@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CremeWorks.DTO;
 
-namespace CremeWorks.App.Networking.Cloud;
 public class CloudEntryInformation
 {
     public int Id { get; set; }

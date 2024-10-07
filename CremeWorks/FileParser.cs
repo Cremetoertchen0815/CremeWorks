@@ -83,6 +83,7 @@ public class FileParser
         var doc = new XmlDocument();
         var root = doc.CreateElement("cwdb");
         FillXmlBody(doc, root, db);
+        doc.AppendChild(root);
 
         return doc.OuterXml;
     }

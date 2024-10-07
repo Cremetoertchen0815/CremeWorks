@@ -1,3 +1,4 @@
+using CremeWorks.App.Data;
 using CremeWorks.Client.MIDI;
 using CremeWorks.Client.Networking;
 using Newtonsoft.Json;
@@ -56,15 +57,15 @@ public partial class Form1 : Form
                 lstSet.SelectedIndex = _currentSong.Index;
                 lblTitle.Text = _currentSong.Title;
                 lblTempo.Text = _currentSong.Tempo.ToString() + " BPM";
-                lblCurrCue.Text = _currentSong.Cues!.Length == 0 ? "-" : _currentSong.Cues[0].Description;
-                lblNextCue.Text = _currentSong.Cues.Length < 2 ? "-" : _currentSong.Cues[1].Description;
+                lblCurrCue.Text = _currentSong.Cues!.Count == 0 ? "-" : _currentSong.Cues[0].Description;
+                lblNextCue.Text = _currentSong.Cues.Count < 2 ? "-" : _currentSong.Cues[1].Description;
                 lblInstructions.Text = _currentSong.Instructions;
                 break;
             case MessageTypeEnum.CUE_INDEX:
                 var index = int.Parse(data);
                 if (_currentSong.Cues is null) break;
-                lblCurrCue.Text = _currentSong.Cues.Length <= Math.Max(index, 0) ? "-" : _currentSong.Cues[index].Description;
-                lblNextCue.Text = _currentSong.Cues.Length <= Math.Max(index, 0) + 1 ? "-" : _currentSong.Cues[index + 1].Description;
+                lblCurrCue.Text = _currentSong.Cues.Count <= Math.Max(index, 0) ? "-" : _currentSong.Cues[index].Description;
+                lblNextCue.Text = _currentSong.Cues.Count <= Math.Max(index, 0) + 1 ? "-" : _currentSong.Cues[index + 1].Description;
                 break;
             case MessageTypeEnum.CHAT_MESSAGE:
                 lstChat.Items.Add(data);

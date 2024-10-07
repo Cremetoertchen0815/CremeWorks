@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CremeWorks.DTO\CremeWorks.DTO.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="BorderedGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -1,6 +1,7 @@
 ﻿using CremeWorks.App.Data;
 using CremeWorks.App.Dialogs.Cloud;
 using CremeWorks.App.Properties;
+using CremeWorks.DTO;
 using RestSharp;
 
 namespace CremeWorks.App.Networking.Cloud;
@@ -10,7 +11,7 @@ public class CloudManager(IDataParent parent)
     private readonly IDataParent _parent = parent;
     private readonly RestClient _client = new();
 
-    private const string BASE_URL = "https://cremetoertchen.com/api/cremeworks";
+    private const string BASE_URL = "http://localhost:5033/api/cremeworks";
 
     public async Task<CloudEntryInformation[]?> GetAllDatabases()
     {
@@ -27,10 +28,12 @@ public class CloudManager(IDataParent parent)
         //Check if token is valid
         if (!await CheckCredentials()) return null;
 
+        var newXml = FileParser.GetContentXmlString(db);
         var request = new RestRequest($"{BASE_URL}/publish", Method.Post);
         request.AddQueryParameter("token", _token!.Value);
         request.AddQueryParameter("name", name);
-        request.AddQueryParameter("public", isPublic);
+        request.AddQueryParameter("isPublic", isPublic);
+        request.AddJsonBody(newXml, true);
 
         var response = await _client.ExecuteAsync<int>(request);
         return response.IsSuccessful ? response.Data : null;
@@ -147,7 +150,7 @@ public class CloudManager(IDataParent parent)
                 request.AddParameter("token", _token!.Value);
                 request.AddParameter("id", db.CloudId!.Value);
                 request.AddParameter("synctime", db.LastLocalSave.Ticks);
-                request.AddBody(newXml);
+                request.AddJsonBody(newXml, true);
                 await _client.ExecuteAsync(request);
                 break;
             case OverrideDecision.ForceFetch:
@@ -186,7 +189,7 @@ public class CloudManager(IDataParent parent)
         var password = Settings.Default.Password;
 
         //If credentials are not set or invalid, open window to reenter
-        while (username is null || password is null || (_token = await Login(username, password)) is null)
+        while (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || (_token = await Login(username, password)) is null)
         {
             if (!LoginDialog.OpenWindow(credentialsIncorrect, out username, out password, out var register))
             {
@@ -209,7 +212,7 @@ public class CloudManager(IDataParent parent)
 
     private async Task<int?> Login(string username, string password)
     {
-        var requestUri = new RestRequest($"{BASE_URL}/user", Method.Get);
+        var requestUri = new RestRequest($"{BASE_URL}/user", Method.Put);
         requestUri.AddQueryParameter("username", username);
         requestUri.AddQueryParameter("password", password);
 
@@ -237,7 +240,7 @@ public class CloudManager(IDataParent parent)
     private async Task<bool> ValidateToken()
     {
         if (_token is null) return false;
-        var request = new RestRequest(BASE_URL + "/checkvalidity", Method.Get);
+        var request = new RestRequest(BASE_URL + "/user", Method.Get);
         request.AddParameter("token", _token.Value);
         return (await _client.ExecuteAsync(request)).IsSuccessful;
     }

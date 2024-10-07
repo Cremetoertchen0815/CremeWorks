@@ -21,6 +21,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+
 // Migrate database
 var dbFactory = app.Services.GetRequiredService<IDbContextFactory<DataContext>>();
 using (var db = await dbFactory.CreateDbContextAsync()) await db.Database.MigrateAsync();
@@ -32,6 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

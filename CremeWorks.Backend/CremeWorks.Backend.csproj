@@ -18,9 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Migrations\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CremeWorks.DTO\CremeWorks.DTO.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@ GET: https://cremetoertchen.com/api/cremeworks/allentries?token=x (returns Cloud
 GET: https://cremetoertchen.com/api/cremeworks/entryinfo?token=x&id=y (returns CloudEntryInformation)
 GET: https://cremetoertchen.com/api/cremeworks/entrydata?token=x&id=y (returns string<XML>)
 POST: https://cremetoertchen.com/api/cremeworks/entrydata?token=x&id=y&synctime=z
-GET: https://cremetoertchen.com/api/cremeworks/user?username=x&password=y (returns int)
-POST: https://cremetoertchen.com/api/cremeworks/user?username=x&password=y
 GET: https://cremetoertchen.com/api/cremeworks/user?checkvalidity=x
+POST: https://cremetoertchen.com/api/cremeworks/user?username=x&password=y
+PUT: https://cremetoertchen.com/api/cremeworks/user?username=x&password=y (returns int)
 GET: https://cremetoertchen.com/api/cremeworks/ping
