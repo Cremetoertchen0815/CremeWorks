@@ -8,7 +8,7 @@ namespace CremeWorks.Backend.Controllers;
 public class UserController(UserService userService) : Controller
 {
     [HttpGet]
-    public ActionResult Validate(int tokens) => userService.ValidateSession(tokens) ? Ok() : Unauthorized();
+    public ActionResult Validate(int token) => userService.ValidateSession(token) ? Ok() : Unauthorized();
 
     [HttpPost]
     public async Task<ActionResult> Create(string username, string password)

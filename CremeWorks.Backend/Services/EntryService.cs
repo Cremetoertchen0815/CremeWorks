@@ -25,7 +25,7 @@ public class EntryService(IDbContextFactory<DataContext> _contextFactory)
     public async Task<int> CreateEntryAsync(string name, int creatorId, bool isPublic)
     {
         using var context = await _contextFactory.CreateDbContextAsync();
-        var entry = new Entry { Name = name, CreatorId = creatorId, IsPublic = isPublic };
+        var entry = new Entry { Name = name, CreatorId = creatorId, IsPublic = isPublic, Hash = string.Empty };
         await context.Entries.AddAsync(entry);
         await context.SaveChangesAsync();
         return entry.Id;

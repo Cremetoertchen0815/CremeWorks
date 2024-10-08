@@ -95,6 +95,7 @@ public class FileParser
             switch (node.Name)
             {
                 case "devices":
+                    db.Devices.Clear();
                     foreach (XmlNode deviceNode in node.ChildNodes)
                     {
                         var id = int.Parse(deviceNode.Attributes?["id"]?.Value ?? throw new Exception("Device id cannot be null!"));
@@ -107,6 +108,7 @@ public class FileParser
                     }
                     break;
                 case "patches":
+                    db.Patches.Clear();
                     foreach (XmlNode patchNode in node.ChildNodes)
                     {
                         var id = int.Parse(patchNode.Attributes?["id"]?.Value ?? throw new Exception("Patch id cannot be null!"));
@@ -126,6 +128,7 @@ public class FileParser
                     }
                     break;
                 case "cues":
+                    db.LightingCues.Clear();
                     foreach (XmlNode cueNode in node.ChildNodes)
                     {
                         var id = int.Parse(cueNode.Attributes?["id"]?.Value ?? throw new Exception("Cue id cannot be null!"));
@@ -135,6 +138,7 @@ public class FileParser
                     }
                     break;
                 case "actions":
+                    db.Actions.Clear();
                     foreach (XmlNode actionNode in node.ChildNodes)
                     {
                         var srcEventType = Enum.Parse<MidiEventType>(actionNode.Attributes?["event"]?.Value ?? throw new Exception("Action source event type cannot be null!"));
@@ -146,6 +150,7 @@ public class FileParser
                     }
                     break;
                 case "songs":
+                    db.Songs.Clear();
                     foreach (XmlNode songNode in node.ChildNodes)
                     {
                         // Parse basic song data
@@ -215,6 +220,7 @@ public class FileParser
                     }
                     break;
                 case "playlists":
+                    db.Playlists.Clear();
                     foreach (XmlNode playlistNode in node.ChildNodes)
                     {
                         var playlist = new Playlist
@@ -239,6 +245,7 @@ public class FileParser
                     }
                     break;
                 case "routing":
+                    db.DefaultRouting.Clear();
                     foreach (XmlNode routingNode in node.ChildNodes)
                     {
                         var srcId = int.Parse(routingNode.Attributes?["src"]?.Value ?? throw new Exception("Routing source id cannot be null!"));
@@ -248,6 +255,7 @@ public class FileParser
                     }
                     break;
                 case "solo":
+                    db.SoloModeConfig.Devices.Clear();
                     var fadeRaw = node.Attributes?["fade"]?.Value;
                     db.SoloModeConfig.Enabled = bool.Parse(node.Attributes!["enabled"]?.Value ?? throw new Exception("Solo enabled cannot be null!"));
                     db.SoloModeConfig.CCNumber = byte.Parse(node.Attributes["cc"]?.Value ?? throw new Exception("Solo cc number cannot be null!"));

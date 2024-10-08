@@ -35,7 +35,7 @@ public class CloudManager(IDataParent parent)
         request.AddQueryParameter("name", name);
         request.AddQueryParameter("isPublic", isPublic);
         request.AddQueryParameter("hash", newHash);
-        request.AddQueryParameter("date", db.LastLocalSave);
+        request.AddQueryParameter("date", db.LastLocalSave.ToBinary());
         request.AddJsonBody(newXml, true);
 
         var response = await _client.ExecuteAsync<int>(request);
@@ -69,27 +69,33 @@ public class CloudManager(IDataParent parent)
         return db;
     }
 
-    public async Task SyncProgress(Database db, bool save)
+    /// <summary>
+    /// Syncronizes the local database with the cloud.
+    /// </summary>
+    /// <param name="db">The current database.</param>
+    /// <param name="save">If the user is in the process of saving. If false, the user is in the process of loading.</param>
+    /// <returns>True if the local DB was overridden.</returns>
+    public async Task<bool> SyncProgress(Database db, bool save)
     {
         //Don't do anything if the database is not synced to the cloud
-        if (db.CloudId is null) return;
+        if (db.CloudId is null) return false;
 
         //Make sure the user has a valid session
-        if (!await CheckCredentials()) return;
+        if (!await CheckCredentials()) return false;
 
         //Fetch the "last saved" value
         var request = new RestRequest($"{BASE_URL}/entryinfo", Method.Get);
         request.AddQueryParameter("token", _token!.Value);
         request.AddQueryParameter("id", db.CloudId.Value);
         var response = await _client.ExecuteAsync<CloudEntryInformation>(request);
-        if (!response.IsSuccessful || response.Data is null) return;
+        if (!response.IsSuccessful || response.Data is null) return false;
         var serverTime = DateTime.FromBinary(response.Data.LastTimeUpdated);
 
         //Check if the data has stayed the same
         var newXml = FileParser.GetContentXmlString(db);
         var newHash = StringHasher.GetConsistentHash(newXml);
 
-        if (newHash == response.Data.Hash) return;
+        if (newHash == response.Data.Hash) return false;
 
         //Data has changed, so check which version to keep
         OverrideDecision decision;
@@ -154,20 +160,22 @@ public class CloudManager(IDataParent parent)
                 request = new RestRequest($"{BASE_URL}/entrydata", Method.Post);
                 request.AddQueryParameter("token", _token!.Value);
                 request.AddQueryParameter("id", db.CloudId!.Value);
-                request.AddQueryParameter("synctime", db.LastLocalSave);
+                request.AddQueryParameter("synctime", db.LastLocalSave.ToBinary());
                 request.AddQueryParameter("hash", newHash);
                 request.AddJsonBody(newXml, true);
                 await _client.ExecuteAsync(request);
-                break;
+                return true;
             case OverrideDecision.ForceFetch:
                 request = new RestRequest($"{BASE_URL}/entrydata", Method.Get);
                 request.AddQueryParameter("token", _token!.Value);
                 request.AddQueryParameter("id", db.CloudId!.Value);
                 var fetchResponse = await _client.ExecuteAsync<string>(request);
                 if (fetchResponse.IsSuccessful && fetchResponse.Data is not null) FileParser.ParseFromXmlString(fetchResponse.Data, db);
-                break;
+
+                db.LastServerSync = serverTime;
+                return true;
             default:
-                return;
+                return false;
         }
 
     }

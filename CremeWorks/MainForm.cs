@@ -261,7 +261,14 @@ namespace CremeWorks
                     openRecentToolStripMenuItem.DropDownItems.Add(item);
                 }
 
-                if (syncToolStripMenuItem.Checked) await _cloudManager.SyncProgress(_database, false);
+                if (syncToolStripMenuItem.Checked)
+                {
+                    var modified = await _cloudManager.SyncProgress(_database, false);
+                    if (modified && !string.IsNullOrEmpty(_database.FilePath))
+                    {
+                        FileParser.SaveFile(_database.FilePath, _database);
+                    }
+                }
             }
             catch (Exception)
             {
@@ -549,9 +556,16 @@ namespace CremeWorks
                 MessageBox.Show("Database file is corrupted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            UpdateConcert();
+            if (syncToolStripMenuItem.Checked)
+            {
+                var modified = await _cloudManager.SyncProgress(_database, false);
+                if (modified && !string.IsNullOrEmpty(_database.FilePath))
+                {
+                    FileParser.SaveFile(_database.FilePath, _database);
+                }
+            }
 
-            if (syncToolStripMenuItem.Checked) await _cloudManager.SyncProgress(_database, false);
+            UpdateConcert();
         }
 
         private void songTimer_Tick(object sender, EventArgs e)
