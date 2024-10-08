@@ -2,6 +2,9 @@
 
 # Diese Stufe wird verwendet, wenn sie von VS im Schnellmodus ausgeführt wird (Standardeinstellung für Debugkonfiguration).
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+#Install required packages
+RUN apt update --fix-missing && apt install -y curl
+
 USER app
 WORKDIR /app
 EXPOSE 8002
