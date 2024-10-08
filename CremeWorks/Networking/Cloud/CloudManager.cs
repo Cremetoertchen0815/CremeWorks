@@ -11,7 +11,7 @@ public class CloudManager(IDataParent parent)
     private readonly IDataParent _parent = parent;
     private readonly RestClient _client = new();
 
-    private const string BASE_URL = "http://localhost:5033/api/cremeworks";
+    private const string BASE_URL = "https://cremetoertchen.com/api/cremeworks";
 
     public async Task<CloudEntryInformation[]?> GetAllDatabases()
     {
