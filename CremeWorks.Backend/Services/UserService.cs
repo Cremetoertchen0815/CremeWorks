@@ -65,16 +65,20 @@ public class UserService(IDbContextFactory<DataContext> contextFactory) : Backgr
         return await context.Users.FindAsync(session.UserId);
     }
 
-    public async Task CreateUser(string username, string password)
+    public async Task<bool> CreateUser(string username, string password)
     {
+        //Check if user already exists
+        using var context = await contextFactory.CreateDbContextAsync();
+        if (await context.Users.AnyAsync(x => x.Username == username)) return false;
+
         //Generate salt and hash password
         var salt = PasswordHash.GenerateSalt();
         var hash = await PasswordHash.HashPasswordAsync(password, salt);
 
         //Save user to database
-        using var context = await contextFactory.CreateDbContextAsync();
         await context.Users.AddAsync(new User { Username = username, PasswordHash = hash, PasswordSalt = salt });
         await context.SaveChangesAsync();
+        return true;
     }
 
     public bool IsUserAuthorized(int sessionToken, out int userId)

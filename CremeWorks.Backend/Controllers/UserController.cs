@@ -11,11 +11,7 @@ public class UserController(UserService userService) : Controller
     public ActionResult Validate(int token) => userService.ValidateSession(token) ? Ok() : Unauthorized();
 
     [HttpPost]
-    public async Task<ActionResult> Create(string username, string password)
-    {
-        await userService.CreateUser(username, password);
-        return Ok();
-    }
+    public async Task<ActionResult> Create(string username, string password) => await userService.CreateUser(username, password) ? Ok() : Conflict();
 
     [HttpPut]
     public async Task<ActionResult<int>> Logon(string username, string password)

@@ -199,21 +199,23 @@ public class CloudManager(IDataParent parent)
         //Try to fetch new token
         //First load credentials from memory
         var credentialsIncorrect = false;
+        var registerWasBad = false;
         var username = Settings.Default.Username;
         var password = Settings.Default.Password;
 
         //If credentials are not set or invalid, open window to reenter
-        while (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || (_token = await Login(username, password)) is null)
+        while (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || registerWasBad || (_token = await Login(username, password)) is null)
         {
-            if (!LoginDialog.OpenWindow(credentialsIncorrect, out username, out password, out var register))
+            if (!LoginDialog.OpenWindow(credentialsIncorrect || registerWasBad, out username, out password, out var register))
             {
                 _token = null;
                 return false;
             }
             credentialsIncorrect = true; //Next time, show the "credentials incorrect" label
+            registerWasBad = false; //Next time, show the "register failed" label
 
             //Try to register new user, if user selected that
-            if (register && !await RegisterNewUser(username, password)) return false;
+            if (register && !await RegisterNewUser(username, password)) registerWasBad = true;
         }
 
         //Store the settings
