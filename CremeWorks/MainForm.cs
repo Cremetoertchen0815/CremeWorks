@@ -59,7 +59,7 @@ namespace CremeWorks
             _metronome = new Metronome();
             _metronome.Tick += TickMetronome;
 
-            _cloudManager = new CloudManager(this);
+            _cloudManager = new CloudManager();
             syncToolStripMenuItem.Checked = Settings.Default.SyncToCloud;
             if (Settings.Default.Recents == null)
             {

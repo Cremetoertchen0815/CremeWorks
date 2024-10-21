@@ -1,4 +1,5 @@
-﻿using CremeWorks.App.Data;
+﻿using BV.Game.Components.Network;
+using CremeWorks.App.Data;
 using CremeWorks.App.Dialogs.Cloud;
 using CremeWorks.App.Properties;
 using CremeWorks.DTO;
@@ -8,17 +9,11 @@ namespace CremeWorks.App.Networking.Cloud;
 public class CloudManager
 {
     private int? _token = null;
-    private readonly IDataParent _parent;
-    private readonly RestClient _client;
+    private RestClient? _client;
 
     private const string BASE_URL = "/api/cremeworks";
+    private const string DNS_NAME = "cremetoertchen.com";
 
-    public CloudManager(IDataParent parent)
-    {
-        _parent = parent;
-        _client = new RestClient("https://cremetoertchen.com");
-
-    private const string BASE_URL = "https://cremetoertchen.com/api/cremeworks";
 
     public async Task<CloudEntryInformation[]?> GetAllDatabases()
     {
@@ -254,11 +249,11 @@ public class CloudManager
 
     private async Task<bool> PingServer()
     {
-        PrepareClient();
+        await PrepareClient();
 
         var request = new RestRequest(BASE_URL + "/ping", Method.Get);
         request.Timeout = TimeSpan.FromSeconds(1);
-        var response = await _client.ExecuteAsync(request);
+        var response = await _client!.ExecuteAsync(request);
         return response.IsSuccessful;
     }
 
@@ -270,12 +265,13 @@ public class CloudManager
         return (await _client!.ExecuteAsync(request)).IsSuccessful;
     }
 
-    private void PrepareClient()
+    private async Task PrepareClient()
     {
         if (_client is not null) return;
 
-        var client = new HttpClient(new Ipv4OnlyHandler());
-        client.BaseAddress = new Uri(DNS_NAME);
+        var address = await DnsResolverIPv4.Instance.ResolveHostname(DNS_NAME);
+        var client = new HttpClient();
+        client.BaseAddress = new Uri($"http://{address}");
         _client = new RestClient(client);
     }
 }

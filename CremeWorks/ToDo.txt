@@ -1,4 +1,6 @@
 -Fix not being able to select no patch
 -Fix CP not applying Drive when fetching
+-Add function to copy playlist
+-Add function to rename patches
 
 -Fix SoundPlayer lag under Linux
