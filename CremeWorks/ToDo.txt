@@ -1,5 +1,4 @@
--Test cue system
--Test sound macros
--Implement cloud saves
+-Fix not being able to select no patch
+-Fix CP not applying Drive when fetching
 
 -Fix SoundPlayer lag under Linux

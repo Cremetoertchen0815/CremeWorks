@@ -5,13 +5,20 @@ using CremeWorks.DTO;
 using RestSharp;
 
 namespace CremeWorks.App.Networking.Cloud;
-public class CloudManager(IDataParent parent)
+public class CloudManager
 {
     private int? _token = null;
-    private readonly IDataParent _parent = parent;
-    private readonly RestClient _client = new();
+    private readonly IDataParent _parent;
+    private readonly RestClient _client;
 
-    private const string BASE_URL = "https://cremetoertchen.com/api/cremeworks";
+    private const string BASE_URL = "/api/cremeworks";
+
+    public CloudManager(IDataParent parent)
+    {
+        _parent = parent;
+        _client = new RestClient("https://cremetoertchen.com");
+
+    }
 
     public async Task<CloudEntryInformation[]?> GetAllDatabases()
     {
@@ -248,7 +255,6 @@ public class CloudManager(IDataParent parent)
     private async Task<bool> PingServer()
     {
         var request = new RestRequest(BASE_URL + "/ping", Method.Get);
-        request.Timeout = TimeSpan.FromSeconds(1);
         var response = await _client.ExecuteAsync(request);
         return response.IsSuccessful;
     }
