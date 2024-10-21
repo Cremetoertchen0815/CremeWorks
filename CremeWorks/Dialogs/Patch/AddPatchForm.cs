@@ -23,6 +23,22 @@ public partial class AddPatchForm : Form
         };
     }
 
+    public static void ShowRenameDialog(IDevicePatch patch)
+    {
+        var form = new AddPatchForm();
+        form.txtName.Text = patch.Name;
+        form.cmbType.Enabled = false;
+        form.cmbType.SelectedIndex = patch switch
+        {
+            CSPatch => 0,
+            CPPatch => 1,
+            YCPatch => 2,
+            _ => 3
+        };
+        form.Text = "Rename Patch";
+        if (form.ShowDialog() == DialogResult.OK) patch.Name = form.txtName.Text;
+    }
+
     private void button1_Click(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(txtName.Text))

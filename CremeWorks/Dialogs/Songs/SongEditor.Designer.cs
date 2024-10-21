@@ -406,6 +406,7 @@ namespace CremeWorks.App.Dialogs.Songs
             MinimizeBox = false;
             Name = "SongEditor";
             ShowIcon = false;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Edit Song";
             FormClosing += SongEditor_FormClosing;
             ((System.ComponentModel.ISupportInitialize)txtBpm).EndInit();

@@ -141,6 +141,7 @@ namespace CremeWorks
             btnDelete = new Button();
             label1 = new Label();
             boxPlayback = new ComboBox();
+            btnRename = new Button();
             voiceBoxCP.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown16).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown14).BeginInit();
@@ -1369,7 +1370,7 @@ namespace CremeWorks
             // 
             // btnNew
             // 
-            btnNew.Location = new Point(380, 43);
+            btnNew.Location = new Point(307, 43);
             btnNew.Name = "btnNew";
             btnNew.Size = new Size(67, 23);
             btnNew.TabIndex = 39;
@@ -1379,7 +1380,7 @@ namespace CremeWorks
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(453, 43);
+            btnDelete.Location = new Point(380, 43);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(67, 23);
             btnDelete.TabIndex = 41;
@@ -1406,11 +1407,22 @@ namespace CremeWorks
             boxPlayback.TabIndex = 43;
             boxPlayback.SelectedIndexChanged += boxPlayback_SelectedIndexChanged;
             // 
+            // btnRename
+            // 
+            btnRename.Location = new Point(453, 43);
+            btnRename.Name = "btnRename";
+            btnRename.Size = new Size(67, 23);
+            btnRename.TabIndex = 44;
+            btnRename.Text = "Rename";
+            btnRename.UseVisualStyleBackColor = true;
+            btnRename.Click += btnRename_Click;
+            // 
             // PatchEditor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(532, 564);
+            Controls.Add(btnRename);
             Controls.Add(boxPlayback);
             Controls.Add(label1);
             Controls.Add(voiceBoxPC);
@@ -1595,5 +1607,6 @@ namespace CremeWorks
         private Button btnDelete;
         private Label label1;
         private ComboBox boxPlayback;
+        private Button btnRename;
     }
 }

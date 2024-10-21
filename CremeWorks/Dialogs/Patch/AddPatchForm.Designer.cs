@@ -58,7 +58,7 @@ partial class AddPatchForm
         button1.Name = "button1";
         button1.Size = new Size(76, 34);
         button1.TabIndex = 2;
-        button1.Text = "Add";
+        button1.Text = "OK";
         button1.UseVisualStyleBackColor = true;
         button1.Click += button1_Click;
         // 
@@ -95,6 +95,7 @@ partial class AddPatchForm
         MinimizeBox = false;
         Name = "AddPatchForm";
         ShowIcon = false;
+        StartPosition = FormStartPosition.CenterParent;
         Text = "Add Patch";
         ResumeLayout(false);
         PerformLayout();

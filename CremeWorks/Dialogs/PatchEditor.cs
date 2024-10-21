@@ -310,6 +310,13 @@ namespace CremeWorks
             }
         }
 
+        private void btnRename_Click(object sender, EventArgs e)
+        {
+            if (boxSelector.SelectedItem is not PatchComboBoxItem item) return;
+            AddPatchForm.ShowRenameDialog(item.patch);
+            boxSelector.Items[boxSelector.SelectedIndex] = item;
+        }
+
         private void boxSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
             SaveVoiceData();
@@ -323,7 +330,8 @@ namespace CremeWorks
             if (dev is null)
             {
                 _parent.MidiManager.UpdateMatrix([]);
-            } else
+            }
+            else
             {
                 _parent.MidiManager.UpdateMatrix([new MidiMatrixNode(dev.deviceId, dev.deviceId, MidiMatrixNodeType.Both)]);
             }

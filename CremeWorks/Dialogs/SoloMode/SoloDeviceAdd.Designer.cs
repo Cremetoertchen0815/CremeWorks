@@ -72,6 +72,7 @@ partial class SoloDeviceAdd
         MinimizeBox = false;
         Name = "SoloDeviceAdd";
         ShowIcon = false;
+        StartPosition = FormStartPosition.CenterParent;
         Text = "Add Device";
         ResumeLayout(false);
     }
