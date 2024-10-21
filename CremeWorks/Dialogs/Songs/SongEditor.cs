@@ -55,8 +55,11 @@ namespace CremeWorks.App.Dialogs.Songs
                 cmbBox.Location = new Point(589, patchBaseYPos);
                 cmbBox.Name = "boxPatch" + item.Key;
                 cmbBox.Size = new Size(146, 23);
+                cmbBox.Items.Add(new ComboBoxPatchItem(-1, "-"));
                 cmbBox.Items.AddRange(_parent.Database.Patches.Where(x => x.Value.DeviceType == item.Value.Type).Select(x => new ComboBoxPatchItem(x.Key, x.Value.Name)).ToArray());
                 cmbBox.SelectedItem = cmbBox.Items.Cast<ComboBoxPatchItem>().FirstOrDefault(x => x.PatchId == _s.Patches.FirstOrDefault(y => y.DeviceId == item.Key).PatchId);
+                if (cmbBox.SelectedItem == null) cmbBox.SelectedIndex = 0;
+
                 Controls.Add(cmbBox);
                 _patchBoxes.Add(item.Key, cmbBox);
 
@@ -99,7 +102,7 @@ namespace CremeWorks.App.Dialogs.Songs
             _s.Cues.Clear();
             foreach (var item in _patchBoxes)
             {
-                if (item.Value.SelectedItem is not ComboBoxPatchItem ca) continue;
+                if (item.Value.SelectedItem is not ComboBoxPatchItem ca || ca.PatchId < 0) continue;
                 _s.Patches.Add(new PatchInstance { PatchId = ca.PatchId, DeviceId = item.Key });
             }
 
