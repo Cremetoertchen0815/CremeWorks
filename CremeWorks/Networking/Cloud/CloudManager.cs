@@ -18,11 +18,11 @@ public class CloudManager
         _parent = parent;
         _client = new RestClient("https://cremetoertchen.com");
 
-    }
+    private const string BASE_URL = "https://cremetoertchen.com/api/cremeworks";
 
     public async Task<CloudEntryInformation[]?> GetAllDatabases()
     {
-        if (!await CheckCredentials()) return null;
+        if (!await CheckCredentials() || _client is null) return null;
 
         var request = new RestRequest($"{BASE_URL}/allentries", Method.Get);
         request.AddQueryParameter("token", _token!.Value);
@@ -33,7 +33,7 @@ public class CloudManager
     public async Task<int?> Register(Database db, string name, bool isPublic)
     {
         //Check if token is valid
-        if (!await CheckCredentials()) return null;
+        if (!await CheckCredentials() || _client is null) return null;
 
         var newXml = FileParser.GetContentXmlString(db);
         var newHash = StringHasher.GetConsistentHash(newXml);
@@ -52,7 +52,7 @@ public class CloudManager
     public async Task<Database?> Fetch(int id)
     {
         //Check if token is valid
-        if (!await CheckCredentials()) return null;
+        if (!await CheckCredentials() || _client is null) return null;
 
         //Fetch basic information
         var request = new RestRequest($"{BASE_URL}/entryinfo", Method.Get);
@@ -88,7 +88,7 @@ public class CloudManager
         if (db.CloudId is null) return false;
 
         //Make sure the user has a valid session
-        if (!await CheckCredentials()) return false;
+        if (!await CheckCredentials() || _client is null) return false;
 
         //Fetch the "last saved" value
         var request = new RestRequest($"{BASE_URL}/entryinfo", Method.Get);
@@ -239,7 +239,7 @@ public class CloudManager
         requestUri.AddQueryParameter("username", username);
         requestUri.AddQueryParameter("password", password);
 
-        var response = await _client.ExecuteAsync<int>(requestUri);
+        var response = await _client!.ExecuteAsync<int>(requestUri);
         return response.IsSuccessful ? response.Data : null;
     }
 
@@ -249,12 +249,15 @@ public class CloudManager
         requestUri.AddQueryParameter("username", username);
         requestUri.AddQueryParameter("password", password);
 
-        return (await _client.ExecuteAsync(requestUri)).IsSuccessStatusCode;
+        return (await _client!.ExecuteAsync(requestUri)).IsSuccessStatusCode;
     }
 
     private async Task<bool> PingServer()
     {
+        PrepareClient();
+
         var request = new RestRequest(BASE_URL + "/ping", Method.Get);
+        request.Timeout = TimeSpan.FromSeconds(1);
         var response = await _client.ExecuteAsync(request);
         return response.IsSuccessful;
     }
@@ -264,6 +267,15 @@ public class CloudManager
         if (_token is null) return false;
         var request = new RestRequest(BASE_URL + "/user", Method.Get);
         request.AddParameter("token", _token.Value);
-        return (await _client.ExecuteAsync(request)).IsSuccessful;
+        return (await _client!.ExecuteAsync(request)).IsSuccessful;
+    }
+
+    private void PrepareClient()
+    {
+        if (_client is not null) return;
+
+        var client = new HttpClient(new Ipv4OnlyHandler());
+        client.BaseAddress = new Uri(DNS_NAME);
+        _client = new RestClient(client);
     }
 }
