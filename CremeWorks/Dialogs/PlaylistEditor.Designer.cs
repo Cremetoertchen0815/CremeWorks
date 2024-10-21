@@ -131,7 +131,6 @@ partial class PlaylistEditor
         lstEntries.FullRowSelect = true;
         lstEntries.Location = new Point(98, 79);
         lstEntries.Margin = new Padding(4, 3, 4, 3);
-        lstEntries.MultiSelect = false;
         lstEntries.Name = "lstEntries";
         lstEntries.Size = new Size(343, 344);
         lstEntries.TabIndex = 36;
@@ -141,6 +140,7 @@ partial class PlaylistEditor
         lstEntries.DragDrop += lstEntries_DragDrop;
         lstEntries.DragEnter += lstEntries_DragEnter;
         lstEntries.DragOver += lstEntries_DragOver;
+        lstEntries.KeyPress += lstEntries_KeyPress;
         lstEntries.MouseDoubleClick += lstEntries_MouseDoubleClick;
         // 
         // columnNr

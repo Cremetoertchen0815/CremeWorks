@@ -1,6 +1,8 @@
 ﻿using CremeWorks.App.Data;
 using CremeWorks.App.Dialogs.Playlist;
+using System;
 using System.ComponentModel;
+using System.Reflection;
 using PlaylistClass = CremeWorks.App.Data.Playlist;
 
 namespace CremeWorks.App.Dialogs;
@@ -209,15 +211,18 @@ public partial class PlaylistEditor : Form
     private void btnUp_Click(object sender, EventArgs e)
     {
         if (boxSelector.SelectedItem is not PlaylistComboboxItem item || lstEntries.SelectedItems.Count == 0) return;
-        var index = lstEntries.SelectedIndices[0];
-        if (index == 0) return;
-        var entry = item.PlaylistEntries[index];
-        item.PlaylistEntries.RemoveAt(index);
-        item.PlaylistEntries.Insert(index - 1, entry);
-        //Modify the list view
-        var lvi = lstEntries.Items[index];
-        lstEntries.Items.RemoveAt(index);
-        lstEntries.Items.Insert(index - 1, lvi);
+        if (lstEntries.SelectedIndices[0] <= 0) return;
+
+        foreach (var index in lstEntries.SelectedIndices.Cast<int>())
+        {
+            var entry = item.PlaylistEntries[index];
+            item.PlaylistEntries.RemoveAt(index);
+            item.PlaylistEntries.Insert(index - 1, entry);
+            //Modify the list view
+            var lvi = lstEntries.Items[index];
+            lstEntries.Items.RemoveAt(index);
+            lstEntries.Items.Insert(index - 1, lvi);
+        }
 
         FixSongNumeration();
     }
@@ -225,15 +230,18 @@ public partial class PlaylistEditor : Form
     private void btnDown_Click(object sender, EventArgs e)
     {
         if (boxSelector.SelectedItem is not PlaylistComboboxItem item || lstEntries.SelectedItems.Count == 0) return;
-        var index = lstEntries.SelectedIndices[0];
-        if (index == item.PlaylistEntries.Count - 1) return;
-        var entry = item.PlaylistEntries[index];
-        item.PlaylistEntries.RemoveAt(index);
-        item.PlaylistEntries.Insert(index + 1, entry);
-        //Modify the list view
-        var lvi = lstEntries.Items[index];
-        lstEntries.Items.RemoveAt(index);
-        lstEntries.Items.Insert(index + 1, lvi);
+        if (lstEntries.SelectedIndices[^1] >= item.PlaylistEntries.Count - 1) return;
+
+        foreach (var index in lstEntries.SelectedIndices.Cast<int>().Reverse())
+        {
+            var entry = item.PlaylistEntries[index];
+            item.PlaylistEntries.RemoveAt(index);
+            item.PlaylistEntries.Insert(index + 1, entry);
+            //Modify the list view
+            var lvi = lstEntries.Items[index];
+            lstEntries.Items.RemoveAt(index);
+            lstEntries.Items.Insert(index + 1, lvi);
+        }
 
         FixSongNumeration();
     }
@@ -241,35 +249,39 @@ public partial class PlaylistEditor : Form
     private void btnDuplicate_Click(object sender, EventArgs e)
     {
         if (boxSelector.SelectedItem is not PlaylistComboboxItem item || lstEntries.SelectedItems.Count == 0) return;
-        var entry = lstEntries.SelectedItems[0].Tag as IPlaylistEntry;
-        if (entry is SongPlaylistEntry song)
+
+        foreach (var entry in lstEntries.SelectedItems.Cast<ListViewItem>())
         {
-            var newEntry = new SongPlaylistEntry(song.SongId);
-            item.PlaylistEntries.Add(newEntry);
-            lstEntries.Items.Add(new ListViewItem(new[]
+            if (entry.Tag is SongPlaylistEntry song)
             {
-                item.PlaylistEntries.Count(x => x is SongPlaylistEntry).ToString(),
-                lstEntries.SelectedItems[0].SubItems[1].Text,
-                lstEntries.SelectedItems[0].SubItems[2].Text,
-                "Song",
-                lstEntries.SelectedItems[0].SubItems[4].Text
-            })
-            { Tag = newEntry });
-        }
-        else if (entry is MarkerPlaylistEntry marker)
-        {
-            var newEntry = new MarkerPlaylistEntry() { Text = marker.Text };
-            item.PlaylistEntries.Add(newEntry);
-            lstEntries.Items.Add(new ListViewItem(new[]
+                var newEntry = (SongPlaylistEntry)song.CreateCopy();
+                item.PlaylistEntries.Add(newEntry);
+                lstEntries.Items.Add(new ListViewItem(
+                [
+                    item.PlaylistEntries.Count(x => x is SongPlaylistEntry).ToString(),
+                    entry.SubItems[1].Text,
+                    entry.SubItems[2].Text,
+                    "Song",
+                    entry.SubItems[4].Text
+                ])
+                { Tag = newEntry });
+            }
+            else if (entry.Tag is MarkerPlaylistEntry marker)
             {
-                string.Empty,
-                marker.Text,
-                "-",
-                "Marker",
-                "-"
-            })
-            { Tag = newEntry });
+                var newEntry = (MarkerPlaylistEntry)marker.CreateCopy();
+                item.PlaylistEntries.Add(newEntry);
+                lstEntries.Items.Add(new ListViewItem(
+                [
+                    string.Empty,
+                    marker.Text,
+                    "-",
+                    "Marker",
+                    "-"
+                ])
+                { Tag = newEntry });
+            }
         }
+
         FixSongNumeration();
         CalculateTotalDuration();
     }
@@ -277,9 +289,13 @@ public partial class PlaylistEditor : Form
     private void btnDelete_Click(object sender, EventArgs e)
     {
         if (boxSelector.SelectedItem is not PlaylistComboboxItem item || lstEntries.SelectedItems.Count == 0) return;
-        var entityToRemove = lstEntries.SelectedItems[0].Tag as IPlaylistEntry;
-        if (entityToRemove is not null) item.PlaylistEntries.Remove(entityToRemove);
-        lstEntries.Items.Remove(lstEntries.SelectedItems[0]);
+
+        foreach (var entry in lstEntries.SelectedItems.Cast<ListViewItem>())
+        {
+            if (entry.Tag is not IPlaylistEntry entityToRemove) continue;
+            if (entityToRemove is not null) item.PlaylistEntries.Remove(entityToRemove);
+            lstEntries.Items.Remove(entry);
+        }
         FixSongNumeration();
         CalculateTotalDuration();
     }
@@ -394,6 +410,14 @@ public partial class PlaylistEditor : Form
     }
 
     private void lstEntries_MouseDoubleClick(object sender, MouseEventArgs e) => btnEdit_Click(sender, e);
+
+    private void lstEntries_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (e.KeyChar == (char)Keys.Enter) btnEdit_Click(sender, e);
+        else if (e.KeyChar == (char)Keys.Delete) btnDelete_Click(sender, e);
+        else if (e.KeyChar == (char)Keys.Up) btnUp_Click(sender, e);
+        else if (e.KeyChar == (char)Keys.Down) btnDown_Click(sender, e);
+    }
 }
 
 public class PlaylistComboboxItem(string name, DateOnly date)
