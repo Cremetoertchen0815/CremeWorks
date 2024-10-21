@@ -1,5 +1,5 @@
--Fix CP not applying Drive when fetching
--Add function to copy playlist
 -Add function to rename patches
+-Add multi-selection for playlist
+-Add common keyboard shortcuts
 
 -Fix SoundPlayer lag under Linux

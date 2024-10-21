@@ -43,6 +43,8 @@ public partial class PlaylistEditor : Form
             boxSelector.SelectedIndex = 0;
             boxSelector_SelectedIndexChanged(this, EventArgs.Empty);
         }
+
+        if (_comboItems.Count == 0) btnCopy.Enabled = false;
     }
 
     private void btnPlus_Click(object sender, EventArgs e)
@@ -52,6 +54,22 @@ public partial class PlaylistEditor : Form
         boxSelector.Text = item.ToString();
         boxSelector.SelectedItem = item;
         boxSelector_SelectedIndexChanged(sender, e);
+        btnCopy.Enabled = true;
+    }
+
+
+    private void btnCopy_Click(object sender, EventArgs e)
+    {
+        var item = boxSelector.SelectedItem as PlaylistComboboxItem;
+        if (item is null) return;
+        var newItem = new PlaylistComboboxItem(item.Name + " (Copy)", item.Date);
+        newItem.PlaylistEntries.AddRange(item.PlaylistEntries.Select(x => x.CreateCopy()));
+        _comboItems.Add(newItem);
+
+        boxSelector.Text = newItem.ToString();
+        boxSelector.SelectedItem = newItem;
+        boxSelector_SelectedIndexChanged(sender, e);
+        btnCopy.Enabled = true;
     }
 
     private void btnMinus_Click(object sender, EventArgs e)
@@ -62,6 +80,7 @@ public partial class PlaylistEditor : Form
         if (boxSelector.SelectedIndex < 0)
         {
             boxSelector.Text = string.Empty;
+            btnCopy.Enabled = false;
         }
     }
 

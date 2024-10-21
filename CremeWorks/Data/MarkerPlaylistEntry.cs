@@ -4,14 +4,24 @@ namespace CremeWorks.App.Data;
 
 public class MarkerPlaylistEntry : IPlaylistEntry
 {
+    //Content
     public string Text { get; set; } = string.Empty;
     public string Instructions { get; set; } = string.Empty;
     public List<CueInstance> Cues { get; init; } = [];
 
+    //IPlaylistEntry
     public PlaylistEntryType Type => PlaylistEntryType.Marker;
 
     public PlaylistEntryCommonInfo GetCommonInformation(Database db, int indexInPlaylist, bool isSet) => new(indexInPlaylist, $"---{Text}---", Text, string.Empty, string.Empty, string.Empty, Instructions, 0, Cues);
+    
+    public IPlaylistEntry CreateCopy() => new MarkerPlaylistEntry
+    {
+        Text = Text,
+        Instructions = Instructions,
+        Cues = [.. Cues]
+    };
 
+    //Serialization
     public static MarkerPlaylistEntry Deserialize(XmlNode node)
     {
         var entry = new MarkerPlaylistEntry

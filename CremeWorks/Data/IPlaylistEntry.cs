@@ -1,8 +1,20 @@
 ﻿namespace CremeWorks.App.Data;
 
+/// <summary>
+/// Represents an entry in a playlist.
+/// </summary>
 public interface IPlaylistEntry
 {
+    /// <summary>
+    /// The type of the entry.
+    /// </summary>
     PlaylistEntryType Type { get; }
+
+    /// <summary>
+    /// Creates a deep copy of the entry.
+    /// </summary>
+    /// <returns></returns>
+    IPlaylistEntry CreateCopy();
 
     /// <summary>
     /// Retrieves common display information from the entry(white is merely a reference) with the given database.
