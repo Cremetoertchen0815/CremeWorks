@@ -66,12 +66,6 @@ namespace CremeWorks.App.Dialogs.Songs
                 patchBaseYPos += 29;
             }
 
-            if (_patchBoxes.Count > 0)
-            {
-                lblDevicePatches.Visible = true;
-                lblDevicePatches.Location = new Point(516, patchBaseYPos);
-            }
-
             _metronome.Tick += blinkTimer_Tick;
             _metronome.Start((int)txtBpm.Value);
         }

@@ -47,7 +47,6 @@ namespace CremeWorks.App.Dialogs.Songs
             txtInstructions = new TextBox();
             label35 = new Label();
             btnRouting = new Button();
-            lblDevicePatches = new Label();
             lstCues = new ListBox();
             label5 = new Label();
             btnCueAdd = new Button();
@@ -59,6 +58,7 @@ namespace CremeWorks.App.Dialogs.Songs
             label7 = new Label();
             label8 = new Label();
             txtDurationSec = new NumericUpDown();
+            label9 = new Label();
             ((System.ComponentModel.ISupportInitialize)txtBpm).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtDurationMin).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtDurationSec).BeginInit();
@@ -246,16 +246,6 @@ namespace CremeWorks.App.Dialogs.Songs
             btnRouting.UseVisualStyleBackColor = true;
             btnRouting.Click += btnRouting_Click;
             // 
-            // lblDevicePatches
-            // 
-            lblDevicePatches.Location = new Point(428, 259);
-            lblDevicePatches.Name = "lblDevicePatches";
-            lblDevicePatches.Size = new Size(70, 37);
-            lblDevicePatches.TabIndex = 143;
-            lblDevicePatches.Text = "Device Patches";
-            lblDevicePatches.TextAlign = ContentAlignment.TopRight;
-            lblDevicePatches.Visible = false;
-            // 
             // lstCues
             // 
             lstCues.FormattingEnabled = true;
@@ -364,12 +354,23 @@ namespace CremeWorks.App.Dialogs.Songs
             txtDurationSec.TabIndex = 154;
             txtDurationSec.Value = new decimal(new int[] { 30, 0, 0, 0 });
             // 
+            // label9
+            // 
+            label9.Location = new Point(428, 259);
+            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(70, 35);
+            label9.TabIndex = 156;
+            label9.Text = "Device Patches";
+            label9.TextAlign = ContentAlignment.MiddleRight;
+            // 
             // SongEditor
             // 
             AcceptButton = btnOk;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(845, 617);
+            Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(txtDurationSec);
             Controls.Add(label6);
@@ -381,7 +382,6 @@ namespace CremeWorks.App.Dialogs.Songs
             Controls.Add(btnCueAdd);
             Controls.Add(label5);
             Controls.Add(lstCues);
-            Controls.Add(lblDevicePatches);
             Controls.Add(btnRouting);
             Controls.Add(txtInstructions);
             Controls.Add(label35);
@@ -436,7 +436,6 @@ namespace CremeWorks.App.Dialogs.Songs
         private System.Windows.Forms.TextBox txtInstructions;
         private System.Windows.Forms.Label label35;
         private Button btnRouting;
-        private Label lblDevicePatches;
         private ListBox lstCues;
         private Label label5;
         private Button btnCueAdd;
@@ -448,5 +447,6 @@ namespace CremeWorks.App.Dialogs.Songs
         private Label label7;
         private Label label8;
         private NumericUpDown txtDurationSec;
+        private Label label9;
     }
 }
