@@ -160,8 +160,8 @@ namespace CremeWorks.App.Dialogs.Songs
             if (SongCueEditor.EditCue(_parent, ref cueInstance))
             {
                 cbi.Instance = cueInstance;
-
-                lstCues.Refresh();
+                cbi.LightingCueItem = _parent.Database.LightingCues[cueInstance.CueId];
+                lstCues.Items[lstCues.SelectedIndex] = cbi;
             }
 
         }
