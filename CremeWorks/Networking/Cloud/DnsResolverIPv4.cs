@@ -12,8 +12,8 @@ public class DnsResolverIPv4
     public static readonly DnsResolverIPv4 Instance = new();
     private DnsResolverIPv4() { }
 
-    private string _lastHostName = null;
-    private IPAddress _lastIP = null;
+    private string? _lastHostName = null;
+    private IPAddress? _lastIP = null;
 
     /// <summary>
     /// Translate the <paramref name="hostname"/> parameter into an IPv4 address asynchronously.
@@ -24,7 +24,7 @@ public class DnsResolverIPv4
     /// <returns></returns>
     public async Task<IPAddress> ResolveHostname(string hostname)
     {
-        if (_lastHostName == hostname) return _lastIP;
+        if (_lastIP is not null && _lastHostName == hostname) return _lastIP;
 
         var addresses = await Dns.GetHostAddressesAsync(_lastHostName = hostname, AddressFamily.InterNetwork);
         return _lastIP = addresses.First();
