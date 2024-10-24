@@ -22,11 +22,18 @@ public class DnsResolverIPv4
     /// </summary>
     /// <param name="hostname"></param>
     /// <returns></returns>
-    public async Task<IPAddress> ResolveHostname(string hostname)
+    public async Task<IPAddress?> ResolveHostname(string hostname)
     {
         if (_lastIP is not null && _lastHostName == hostname) return _lastIP;
 
-        var addresses = await Dns.GetHostAddressesAsync(_lastHostName = hostname, AddressFamily.InterNetwork);
-        return _lastIP = addresses.First();
+        try
+        {
+            var addresses = await Dns.GetHostAddressesAsync(_lastHostName = hostname, AddressFamily.InterNetwork);
+            return _lastIP = addresses.First();
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 }
