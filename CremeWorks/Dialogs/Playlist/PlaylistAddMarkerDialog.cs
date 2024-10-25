@@ -39,8 +39,8 @@ public partial class PlaylistAddMarkerDialog : Form
         if (SongCueEditor.EditCue(_parent, ref cueInstance))
         {
             cbi.Instance = cueInstance;
-
-            lstCues.Refresh();
+            cbi.LightingCueItem = _parent.Database.LightingCues[cueInstance.CueId];
+            lstCues.Items[lstCues.SelectedIndex] = cbi;
         }
 
     }
