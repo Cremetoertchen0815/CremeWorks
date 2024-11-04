@@ -145,13 +145,13 @@ namespace CremeWorks
 
             songTime.Text = "00:00 (+00:00)";
             songTime.ForeColor = Color.Black;
-            songTimer.Stop();
             _secondsCounter = 0;
 
             if (_activeEntry == null)
             {
                 _server.SendToAll(MessageTypeEnum.CLICK_INFO, "off");
                 _metronome.Stop();
+                songTimer.Stop();
                 return;
             }
 
