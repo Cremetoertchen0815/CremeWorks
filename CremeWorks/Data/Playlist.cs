@@ -35,7 +35,7 @@ public class Playlist
             contentBuilder.AppendLine(resultStr);
         }
         contentBuilder.AppendLine();
-        contentBuilder.AppendLine($";;;;{TimeSpan.FromSeconds(secondsSum):mm\\:ss};;");
+        contentBuilder.AppendLine($";;;{TimeSpan.FromSeconds(secondsSum):hh\\:mm\\:ss};;;");
 
         return contentBuilder.ToString();
     }
