@@ -248,11 +248,11 @@ public class CloudManager
     }
 
     private async Task<bool> PingServer()
-    {
-        if (!await PrepareClient()) return false;
+        await PrepareClient();
+        if (_client is null) return false;
 
         var request = new RestRequest(BASE_URL + "/ping", Method.Get);
-        request.Timeout = TimeSpan.FromSeconds(1);
+        request.Timeout = TimeSpan.FromSeconds(5);
         var response = await _client!.ExecuteAsync(request);
         return response.IsSuccessful;
     }
@@ -270,7 +270,7 @@ public class CloudManager
         if (_client is not null) return true;
 
         var address = await DnsResolverIPv4.Instance.ResolveHostname(DNS_NAME);
-        if (address == null) return false;
+        if (address is null) return;
 
         var client = new HttpClient();
         client.BaseAddress = new Uri($"http://{address}");

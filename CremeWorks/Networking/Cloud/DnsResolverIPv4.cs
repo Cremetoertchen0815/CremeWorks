@@ -24,10 +24,10 @@ public class DnsResolverIPv4
     /// <returns></returns>
     public async Task<IPAddress?> ResolveHostname(string hostname)
     {
+        if (_lastIP is not null && _lastHostName == hostname) return _lastIP;
+
         try
         {
-            if (_lastIP is not null && _lastHostName == hostname) return _lastIP;
-
             var addresses = await Dns.GetHostAddressesAsync(_lastHostName = hostname, AddressFamily.InterNetwork);
             return _lastIP = addresses.First();
         }

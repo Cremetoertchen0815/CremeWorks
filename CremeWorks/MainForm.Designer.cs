@@ -604,6 +604,7 @@ namespace CremeWorks
             // songTimer
             // 
             songTimer.Interval = 1000;
+            songTimer.Tag = "Schlagerstrudel";
             songTimer.Tick += songTimer_Tick;
             // 
             // MainForm
