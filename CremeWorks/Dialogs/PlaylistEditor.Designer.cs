@@ -142,6 +142,9 @@ partial class PlaylistEditor
         lstEntries.DragOver += lstEntries_DragOver;
         lstEntries.KeyPress += lstEntries_KeyPress;
         lstEntries.MouseDoubleClick += lstEntries_MouseDoubleClick;
+        lstEntries.MouseDown += lstEntries_MouseDown;
+        lstEntries.MouseMove += lstEntries_MouseMove;
+        lstEntries.MouseUp += lstEntries_MouseUp;
         // 
         // columnNr
         // 

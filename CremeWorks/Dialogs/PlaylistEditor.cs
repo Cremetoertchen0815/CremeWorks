@@ -11,7 +11,8 @@ public partial class PlaylistEditor : Form
     private readonly IDataParent _parent;
     private readonly BindingList<PlaylistComboboxItem> _comboItems = [];
     private bool _canDataBeUpdated = true;
-    private ListViewItem? draggedItem;
+    private bool _isDragging = false; 
+    private Point _dragStartPoint; // To track the drag starting position
 
     public PlaylistEditor(IDataParent parent, PlaylistClass? currentPlaylist)
     {
@@ -315,16 +316,15 @@ public partial class PlaylistEditor : Form
 
     private void lstEntries_ItemDrag(object sender, ItemDragEventArgs e)
     {
-        // Start dragging the item
-        draggedItem = (ListViewItem?)e.Item;
-        if (draggedItem is null) return;
-        DoDragDrop(draggedItem, DragDropEffects.Move);
+        if (lstEntries.SelectedItems.Count == 0) return;
+
+        // Start dragging all selected items
+        DoDragDrop(lstEntries.SelectedItems.Cast<ListViewItem>().ToList(), DragDropEffects.Move);
     }
 
     private void lstEntries_DragEnter(object sender, DragEventArgs e)
     {
-        // Allow move operation
-        if (e.Data?.GetDataPresent(typeof(ListViewItem)) == true)
+        if (e.Data?.GetDataPresent(typeof(List<ListViewItem>)) == true)
         {
             e.Effect = DragDropEffects.Move;
         }
@@ -336,59 +336,74 @@ public partial class PlaylistEditor : Form
 
     private void lstEntries_DragOver(object sender, DragEventArgs e)
     {
-        // Ensure the effect is Move while dragging over
-        e.Effect = DragDropEffects.Move;
-
-        // Get the location in the ListView
-        Point point = lstEntries.PointToClient(new Point(e.X, e.Y));
-
-        // Get the target item under the mouse
-        ListViewItem? targetItem = lstEntries.GetItemAt(point.X, point.Y);
-
-        // Highlight the target item for better user experience
-        if (targetItem != null && targetItem != draggedItem)
+        if (e.Data?.GetData(typeof(List<ListViewItem>)) is List<ListViewItem> draggedItems)
         {
-            targetItem.Selected = true;
-            targetItem.Focused = true;
+            // Ensure dragged items remain selected
+            foreach (ListViewItem item in lstEntries.Items)
+            {
+                item.Selected = draggedItems.Contains(item);
+            }
+
+            e.Effect = DragDropEffects.Move;
+        }
+        else
+        {
+            e.Effect = DragDropEffects.None;
         }
     }
 
     private void lstEntries_DragDrop(object sender, DragEventArgs e)
     {
-        // Get the drop point
-        Point point = lstEntries.PointToClient(new Point(e.X, e.Y));
 
-        // Get the target item
+        if (e.Data?.GetData(typeof(List<ListViewItem>)) is not List<ListViewItem> draggedItems) return;
+
+        Point point = lstEntries.PointToClient(new Point(e.X, e.Y));
         ListViewItem? targetItem = lstEntries.GetItemAt(point.X, point.Y);
 
-        if (targetItem != null && draggedItem != null)
+        if (targetItem is null) return;
+
+        var playlist = boxSelector.SelectedItem as PlaylistComboboxItem;
+        if (playlist is null) return;
+
+        int targetIndex = targetItem.Index;
+
+        // Determine if we should insert before or after based on drag direction
+        bool insertAfter = point.Y > _dragStartPoint.Y;
+
+        if (insertAfter)
         {
-            // Find the indices of the dragged item and target item
-            int draggedIndex = draggedItem.Index;
-            int targetIndex = targetItem.Index;
-
-            // Remove the dragged item
-            var playlist = boxSelector.SelectedItem as PlaylistComboboxItem;
-            if (playlist is null) return;
-            var entry = playlist.PlaylistEntries[draggedIndex];
-            playlist.PlaylistEntries.RemoveAt(draggedIndex);
-            lstEntries.Items.RemoveAt(draggedIndex);
-
-            // Insert it at the target location
-            playlist.PlaylistEntries.Insert(targetIndex, entry);
-            lstEntries.Items.Insert(targetIndex, draggedItem);
-
-            FixSongNumeration();
-
-
-            // Clear the selection
-            draggedItem.Selected = false;
-            draggedItem.Focused = false;
-
-            // Re-select and focus the moved item for visibility
-            lstEntries.Items[targetIndex].Selected = true;
-            lstEntries.Items[targetIndex].Focused = true;
+            targetIndex++; // Adjust to insert *after* the target item
         }
+
+        // Adjust the target index to account for items removed above it
+        int originalTargetIndex = targetIndex;
+
+        // Remove dragged items from the playlist and ListView
+        foreach (var draggedItem in draggedItems)
+        {
+            if (draggedItem.Tag is IPlaylistEntry entryToRemove)
+            {
+                int indexToRemove = playlist.PlaylistEntries.IndexOf(entryToRemove);
+                if (indexToRemove < originalTargetIndex)
+                {
+                    targetIndex--; // Decrement target index for each removed item above it
+                }
+                playlist.PlaylistEntries.Remove(entryToRemove);
+                lstEntries.Items.Remove(draggedItem);
+            }
+        }
+
+        // Re-insert dragged items at the adjusted target position
+        for (int i = 0; i < draggedItems.Count; i++)
+        {
+            var entry = draggedItems[i].Tag as IPlaylistEntry;
+            if (entry is null) continue;
+
+            playlist.PlaylistEntries.Insert(targetIndex + i, entry);
+            lstEntries.Items.Insert(targetIndex + i, draggedItems[i]);
+        }
+
+        FixSongNumeration();
     }
 
     private void FixSongNumeration()
@@ -417,6 +432,34 @@ public partial class PlaylistEditor : Form
         else if (e.KeyChar == (char)Keys.Delete) btnDelete_Click(sender, e);
         else if (e.KeyChar == (char)Keys.Up) btnUp_Click(sender, e);
         else if (e.KeyChar == (char)Keys.Down) btnDown_Click(sender, e);
+    }
+
+    private void lstEntries_MouseDown(object sender, MouseEventArgs e)
+    {
+        var hitTestInfo = lstEntries.HitTest(e.X, e.Y);
+        if (hitTestInfo.Item != null && hitTestInfo.Item.Selected)
+        {
+            _isDragging = true; // Prevent selection change
+            _dragStartPoint = e.Location; // Track the drag start position
+        }
+        else
+        {
+            _isDragging = false; // Allow selection change
+        }
+    }
+
+    private void lstEntries_MouseUp(object sender, MouseEventArgs e)
+    {
+        _isDragging = false; // Reset dragging flag on mouse release
+    }
+
+    private void lstEntries_MouseMove(object sender, MouseEventArgs e)
+    {
+        if (_isDragging && e.Button == MouseButtons.Left)
+        {
+            // Start drag operation without changing the selection
+            lstEntries.DoDragDrop(lstEntries.SelectedItems.Cast<ListViewItem>().ToList(), DragDropEffects.Move);
+        }
     }
 }
 
