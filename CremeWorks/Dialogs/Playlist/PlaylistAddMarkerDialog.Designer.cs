@@ -122,6 +122,7 @@ partial class PlaylistAddMarkerDialog
         lstCues.Name = "lstCues";
         lstCues.Size = new Size(328, 199);
         lstCues.TabIndex = 164;
+        lstCues.MouseDoubleClick += lstCues_MouseDoubleClick;
         // 
         // txtInstructions
         // 

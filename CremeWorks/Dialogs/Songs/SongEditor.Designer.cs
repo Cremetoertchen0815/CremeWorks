@@ -254,6 +254,7 @@ namespace CremeWorks.App.Dialogs.Songs
             lstCues.Name = "lstCues";
             lstCues.Size = new Size(328, 199);
             lstCues.TabIndex = 145;
+            lstCues.MouseDoubleClick += lstCues_MouseDoubleClick;
             // 
             // label5
             // 

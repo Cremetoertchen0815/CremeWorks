@@ -190,5 +190,11 @@ namespace CremeWorks.App.Dialogs.Songs
         }
 
         private void btnRouting_Click(object sender, EventArgs e) => new SongRoutingEditor(_parent, _s).ShowDialog();
+
+        private void lstCues_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (lstCues.IndexFromPoint(new Point(e.X, e.Y)) < 0) return;
+            btnCueEdit_Click(sender, e);
+        }
     }
 }

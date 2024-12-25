@@ -101,4 +101,10 @@ public partial class PlaylistAddMarkerDialog : Form
 
         public override string ToString() => $"{Instance.Description} ({LightingCueItem.Name})";
     }
+
+    private void lstCues_MouseDoubleClick(object sender, MouseEventArgs e)
+    {
+        if (lstCues.IndexFromPoint(new Point(e.X, e.Y)) < 0) return;
+        btnCueEdit_Click(sender, e);
+    }
 }
