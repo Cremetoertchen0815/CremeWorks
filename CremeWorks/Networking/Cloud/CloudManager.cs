@@ -247,7 +247,9 @@ public class CloudManager
         return (await _client!.ExecuteAsync(requestUri)).IsSuccessStatusCode;
     }
 
+
     private async Task<bool> PingServer()
+    {
         await PrepareClient();
         if (_client is null) return false;
 
@@ -265,9 +267,9 @@ public class CloudManager
         return (await _client!.ExecuteAsync(request)).IsSuccessful;
     }
 
-    private async Task<bool> PrepareClient()
+    private async Task PrepareClient()
     {
-        if (_client is not null) return true;
+        if (_client is not null) return;
 
         var address = await DnsResolverIPv4.Instance.ResolveHostname(DNS_NAME);
         if (address is null) return;
@@ -275,6 +277,5 @@ public class CloudManager
         var client = new HttpClient();
         client.BaseAddress = new Uri($"http://{address}");
         _client = new RestClient(client);
-        return true;
     }
 }
