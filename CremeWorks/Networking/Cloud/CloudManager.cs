@@ -1,5 +1,4 @@
-﻿using BV.Game.Components.Network;
-using CremeWorks.App.Data;
+﻿using CremeWorks.App.Data;
 using CremeWorks.App.Dialogs.Cloud;
 using CremeWorks.App.Properties;
 using CremeWorks.DTO;
@@ -250,8 +249,7 @@ public class CloudManager
 
     private async Task<bool> PingServer()
     {
-        await PrepareClient();
-        if (_client is null) return false;
+        PrepareClient();
 
         var request = new RestRequest(BASE_URL + "/ping", Method.Get);
         request.Timeout = TimeSpan.FromSeconds(5);
@@ -267,15 +265,12 @@ public class CloudManager
         return (await _client!.ExecuteAsync(request)).IsSuccessful;
     }
 
-    private async Task PrepareClient()
+    private void PrepareClient()
     {
         if (_client is not null) return;
 
-        var address = await DnsResolverIPv4.Instance.ResolveHostname(DNS_NAME);
-        if (address is null) return;
-
         var client = new HttpClient();
-        client.BaseAddress = new Uri($"http://{address}");
+        client.BaseAddress = new Uri($"https://{DNS_NAME}");
         _client = new RestClient(client);
     }
 }
