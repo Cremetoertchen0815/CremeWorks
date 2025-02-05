@@ -571,7 +571,8 @@ namespace CremeWorks
         private void songTimer_Tick(object sender, EventArgs e)
         {
             if (_activeEntry is null || _activeEntry.Entry.Type != PlaylistEntryType.Song) return;
-            var songEntry = (SongPlaylistEntry)_activeEntry.Entry;
+            if (_activeEntry.Entry is not SongPlaylistEntry songEntry) return;
+
             var song = _database.Songs[songEntry.SongId];
             var time = TimeSpan.FromSeconds(++_secondsCounter);
             var diff = time - TimeSpan.FromSeconds(song.ExpectedDurationSeconds);
