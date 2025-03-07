@@ -103,27 +103,32 @@ namespace CremeWorks
             _server.SendToAll(MessageTypeEnum.CONCERT_NAME, playlistEntry.ToString());
 
             playList.Items.Clear();
-            var sortedSongEntries = new List<(IPlaylistEntry entry, int index)>();
+            var sortedSongEntries = new List<IndexedPlaylistEntry>();
 
             if (playlistEntry.playlist is null)
             {
                 //Add backlog songs
-                sortedSongEntries = _database.Songs.OrderBy(x => x.Value.Artist).ThenBy(x => x.Value.Title).Select((x, i) => ((IPlaylistEntry)new SongPlaylistEntry(x.Key), i)).ToList();
+                sortedSongEntries = _database.Songs
+                    .OrderBy(x => x.Value.Artist)
+                    .ThenBy(x => x.Value.Title)
+                    .Select((x, i) => new IndexedPlaylistEntry(new SongPlaylistEntry(x.Key), i, null))
+                    .ToList();
             }
             else
             {
                 //Add playlist songs
-                int songIndex = 0;
-                foreach (var song in playlistEntry.playlist.Elements)
+                int songNumber = 1;
+                for (int i = 0; i < playlistEntry.playlist.Elements.Count; i++)
                 {
-                    sortedSongEntries.Add((song, songIndex));
-                    if (song is SongPlaylistEntry) songIndex++;
+                    var song = playlistEntry.playlist.Elements[i];
+                    int? number = song is SongPlaylistEntry ? songNumber++ : null;
+                    sortedSongEntries.Add(new IndexedPlaylistEntry(song, i, number));
                 }
             }
 
             //Add playlist to listbox
             var inSet = playlistEntry.playlist is not null;
-            playList.Items.AddRange(sortedSongEntries.Select(x => new PlaylistListBoxItem(x.entry.GetCommonInformation(_database, x.index, inSet), x.entry)).ToArray());
+            playList.Items.AddRange(sortedSongEntries.Select(x => new PlaylistListBoxItem(x.Entry.GetCommonInformation(_database, x.Index, x.Number), x.Entry)).ToArray());
 
             _server.SendToAll(MessageTypeEnum.SET_DATA, GetClientSet());
             _activeEntry = null;
@@ -661,5 +666,7 @@ namespace CremeWorks
         {
             public override string ToString() => $"{Index + 1}. {Cue.Description}({CueName})";
         }
+
+        private record struct IndexedPlaylistEntry(IPlaylistEntry Entry, int Index, int? Number);
     }
 }

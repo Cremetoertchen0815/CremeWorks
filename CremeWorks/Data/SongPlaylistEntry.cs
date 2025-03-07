@@ -11,11 +11,11 @@ public record SongPlaylistEntry : IPlaylistEntry
     //IPlaylistEntry
     public PlaylistEntryType Type => PlaylistEntryType.Song;
 
-    public PlaylistEntryCommonInfo GetCommonInformation(Database db, int indexInPlaylist, bool isSet)
+    public PlaylistEntryCommonInfo GetCommonInformation(Database db, int index, int? numberInPlaylist)
     {
         var song = db.Songs[SongId];
-        var header = isSet ? $"{indexInPlaylist + 1}. {song.Title} - {song.Artist}" : $"{song.Artist} - {song.Title}";
-        return new PlaylistEntryCommonInfo(indexInPlaylist, header, song.Title, song.Artist, song.Key, song.Lyrics, song.Instructions, song.Tempo, song.Cues);
+        var header = numberInPlaylist is not null ? $"{numberInPlaylist + 1}. {song.Title} - {song.Artist}" : $"{song.Artist} - {song.Title}";
+        return new PlaylistEntryCommonInfo(index, header, song.Title, song.Artist, song.Key, song.Lyrics, song.Instructions, song.Tempo, song.Cues);
     }
 
     public IPlaylistEntry CreateCopy() => new SongPlaylistEntry(SongId);

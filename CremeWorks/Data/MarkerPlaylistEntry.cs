@@ -12,8 +12,9 @@ public class MarkerPlaylistEntry : IPlaylistEntry
     //IPlaylistEntry
     public PlaylistEntryType Type => PlaylistEntryType.Marker;
 
-    public PlaylistEntryCommonInfo GetCommonInformation(Database db, int indexInPlaylist, bool isSet) => new(indexInPlaylist, $"---{Text}---", Text, string.Empty, string.Empty, string.Empty, Instructions, 0, Cues);
-    
+    public PlaylistEntryCommonInfo GetCommonInformation(Database db, int index, int? numberInPlaylist) =>
+        new(index, $"---{Text}---", Text, string.Empty, string.Empty, string.Empty, Instructions, 0, Cues);
+
     public IPlaylistEntry CreateCopy() => new MarkerPlaylistEntry
     {
         Text = Text,

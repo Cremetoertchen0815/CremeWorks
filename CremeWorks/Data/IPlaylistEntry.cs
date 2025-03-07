@@ -20,7 +20,9 @@ public interface IPlaylistEntry
     /// Retrieves common display information from the entry(white is merely a reference) with the given database.
     /// </summary>
     /// <param name="db">The database from where the information should be retrieved.</param>
-    PlaylistEntryCommonInfo GetCommonInformation(Database db, int indexInPlaylist, bool isSet);
+    /// <param name="index">The index of the element in the list.</param>
+    /// <param name="numberInPlaylist">The number of the item(only exists for songs in a set)</param>
+    PlaylistEntryCommonInfo GetCommonInformation(Database db, int index, int? numberInPlaylist);
 }
 
 public enum PlaylistEntryType
