@@ -37,8 +37,14 @@ namespace CremeWorks.App.Reface
             if (d == null) return;
 
             //Send byte by byte
-            for (int i = 0; i < data.Length; i++)
-                d.SendEvent(new NormalSysExEvent([0x43, 0x10, 0x7F, 0x1C, (byte)t, startAddr[0], startAddr[1], (byte)(startAddr[2] + i), data[i], 0xF7])); //Send parameter change
+            try
+            {
+                for (int i = 0; i < data.Length; i++)
+                    d.SendEvent(new NormalSysExEvent([0x43, 0x10, 0x7F, 0x1C, (byte)t, startAddr[0], startAddr[1], (byte)(startAddr[2] + i), data[i], 0xF7])); //Send parameter change
+            }
+            catch (Exception)
+            {
+            }
         }
 
 
