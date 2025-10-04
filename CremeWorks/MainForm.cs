@@ -578,7 +578,11 @@ namespace CremeWorks
             if (_activeEntry is null || _activeEntry.Entry.Type != PlaylistEntryType.Song) return;
             if (_activeEntry.Entry is not SongPlaylistEntry songEntry) return;
 
-            var song = _database.Songs[songEntry.SongId];
+            if (!_database.Songs.TryGetValue(songEntry.SongId, out var song))
+            {
+                return;
+            }
+
             var time = TimeSpan.FromSeconds(++_secondsCounter);
             var diff = time - TimeSpan.FromSeconds(song.ExpectedDurationSeconds);
             songTime.Text = $"{time:mm\\:ss} ({(diff.TotalSeconds < 0 ? "-" : "+")}{diff:mm\\:ss})";
