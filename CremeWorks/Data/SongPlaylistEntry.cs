@@ -14,7 +14,7 @@ public record SongPlaylistEntry : IPlaylistEntry
     public PlaylistEntryCommonInfo GetCommonInformation(Database db, int index, int? numberInPlaylist)
     {
         var song = db.Songs[SongId];
-        var header = numberInPlaylist is not null ? $"{numberInPlaylist + 1}. {song.Title} - {song.Artist}" : $"{song.Artist} - {song.Title}";
+        var header = numberInPlaylist is not null ? $"{numberInPlaylist}. {song.Title} - {song.Artist}" : $"{song.Artist} - {song.Title}";
         return new PlaylistEntryCommonInfo(index, header, song.Title, song.Artist, song.Key, song.Lyrics, song.Instructions, song.Tempo, song.Cues);
     }
 
