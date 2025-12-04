@@ -88,6 +88,7 @@ namespace CremeWorks
             songTime = new Label();
             btnTimeReset = new Button();
             btnTimeStore = new Button();
+            btnRandom = new Button();
             cwcImportOpenFile = new OpenFileDialog();
             songTimer = new System.Windows.Forms.Timer(components);
             menuStrip1.SuspendLayout();
@@ -607,6 +608,16 @@ namespace CremeWorks
             songTimer.Tag = "Schlagerstrudel";
             songTimer.Tick += songTimer_Tick;
             // 
+            // button1
+            // 
+            btnRandom.Location = new Point(250, 40);
+            btnRandom.Name = "btnRandom";
+            btnRandom.Size = new Size(72, 24);
+            btnRandom.TabIndex = 43;
+            btnRandom.Text = "Random";
+            btnRandom.UseVisualStyleBackColor = true;
+            btnRandom.Click += button1_Click;
+            // 
             // MainForm
             // 
             AcceptButton = btnChatSend;
@@ -634,6 +645,7 @@ namespace CremeWorks
             Controls.Add(songTitle);
             Controls.Add(songLyrics);
             Controls.Add(label1);
+            Controls.Add(btnRandom);
             Controls.Add(menuStrip1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
@@ -698,6 +710,7 @@ namespace CremeWorks
         private Label songTime;
         private Button btnTimeReset;
         private Button btnTimeStore;
+        private Button btnRandom;
         private ToolStripMenuItem cremeWorksCloudToolStripMenuItem;
         private ToolStripMenuItem cloneFromCloudToolStripMenuItem;
         private ToolStripMenuItem publishToCloudToolStripMenuItem;

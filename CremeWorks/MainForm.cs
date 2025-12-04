@@ -656,6 +656,14 @@ namespace CremeWorks
             FileParser.SaveFile(_database.FilePath, _database);
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (playList.Items.Count == 0) return;
+
+            var randomIndex = Random.Shared.Next(playList.Items.Count);
+            playList.SelectedIndex = randomIndex;
+        }
+
         private record PlaylistListBoxItem(PlaylistEntryCommonInfo Info, IPlaylistEntry Entry)
         {
             public override string ToString() => Info.Header;
