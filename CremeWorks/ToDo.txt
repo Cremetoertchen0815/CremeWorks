@@ -1,3 +1,2 @@
 -Add common keyboard shortcuts
-
 -Fix SoundPlayer lag under Linux
