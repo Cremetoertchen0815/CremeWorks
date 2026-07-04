@@ -200,7 +200,13 @@ public class MidiManager
                 {
                     if (!oldNotes[src, dst] || _matrixNote[src, dst] || killOffDevices.Contains(dst)) continue;
                     killOffDevices.Add(dst);
-                    _midiDevices[_matrixIds[dst]]?.Output?.SendEvent(allNotesOffEvent);
+                    try
+                    {
+                        _midiDevices[_matrixIds[dst]]?.Output?.SendEvent(allNotesOffEvent);
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
             }
         }
