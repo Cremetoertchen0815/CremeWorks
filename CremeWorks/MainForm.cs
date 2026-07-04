@@ -21,11 +21,13 @@ namespace CremeWorks
         private PlaylistListBoxItem? _activeEntry = null;
         private NetworkingServer _server;
         private readonly Metronome _metronome;
+        private readonly BeepBoopSequencer _beepBoopSequencer;
         private readonly CloudManager _cloudManager;
         private bool _sendMetronomeData = false;
         private int _secondsCounter = 0;
         private Color _metronomeColor = Color.Navy;
         private bool? _metronomeOverride = null;
+        private bool _metronomRunning = false;
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -58,6 +60,8 @@ namespace CremeWorks
 
             _metronome = new Metronome();
             _metronome.Tick += TickMetronome;
+
+            _beepBoopSequencer = new BeepBoopSequencer();
 
             _cloudManager = new CloudManager();
             syncToolStripMenuItem.Checked = Settings.Default.SyncToCloud;
@@ -386,21 +390,26 @@ namespace CremeWorks
 
         private async void TickMetronome()
         {
+            byte? metronomeVal = null;
+
+            if (_activeEntry?.Entry is SongPlaylistEntry se && Database.Songs.TryGetValue(se.SongId, out var song))
+            {
+                metronomeVal = song.Tempo;
+                if (!_metronomRunning || _metronomeOverride == false || _metronomeOverride == null && !song.Click) metronomeVal = null;
+            }
+
             if (_sendMetronomeData)
             {
-                byte? metronomeVal = null;
-                if (_activeEntry?.Entry is SongPlaylistEntry se && Database.Songs.TryGetValue(se.SongId, out var song))
-                {
-                    metronomeVal = song.Tempo;
-                    if (_metronomeOverride == false || _metronomeOverride != true && !song.Click) metronomeVal = null;
-                }
-
-                _metronomeColor = metronomeVal.HasValue ? Color.Lime : Color.Navy;
                 _server.SendToAll(MessageTypeEnum.CLICK_INFO, metronomeVal?.ToString() ?? "off");
                 _sendMetronomeData = false;
             }
-            await Task.Delay(15);
-            boxTempo.BackColor = _metronomeColor;
+
+            if (metronomeVal is not null)
+            {
+                _beepBoopSequencer.Click(false);
+            }
+
+            boxTempo.BackColor = metronomeVal.HasValue ? Color.Lime : Color.Navy;
             await Task.Delay(50);
             boxTempo.BackColor = Color.White;
         }
@@ -662,6 +671,12 @@ namespace CremeWorks
 
             var randomIndex = Random.Shared.Next(playList.Items.Count);
             playList.SelectedIndex = randomIndex;
+        }
+
+        private void enableClickToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            enableClickToolStripMenuItem.Checked = !enableClickToolStripMenuItem.Checked;
+            _metronomRunning = enableClickToolStripMenuItem.Checked;
         }
 
         private record PlaylistListBoxItem(PlaylistEntryCommonInfo Info, IPlaylistEntry Entry)
