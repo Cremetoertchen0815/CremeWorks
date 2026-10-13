@@ -1,8 +1,8 @@
 ﻿using CremeWorks.App.Data;
+using CremeWorks.App.Midi;
 using CremeWorks.Networking;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
-using Melanchall.DryWetMidi.Multimedia;
 
 namespace CremeWorks.App;
 public class MidiManager
@@ -25,18 +25,22 @@ public class MidiManager
     private int _macroDeviceDestId = -1;
     private List<ChordMacro> _activeMacros = [];
     private readonly IDataParent _parent;
+    private readonly IMidiBackend _backend;
     private readonly MidiEventToBytesConverter _converter = new();
 
     public bool PlaybackPaused { get; set; } = false;
     public bool IsConnected { get; private set; } = false;
 
-    public MidiManager(IDataParent parent)
+    public MidiManager(IDataParent parent) : this(parent, new ManagedMidiBackend()) { }
+
+    public MidiManager(IDataParent parent, IMidiBackend backend)
     {
         _parent = parent;
+        _backend = backend;
         ControllerActionExecuted += HandleAction;
     }
 
-    public void Connect()
+    public async Task ConnectAsync()
     {
         if (IsConnected) return;
 
@@ -52,30 +56,28 @@ public class MidiManager
             if (item.Value.MidiId is "" || item.Value.Type == MidiDeviceType.Unknown) continue;
             if (item.Value.IsInstrument) _matrixIds[i++] = item.Key;
 
-            InputDevice? inputDev = null;
-            OutputDevice? outputDev = null;
+            IMidiInputPort? inputDev = null;
+            IMidiOutputPort? outputDev = null;
             try
             {
                 //Connect to input device and start listening
                 if (item.Value.IsInstrument || item.Value.Type is MidiDeviceType.GenericController)
                 {
-                    inputDev = InputDevice.GetByName(item.Value.MidiId);
-                    inputDev.EventReceived += item.Value.IsInstrument ? (sender, e) => ListenInstrument(currentIndex, e.Event) : ListenFootPedal;
-                    inputDev.StartEventsListening();
+                    inputDev = await _backend.OpenInputAsync(item.Value.MidiId);
+                    inputDev.EventReceived += item.Value.IsInstrument ? e => ListenInstrument(currentIndex, e) : ListenFootPedal;
                 }
                 //Connect to output device
                 if (item.Value.IsInstrument || item.Value.Type is MidiDeviceType.Lighting)
                 {
-                    outputDev = OutputDevice.GetByName(item.Value.MidiId);
+                    outputDev = await _backend.OpenOutputAsync(item.Value.MidiId);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Cannot connect to \"" + item.Value.Name + "\"! Check connections and reconnect!", "MIDI Connection error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                inputDev?.StopEventsListening();
-                inputDev?.Dispose();
+                MessageBox.Show("Cannot connect to \"" + item.Value.Name + "\"! Check connections and reconnect!\n\n" + ex.Message, "MIDI Connection error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (inputDev is not null) await inputDev.DisposeAsync();
                 inputDev = null;
-                outputDev?.Dispose();
+                if (outputDev is not null) await outputDev.DisposeAsync();
                 outputDev = null;
             }
 
@@ -87,15 +89,15 @@ public class MidiManager
         _parent.SoloManager?.UpdateState();
     }
 
-    public void Disconnect()
+    public async Task DisconnectAsync()
     {
         if (!IsConnected) return;
         SendAllNotesOff();
 
         foreach (var element in _midiDevices.Values)
         {
-            if (element.Input != null) element.Input.Dispose();
-            if (element.Output != null) element.Output.Dispose();
+            if (element.Input != null) await element.Input.DisposeAsync();
+            if (element.Output != null) await element.Output.DisposeAsync();
         }
         _midiDevices.Clear();
         _matrixNote = null;
@@ -140,18 +142,14 @@ public class MidiManager
         foreach (var item in _lightingDevices.Select(x => _midiDevices[x])) item?.Output?.SendEvent(e);
     } 
 
-    public string[] GetAllDevices()
+    public async Task<string[]> GetAllDevicesAsync()
     {
         var wasConnected = IsConnected;
-        Disconnect();
-        var outList = OutputDevice.GetAll();
-        var inList = InputDevice.GetAll();
-        var outNames = outList.Select(x => x.Name).ToArray();
-        var inNames = inList.Select(x => x.Name).ToArray();
-        foreach (var el in outList) el.Dispose();
-        foreach (var el in inList) el.Dispose();
+        await DisconnectAsync();
+        var outNames = _backend.GetOutputDeviceNames();
+        var inNames = _backend.GetInputDeviceNames();
 
-        if (wasConnected) Connect();
+        if (wasConnected) await ConnectAsync();
         string[] common = [.. outNames, .. inNames];
         return common.Distinct().ToArray();
     }
@@ -231,7 +229,7 @@ public class MidiManager
     }
 
 
-    public bool TryGetMidiDevicePort(int deviceId, out InputDevice? input, out OutputDevice? output)
+    public bool TryGetMidiDevicePort(int deviceId, out IMidiInputPort? input, out IMidiOutputPort? output)
     {
         if (_midiDevices.TryGetValue(deviceId, out var dev) && dev.Input is not null && dev.Output is not null)
         {
@@ -244,21 +242,21 @@ public class MidiManager
         return false;
     }
 
-    private void ListenFootPedal(object? sender, MidiEventReceivedEventArgs e)
+    private void ListenFootPedal(MidiEvent e)
     {
         //If it isn't, redirect to lighting board
-        if (PlaybackPaused || e.Event.EventType is not MidiEventType.NoteOn and not MidiEventType.ControlChange and not MidiEventType.ProgramChange) return;
-        ControllerEventReceived?.Invoke(e.Event);
-        SendToLighting(e.Event);
+        if (PlaybackPaused || e.EventType is not MidiEventType.NoteOn and not MidiEventType.ControlChange and not MidiEventType.ProgramChange) return;
+        ControllerEventReceived?.Invoke(e);
+        SendToLighting(e);
 
         //Check if foot pedal event is a macro
         foreach (var action in _parent.Database.Actions)
         {
-            if (action.SourceEventType != e.Event.EventType) continue;
-            switch (e.Event.EventType)
+            if (action.SourceEventType != e.EventType) continue;
+            switch (e.EventType)
             {
                 case MidiEventType.NoteOn:
-                    var note = (NoteOnEvent)e.Event;
+                    var note = (NoteOnEvent)e;
                     if (note.NoteNumber == action.SourceEventValue && note.Channel == action.SourceEventChannel)
                     {
                         ControllerActionExecuted?.Invoke(action.Action, note.Velocity > 0);
@@ -266,7 +264,7 @@ public class MidiManager
                     }
                     break;
                 case MidiEventType.ControlChange:
-                    var cc = (ControlChangeEvent)e.Event;
+                    var cc = (ControlChangeEvent)e;
                     if (cc.ControlNumber == action.SourceEventValue && cc.Channel == action.SourceEventChannel)
                     {
                         ControllerActionExecuted?.Invoke(action.Action, cc.ControlValue >= 64);
@@ -274,7 +272,7 @@ public class MidiManager
                     }
                     break;
                 case MidiEventType.ProgramChange:
-                    var pc = (ProgramChangeEvent)e.Event;
+                    var pc = (ProgramChangeEvent)e;
                     if (pc.ProgramNumber == action.SourceEventValue && pc.Channel == action.SourceEventChannel)
                     {
                         ControllerActionExecuted?.Invoke(action.Action, null);
@@ -324,5 +322,5 @@ public class MidiManager
         if (e is ControlChangeEvent cc && cc.ControlNumber == 64 && cc.ControlValue >= 64) SustainPedalPressed?.Invoke();
     }
 
-    private record InternalMidiDevice(string MidiName, InputDevice? Input, OutputDevice? Output);
+    private record InternalMidiDevice(string MidiName, IMidiInputPort? Input, IMidiOutputPort? Output);
 }

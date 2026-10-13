@@ -1,7 +1,7 @@
 ﻿using CremeWorks.App;
 using CremeWorks.App.Data;
+using CremeWorks.App.Midi;
 using Melanchall.DryWetMidi.Core;
-using Melanchall.DryWetMidi.Multimedia;
 
 namespace CremeWorks.App.Dialogs.Songs
 {
@@ -10,6 +10,8 @@ namespace CremeWorks.App.Dialogs.Songs
         private IDataParent _parent;
         private Song _s;
         private bool _inTest = false;
+        private IMidiInputPort? _triggerCaptureInput = null;
+        private IMidiInputPort? _noteCaptureInput = null;
         private bool _ignoreMacroListSelChange = true;
         private bool _ignoreMacroListValChange = false;
         private List<int> _activeSenseKeys = [];
@@ -138,21 +140,23 @@ namespace CremeWorks.App.Dialogs.Songs
             btnItemTriggerCapture.Text = "Sensing...";
             valSrcDev.Enabled = false;
 
+            _triggerCaptureInput = inputDev;
             inputDev.EventReceived += TriggerCapture;
         }
 
 
-        private void TriggerCapture(object? sender, MidiEventReceivedEventArgs e)
+        private void TriggerCapture(MidiEvent e)
         {
-            if (e.Event.EventType != MidiEventType.NoteOn) return;
+            if (e.EventType != MidiEventType.NoteOn) return;
 
             //Disable capture
-            var scon = (InputDevice)sender!;
-            scon.EventReceived -= TriggerCapture;
+            var scon = _triggerCaptureInput;
+            if (scon is not null) scon.EventReceived -= TriggerCapture;
+            _triggerCaptureInput = null;
             //_inTest = false;
 
             //Process data
-            var note = ((NoteOnEvent)e.Event);
+            var note = ((NoteOnEvent)e);
             var sel = _s.ChordMacros[lstMacros.SelectedIndex];
             sel.TriggerNote = note.NoteNumber;
             sel.Velocity = note.Velocity;
@@ -189,32 +193,34 @@ namespace CremeWorks.App.Dialogs.Songs
             valDstDev.Enabled = false;
             _activeSenseKeys.Clear();
 
+            _noteCaptureInput = inputDev;
             inputDev.EventReceived += NoteCapture;
         }
 
-        private void NoteCapture(object? sender, MidiEventReceivedEventArgs e)
+        private void NoteCapture(MidiEvent e)
         {
             //Capture key presses
-            if (e.Event.EventType == MidiEventType.NoteOn)
+            if (e is NoteOnEvent noteOn && noteOn.Velocity > 0)
             {
-                _activeSenseKeys.Add(((NoteOnEvent)e.Event).NoteNumber);
+                _activeSenseKeys.Add(noteOn.NoteNumber);
                 return;
             }
-            else if (e.Event.EventType == MidiEventType.NoteOff)
+            else if (e is NoteEvent noteOff)
             {
-                var noteVal = ((NoteOnEvent)e.Event).NoteNumber;
+                var noteVal = noteOff.NoteNumber;
                 if (_activeSenseKeys.Contains(noteVal)) _activeSenseKeys.Remove(noteVal);
                 return;
             }
-            else if (e.Event.EventType != MidiEventType.ControlChange)
+            else if (e.EventType != MidiEventType.ControlChange)
                 return;
 
-            var ctrl = (ControlChangeEvent)e.Event;
+            var ctrl = (ControlChangeEvent)e;
             if (ctrl.ControlNumber != 64 || ctrl.ControlValue < 64) return;
 
             //Disable capture
-            var scon = (InputDevice)sender!;
-            scon.EventReceived -= NoteCapture;
+            var scon = _noteCaptureInput;
+            if (scon is not null) scon.EventReceived -= NoteCapture;
+            _noteCaptureInput = null;
             _inTest = false;
 
             //Process data

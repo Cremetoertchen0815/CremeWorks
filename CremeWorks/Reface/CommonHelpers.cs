@@ -1,6 +1,6 @@
 ﻿using CremeWorks.App.Data;
+using CremeWorks.App.Midi;
 using Melanchall.DryWetMidi.Core;
-using Melanchall.DryWetMidi.Multimedia;
 
 namespace CremeWorks.App.Reface
 {
@@ -23,16 +23,16 @@ namespace CremeWorks.App.Reface
             _ => RefaceType.Undefined,
         };
         
-        public static void SendSystemBulkdumpRequest(OutputDevice d, RefaceType t) => d?.SendEvent(new NormalSysExEvent([0x43, 0x20, 0x7F, 0x1C, (byte)t, 0x00, 0x00, 0x00, 0xF7])); //Request device settings
+        public static void SendSystemBulkdumpRequest(IMidiOutputPort d, RefaceType t) => d?.SendEvent(new NormalSysExEvent([0x43, 0x20, 0x7F, 0x1C, (byte)t, 0x00, 0x00, 0x00, 0xF7])); //Request device settings
 
-        public static void SendVoiceBulkdumpRequest(OutputDevice d, RefaceType t)
+        public static void SendVoiceBulkdumpRequest(IMidiOutputPort d, RefaceType t)
         {
             if (t == RefaceType.Undefined || t == RefaceType.RefaceDX || d == null) return;
             d.SendEvent(new NormalSysExEvent([0x43, 0x20, 0x7F, 0x1C, (byte)t, 0x0E, 0x0F, 0x00, 0xF7])); //Request device settings
         }
 
 
-        public static void SendParameterChange(OutputDevice d, RefaceType t, byte[] startAddr, byte[] data)
+        public static void SendParameterChange(IMidiOutputPort d, RefaceType t, byte[] startAddr, byte[] data)
         {
             if (d == null) return;
 

@@ -1,7 +1,7 @@
 ﻿using CremeWorks.App.Data;
+using CremeWorks.App.Midi;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
-using Melanchall.DryWetMidi.Multimedia;
 
 namespace CremeWorks.App;
 public class VolumeManager
@@ -10,7 +10,7 @@ public class VolumeManager
     private bool _enabled;
     private bool _soloMode;
     private bool _muteMode;
-    private OutputDevice[] _outputDevices = [];
+    private IMidiOutputPort[] _outputDevices = [];
 
     public event Action<VolumeLevel>? StateChanged;
 

@@ -28,6 +28,7 @@ namespace CremeWorks
         private Color _metronomeColor = Color.Navy;
         private bool? _metronomeOverride = null;
         private bool _metronomRunning = false;
+        private bool _shutdownDone = false;
 
         #region External
         private const int EM_LINESCROLL = 0x00B6;
@@ -59,7 +60,7 @@ namespace CremeWorks
             _volumeManager.StateChanged += _soloManager_SoloStateChanged;
 
             _metronome = new Metronome();
-            _metronome.Tick += TickMetronome;
+            _metronome.Tick += () => TickMetronomeAsync().FireAndForget();
 
             _beepBoopSequencer = new BeepBoopSequencer();
 
@@ -85,17 +86,25 @@ namespace CremeWorks
         private void configureToolStripMenuItem_Click(object sender, EventArgs e) => new MidiSetUp(this).ShowDialog();
         private void footSwitchToolStripMenuItem_Click(object sender, EventArgs e) => new FootSwitchConfig(this).ShowDialog();
 
-        private void startMIDIToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void startMIDIToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!startMIDIToolStripMenuItem.Checked)
+            startMIDIToolStripMenuItem.Enabled = false;
+            try
             {
-                _midiManager.Connect();
-                _midiManager.UpdateMatrix();
+                if (!startMIDIToolStripMenuItem.Checked)
+                {
+                    await _midiManager.ConnectAsync();
+                    _midiManager.UpdateMatrix();
+                }
+                else
+                {
+                    _midiManager.SendAllNotesOff();
+                    await _midiManager.DisconnectAsync();
+                }
             }
-            else
+            finally
             {
-                _midiManager.SendAllNotesOff();
-                _midiManager.Disconnect();
+                startMIDIToolStripMenuItem.Enabled = true;
             }
 
             _volumeManager.UpdateState();
@@ -354,10 +363,27 @@ namespace CremeWorks
             }
         }
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _server.Stop();
-            if (!MidiManager.IsConnected) MidiManager.Disconnect();
+            //Shutting down the MIDI ports is asynchronous, so cancel the close, run it and close again afterwards
+            if (_shutdownDone) return;
+            e.Cancel = true;
+            ShutDownAndCloseAsync().FireAndForget();
+        }
+
+        private async Task ShutDownAndCloseAsync()
+        {
+            try
+            {
+                _server.Stop();
+                if (MidiManager.IsConnected) await MidiManager.DisconnectAsync();
+            }
+            finally
+            {
+                //Never keep the window open because of a failed shutdown
+                _shutdownDone = true;
+                Close();
+            }
         }
 
 
@@ -381,14 +407,14 @@ namespace CremeWorks
                     chatBox.Items.Add(msg);
                     _server.SendToAll(MessageTypeEnum.CHAT_MESSAGE, msg);
                     chatBox.TopIndex = chatBox.Items.Count - 1;
-                    LightUpChatbox();
+                    LightUpChatboxAsync().FireAndForget();
                     break;
                 default:
                     break;
             }
         }));
 
-        private async void TickMetronome()
+        private async Task TickMetronomeAsync()
         {
             byte? metronomeVal = null;
 
@@ -467,7 +493,7 @@ namespace CremeWorks
         public IPlaylistEntry? CurrentEntry => _activeEntry?.Entry;
 
 
-        private async void LightUpChatbox()
+        private async Task LightUpChatboxAsync()
         {
             if (_chatboxLit) return;
             _chatboxLit = true;

@@ -66,7 +66,7 @@ namespace CremeWorks.App.Dialogs.Songs
                 patchBaseYPos += 29;
             }
 
-            _metronome.Tick += blinkTimer_Tick;
+            _metronome.Tick += () => BlinkTimerTickAsync().FireAndForget();
             _metronome.Start((int)txtBpm.Value);
         }
 
@@ -114,7 +114,7 @@ namespace CremeWorks.App.Dialogs.Songs
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e) => _metronome.Start((int)txtBpm.Value);
 
-        private async void blinkTimer_Tick()
+        private async Task BlinkTimerTickAsync()
         {
             blinkBox.BackColor = Color.Navy;
             await Task.Delay(50);

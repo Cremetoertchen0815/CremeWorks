@@ -660,7 +660,7 @@ namespace CremeWorks
             Margin = new Padding(4, 3, 4, 3);
             Name = "MainForm";
             Text = "CremeWorks Stage Controller";
-            FormClosed += MainForm_FormClosed;
+            FormClosing += MainForm_FormClosing;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);

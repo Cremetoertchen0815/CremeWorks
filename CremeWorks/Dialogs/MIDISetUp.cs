@@ -23,15 +23,15 @@ public partial class MidiSetUp : Form
         boxSelector.DataSource = new BindingSource(_comboBoxDeviceItems, null);
     }
 
-    private void MIDISetUp_Load(object sender, EventArgs e)
+    private async void MIDISetUp_Load(object sender, EventArgs e)
     {
         _parent.MidiManager.PlaybackPaused = true;
-        RefreshAll();
+        await RefreshAllAsync();
     }
 
-    private void RefreshButton_Click(object sender, EventArgs e)
+    private async void RefreshButton_Click(object sender, EventArgs e)
     {
-        RefreshAll();
+        await RefreshAllAsync();
         if (boxSelector.SelectedItem is not ComboBoxDeviceItem item) return;
         boxDevice.Text = item.MidiId;
     }
@@ -55,10 +55,19 @@ public partial class MidiSetUp : Form
         _canDataBeUpdated = true;
     }
 
-    private void RefreshAll()
+    private async Task RefreshAllAsync()
     {
-        boxDevice.Items.Clear();
-        boxDevice.Items.AddRange(_parent.MidiManager.GetAllDevices());
+        btnRefresh.Enabled = false;
+        try
+        {
+            var devices = await _parent.MidiManager.GetAllDevicesAsync();
+            boxDevice.Items.Clear();
+            boxDevice.Items.AddRange(devices);
+        }
+        finally
+        {
+            btnRefresh.Enabled = true;
+        }
     }
 
     private void btnPlus_Click(object sender, EventArgs e)

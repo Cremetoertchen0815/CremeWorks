@@ -2,8 +2,8 @@
 using CremeWorks.App.Data;
 using CremeWorks.App.Data.Patches;
 using CremeWorks.App.Dialogs.Patch;
+using CremeWorks.App.Midi;
 using Melanchall.DryWetMidi.Core;
-using Melanchall.DryWetMidi.Multimedia;
 using static CremeWorks.App.Reface.CommonHelpers;
 
 namespace CremeWorks
@@ -13,6 +13,7 @@ namespace CremeWorks
 
         public readonly IDataParent _parent;
         private PatchComboBoxItem? _oldItem = null;
+        private IMidiInputPort? _listeningInput = null;
 
         public PatchEditor(IDataParent parent)
         {
@@ -130,37 +131,37 @@ namespace CremeWorks
             }
         }
 
-        private void ListenForSysEx(object? sender, MidiEventReceivedEventArgs e)
+        private void ListenForSysEx(MidiEvent e)
         {
-            var inputDev = sender as InputDevice;
+            var inputDev = _listeningInput;
             var patch = _oldItem?.patch;
             if (patch is null || inputDev is null) return;
 
-            if (e.Event.EventType == MidiEventType.ProgramChange && patch is ProgramChangePatch pc)
+            if (e.EventType == MidiEventType.ProgramChange && patch is ProgramChangePatch pc)
             {
                 //DX program change received
-                var evPc = (ProgramChangeEvent)e.Event;
+                var evPc = (ProgramChangeEvent)e;
                 pc.ProgramChangeNr = evPc.ProgramNumber;
                 UpdateControls();
                 return;
             }
 
-            if (e.Event.EventType != MidiEventType.NormalSysEx) return;
+            if (e.EventType != MidiEventType.NormalSysEx) return;
 
-            var ev = (NormalSysExEvent)e.Event;
+            var ev = (NormalSysExEvent)e;
             if (ev.Data.Length == 28 && patch is CPPatch cp)
             {
                 //CP voice data bulk received
                 cp.VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(ev.Data[10..^2]);
                 UpdateControls();
-                inputDev.EventReceived -= ListenForSysEx;
+                StopListening();
             }
             else if (ev.Data.Length == 34 && patch is CSPatch cs)
             {
                 //CS voice data bulk received
                 cs.VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(ev.Data[10..^2]);
                 UpdateControls();
-                inputDev.EventReceived -= ListenForSysEx;
+                StopListening();
 
             }
             else if (ev.Data.Length == 34 && patch is YCPatch yc)
@@ -168,8 +169,15 @@ namespace CremeWorks
                 //CS voice data bulk received
                 yc.VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(ev.Data[10..^2]);
                 UpdateControls();
-                inputDev.EventReceived -= ListenForSysEx;
+                StopListening();
             }
+        }
+
+        private void StopListening()
+        {
+            if (_listeningInput is null) return;
+            _listeningInput.EventReceived -= ListenForSysEx;
+            _listeningInput = null;
         }
 
         private IDevicePatch? SaveVoiceData()
@@ -263,13 +271,19 @@ namespace CremeWorks
 
             var refaceType = GetRefaceType(patch.DeviceType);
 
+            StopListening();
+            _listeningInput = inputDev;
             inputDev.EventReceived += ListenForSysEx;
 
             SendVoiceBulkdumpRequest(outputDev, refaceType);
             fetchVoiceData.Enabled = false;
         }
 
-        private void SaveStuffWhenClosing(object sender, FormClosingEventArgs e) => SaveVoiceData();
+        private void SaveStuffWhenClosing(object sender, FormClosingEventArgs e)
+        {
+            StopListening();
+            SaveVoiceData();
+        }
 
         private void PushVoiceSettings(object sender, EventArgs e)
         {
