@@ -108,28 +108,31 @@ public class ManagedMidiBackend : IMidiBackend
         }
     }
 
-    private sealed class ManagedMidiOutputPort : IMidiOutputPort
+    private sealed class ManagedMidiOutputPort(string name, IMidiOutput port) : IMidiOutputPort
     {
-        private readonly IMidiOutput _port;
         private readonly MidiEventToBytesConverter _converter = new();
+        private bool _isClosed;
 
-        public ManagedMidiOutputPort(string name, IMidiOutput port)
-        {
-            Name = name;
-            _port = port;
-        }
-
-        public string Name { get; }
+        public string Name { get; } = name;
 
         public void SendEvent(MidiEvent e)
         {
-            lock (_converter)
+            if (_isClosed) return;
+            
+            try
             {
-                var bytes = MidiWireFormat.ToBytes(e, _converter);
-                _port.Send(bytes, 0, bytes.Length, 0);
+                lock (_converter)
+                {
+                    var bytes = MidiWireFormat.ToBytes(e, _converter);
+                    port.Send(bytes, 0, bytes.Length, 0);
+                }
+            }
+            catch
+            {
+                _isClosed = true;
             }
         }
 
-        public ValueTask DisposeAsync() => ClosePortAsync(_port);
+        public ValueTask DisposeAsync() => ClosePortAsync(port);
     }
 }
