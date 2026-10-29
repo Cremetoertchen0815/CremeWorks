@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="1400" d:DesignHeight="600"
         x:Class="CremeWorks.NewApp.MainWindow"
         Title="CremeWorks Stage Controller">
     <!--Menu section-->
@@ -49,29 +49,35 @@
                 <MenuItem Header="MIDI Panic" Background="IndianRed" />
             </MenuItem>
         </Menu>
-        <Grid ColumnDefinitions="300,*,200" ColumnSpacing="7">
-            
+        <Grid ColumnDefinitions="400,*,300" Margin="7, 0, 7, 7" ColumnSpacing="7">
+
             <!--Playlist column-->
-            <Panel Grid.Column="0">
-                <Grid RowDefinitions="Auto,*,Auto" RowSpacing="7">
-                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0" Content="sfkjsdlf"></Label>
-                        <Button Grid.Column="1" Content="Random"/>
-                    </Grid>
-                    
-                    <ListBox Grid.Row="1">
-                        <ListBoxItem>sdfsd</ListBoxItem>
-                    </ListBox>
-                    
-                    <ComboBox Grid.Row="2" HorizontalAlignment="Stretch">
-                        <ComboBoxItem>Soos</ComboBoxItem>
-                    </ComboBox>
+            <Grid Grid.Column="0" RowDefinitions="Auto,*,Auto" RowSpacing="7">
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                    <Label Grid.Column="0" Content="sfkjsdlf"></Label>
+                    <Button Grid.Column="1" Content="Random" />
                 </Grid>
-            </Panel>
-            
+
+                <ListBox Grid.Row="1">
+                    <ListBoxItem>sdfsd</ListBoxItem>
+                </ListBox>
+
+                <ComboBox Grid.Row="2" HorizontalAlignment="Stretch">
+                    <ComboBoxItem>Soos</ComboBoxItem>
+                </ComboBox>
+            </Grid>
+
             <!--Text column-->
-            <Panel Grid.Column="1" Background="Green"></Panel>
-            
+            <Grid Grid.Column="1" RowDefinitions="*,200,Auto" RowSpacing="7">
+                <TextBlock Grid.Row="0" />
+                <ListBox Grid.Row="1" />
+                <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="7" Background="White">
+                    <TextBox Grid.Column="0" Grid.Row="0" />
+                    <Button Grid.Column="1" Content="Send" />
+                
+                </Grid>
+            </Grid>
+
             <!--Cue/Info column-->
             <Panel Grid.Column="2" Background="Blue"></Panel>
         </Grid>
