@@ -2,9 +2,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="1400" d:DesignHeight="600"
+        mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="800"
         x:Class="CremeWorks.NewApp.MainWindow"
+        MinWidth="1200"
+        MinHeight="600"
         Title="CremeWorks Stage Controller">
+    <Window.Styles>
+        <Style Selector="Label.InfoHeader">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        <Style Selector="Label.InfoValue">
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <Style Selector="Label.InfoValueSound">
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style Selector="Label.ColumnHeader">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+    </Window.Styles>
+    
     <!--Menu section-->
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -49,37 +68,51 @@
                 <MenuItem Header="MIDI Panic" Background="IndianRed" />
             </MenuItem>
         </Menu>
-        <Grid ColumnDefinitions="400,*,300" Margin="7, 0, 7, 7" ColumnSpacing="7">
+        <Grid ColumnDefinitions="320,*,270" Margin="7, 0, 7, 7" ColumnSpacing="7">
 
             <!--Playlist column-->
-            <Grid Grid.Column="0" RowDefinitions="Auto,*,Auto" RowSpacing="7">
+            <Grid Grid.Column="0" RowDefinitions="30,*,30" RowSpacing="7">
                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                    <Label Grid.Column="0" Content="sfkjsdlf"></Label>
+                    <Label Grid.Column="0" Content="Playlist:" VerticalContentAlignment="Center" Classes="ColumnHeader"></Label>
                     <Button Grid.Column="1" Content="Random" />
                 </Grid>
 
-                <ListBox Grid.Row="1">
-                    <ListBoxItem>sdfsd</ListBoxItem>
-                </ListBox>
-
-                <ComboBox Grid.Row="2" HorizontalAlignment="Stretch">
-                    <ComboBoxItem>Soos</ComboBoxItem>
-                </ComboBox>
+                <ListBox Grid.Row="1" />
+                <ComboBox Grid.Row="2" HorizontalAlignment="Stretch" />
             </Grid>
 
             <!--Text column-->
-            <Grid Grid.Column="1" RowDefinitions="*,200,Auto" RowSpacing="7">
+            <Grid Grid.Column="1" RowDefinitions="*,150,30" RowSpacing="7">
                 <TextBlock Grid.Row="0" />
                 <ListBox Grid.Row="1" />
                 <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="7" Background="White">
                     <TextBox Grid.Column="0" Grid.Row="0" />
                     <Button Grid.Column="1" Content="Send" />
-                
                 </Grid>
             </Grid>
 
             <!--Cue/Info column-->
-            <Panel Grid.Column="2" Background="Blue"></Panel>
+            <Grid Grid.Column="2" RowDefinitions="30,*,150,30" RowSpacing="7">
+                <Label Grid.Row="0" Content="Cue Queue:" VerticalContentAlignment="Center" Classes="ColumnHeader"></Label>
+                <ListBox Grid.Row="1" />
+                <Grid Grid.Row="2" ColumnDefinitions="75,*" RowDefinitions="*,*,*,*" RowSpacing="7" ColumnSpacing="7" VerticalAlignment="Center">
+                    <Label Grid.Column="0" Grid.Row="0" Content="Key:" HorizontalAlignment="Right" Classes="InfoHeader" />
+                    <Label Grid.Column="1" Grid.Row="0" Content="C" Classes="InfoValue" />
+                    <Label Grid.Column="0" Grid.Row="1" Content="Tempo:" HorizontalAlignment="Right" Classes="InfoHeader" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Spacing="5">
+                        <Panel Background="Red" Height="25" Width="25"/>
+                        <Label Content="BPM" Classes="InfoValue"/>
+                    </StackPanel>
+                    <Label Grid.Column="0" Grid.Row="2" Content="Sound:" HorizontalAlignment="Right" Classes="InfoHeader" />
+                    <Label Grid.Column="1" Grid.Row="2" Content="Disconnected" Classes="InfoValueSound" />
+                    <Label Grid.Column="0" Grid.Row="3" Content="Time:" HorizontalAlignment="Right" Classes="InfoHeader" />
+                    <Label Grid.Column="1" Grid.Row="3" Content="00:00 (+00:00)" Classes="InfoValue" />
+                </Grid>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="7">
+                    <Button>Reset</Button>
+                    <Button>Store</Button>
+                </StackPanel>
+            </Grid>
         </Grid>
     </DockPanel>
 </Window>
