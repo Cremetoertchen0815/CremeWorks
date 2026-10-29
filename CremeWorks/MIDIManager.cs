@@ -158,8 +158,15 @@ public class MidiManager
 
     public void SendAllNotesOff()
     {
-        var allNotesOffEvent = new ControlChangeEvent(new SevenBitNumber(120), new SevenBitNumber(0));
-        foreach (var item in _midiDevices) item.Value.Output?.SendEvent(allNotesOffEvent);
+        try
+        {
+            var allNotesOffEvent = new ControlChangeEvent(new SevenBitNumber(120), new SevenBitNumber(0));
+            foreach (var item in _midiDevices) item.Value.Output?.SendEvent(allNotesOffEvent);
+        }
+        catch
+        {
+
+        }
     }
 
     public void UpdateMatrix(MidiMatrixNode[]? overrideRouting = null)
