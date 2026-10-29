@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CremeWorks.Backend", "Creme
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CremeWorks.DTO", "CremeWorks.DTO\CremeWorks.DTO.csproj", "{0455CDF0-929D-4F82-A390-FC15B1891CEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CremeWorks.NewApp", "CremeWorks.NewApp\CremeWorks.NewApp.csproj", "{5C23034A-EC38-44EE-8188-8B05F8AFFB9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0455CDF0-929D-4F82-A390-FC15B1891CEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0455CDF0-929D-4F82-A390-FC15B1891CEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0455CDF0-929D-4F82-A390-FC15B1891CEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C23034A-EC38-44EE-8188-8B05F8AFFB9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C23034A-EC38-44EE-8188-8B05F8AFFB9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C23034A-EC38-44EE-8188-8B05F8AFFB9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C23034A-EC38-44EE-8188-8B05F8AFFB9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

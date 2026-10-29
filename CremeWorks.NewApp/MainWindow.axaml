@@ -1,0 +1,79 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="CremeWorks.NewApp.MainWindow"
+        Title="CremeWorks Stage Controller">
+    <!--Menu section-->
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="New" />
+                <MenuItem Header="Open" />
+                <MenuItem Header="Open Recent" />
+                <MenuItem Header="Save" />
+                <MenuItem Header="Save As" />
+                <Separator />
+                <MenuItem Header="CremeWorks Cloud">
+                    <MenuItem Header="Clone from Cloud" />
+                    <MenuItem Header="Publish to Cloud" />
+                    <Separator />
+                    <MenuItem Header="Sync" IsChecked="True" />
+                </MenuItem>
+                <MenuItem Header="Import">
+                    <MenuItem Header="CremeWorks Concert (*.cwc)" />
+                </MenuItem>
+                <MenuItem Header="Export">
+                    <MenuItem Header="Set List (*.csv)" />
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Exit" />
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Songs" />
+                <MenuItem Header="Playlists" />
+                <MenuItem Header="Patches" />
+            </MenuItem>
+            <MenuItem Header="Settings">
+                <MenuItem Header="MIDI Devices" />
+                <MenuItem Header="Default Routing" />
+                <MenuItem Header="Solo Mode" />
+                <MenuItem Header="Light Cues" />
+                <MenuItem Header="Controller Actions" />
+                <MenuItem Header="Enable Click" />
+            </MenuItem>
+            <MenuItem Header="Connection">
+                <MenuItem Header="Connect to MIDI Devices" />
+                <MenuItem Header="Open View Server" />
+                <MenuItem Header="MIDI Panic" Background="IndianRed" />
+            </MenuItem>
+        </Menu>
+        <Grid ColumnDefinitions="300,*,200" ColumnSpacing="7">
+            
+            <!--Playlist column-->
+            <Panel Grid.Column="0">
+                <Grid RowDefinitions="Auto,*,Auto" RowSpacing="7">
+                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Content="sfkjsdlf"></Label>
+                        <Button Grid.Column="1" Content="Random"/>
+                    </Grid>
+                    
+                    <ListBox Grid.Row="1">
+                        <ListBoxItem>sdfsd</ListBoxItem>
+                    </ListBox>
+                    
+                    <ComboBox Grid.Row="2" HorizontalAlignment="Stretch">
+                        <ComboBoxItem>Soos</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+            </Panel>
+            
+            <!--Text column-->
+            <Panel Grid.Column="1" Background="Green"></Panel>
+            
+            <!--Cue/Info column-->
+            <Panel Grid.Column="2" Background="Blue"></Panel>
+        </Grid>
+    </DockPanel>
+</Window>

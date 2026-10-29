@@ -5,7 +5,7 @@ using Melanchall.DryWetMidi.Core;
 using System.Xml;
 
 namespace CremeWorks.App;
-public class FileParser
+public static class FileParser
 {
     private const string VERSION = "v1.0-base";
 
