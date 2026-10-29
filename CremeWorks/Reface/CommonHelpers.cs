@@ -4,7 +4,7 @@ using Melanchall.DryWetMidi.Core;
 
 namespace CremeWorks.App.Reface
 {
-    public class CommonHelpers
+    public static class CommonHelpers
     {
         public enum RefaceType : byte
         { 
@@ -27,15 +27,13 @@ namespace CremeWorks.App.Reface
 
         public static void SendVoiceBulkdumpRequest(IMidiOutputPort d, RefaceType t)
         {
-            if (t == RefaceType.Undefined || t == RefaceType.RefaceDX || d == null) return;
+            if (t == RefaceType.Undefined || t == RefaceType.RefaceDX) return;
             d.SendEvent(new NormalSysExEvent([0x43, 0x20, 0x7F, 0x1C, (byte)t, 0x0E, 0x0F, 0x00, 0xF7])); //Request device settings
         }
 
 
         public static void SendParameterChange(IMidiOutputPort d, RefaceType t, byte[] startAddr, byte[] data)
         {
-            if (d == null) return;
-
             //Send byte by byte
             try
             {

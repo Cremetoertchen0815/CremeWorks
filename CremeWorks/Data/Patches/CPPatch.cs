@@ -15,7 +15,7 @@ namespace CremeWorks.App.Data.Patches
         public void ApplyPatch(IDataParent parent, int deviceId)
         {
             if (!parent.MidiManager.TryGetMidiDevicePort(deviceId, out _, out var outputDevice) || outputDevice is null) return;
-            CommonHelpers.SendParameterChange(outputDevice, CommonHelpers.GetRefaceType(DeviceType), [0x30, 0, 0], StructMarshal<RefaceCPVoiceData>.getBytes(VoiceSettings));
+            CommonHelpers.SendParameterChange(outputDevice, CommonHelpers.GetRefaceType(DeviceType), [0x30, 0, 0], StructMarshal.GetBytes(VoiceSettings));
         }
 
         public IDevicePatch Clone() => (IDevicePatch)MemberwiseClone();

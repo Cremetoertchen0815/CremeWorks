@@ -1,8 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Xml;
-using CremeWorks.App.Data;
 using CremeWorks.App.Reface;
-using static CremeWorks.App.Data.Patches.CPPatch;
 
 namespace CremeWorks.App.Data.Patches
 {
@@ -15,7 +13,7 @@ namespace CremeWorks.App.Data.Patches
         public void ApplyPatch(IDataParent parent, int deviceId)
         {
             if (!parent.MidiManager.TryGetMidiDevicePort(deviceId, out _, out var outputDevice) || outputDevice is null) return;
-            CommonHelpers.SendParameterChange(outputDevice, CommonHelpers.GetRefaceType(DeviceType), [0x30, 0, 0], StructMarshal<RefaceYCVoiceData>.getBytes(VoiceSettings));
+            CommonHelpers.SendParameterChange(outputDevice, CommonHelpers.GetRefaceType(DeviceType), [0x30, 0, 0], StructMarshal.GetBytes(VoiceSettings));
         }
 
         public IDevicePatch Clone() => (IDevicePatch)MemberwiseClone();

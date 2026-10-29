@@ -152,14 +152,14 @@ namespace CremeWorks
             if (ev.Data.Length == 28 && patch is CPPatch cp)
             {
                 //CP voice data bulk received
-                cp.VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(ev.Data[10..^2]);
+                cp.VoiceSettings = StructMarshal.FromBytes<CPPatch.RefaceCPVoiceData>(ev.Data[10..^2]);
                 UpdateControls();
                 StopListening();
             }
             else if (ev.Data.Length == 34 && patch is CSPatch cs)
             {
                 //CS voice data bulk received
-                cs.VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(ev.Data[10..^2]);
+                cs.VoiceSettings = StructMarshal.FromBytes<CSPatch.RefaceCSVoiceData>(ev.Data[10..^2]);
                 UpdateControls();
                 StopListening();
 
@@ -167,7 +167,7 @@ namespace CremeWorks
             else if (ev.Data.Length == 34 && patch is YCPatch yc)
             {
                 //CS voice data bulk received
-                yc.VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(ev.Data[10..^2]);
+                yc.VoiceSettings = StructMarshal.FromBytes<YCPatch.RefaceYCVoiceData>(ev.Data[10..^2]);
                 UpdateControls();
                 StopListening();
             }

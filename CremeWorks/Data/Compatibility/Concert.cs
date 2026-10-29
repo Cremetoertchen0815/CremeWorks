@@ -89,7 +89,7 @@ namespace CremeWorks.App.Data.Compatibility
                                 _ = br.ReadBytes(br.ReadInt32()); //System settings(obsolete)
                                 var cs = new CSPatch(string.Empty)
                                 {
-                                    VoiceSettings = StructMarshal<CSPatch.RefaceCSVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                                    VoiceSettings = StructMarshal.FromBytes<CSPatch.RefaceCSVoiceData>(br.ReadBytes(br.ReadInt32()))
                                 };
                                 patch = cs;
                                 break;
@@ -105,7 +105,7 @@ namespace CremeWorks.App.Data.Compatibility
                                 _ = br.ReadBytes(br.ReadInt32());
                                 var cp = new CPPatch(string.Empty)
                                 {
-                                    VoiceSettings = StructMarshal<CPPatch.RefaceCPVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                                    VoiceSettings = StructMarshal.FromBytes<CPPatch.RefaceCPVoiceData>(br.ReadBytes(br.ReadInt32()))
                                 };
                                 patch = cp;
                                 break;
@@ -113,7 +113,7 @@ namespace CremeWorks.App.Data.Compatibility
                                 _ = br.ReadBytes(br.ReadInt32());
                                 var yc = new YCPatch(string.Empty)
                                 {
-                                    VoiceSettings = StructMarshal<YCPatch.RefaceYCVoiceData>.fromBytes(br.ReadBytes(br.ReadInt32()))
+                                    VoiceSettings = StructMarshal.FromBytes<YCPatch.RefaceYCVoiceData>(br.ReadBytes(br.ReadInt32()))
                                 };
                                 patch = yc;
                                 break;

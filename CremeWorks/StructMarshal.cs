@@ -1,34 +1,47 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace CremeWorks
+namespace CremeWorks.App
 {
-    public static class StructMarshal<T> where T : struct
+    public static class StructMarshal
     {
-        public static byte[] getBytes(T str)
+        public static byte[] GetBytes<T>(T value) where T : struct
         {
-            int size = Marshal.SizeOf(str);
-            byte[] arr = new byte[size];
-
+            var size = Marshal.SizeOf<T>();
+            var bytes = new byte[size];
             var ptr = Marshal.AllocHGlobal(size);
-            Marshal.StructureToPtr(str, ptr, true);
-            Marshal.Copy(ptr, arr, 0, size);
-            Marshal.FreeHGlobal(ptr);
-            return arr;
+
+            try
+            {
+                Marshal.StructureToPtr(value, ptr, false);
+                Marshal.Copy(ptr, bytes, 0, size);
+                return bytes;
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(ptr);
+            }
         }
 
-        public static T fromBytes(byte[] arr)
+        public static T FromBytes<T>(byte[] bytes) where T : struct
         {
-            var str = new T();
+            ArgumentNullException.ThrowIfNull(bytes);
 
-            int size = Marshal.SizeOf(str);
+            int size = Marshal.SizeOf<T>();
+
+            if (bytes.Length != size)
+                throw new ArgumentException($"Expected {size} bytes, received {bytes.Length}.");
+
             var ptr = Marshal.AllocHGlobal(size);
 
-            Marshal.Copy(arr, 0, ptr, size);
-
-            str = (T)Marshal.PtrToStructure(ptr, str.GetType())!;
-            Marshal.FreeHGlobal(ptr);
-
-            return str;
+            try
+            {
+                Marshal.Copy(bytes, 0, ptr, size);
+                return Marshal.PtrToStructure<T>(ptr);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(ptr);
+            }
         }
     }
 }
