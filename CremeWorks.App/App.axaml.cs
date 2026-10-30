@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-namespace CremeWorks.NewApp;
+namespace CremeWorks.App;
 
 public partial class App : Application
 {

@@ -12,6 +12,7 @@
     <AssemblyVersion>1.6.2</AssemblyVersion>
     <FileVersion>1.6.2</FileVersion>
       <EnableWindowsTargeting>true</EnableWindowsTargeting>
+      <RootNamespace>CremeWorks.App</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
